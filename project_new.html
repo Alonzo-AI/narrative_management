@@ -426,6 +426,32 @@
             font-size: 14px;
         }
 
+        .assigned-members {
+            background-color: #f8f8f8;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .team-members-list ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .team-members-list li {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            color: var(--fsu-garnet);
+        }
+        
+        .team-members-list li::before {
+            content: '•';
+            margin-right: 8px;
+            color: var(--fsu-gold);
+            font-size: 1.2em;
+        }
+
         .dropdown-menu {
             display: none;
             background: white;
@@ -621,6 +647,12 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div id="assigned-team-info" class="assigned-members" style="display: none; margin-top: 12px;">
+                            <div class="team-members-list">
+                                <ul id="assigned-members-list"></ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -723,11 +755,39 @@
                 // Create a notification
                 addNotification(`${selectedMembers.length} team members added`, 'Just now');
                 
+                // Display assigned team members
+                displayAssignedMembers(selectedMembers);
+                
                 // Hide the selection
                 hideTeamSelection();
+                
+                // Hide instruction text
+                document.getElementById('team-instruction').style.display = 'none';
             } else {
                 alert('Please select at least one team member');
             }
+        }
+        
+        function displayAssignedMembers(members) {
+            const membersList = document.getElementById('assigned-members-list');
+            membersList.innerHTML = ''; // Clear existing list
+            
+            members.forEach(member => {
+                const listItem = document.createElement('li');
+                listItem.textContent = member.name;
+                membersList.appendChild(listItem);
+            });
+            
+            // Show the assigned members section
+            document.getElementById('assigned-team-info').style.display = 'block';
+            
+            // Update the manage button
+            const manageButton = document.querySelector('.team-option .team-button');
+            manageButton.textContent = 'Update Team';
+        }
+        
+        function showTeamSelection() {
+            document.getElementById('team-selection').style.display = 'block';
         }
 
         function addNotification(message, time) {
