@@ -318,6 +318,20 @@
             margin-bottom: 16px;
         }
 
+        .assigned-coordinator {
+            margin-top: 8px;
+            font-weight: 500;
+            color: var(--fsu-garnet);
+            display: flex;
+            align-items: center;
+        }
+
+        .assigned-coordinator i {
+            font-size: 16px;
+            margin-right: 6px;
+            color: var(--fsu-gold);
+        }
+
         .team-button {
             background: var(--fsu-garnet);
             color: white;
@@ -334,63 +348,86 @@
             color: var(--fsu-garnet);
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+        .form-row {
+            margin-bottom: 12px;
         }
 
-        .modal-content {
-            background: white;
-            padding: 24px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            cursor: pointer;
-            color: var(--fsu-garnet);
-        }
-
-        .modal-form {
-            margin-top: 16px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--fsu-garnet);
-        }
-
-        .form-group input, .form-group select {
+        .form-row select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            background-color: white;
         }
 
-        .modal-actions {
+        .form-row label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--fsu-garnet);
+        }
+
+        .coordinator-form {
+            background-color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            border: 1px solid #eee;
+        }
+
+        .action-buttons {
             display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .cancel-button {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .cancel-button:hover {
+            background: #e0e0e0;
+        }
+
+        .dropdown-menu {
+            display: none;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        .dropdown-toggle {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .dropdown-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        
+        .dropdown-item:hover {
+            background: #f5f5f5;
         }
 
         @media (max-width: 768px) {
@@ -488,12 +525,45 @@
         <section class="team-management">
             <h2>Assign Research Team</h2>
             <div class="team-options">
-                <div class="team-option">
+                <div class="team-option" id="coordinator-container">
                     <i class="material-icons">person_add</i>
                     <div class="option-content">
                         <h3>Assign Coordinator</h3>
-                        <p>Select project coordinator</p>
-                        <button class="team-button" onclick="openModal('coordinator')">Assign</button>
+                
+                        
+                        <div id="coordinator-selection" style="display: block;">
+                            <div class="coordinator-form">
+                                <div class="form-row">
+                                    <label for="coordinator-role">Department</label>
+                                    <select id="coordinator-role">
+                                        <option value="">Select department</option>
+                                        <option value="content">Content Team</option>
+                                        <option value="design">Design Team</option>
+                                        <option value="marketing">Marketing Team</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <label for="coordinator-select">Select Coordinator</label>
+                                    <select id="coordinator-select">
+                                        <option value="">Choose a coordinator</option>
+                                        <option value="1">Sarah Johnson</option>
+                                        <option value="2">Michael Chen</option>
+                                        <option value="3">Emily Rodriguez</option>
+                                        <option value="4">David Kim</option>
+                                        <option value="5">Rachel Thompson</option>
+                                    </select>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="team-button" onclick="saveCoordinator()">Assign</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="assigned-coordinator-info" class="assigned-coordinator" style="display: none;">
+                            <i class="material-icons">check_circle</i>
+                            Coordinator: <span id="coordinator-name">Not assigned</span>
+                            <button class="team-button" style="margin-left: 12px; padding: 4px 8px; font-size: 0.8rem;" onclick="showCoordinatorSelection()">Change</button>
+                        </div>
                     </div>
                 </div>
                 <div class="team-option">
@@ -501,23 +571,49 @@
                     <div class="option-content">
                         <h3>Team Members</h3>
                         <p>Add or remove team members</p>
-                        <button class="team-button" onclick="openModal('team')">Manage Team</button>
+                        <button class="team-button" onclick="showTeamSelection()">Manage Team</button>
+                        <div id="team-selection" style="display: none; margin-top: 12px;">
+                            <div class="coordinator-form">
+                                <div class="form-row">
+                                    <label for="team-department">Department</label>
+                                    <select id="team-department">
+                                        <option value="">Select department</option>
+                                        <option value="content">Content Team</option>
+                                        <option value="design">Design Team</option>
+                                        <option value="marketing">Marketing Team</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <label>Select Team Members</label>
+                                    <div class="team-members-list">
+                                        <div class="team-member-item">
+                                            <input type="checkbox" id="member-1" value="1">
+                                            <label for="member-1">Alex Foster</label>
+                                        </div>
+                                        <div class="team-member-item">
+                                            <input type="checkbox" id="member-2" value="2">
+                                            <label for="member-2">Maria Garcia</label>
+                                        </div>
+                                        <div class="team-member-item">
+                                            <input type="checkbox" id="member-3" value="3">
+                                            <label for="member-3">James Wilson</label>
+                                        </div>
+                                        <div class="team-member-item">
+                                            <input type="checkbox" id="member-4" value="4">
+                                            <label for="member-4">Lisa Park</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="cancel-button" onclick="hideTeamSelection()">Cancel</button>
+                                    <button class="team-button" onclick="saveTeamMembers()">Add Selected</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-        </section>
-    </div>
-
-    
-
-    <!-- Modal -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <i class="material-icons close-modal" onclick="closeModal()">close</i>
-            <h2 id="modal-title">Assign Coordinator</h2>
-            <div class="modal-form">
-                <!-- Form content will be dynamically inserted here -->
             </div>
-        </div>
+        </section>
     </div>
     
 
@@ -546,166 +642,98 @@
     </div>
 
     <script>
-        function openModal(type) {
-            const modal = document.getElementById('modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalForm = document.querySelector('.modal-form');
-            
-            let formContent = '';
-            
-            switch(type) {
-                case 'coordinator':
-                    modalTitle.textContent = 'Assign Coordinator';
-                    formContent = `
-                        <div class="form-group">
-                            <label for="coordinator-role">Department</label>
-                            <select id="coordinator-role" class="form-select">
-                                <option value="">Select department</option>
-                                <option value="content">Content Team</option>
-                                <option value="design">Design Team</option>
-                                <option value="marketing">Marketing Team</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="coordinator-select">Select Coordinator</label>
-                            <select id="coordinator-select" class="form-select">
-                                <option value="">Choose a coordinator</option>
-                                <option value="1">Sarah Johnson</option>
-                                <option value="2">Michael Chen</option>
-                                <option value="3">Emily Rodriguez</option>
-                                <option value="4">David Kim</option>
-                                <option value="5">Rachel Thompson</option>
-                            </select>
-                        </div>
-                        <div class="modal-actions">
-                            <button class="team-button" onclick="closeModal()">Cancel</button>
-                            <button class="team-button" onclick="saveCoordinator()">Assign</button>
-                        </div>
-                    `;
-                    break;
-                    
-                    case 'team':
-                    modalTitle.textContent = 'Manage Team Members';
-                    formContent = `
-                        <div class="form-group">
-                            <label for="team-department">Department</label>
-                            <select id="team-department" class="form-select">
-                                <option value="">Select department</option>
-                                <option value="content">Content Team</option>
-                                <option value="design">Design Team</option>
-                                <option value="marketing">Marketing Team</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="team-members-dropdown">Select Team Members</label>
-                            <div class="multi-select-dropdown">
-                                <div class="dropdown-toggle" onclick="toggleDropdown()">
-                                    Select Members <span class="selected-count">0 selected</span>
-                                </div>
-                                <div class="dropdown-menu" id="team-members-menu">
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-1" value="1">
-                                        <label for="member-1">Alex Foster</label>
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-2" value="2">
-                                        <label for="member-2">Maria Garcia</label>
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-3" value="3">
-                                        <label for="member-3">James Wilson</label>
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-4" value="4">
-                                        <label for="member-4">Lisa Park</label>
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-5" value="5">
-                                        <label for="member-5">Andre Thomas</label>
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-6" value="6">
-                                        <label for="member-6">Sophie Martinez</label>
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" id="member-7" value="7">
-                                        <label for="member-7">Ryan Cooper</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-actions">
-                            <button class="team-button" onclick="closeModal()">Cancel</button>
-                            <button class="team-button" onclick="saveTeamMember()">Add Selected Members</button>
-                        </div>
-                    `;
-                    break;
-                    
-            }
-            
-            modalForm.innerHTML = formContent;
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.style.display = 'none';
-        }
+        // Store coordinator names
+        const coordinatorNames = {
+            "1": "Sarah Johnson",
+            "2": "Michael Chen",
+            "3": "Emily Rodriguez",
+            "4": "David Kim",
+            "5": "Rachel Thompson"
+        };
 
         function saveCoordinator() {
-            const coordinator = document.getElementById('coordinator-select').value;
-            const department = document.getElementById('coordinator-role').value;
-            console.log('Saving coordinator:', { coordinator, department });
-            closeModal();
+            const coordinatorSelect = document.getElementById('coordinator-select');
+            const coordinatorId = coordinatorSelect.value;
+            const departmentSelect = document.getElementById('coordinator-role');
+            const department = departmentSelect.value;
+            
+            if (coordinatorId && department) {
+                const coordinatorName = coordinatorNames[coordinatorId];
+                const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
+                
+                // Update the UI to show the assigned coordinator
+                document.getElementById('coordinator-name').textContent = coordinatorName;
+                
+                // Hide the selection form and show the assigned info
+                document.getElementById('coordinator-selection').style.display = 'none';
+                document.getElementById('assigned-coordinator-info').style.display = 'flex';
+                
+                // Hide the "Select project coordinator" instruction
+                document.getElementById('coordinator-instruction').style.display = 'none';
+                
+                console.log('Coordinator assigned:', { 
+                    name: coordinatorName, 
+                    id: coordinatorId, 
+                    department: departmentName 
+                });
+                
+                // Create a notification about the assignment
+                addNotification(`${coordinatorName} assigned as ${departmentName} Coordinator`, 'Just now');
+            } else {
+                alert('Please select both a department and a coordinator');
+            }
         }
 
-        function toggleDropdown() {
-            const menu = document.getElementById('team-members-menu');
-            menu.classList.toggle('show');
+        function showCoordinatorSelection() {
+            document.getElementById('coordinator-selection').style.display = 'block';
+            document.getElementById('assigned-coordinator-info').style.display = 'none';
+            document.getElementById('coordinator-instruction').style.display = 'block';
         }
 
-        // Close dropdown when clicking outside
-        window.addEventListener('click', function(event) {
-            if (!event.target.closest('.multi-select-dropdown')) {
-                const menus = document.getElementsByClassName('dropdown-menu');
-                Array.from(menus).forEach(menu => menu.classList.remove('show'));
-            }
-        });
+        function showTeamSelection() {
+            document.getElementById('team-selection').style.display = 'block';
+        }
 
-        // Update selected count
-        document.addEventListener('change', function(event) {
-            if (event.target.closest('.dropdown-menu')) {
-                const menu = event.target.closest('.dropdown-menu');
-                const selectedCount = menu.querySelectorAll('input[type="checkbox"]:checked').length;
-                const countSpan = menu.closest('.multi-select-dropdown').querySelector('.selected-count');
-                countSpan.textContent = `${selectedCount} selected`;
-            }
-        });
+        function hideTeamSelection() {
+            document.getElementById('team-selection').style.display = 'none';
+        }
 
-        function saveTeamMember() {
-            const checkboxes = document.querySelectorAll('#team-members-menu input[type="checkbox"]:checked');
+        function saveTeamMembers() {
+            const checkboxes = document.querySelectorAll('.team-members-list input[type="checkbox"]:checked');
             const selectedMembers = Array.from(checkboxes).map(checkbox => ({
                 id: checkbox.value,
                 name: checkbox.nextElementSibling.textContent
             }));
-            const department = document.getElementById('team-department').value;
-            console.log('Saving team members:', { selectedMembers, department });
-            closeModal();
-        }
-
-        function saveRole() {
-            const member = document.getElementById('member-select').value;
-            const role = document.getElementById('role-select').value;
-            console.log('Saving role assignment:', { member, role });
-            closeModal();
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('modal');
-            if (event.target === modal) {
-                closeModal();
+            const departmentSelect = document.getElementById('team-department');
+            const department = departmentSelect.value;
+            
+            if (selectedMembers.length > 0 && department) {
+                const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
+                console.log('Team members assigned:', { selectedMembers, department: departmentName });
+                
+                // Create a notification
+                addNotification(`${selectedMembers.length} members added to ${departmentName}`, 'Just now');
+                
+                // Hide the selection
+                hideTeamSelection();
+            } else {
+                alert('Please select a department and at least one team member');
             }
+        }
+
+        function addNotification(message, time) {
+            const notificationSidebar = document.querySelector('.notification-sidebar');
+            const newNotification = document.createElement('div');
+            newNotification.className = 'notification';
+            newNotification.innerHTML = `
+                <div class="notification-title">Team Update</div>
+                <div class="notification-content">${message}</div>
+                <div class="notification-time">${time}</div>
+            `;
+            
+            // Insert at the top of notifications
+            const firstNotification = notificationSidebar.querySelector('.notification');
+            notificationSidebar.insertBefore(newNotification, firstNotification);
         }
     </script>
 </body>
