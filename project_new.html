@@ -412,6 +412,20 @@
             background: #e0e0e0;
         }
 
+        .multi-select {
+            width: 100%;
+            height: 150px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+        
+        .multi-select option {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
         .dropdown-menu {
             display: none;
             background: white;
@@ -586,39 +600,20 @@
                     <i class="material-icons">group_add</i>
                     <div class="option-content">
                         <h3>Team Members</h3>
-                        <p>Add or remove team members</p>
-                        <button class="team-button" onclick="showTeamSelection()">Manage Team</button>
+                        <button class="team-button" onclick="showTeamSelection()">Assign Team</button>
                         <div id="team-selection" style="display: none; margin-top: 12px;">
                             <div class="coordinator-form">
                                 <div class="form-row">
-                                    <label for="team-department">Department</label>
-                                    <select id="team-department">
-                                        <option value="">Select department</option>
-                                        <option value="content">Content Team</option>
-                                        <option value="design">Design Team</option>
-                                        <option value="marketing">Marketing Team</option>
+                                    <label for="team-members-select">Select Team Members</label>
+                                    <select id="team-members-select" multiple class="multi-select">
+                                        <option value="1">Alex Foster</option>
+                                        <option value="2">Maria Garcia</option>
+                                        <option value="3">James Wilson</option>
+                                        <option value="4">Lisa Park</option>
+                                        <option value="5">Andre Thomas</option>
+                                        <option value="6">Sophie Martinez</option>
+                                        <option value="7">Ryan Cooper</option>
                                     </select>
-                                </div>
-                                <div class="form-row">
-                                    <label>Select Team Members</label>
-                                    <div class="team-members-list">
-                                        <div class="team-member-item">
-                                            <input type="checkbox" id="member-1" value="1">
-                                            <label for="member-1">Alex Foster</label>
-                                        </div>
-                                        <div class="team-member-item">
-                                            <input type="checkbox" id="member-2" value="2">
-                                            <label for="member-2">Maria Garcia</label>
-                                        </div>
-                                        <div class="team-member-item">
-                                            <input type="checkbox" id="member-3" value="3">
-                                            <label for="member-3">James Wilson</label>
-                                        </div>
-                                        <div class="team-member-item">
-                                            <input type="checkbox" id="member-4" value="4">
-                                            <label for="member-4">Lisa Park</label>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="action-buttons">
                                     <button class="cancel-button" onclick="hideTeamSelection()">Cancel</button>
@@ -631,7 +626,6 @@
             </div>
         </section>
     </div>
-    
 
     <div class="notification-sidebar">
         <h2>Notifications</h2>
@@ -715,25 +709,24 @@
         }
 
         function saveTeamMembers() {
-            const checkboxes = document.querySelectorAll('.team-members-list input[type="checkbox"]:checked');
-            const selectedMembers = Array.from(checkboxes).map(checkbox => ({
-                id: checkbox.value,
-                name: checkbox.nextElementSibling.textContent
-            }));
-            const departmentSelect = document.getElementById('team-department');
-            const department = departmentSelect.value;
+            const selectElement = document.getElementById('team-members-select');
+            const selectedOptions = Array.from(selectElement.selectedOptions);
             
-            if (selectedMembers.length > 0 && department) {
-                const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
-                console.log('Team members assigned:', { selectedMembers, department: departmentName });
+            const selectedMembers = selectedOptions.map(option => ({
+                id: option.value,
+                name: option.textContent
+            }));
+            
+            if (selectedMembers.length > 0) {
+                console.log('Team members assigned:', selectedMembers);
                 
                 // Create a notification
-                addNotification(`${selectedMembers.length} members added to ${departmentName}`, 'Just now');
+                addNotification(`${selectedMembers.length} team members added`, 'Just now');
                 
                 // Hide the selection
                 hideTeamSelection();
             } else {
-                alert('Please select a department and at least one team member');
+                alert('Please select at least one team member');
             }
         }
 
