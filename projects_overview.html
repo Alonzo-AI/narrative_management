@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Projects Overview | Athlyte</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <style>
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                gap: 20px;
+            }
+
+            .header-title {
+                color: #ceb888;
+                margin: 0;
+                flex-grow: 1;
+            }
+
+            .create-project-btn {
+                background-color: #ceb888;
+                color: #782f40;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                height: 36px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 500;
+                text-decoration: none;
+                transition: opacity 0.3s ease;
+            }
+
+            .create-project-btn:hover {
+                opacity: 0.9;
+            }
+
+            .create-project-btn i {
+                margin-right: 8px;
+            }
+
+            .view-selector {
+                background-color: #ceb888;
+                color: #782f40;
+                border: none;
+                border-radius: 4px;
+                padding: 8px;
+                width: 200px;
+                height: 36px;
+            }
+            .chip-container {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                display: flex;
+                gap: 8px;
+            }
+            .deadline-chip {
+                background-color: #d32f2f;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+            .review-chip {
+                background-color: #ffa726;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+
+            body {
+                background-color: #782f40;
+            }
+            .kanban-container {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                min-width: 1200px;
+                gap: 15px;
+                overflow-x: auto;
+                padding: 20px 0px 20px 0px;
+            }
+            .kanban-column {
+                flex: 1;
+                min-width: 250px;
+                background-color: #ceb888;
+                padding: 15px;
+                border-radius: 10px;
+            }
+            .kanban-header {
+                font-size: 1.2rem;
+                font-weight: bold;
+                text-align: center;
+                color: #782f40;
+                margin-bottom: 10px;
+            }
+            .kanban-card {
+                background: white;
+                padding: 10px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                position: relative;
+                padding-bottom: 50px;
+                cursor: move;
+            }
+            .kanban-card.dragging {
+                opacity: 0.5;
+                transform: scale(0.95);
+            }
+            .user-image {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+            }
+            .drop-zone-active {
+                background-color: #e0d5b3;
+                transition: background-color 0.3s ease;
+            }
+            .container {
+                margin-left: 10%;
+            }
+
+            .notifications-trigger {
+                position: relative;
+                background: none;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                margin-right: 20px;
+            }
+
+            .notifications-trigger i {
+                color: #ceb888;
+                font-size: 24px;
+            }
+
+            .notification-count {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: #d32f2f;
+                color: white;
+                border-radius: 50%;
+                padding: 2px 6px;
+                font-size: 12px;
+                min-width: 18px;
+                text-align: center;
+            }
+
+            .notifications-panel {
+                position: fixed;
+                top: 0;
+                right: -400px;
+                width: 400px;
+                height: 100vh;
+                background-color: white;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .notifications-panel.active {
+                right: 0;
+            }
+
+            .notifications-header {
+                background-color: #782f40;
+                color: #ceb888;
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .notifications-header h5 {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+
+            .close-notifications {
+                background: none;
+                border: none;
+                color: #ceb888;
+                cursor: pointer;
+                padding: 5px;
+            }
+
+            .notifications-tabs {
+                background-color: #ceb888;
+                display: flex;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .notifications-tab {
+                flex: 1;
+                padding: 15px;
+                text-align: center;
+                color: #782f40;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                font-weight: 500;
+            }
+
+            .notifications-tab.active {
+                background-color: #782f40;
+                color: #ceb888;
+            }
+
+            .notifications-content {
+                flex-grow: 1;
+                overflow-y: auto;
+                padding: 0;
+            }
+
+            .notification-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .notification-item {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                align-items: flex-start;
+                gap: 15px;
+                transition: background-color 0.3s ease;
+            }
+
+            .notification-item:hover {
+                background-color: #f5f5f5;
+            }
+
+            .notification-icon {
+                color: #782f40;
+            }
+
+            .notification-content {
+                flex-grow: 1;
+            }
+
+            .notification-title {
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+            .notification-time {
+                color: #666;
+                font-size: 0.8rem;
+            }
+
+            .notification-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .notification-actions button {
+                background-color: #782f40;
+                color: white;
+                border: none;
+                padding: 5px 15px;
+                border-radius: 15px;
+                cursor: pointer;
+                font-size: 0.8rem;
+                transition: opacity 0.3s ease;
+            }
+
+            .notification-actions button:hover {
+                opacity: 0.9;
+            }
+
+            .notification-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .notification-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="notification-overlay"></div>
+        <div class="notifications-panel">
+            <div class="notifications-header">
+                <h5>Notifications</h5>
+                <button class="close-notifications">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="notifications-tabs">
+                <div class="notifications-tab active" data-tab="info">Info</div>
+                <div class="notifications-tab" data-tab="actions">Actions</div>
+            </div>
+            <div class="notifications-content">
+                <!-- Info Notifications Tab Content -->
+                <div class="tab-content" id="info-notifications">
+                    <div class="notification-item">
+                        <i class="material-icons notification-icon">update</i>
+                        <div class="notification-content">
+                            <div class="notification-title">
+                                Alex Jones updated the graphics for NFL Draft
+                                2025
+                            </div>
+                            <div class="notification-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <i class="material-icons notification-icon">edit</i>
+                        <div class="notification-content">
+                            <div class="notification-title">
+                                Sarah Thompson modified the content for FSU
+                                Football Season 2025
+                            </div>
+                            <div class="notification-time">3 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions Notifications Tab Content -->
+                <div
+                    class="tab-content"
+                    id="actions-notifications"
+                    style="display: none"
+                >
+                    <div class="notification-item">
+                        <i class="material-icons notification-icon"
+                            >rate_review</i
+                        >
+                        <div class="notification-content">
+                            <div class="notification-title">
+                                "FSU Fan Engagement Drive" has a new Review
+                                Request for Graphics
+                            </div>
+                            <div class="notification-time">1 hour ago</div>
+                            <div class="notification-actions">
+                                <button onclick="handleReview('approve')">
+                                    Approve
+                                </button>
+                                <button onclick="handleReview('reject')">
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <i class="material-icons notification-icon"
+                            >assignment</i
+                        >
+                        <div class="notification-content">
+                            <div class="notification-title">
+                                New task assignment in "Seminoles Championship
+                                Run"
+                            </div>
+                            <div class="notification-time">4 hours ago</div>
+                            <div class="notification-actions">
+                                <button onclick="handleAssignment('accept')">
+                                    Accept
+                                </button>
+                                <button onclick="handleAssignment('decline')">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-align" style="padding: 10px; margin-bottom: -10px">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+                alt="FSU Logo"
+                width="100"
+            />
+        </div>
+        <div class="container">
+            <div class="header-container">
+                <h3 class="header-title">Projects Overview</h3>
+                <button
+                    class="notifications-trigger"
+                    onclick="toggleNotifications()"
+                >
+                    <i class="material-icons">notifications</i>
+                    <span class="notification-count">3</span>
+                </button>
+                <a href="create_project.html" class="create-project-btn">
+                    <i class="material-icons">add</i>
+                    Create Project
+                </a>
+                <a href="archives.html" class="btn" style="text-transform: none; background-color: #ceb888; color: #782f40; margin-left: 10px; padding: 0 20px; height: 36px; display: flex; align-items: center; border-radius: 4px; text-decoration: none;">
+                    <i class="material-icons left">archive</i>Archives
+                </a>
+                <select
+                    id="viewSelector"
+                    class="browser-default view-selector"
+                    onchange="location = this.value"
+                >
+                    <option value="projects_overview.html" selected>
+                        Workflow View
+                    </option>
+                    <option value="grid_view.html">Grid View</option>
+                    <option value="calendar_new.html">
+                        Calendar View
+                    </option>
+                </select>
+            </div>
+
+            <div class="kanban-container">
+                <div
+                    class="kanban-column"
+                    ondragover="handleDragOver(event)"
+                    ondrop="handleDrop(event)"
+                    data-column="Research"
+                >
+                    <div class="kanban-header">Research</div>
+                    <div
+                        class="kanban-card"
+                        draggable="true"
+                        ondragstart="handleDragStart(event)"
+                        ondragend="handleDragEnd(event)"
+                    >
+                        <strong
+                            ><a
+                                href="project_page.html"
+                                style="
+                                    color: inherit;
+                                    text-decoration: none;
+                                    transition: opacity 0.2s ease-in-out;
+                                "
+                                onmouseover="this.style.opacity='0.8'"
+                                onmouseout="this.style.opacity='1'"
+                                >FSU Football Season 2025</a
+                            ></strong
+                        >
+                        <div style="font-size: 0.9rem; color: gray">
+                            Brief description of FSU Football Season 2025
+                        </div>
+                        <div class="chip-container">
+                            <div class="deadline-chip">Due Mar 15</div>
+                            <div class="review-chip">Needs Review</div>
+                        </div>
+                        <img
+                            src="https://randomuser.me/api/portraits/men/1.jpg"
+                            alt="User"
+                            class="user-image"
+                        />
+                    </div>
+                    <div
+                        class="kanban-card"
+                        draggable="true"
+                        ondragstart="handleDragStart(event)"
+                        ondragend="handleDragEnd(event)"
+                    >
+                        <strong
+                            ><a
+                                href="#"
+                                style="
+                                    color: inherit;
+                                    text-decoration: none;
+                                    transition: opacity 0.2s ease-in-out;
+                                "
+                                onmouseover="this.style.opacity='0.8'"
+                                onmouseout="this.style.opacity='1'"
+                                >Seminoles Championship Run</a
+                            ></strong
+                        >
+                        <div style="font-size: 0.9rem; color: gray">
+                            Brief description of Seminoles Championship Run
+                        </div>
+                        <div class="chip-container">
+                            <div class="deadline-chip">Due Apr 1</div>
+                            <div class="review-chip">Needs Review</div>
+                        </div>
+                        <img
+                            src="https://randomuser.me/api/portraits/women/2.jpg"
+                            alt="User"
+                            class="user-image"
+                        />
+                    </div>
+                </div>
+                <div
+                    class="kanban-column"
+                    ondragover="handleDragOver(event)"
+                    ondrop="handleDrop(event)"
+                    data-column="Content Draft"
+                >
+                    <div class="kanban-header">Content Draft</div>
+                    <div
+                        class="kanban-card"
+                        draggable="true"
+                        ondragstart="handleDragStart(event)"
+                        ondragend="handleDragEnd(event)"
+                    >
+                        <strong
+                            ><a
+                                href="#"
+                                style="
+                                    color: inherit;
+                                    text-decoration: none;
+                                    transition: opacity 0.2s ease-in-out;
+                                "
+                                onmouseover="this.style.opacity='0.8'"
+                                onmouseout="this.style.opacity='1'"
+                                >FSU vs Miami Rivalry Analysis</a
+                            ></strong
+                        >
+                        <div style="font-size: 0.9rem; color: gray">
+                            Brief description of FSU vs Miami Rivalry Analysis
+                        </div>
+                        <div class="chip-container">
+                            <div class="deadline-chip">Due Mar 20</div>
+                            <div class="review-chip">Needs Review</div>
+                        </div>
+                        <img
+                            src="https://randomuser.me/api/portraits/men/3.jpg"
+                            alt="User"
+                            class="user-image"
+                        />
+                    </div>
+                </div>
+                <div
+                    class="kanban-column"
+                    ondragover="handleDragOver(event)"
+                    ondrop="handleDrop(event)"
+                    data-column="Graphics"
+                >
+                    <div class="kanban-header">Graphics</div>
+                    <div
+                        class="kanban-card"
+                        draggable="true"
+                        ondragstart="handleDragStart(event)"
+                        ondragend="handleDragEnd(event)"
+                    >
+                        <strong
+                            ><a
+                                href="#"
+                                style="
+                                    color: inherit;
+                                    text-decoration: none;
+                                    transition: opacity 0.2s ease-in-out;
+                                "
+                                onmouseover="this.style.opacity='0.8'"
+                                onmouseout="this.style.opacity='1'"
+                                >NFL Draft 2025</a
+                            ></strong
+                        >
+                        <div style="font-size: 0.9rem; color: gray">
+                            Brief description of NFL Draft 2025
+                        </div>
+                        <div class="chip-container">
+                            <div class="deadline-chip">Due Mar 25</div>
+                            <div class="review-chip">Needs Review</div>
+                        </div>
+                        <img
+                            src="https://randomuser.me/api/portraits/women/4.jpg"
+                            alt="User"
+                            class="user-image"
+                        />
+                    </div>
+                </div>
+                <div
+                    class="kanban-column"
+                    ondragover="handleDragOver(event)"
+                    ondrop="handleDrop(event)"
+                    data-column="Marketing"
+                >
+                    <div class="kanban-header">Marketing</div>
+                    <div
+                        class="kanban-card"
+                        draggable="true"
+                        ondragstart="handleDragStart(event)"
+                        ondragend="handleDragEnd(event)"
+                    >
+                        <strong
+                            ><a
+                                href="#"
+                                style="
+                                    color: inherit;
+                                    text-decoration: none;
+                                    transition: opacity 0.2s ease-in-out;
+                                "
+                                onmouseover="this.style.opacity='0.8'"
+                                onmouseout="this.style.opacity='1'"
+                                >FSU Fan Engagement Drive</a
+                            ></strong
+                        >
+                        <div style="font-size: 0.9rem; color: gray">
+                            Brief description of FSU Fan Engagement Drive
+                        </div>
+                        <div class="chip-container">
+                            <div class="deadline-chip">Due Mar 30</div>
+                            <div class="review-chip">Needs Review</div>
+                        </div>
+                        <img
+                            src="https://randomuser.me/api/portraits/men/5.jpg"
+                            alt="User"
+                            class="user-image"
+                        />
+                    </div>
+                   
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            // Initialize Materialize Select
+            document.addEventListener("DOMContentLoaded", function () {
+                var elems = document.querySelectorAll("select");
+                var instances = M.FormSelect.init(elems);
+            });
+
+            let draggedCard = null;
+
+            function handleDragStart(event) {
+                draggedCard = event.target;
+                event.target.classList.add("dragging");
+
+                // Set the dragged data
+                event.dataTransfer.setData(
+                    "text/plain",
+                    event.target.innerHTML,
+                );
+                event.dataTransfer.effectAllowed = "move";
+            }
+
+            function handleDragEnd(event) {
+                event.target.classList.remove("dragging");
+                // Remove the highlight from all columns
+                document
+                    .querySelectorAll(".kanban-column")
+                    .forEach((column) => {
+                        column.classList.remove("drop-zone-active");
+                    });
+            }
+
+            function handleDragOver(event) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+
+                // Highlight the column being dragged over
+                const column = event.target.closest(".kanban-column");
+                if (column) {
+                    column.classList.add("drop-zone-active");
+                }
+            }
+
+            function handleDragLeave(event) {
+                const column = event.target.closest(".kanban-column");
+                if (column) {
+                    column.classList.remove("drop-zone-active");
+                }
+            }
+
+            function handleDrop(event) {
+                event.preventDefault();
+
+                const column = event.target.closest(".kanban-column");
+                if (column && draggedCard) {
+                    const sourceColumn = draggedCard.closest(".kanban-column");
+                    const sourceIndex = Array.from(
+                        document.querySelectorAll(".kanban-column"),
+                    ).indexOf(sourceColumn);
+                    const targetIndex = Array.from(
+                        document.querySelectorAll(".kanban-column"),
+                    ).indexOf(column);
+
+                    // Remove from old position
+                    draggedCard.parentNode.removeChild(draggedCard);
+
+                    // If moving right, remove the review chip
+                    if (targetIndex > sourceIndex) {
+                        const reviewChip =
+                            draggedCard.querySelector(".review-chip");
+                        if (reviewChip) {
+                            reviewChip.remove();
+                        }
+                    }
+
+                    // Add to new position
+                    const cards = column.querySelectorAll(".kanban-card");
+                    const afterElement = getDropPosition(column, event.clientY);
+
+                    if (afterElement) {
+                        column.insertBefore(draggedCard, afterElement);
+                    } else {
+                        column.appendChild(draggedCard);
+                    }
+
+                    // Remove highlight
+                    column.classList.remove("drop-zone-active");
+                }
+            }
+
+            function getDropPosition(column, y) {
+                const cards = [
+                    ...column.querySelectorAll(".kanban-card:not(.dragging)"),
+                ];
+
+                return cards.reduce(
+                    (closest, child) => {
+                        const box = child.getBoundingClientRect();
+                        const offset = y - box.top - box.height / 2;
+
+                        if (offset < 0 && offset > closest.offset) {
+                            return { offset: offset, element: child };
+                        } else {
+                            return closest;
+                        }
+                    },
+                    { offset: Number.NEGATIVE_INFINITY },
+                ).element;
+            }
+
+            // Add dragenter and dragleave event listeners to all columns
+            document.querySelectorAll(".kanban-column").forEach((column) => {
+                column.addEventListener("dragenter", (e) => {
+                    e.preventDefault();
+                    column.classList.add("drop-zone-active");
+                });
+
+                column.addEventListener("dragleave", handleDragLeave);
+            });
+
+            function toggleNotifications() {
+                document
+                    .querySelector(".notifications-panel")
+                    .classList.toggle("active");
+                document
+                    .querySelector(".notification-overlay")
+                    .classList.toggle("active");
+            }
+
+            document
+                .querySelector(".close-notifications")
+                .addEventListener("click", toggleNotifications);
+            document
+                .querySelector(".notification-overlay")
+                .addEventListener("click", toggleNotifications);
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Tab switching functionality
+                const tabs = document.querySelectorAll(".notifications-tab");
+
+                function switchTab(tabType) {
+                    // Update tab styles
+                    tabs.forEach((tab) => {
+                        if (tab.dataset.tab === tabType) {
+                            tab.classList.add("active");
+                        } else {
+                            tab.classList.remove("active");
+                        }
+                    });
+
+                    // Update content visibility
+                    document
+                        .querySelectorAll(".tab-content")
+                        .forEach((content) => {
+                            content.style.display = "none";
+                        });
+
+                    const activeContent = document.getElementById(
+                        `${tabType}-notifications`,
+                    );
+                    if (activeContent) {
+                        activeContent.style.display = "block";
+                    }
+                }
+
+                // Add click event listeners to tabs
+                tabs.forEach((tab) => {
+                    tab.addEventListener("click", () => {
+                        switchTab(tab.dataset.tab);
+                    });
+                });
+
+                // Initialize with info tab active
+                switchTab("info");
+            });
+
+            // Handle notification actions
+            function handleReview(action) {
+                M.toast({ html: `Review ${action}ed successfully!` });
+                // Here you would typically make an API call to update the review status
+            }
+
+            function handleAssignment(action) {
+                M.toast({ html: `Assignment ${action}ed successfully!` });
+                // Here you would typically make an API call to update the assignment status
+            }
+        </script>
+    </body>
+</html>

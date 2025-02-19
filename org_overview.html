@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Organisation Overview | Athlyte</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            body {
+                background-color: #782f40;
+            }
+            .overview-container {
+                margin-top: 5vh;
+            }
+            .card {
+                /* padding: 15px; */
+                background-color: #ceb888;
+                border-radius: 10px;
+            }
+            .icon-container {
+                font-size: 3rem;
+                margin-bottom: 10px;
+            }
+            .avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border: none;
+                background: none;
+            }
+            th,
+            td {
+                padding: 12px;
+                text-align: left;
+                border: none;
+                background: none;
+            }
+            th {
+                background-color: #f4f4f4;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center-align" style="padding: 10px; margin-bottom: -10px">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+                alt="FSU Logo"
+                width="100"
+            />
+        </div>
+        <div class="container overview-container">
+            <h3 class="center-align" style="color: #ceb888">
+                Organisation Overview
+            </h3>
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div
+                            class="card-content"
+                            style="padding-top: 0 !important"
+                            style="
+                                height: 450px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                            "
+                        >
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 10px;
+                                "
+                            >
+                                <span class="icon-container"
+                                    ><i class="material-icons">group</i></span
+                                ><span
+                                    class="card-title"
+                                    style="
+                                        margin: 0;
+                                        padding: 0;
+                                        line-height: 1;
+                                    "
+                                    >Groups</span
+                                >
+                            </div>
+                            <table style="border: none">
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">security</i>
+                                        Admins
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">assignment</i>
+                                        Project Managers
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">create</i>
+                                        Content Creators
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">brush</i>
+                                        Graphics
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">campaign</i>
+                                        Marketing
+                                    </td>
+                                </tr>
+                            </table>
+                            <a
+                                href="#"
+                                class="btn waves-effect waves-light"
+                                style="
+                                    margin-top: auto;
+                                    align-self: center;
+                                    display: flex;
+                                    justify-content: center;
+                                "
+                                >View Groups</a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div
+                            class="card-content"
+                            style="padding-top: 0 !important"
+                            style="
+                                height: 450px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                            "
+                        >
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 10px;
+                                "
+                            >
+                                <span class="icon-container"
+                                    ><i class="material-icons">person</i></span
+                                ><span class="card-title">Users</span>
+                            </div>
+                            <table>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <img
+                                            src="https://randomuser.me/api/portraits/men/1.jpg"
+                                            class="avatar"
+                                        />
+                                        John Doe
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <img
+                                            src="https://randomuser.me/api/portraits/women/2.jpg"
+                                            class="avatar"
+                                        />
+                                        Jane Smith
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <img
+                                            src="https://randomuser.me/api/portraits/men/3.jpg"
+                                            class="avatar"
+                                        />
+                                        Mike Johnson
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <img
+                                            src="https://randomuser.me/api/portraits/women/4.jpg"
+                                            class="avatar"
+                                        />
+                                        Emily Davis
+                                    </td>
+                                </tr>
+                            </table>
+                            <a
+                                href="#"
+                                class="btn waves-effect waves-light"
+                                style="
+                                    margin-top: auto;
+                                    align-self: center;
+                                    display: flex;
+                                    justify-content: center;
+                                "
+                                >View Users</a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div
+                            class="card-content"
+                            style="padding-top: 0 !important"
+                            style="
+                                height: 450px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                            "
+                        >
+                            <div
+                                style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 10px;
+                                "
+                            >
+                                <span class="icon-container"
+                                    ><i class="material-icons">folder</i></span
+                                ><span class="card-title">Projects</span>
+                            </div>
+                            <table>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">event</i> NFL
+                                        Draft Announcement 2025
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">group</i> New
+                                        Coach PR
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons"
+                                            >fitness_center</i
+                                        >
+                                        Pre-Season Workout Regimen
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: none">
+                                    <td>
+                                        <i class="material-icons">sports</i>
+                                        Championship Game Preview
+                                    </td>
+                                </tr>
+                            </table>
+                            <a
+                                href="#"
+                                class="btn waves-effect waves-light"
+                                style="
+                                    margin-top: auto;
+                                    align-self: center;
+                                    display: flex;
+                                    justify-content: center;
+                                "
+                                >View Projects</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archives | Athlyte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+      :root { --fsu-garnet: #782f40; --fsu-gold: #ceb888; }
+      body { background-color: var(--fsu-garnet); color: #fff; }
+      .archive-header { background-color: white; color: var(--fsu-garnet); padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+      .filter-bar { margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; background-color: var(--fsu-gold); padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: var(--fsu-garnet); }
+      .filter-bar select, .filter-bar label { color: var(--fsu-garnet); border-radius: 8px; }
+      .browser-default { border-radius: 8px !important; padding: 8px; border: 1px solid var(--fsu-garnet); }
+      table { width: 100%; background-color: white; color: var(--fsu-garnet); border-radius: 8px; overflow: hidden; }
+      th, td { padding: 12px; border: 1px solid var(--fsu-gold); text-align: left; }
+      th { background-color: var(--fsu-gold); color: var(--fsu-garnet); }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="archive-header">
+        <h4>Archives</h4>
+        <p>Explore past content and coverage of FSU Football</p>
+      </div>
+      <div class="filter-bar" style="padding: 15px;">
+        <div class="input-field">
+          <select id="monthFilter" class="browser-default">
+            <option value="all" selected>All Months</option>
+            <option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option>
+          </select>
+        </div>
+        <div class="input-field">
+          <select id="yearFilter" class="browser-default">
+            <option value="all" selected>All Years</option>
+            <option>2025</option><option>2024</option><option>2023</option>
+          </select>
+        </div>
+      </div>
+      <table id="archiveTable">
+        <thead>
+          <tr><th>Title</th><th>Description</th><th>Published Date</th><th>Published Metrics</th></tr>
+        </thead>
+        <tbody>
+          <tr data-month="January" data-year="2024"><td><a href="#">FSU vs Miami 2024</a></td><td>Game highlights and analysis from 2024.</td><td>Jan 15, 2024</td><td>Views: 10k, Shares: 500</td></tr>
+          <tr data-month="February" data-year="2024"><td><a href="#">Player Profiles 2024</a></td><td>Profiles and stats of FSU players in 2024.</td><td>Feb 10, 2024</td><td>Views: 8k, Shares: 300</td></tr>
+          <tr data-month="December" data-year="2023"><td><a href="#">FSU Season Recap 2023</a></td><td>Coverage of the 2023 season.</td><td>Dec 5, 2023</td><td>Views: 15k, Shares: 700</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() { 
+        function filterTable() {
+          const month = document.getElementById('monthFilter').value;
+          const year = document.getElementById('yearFilter').value;
+          const rows = document.querySelectorAll('#archiveTable tbody tr');
+
+          rows.forEach(row => {
+            const rowMonth = row.getAttribute('data-month');
+            const rowYear = row.getAttribute('data-year');
+            row.style.display = ((month === 'all' || rowMonth === month) && (year === 'all' || rowYear === year)) ? '' : 'none';
+          });
+        }
+
+        document.getElementById('monthFilter').addEventListener('change', filterTable);
+        document.getElementById('yearFilter').addEventListener('change', filterTable);
+      });
+    </script>
+  </body>
+</html>

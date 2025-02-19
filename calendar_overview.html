@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Projects Overview | Athlyte</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <style>
+            .chip-container {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                display: flex;
+                gap: 8px;
+            }
+            .deadline-chip {
+                background-color: #d32f2f;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+            .review-chip {
+                background-color: #ffa726;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+            body {
+                background-color: #782f40;
+            }
+            .calendar-container {
+                background-color: #ceb888;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px auto;
+                overflow-x: auto;
+                max-width: 100%;
+            }
+            .calendar-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                color: #782f40;
+            }
+            .calendar-nav {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            .nav-btn {
+                background: none;
+                border: none;
+                color: #782f40;
+                cursor: pointer;
+                font-size: 24px;
+            }
+            .nav-btn:hover {
+                opacity: 0.8;
+            }
+            .calendar-grid {
+                display: grid;
+                grid-template-columns: repeat(7, minmax(120px, 1fr));
+                gap: 5px;
+                min-width: 840px; /* Minimum width to ensure readability */
+            }
+            .calendar-day-header {
+                text-align: center;
+                padding: 10px;
+                font-weight: bold;
+                color: #782f40;
+                background-color: rgba(120, 47, 64, 0.1);
+                border-radius: 5px;
+            }
+            .calendar-day {
+                min-height: 120px;
+                background: white;
+                border-radius: 5px;
+                padding: 5px;
+                position: relative;
+            }
+            .calendar-day.empty {
+                background: rgba(255, 255, 255, 0.5);
+            }
+            .day-number {
+                font-weight: bold;
+                color: #782f40;
+                margin-bottom: 5px;
+            }
+            .project-card {
+                background: #782f40;
+                color: #ceb888;
+                padding: 6px;
+                border-radius: 5px;
+                margin-bottom: 4px;
+                font-size: 0.75rem;
+                position: relative;
+                cursor: pointer;
+                height: 45px;
+            }
+            .stage-chip {
+                padding: 2px 6px;
+                border-radius: 12px;
+                font-size: 0.65rem;
+                position: absolute;
+                bottom: 5px;
+                left: 6px;
+                color: white;
+            }
+            .stage-research {
+                background-color: #9c27b0;
+            }
+            .stage-content {
+                background-color: #2196f3;
+            }
+            .stage-graphics {
+                background-color: #4caf50;
+            }
+            .stage-marketing {
+                background-color: #ff9800;
+            }
+            .project-card:hover {
+                opacity: 0.9;
+            }
+            .project-title {
+                font-weight: bold;
+                margin-bottom: 3px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .project-desc {
+                font-size: 0.7rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .user-image {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center-align" style="padding: 10px; margin-bottom: -10px">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+                alt="FSU Logo"
+                width="100"
+            />
+        </div>
+        <div class="container">
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                "
+            >
+                <h3 style="color: #ceb888; margin: 0">Projects Overview</h3>
+                <div style="width: 200px">
+                    <select
+                        id="viewSelector"
+                        class="browser-default"
+                        style="
+                            background-color: #ceb888;
+                            color: #782f40;
+                            border: none;
+                            border-radius: 4px;
+                            padding: 8px;
+                            width: 100%;
+                        "
+                        onchange="location = this.value"
+                    >
+                        <option
+                            value="projects_overview.html"
+                            onselect="window.location='projects_overview.html'"
+                        >
+                            Workflow View
+                        </option>
+                        <option value="grid_view.html">Grid View</option>
+                        <option value="calendar_overview.html" selected>
+                            Calendar View
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button class="nav-btn" id="prevMonth">&lt;</button>
+                        <h4 id="currentMonth" style="margin: 0; color: #782f40">
+                            March 2025
+                        </h4>
+                        <button class="nav-btn" id="nextMonth">&gt;</button>
+                    </div>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            // Initialize Materialize Select
+            document.addEventListener("DOMContentLoaded", function () {
+                var elems = document.querySelectorAll("select");
+                var instances = M.FormSelect.init(elems);
+            });
+
+            // Project data
+            const projects = [
+                {
+                    title: "FSU Football Season 2025",
+                    dueDate: new Date(2025, 2, 15),
+                    description:
+                        "Brief description of FSU Football Season 2025",
+                    assignee: "https://randomuser.me/api/portraits/men/1.jpg",
+                    stage: "Research",
+                },
+                {
+                    title: "Seminoles Championship Run",
+                    dueDate: new Date(2025, 3, 1),
+                    description:
+                        "Brief description of Seminoles Championship Run",
+                    assignee: "https://randomuser.me/api/portraits/women/2.jpg",
+                    stage: "Research",
+                },
+                {
+                    title: "FSU vs Miami Rivalry Analysis",
+                    dueDate: new Date(2025, 2, 20),
+                    description:
+                        "Brief description of FSU vs Miami Rivalry Analysis",
+                    assignee: "https://randomuser.me/api/portraits/men/3.jpg",
+                    stage: "Content Draft",
+                },
+                {
+                    title: "NFL Draft 2025",
+                    dueDate: new Date(2025, 2, 25),
+                    description: "Brief description of NFL Draft 2025",
+                    assignee: "https://randomuser.me/api/portraits/women/4.jpg",
+                    stage: "Graphics",
+                },
+                {
+                    title: "FSU Fan Engagement Drive",
+                    dueDate: new Date(2025, 2, 30),
+                    description:
+                        "Brief description of FSU Fan Engagement Drive",
+                    assignee: "https://randomuser.me/api/portraits/men/5.jpg",
+                    stage: "Marketing",
+                },
+            ];
+
+            let currentDate = new Date(2025, 2); // March 2025
+
+            function renderCalendar() {
+                const calendarGrid = document.getElementById("calendarGrid");
+                calendarGrid.innerHTML = "";
+
+                // Add day headers
+                const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                days.forEach((day) => {
+                    const dayHeader = document.createElement("div");
+                    dayHeader.className = "calendar-day-header";
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+
+                const firstDay = new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    1,
+                );
+                const lastDay = new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth() + 1,
+                    0,
+                );
+                const startingDay = firstDay.getDay();
+
+                // Add empty days
+                for (let i = 0; i < startingDay; i++) {
+                    const emptyDay = document.createElement("div");
+                    emptyDay.className = "calendar-day empty";
+                    calendarGrid.appendChild(emptyDay);
+                }
+
+                // Add calendar days
+                for (let date = 1; date <= lastDay.getDate(); date++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.className = "calendar-day";
+
+                    const dayNumber = document.createElement("div");
+                    dayNumber.className = "day-number";
+                    dayNumber.textContent = date;
+                    dayElement.appendChild(dayNumber);
+
+                    // Add projects for this day
+                    const dayProjects = projects.filter((project) => {
+                        return (
+                            project.dueDate.getDate() === date &&
+                            project.dueDate.getMonth() ===
+                                currentDate.getMonth() &&
+                            project.dueDate.getFullYear() ===
+                                currentDate.getFullYear()
+                        );
+                    });
+
+                    dayProjects.forEach((project) => {
+                        const projectCard = document.createElement("div");
+                        projectCard.className = "project-card";
+                        projectCard.innerHTML = `
+                            <div class="project-title">${project.title}</div>
+                            <div class="stage-chip ${getStageClass(project.stage)}">${project.stage}</div>
+                            <img src="${project.assignee}" alt="User" class="user-image" />
+                        `;
+                        dayElement.appendChild(projectCard);
+                    });
+
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+
+            // Navigation handlers
+            document
+                .getElementById("prevMonth")
+                .addEventListener("click", () => {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    updateMonthDisplay();
+                    renderCalendar();
+                });
+
+            document
+                .getElementById("nextMonth")
+                .addEventListener("click", () => {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    updateMonthDisplay();
+                    renderCalendar();
+                });
+
+            function updateMonthDisplay() {
+                const months = [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December",
+                ];
+                document.getElementById("currentMonth").textContent =
+                    `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            }
+
+            function getStageClass(stage) {
+                switch (stage) {
+                    case "Research":
+                        return "stage-research";
+                    case "Content Draft":
+                        return "stage-content";
+                    case "Graphics":
+                        return "stage-graphics";
+                    case "Marketing":
+                        return "stage-marketing";
+                    default:
+                        return "";
+                }
+            }
+
+            // Initial render
+            renderCalendar();
+        </script>
+    </body>
+</html>

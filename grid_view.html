@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Projects Overview | Athlyte</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+        <style>
+            body {
+                background-color: #782f40;
+            }
+
+            .chip-container {
+                display: flex;
+                gap: 8px;
+                margin-top: 15px;
+            }
+
+            .deadline-chip {
+                background-color: #d32f2f;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+
+            .review-chip {
+                background-color: #ffa726;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+
+            .stage-chip.research {
+                background-color: #1976d2;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+            .stage-chip.content {
+                background-color: #388e3c;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+            .stage-chip.graphics {
+                background-color: #7b1fa2;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+            .stage-chip.marketing {
+                background-color: #c62828;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+            }
+
+            .grid-card {
+                background: #ceb888;
+                border-radius: 10px;
+                padding: 15px;
+                height: 100%;
+                transition: transform 0.2s ease;
+                margin-bottom: 20px;
+            }
+
+            .grid-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .user-info {
+                display: flex;
+                align-items: center;
+                margin-top: 15px;
+                gap: 10px;
+            }
+
+            .user-image {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+
+            .user-name {
+                color: #782f40;
+                font-weight: 500;
+            }
+
+            .project-description {
+                min-height: 60px;
+            }
+
+            .promo-image {
+                width: 100%;
+                height: 240px;
+                border-radius: 5px;
+                margin: 0;
+            }
+
+            .grid-card.has-image {
+                padding: 15px;
+            }
+
+            .grid-card.has-image .image-container {
+                background: white;
+                padding: 8px;
+                border-radius: 5px;
+                margin-bottom: 15px;
+            }
+
+            .grid-card.has-image .project-content {
+                margin-top: 15px;
+            }
+
+            .projects-grid {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            /* Override Materialize col padding */
+            .row .col {
+                padding: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center-align" style="padding: 10px; margin-bottom: -10px">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100"/>
+        </div>
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="color: #ceb888; margin: 0">Projects Overview</h3>
+                <div style="width: 200px">
+                    <select id="viewSelector" class="browser-default" style="background-color: #ceb888; color: #782f40; border: none; border-radius: 4px; padding: 8px; width: 100%;"                         onchange="location = this.value"
+>
+                        <option
+                            value="projects_overview.html"
+
+                            onselect="window.location='projects_overview.html'"
+                        >
+                            Workflow View
+                        </option>
+                        <option
+                            value="grid_view.html"
+                            selected
+                        >
+                            Grid View
+                        </option>
+                        <option value="calendar_new.html">
+                            Calendar View
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="projects-grid">
+                <div class="row">
+                    <!-- Project 1 -->
+                    <div class="col s12 m4">
+                        <div class="grid-card">
+                            <strong><a href="#" style="color: #782f40; text-decoration: none;">FSU Football Season 2025</a></strong>
+                            <p class="project-description" style="font-size: 0.9rem; color: #333; margin-top: 10px;">
+                                Brief description of FSU Football Season 2025 analysis and predictions.
+                            </p>
+                            <div class="chip-container">
+                                <div class="stage-chip research">Research</div>
+                                <div class="review-chip">Needs Review</div>
+                            </div>
+                            <div class="user-info">
+                                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" class="user-image"/>
+                                <span class="user-name">John Smith</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="col s12 m4">
+                        <div class="grid-card">
+                            <strong><a href="#" style="color: #782f40; text-decoration: none;">Seminoles Championship Run</a></strong>
+                            <p class="project-description" style="font-size: 0.9rem; color: #333; margin-top: 10px;">
+                                Analysis of championship prospects and team performance metrics.
+                            </p>
+                            <div class="chip-container">
+                                <div class="stage-chip research">Research</div>
+                                <div class="review-chip">Needs Review</div>
+                            </div>
+                            <div class="user-info">
+                                <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User" class="user-image"/>
+                                <span class="user-name">Sarah Johnson</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="col s12 m4">
+                        <div class="grid-card">
+                            <strong><a href="#" style="color: #782f40; text-decoration: none;">FSU vs Miami Rivalry Analysis</a></strong>
+                            <p class="project-description" style="font-size: 0.9rem; color: #333; margin-top: 10px;">
+                                Historical analysis and upcoming matchup predictions.
+                            </p>
+                            <div class="chip-container">
+                                <div class="stage-chip content">Content Draft</div>
+                                <div class="review-chip">Needs Review</div>
+                            </div>
+                            <div class="user-info">
+                                <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="User" class="user-image"/>
+                                <span class="user-name">Mike Wilson</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Project 4 -->
+                    <div class="col s12 m4">
+                        <div class="grid-card has-image">
+                            <div class="image-container">
+                                <svg width="100%" height="240" viewBox="0 0 300 400" class="promo-image">
+                                    <rect width="300" height="400" fill="#782f40"/>
+                                    <text x="150" y="80" fill="#ceb888" font-size="24" text-anchor="middle" font-family="Arial">NFL DRAFT</text>
+                                    <text x="150" y="120" fill="#ceb888" font-size="36" text-anchor="middle" font-family="Arial">2025</text>
+                                    <g transform="translate(50,140)">
+                                        <!-- Football player silhouette -->
+                                        <path d="M100,100 L100,250 M60,170 L140,170 M100,170 L60,140 M100,170 L140,140"
+                                              stroke="#ceb888" fill="none" stroke-width="8"/>
+                                        <circle cx="100" cy="90" r="30" fill="#ceb888"/>
+                                    </g>
+                                    <text x="150" y="350" fill="#ceb888" font-size="18" text-anchor="middle">FSU PROSPECTS</text>
+                                </svg>
+                            </div>
+                            <div class="project-content">
+                                <strong><a href="#" style="color: #782f40; text-decoration: none;">NFL Draft 2025</a></strong>
+                                <p class="project-description" style="font-size: 0.9rem; color: #333; margin-top: 10px;">
+                                    FSU player prospects and draft prediction analysis.
+                                </p>
+                            <div class="chip-container">
+                                <div class="stage-chip graphics">Graphics</div>
+                                <div class="review-chip">Needs Review</div>
+                            </div>
+                            <div class="user-info">
+                                <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="User" class="user-image"/>
+                                <span class="user-name">Emma Davis</span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="col s12 m4">
+                        <div class="grid-card has-image">
+                            <div class="image-container">
+                                <svg width="100%" height="240" viewBox="0 0 300 400" class="promo-image">
+                                    <rect width="300" height="400" fill="#782f40"/>
+                                    <text x="150" y="80" fill="#ceb888" font-size="24" text-anchor="middle" font-family="Arial">FSU FAN</text>
+                                    <text x="150" y="120" fill="#ceb888" font-size="24" text-anchor="middle" font-family="Arial">ENGAGEMENT</text>
+                                    <g transform="translate(50,140)">
+                                        <!-- Crowd silhouette -->
+                                        <path d="M25,150 Q50,100 75,150 Q100,100 125,150 Q150,100 175,150 Q200,100 225,150"
+                                              stroke="#ceb888" fill="none" stroke-width="4"/>
+                                        <circle cx="50" cy="140" r="15" fill="#ceb888"/>
+                                        <circle cx="100" cy="140" r="15" fill="#ceb888"/>
+                                        <circle cx="150" cy="140" r="15" fill="#ceb888"/>
+                                        <circle cx="200" cy="140" r="15" fill="#ceb888"/>
+                                    </g>
+                                    <text x="150" y="350" fill="#ceb888" font-size="24" text-anchor="middle">GO NOLES!</text>
+                                </svg>
+                            </div>
+                            <div class="project-content">
+                                <strong><a href="#" style="color: #782f40; text-decoration: none;">FSU Fan Engagement Drive</a></strong>
+                                <p class="project-description" style="font-size: 0.9rem; color: #333; margin-top: 10px;">
+                                    Social media and community engagement campaign planning.
+                                </p>
+                            <div class="chip-container">
+                                <div class="stage-chip marketing">Marketing</div>
+                                <div class="review-chip">Needs Review</div>
+                            </div>
+                            <div class="user-info">
+                                <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="User" class="user-image"/>
+                                <span class="user-name">Tom Anderson</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('select');
+                var instances = M.FormSelect.init(elems);
+            });
+        </script>
+    </body>
+</html>

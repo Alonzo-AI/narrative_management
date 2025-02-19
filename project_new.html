@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlyte Content Publishing Platform - FSU</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            min-height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+        }
+
+        .sidebar-item {
+            /* display: flex; */
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: #782f40;
+            /* word-break: break-word; */
+        }
+
+        .sidebar-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .sidebar-item i {
+            margin-right: 12px;
+            color: var(--fsu-garnet);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header, .overview {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            color: var(--fsu-garnet);
+            margin-bottom: 16px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 24px;
+            color: #666;
+        }
+
+        .header-meta div {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-meta i {
+            margin-right: 8px;
+            color: var(--fsu-garnet);
+        }
+
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 32px;
+            position: relative;
+            padding: 0 24px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            background: var(--fsu-gold);
+            width: calc(100% - 48px);
+            top: 20px;
+            left: 24px;
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 80px;
+        }
+
+        .progress-step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--fsu-garnet);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-step-label {
+            color: var(--fsu-gold);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+            width: 80px;
+            margin-top: 4px;
+        }
+
+        .progress-step.completed .progress-step-circle {
+            background: var(--fsu-garnet);
+            color: white;
+        }
+        
+        .header {
+            background: white;
+            color: var(--fsu-garnet);
+        }
+        
+        .header h1 {
+            color: var(--fsu-gold);
+            font-family: 'GothicCustom', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .header-meta {
+            color: var(--fsu-garnet);
+        }
+        
+        .header-meta i {
+            color: var(--fsu-garnet);
+        }
+        
+        .sidebar-item:hover {
+            background-color: var(--fsu-gold);
+            color: var(--fsu-garnet);
+        }
+        
+        .sidebar-item:hover i {
+            color: var(--fsu-garnet);
+        }
+
+        .progress-step i {
+            font-size: 20px;
+        }
+
+        .notification-sidebar {
+            position: fixed;
+            right: 0;
+            width: 300px;
+            height: min-content;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 100;
+            border-radius: 6px;
+            margin-left: auto;
+        }
+
+        .notification {
+            padding: 12px;
+            border-left: 3px solid var(--fsu-garnet);
+            margin: 12px 0;
+            background: #f8f8f8;
+            border-radius: 0 4px 4px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .notification:hover {
+            transform: translateX(-5px);
+        }
+
+        .notification-title {
+            color: var(--fsu-garnet);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-content {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .notification-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .main-content {
+            margin-right: 300px;
+        }
+
+        @media (max-width: 1200px) {
+            body {
+                grid-template-columns: 200px 1fr 250px;
+                padding: 16px;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+            .sidebar, .notifications {
+                display: none;
+            }
+         }
+
+      
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-management {
+            margin-top: 10px;
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            color: var(--fsu-garnet);
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+        }
+
+        .team-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .team-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .team-option:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .team-option i {
+            color: var(--fsu-garnet);
+            font-size: 24px;
+            margin-right: 16px;
+            margin-top: 4px;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-content h3 {
+            color: var(--fsu-garnet);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .option-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .team-button {
+            background: var(--fsu-garnet);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .team-button:hover {
+            background: var(--fsu-gold);
+            color: var(--fsu-garnet);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            cursor: pointer;
+            color: var(--fsu-garnet);
+        }
+
+        .modal-form {
+            margin-top: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--fsu-garnet);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .team-options {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: 16px;
+            }    
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <h2>Navigation</h2>
+        <div class="sidebar-item">
+            <i class="material-icons">search</i>
+            Research
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">description</i>
+            Content Draft
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">brush</i>
+            Graphics
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">share</i>
+            Marketing
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">search</i>
+            Analytics
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>FSU Basketball Season Recap</h1>
+            <div class="header-meta">
+                <div>
+                    <i class="material-icons">person</i>
+                    <span>Sarah Johnson</span>
+                </div>
+                <div>
+                    <i class="material-icons">calendar_today</i>
+                    <span>Due: March 15, 2025</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+
+        <section class="overview">
+            <h2>Project Overview</h2>
+            <p>Comprehensive season recap covering key games, player statistics, and memorable moments from the FSU Basketball 2024-25 season.</p>
+            
+            <div class="progress-tracker">
+                <div class="progress-step completed">
+                    <div class="progress-step-circle">
+                        <i class="material-icons">search</i>
+                    </div>
+                    <div class="progress-step-label">Research</div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="progress-step-circle">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <div class="progress-step-label">Content Draft</div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="progress-step-circle">
+                        <i class="material-icons">brush</i>
+                    </div>
+                    <div class="progress-step-label">Graphics</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-step-circle">
+                        <i class="material-icons">share</i>
+                    </div>
+                    <div class="progress-step-label">Marketing</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-step-circle">
+                        <i class="material-icons">publish</i>
+                    </div>
+                    <div class="progress-step-label">Published</div>
+                </div>
+            </div>
+        </section>
+   
+
+        <section class="team-management">
+            <h2>Team Management</h2>
+            <div class="team-options">
+                <div class="team-option">
+                    <i class="material-icons">person_add</i>
+                    <div class="option-content">
+                        <h3>Assign Coordinator</h3>
+                        <p>Select project coordinator</p>
+                        <button class="team-button" onclick="openModal('coordinator')">Assign</button>
+                    </div>
+                </div>
+                <div class="team-option">
+                    <i class="material-icons">group_add</i>
+                    <div class="option-content">
+                        <h3>Team Members</h3>
+                        <p>Add or remove team members</p>
+                        <button class="team-button" onclick="openModal('team')">Manage Team</button>
+                    </div>
+                </div>
+        </section>
+    </div>
+
+    
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <i class="material-icons close-modal" onclick="closeModal()">close</i>
+            <h2 id="modal-title">Assign Coordinator</h2>
+            <div class="modal-form">
+                <!-- Form content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="notification-sidebar">
+        <h2>Notifications</h2>
+        <div class="notification">
+            <div class="notification-title">Graphics Review Complete</div>
+            <div class="notification-content">All game highlight graphics have been approved.</div>
+            <div class="notification-time">2 hours ago</div>
+        </div>
+        <div class="notification">
+            <div class="notification-title">Content Update Required</div>
+            <div class="notification-content">Please add final game statistics to the recap.</div>
+            <div class="notification-time">1 day ago</div>
+        </div>
+        <div class="notification">
+            <div class="notification-title">Marketing Review Scheduled</div>
+            <div class="notification-content">Team meeting tomorrow at 10 AM.</div>
+            <div class="notification-time">2 days ago</div>
+        </div>
+        <div class="notification">
+            <div class="notification-title">New Team Member Added</div>
+            <div class="notification-content">Welcome John Smith to the content team!</div>
+            <div class="notification-time">3 days ago</div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(type) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalForm = document.querySelector('.modal-form');
+            
+            let formContent = '';
+            
+            switch(type) {
+                case 'coordinator':
+                    modalTitle.textContent = 'Assign Coordinator';
+                    formContent = `
+                        <div class="form-group">
+                            <label for="coordinator-role">Department</label>
+                            <select id="coordinator-role" class="form-select">
+                                <option value="">Select department</option>
+                                <option value="content">Content Team</option>
+                                <option value="design">Design Team</option>
+                                <option value="marketing">Marketing Team</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coordinator-select">Select Coordinator</label>
+                            <select id="coordinator-select" class="form-select">
+                                <option value="">Choose a coordinator</option>
+                                <option value="1">Sarah Johnson</option>
+                                <option value="2">Michael Chen</option>
+                                <option value="3">Emily Rodriguez</option>
+                                <option value="4">David Kim</option>
+                                <option value="5">Rachel Thompson</option>
+                            </select>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="team-button" onclick="closeModal()">Cancel</button>
+                            <button class="team-button" onclick="saveCoordinator()">Assign</button>
+                        </div>
+                    `;
+                    break;
+                    
+                    case 'team':
+                    modalTitle.textContent = 'Manage Team Members';
+                    formContent = `
+                        <div class="form-group">
+                            <label for="team-department">Department</label>
+                            <select id="team-department" class="form-select">
+                                <option value="">Select department</option>
+                                <option value="content">Content Team</option>
+                                <option value="design">Design Team</option>
+                                <option value="marketing">Marketing Team</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="team-members-dropdown">Select Team Members</label>
+                            <div class="multi-select-dropdown">
+                                <div class="dropdown-toggle" onclick="toggleDropdown()">
+                                    Select Members <span class="selected-count">0 selected</span>
+                                </div>
+                                <div class="dropdown-menu" id="team-members-menu">
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-1" value="1">
+                                        <label for="member-1">Alex Foster</label>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-2" value="2">
+                                        <label for="member-2">Maria Garcia</label>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-3" value="3">
+                                        <label for="member-3">James Wilson</label>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-4" value="4">
+                                        <label for="member-4">Lisa Park</label>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-5" value="5">
+                                        <label for="member-5">Andre Thomas</label>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-6" value="6">
+                                        <label for="member-6">Sophie Martinez</label>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="checkbox" id="member-7" value="7">
+                                        <label for="member-7">Ryan Cooper</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="team-button" onclick="closeModal()">Cancel</button>
+                            <button class="team-button" onclick="saveTeamMember()">Add Selected Members</button>
+                        </div>
+                    `;
+                    break;
+                    
+            }
+            
+            modalForm.innerHTML = formContent;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+
+        function saveCoordinator() {
+            const coordinator = document.getElementById('coordinator-select').value;
+            const department = document.getElementById('coordinator-role').value;
+            console.log('Saving coordinator:', { coordinator, department });
+            closeModal();
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById('team-members-menu');
+            menu.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(event) {
+            if (!event.target.closest('.multi-select-dropdown')) {
+                const menus = document.getElementsByClassName('dropdown-menu');
+                Array.from(menus).forEach(menu => menu.classList.remove('show'));
+            }
+        });
+
+        // Update selected count
+        document.addEventListener('change', function(event) {
+            if (event.target.closest('.dropdown-menu')) {
+                const menu = event.target.closest('.dropdown-menu');
+                const selectedCount = menu.querySelectorAll('input[type="checkbox"]:checked').length;
+                const countSpan = menu.closest('.multi-select-dropdown').querySelector('.selected-count');
+                countSpan.textContent = `${selectedCount} selected`;
+            }
+        });
+
+        function saveTeamMember() {
+            const checkboxes = document.querySelectorAll('#team-members-menu input[type="checkbox"]:checked');
+            const selectedMembers = Array.from(checkboxes).map(checkbox => ({
+                id: checkbox.value,
+                name: checkbox.nextElementSibling.textContent
+            }));
+            const department = document.getElementById('team-department').value;
+            console.log('Saving team members:', { selectedMembers, department });
+            closeModal();
+        }
+
+        function saveRole() {
+            const member = document.getElementById('member-select').value;
+            const role = document.getElementById('role-select').value;
+            console.log('Saving role assignment:', { member, role });
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

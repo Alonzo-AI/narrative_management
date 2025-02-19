@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSU Calendar Views</title>
+    <style>
+        :root {
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --light-bg: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* View Controls */
+        .view-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            background-color: var(--fsu-gold);
+            color: var(--fsu-garnet);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            opacity: 0.9;
+        }
+
+        .view-btn.active {
+            background-color: white;
+        }
+
+        /* Calendar Container */
+        .calendar-container {
+            background-color: var(--fsu-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--fsu-garnet);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--fsu-garnet);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Calendar Views */
+        .calendar-grid {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Monthly View */
+        .monthly-view {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
+        }
+
+        .monthly-view .header-cell {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .monthly-view .day-cell {
+            background-color: white;
+            min-height: 100px;
+            padding: 10px;
+        }
+
+        /* Weekly View */
+        .weekly-view {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
+        }
+
+        .weekly-view .time-cell {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+            padding: 10px;
+            text-align: right;
+        }
+
+        .weekly-view .event-cell {
+            background-color: white;
+            height: 60px;
+            padding: 5px;
+        }
+
+        /* Daily View */
+        .daily-view {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1px;
+            background-color: #ddd;
+        }
+
+        .daily-view .time-cell {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+            padding: 10px;
+            text-align: right;
+        }
+
+        .daily-view .event-cell {
+            background-color: white;
+            height: 60px;
+            padding: 5px;
+        }
+
+        /* Event Cards */
+        .event-card {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+
+        .event-card .title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .event-card .stage {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .stage.research { background-color: #9c27b0; }
+        .stage.content { background-color: #2196f3; }
+        .stage.graphics { background-color: #4caf50; }
+        .stage.marketing { background-color: #ff9800; }
+
+        /* Day Number */
+        .day-number {
+            font-weight: bold;
+            color: var(--fsu-garnet);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .monthly-view,
+            .weekly-view {
+                min-width: 700px;
+            }
+            
+            .calendar-container {
+                overflow-x: auto;
+            }
+        }
+
+        .view-selector {
+                background-color: #ceb888;
+                color: #782f40;
+                border: none;
+                border-radius: 4px;
+                padding: 8px;
+                width: 200px;
+                height: 36px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+            alt="FSU Logo"
+            width="100" class="logo">
+            <h1>FSU Projects Calendar</h1>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+            <div style="width: 200px">
+                <select
+                id="viewSelector"
+                class="browser-default view-selector"
+                onchange="location = this.value"
+            >
+                <option value="projects_overview.html" selected>
+                    Workflow View
+                </option>
+                <option value="grid_view.html">Grid View</option>
+                <option value="calendar_new.html">
+                    Calendar View
+                </option>
+            </select>
+            </div>
+        </div>
+        <div class="view-controls">
+            <button class="view-btn active">Month</button>
+            <button class="view-btn">Week</button>
+            <button class="view-btn">Day</button>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="nav-buttons">
+                    <button class="nav-btn">&lt;</button>
+                    <h2>March 2025</h2>
+                    <button class="nav-btn">&gt;</button>
+                </div>
+            </div>
+
+            <!-- Monthly View -->
+            <div class="calendar-grid monthly-view">
+                <!-- Day Headers -->
+                <div class="header-cell">Sun</div>
+                <div class="header-cell">Mon</div>
+                <div class="header-cell">Tue</div>
+                <div class="header-cell">Wed</div>
+                <div class="header-cell">Thu</div>
+                <div class="header-cell">Fri</div>
+                <div class="header-cell">Sat</div>
+
+                <!-- Example Day Cells -->
+                <div class="day-cell">
+                    <div class="day-number">1</div>
+                    <div class="event-card">
+                        <div class="title">FSU Football Season 2025</div>
+                        <div class="stage research">Research</div>
+                    </div>
+                </div>
+                <!-- More day cells would go here -->
+            </div>
+
+            <!-- Weekly View (initially hidden) -->
+            <div class="calendar-grid weekly-view" style="display: none;">
+                <div class="time-cell"></div>
+                <div class="header-cell">Sun</div>
+                <div class="header-cell">Mon</div>
+                <div class="header-cell">Tue</div>
+                <div class="header-cell">Wed</div>
+                <div class="header-cell">Thu</div>
+                <div class="header-cell">Fri</div>
+                <div class="header-cell">Sat</div>
+                
+                <!-- Time slots -->
+                <div class="time-cell">9:00 AM</div>
+                <div class="event-cell"></div>
+                <div class="event-cell"></div>
+                <div class="event-cell"></div>
+                <div class="event-cell"></div>
+                <div class="event-cell"></div>
+                <div class="event-cell"></div>
+                <div class="event-cell"></div>
+                <!-- More time slots would go here -->
+            </div>
+
+            <!-- Daily View (initially hidden) -->
+            <div class="calendar-grid daily-view" style="display: none;">
+                <div class="time-cell">Time</div>
+                <div class="header-cell">March 1, 2025</div>
+                
+                <!-- Time slots -->
+                <div class="time-cell">9:00 AM</div>
+                <div class="event-cell">
+                    <div class="event-card">
+                        <div class="title">FSU vs Miami Rivalry Analysis</div>
+                        <div class="stage content">Content</div>
+                    </div>
+                </div>
+                <!-- More time slots would go here -->
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // Sample event data
+const events = [
+    {
+        title: "FSU Football Season 2025",
+        date: new Date(2025, 2, 15),
+        time: "10:00",
+        stage: "research",
+        description: "Season planning and analysis"
+    },
+    {
+        title: "Seminoles Championship Run",
+        date: new Date(2025, 2, 20),
+        time: "14:00",
+        stage: "content",
+        description: "Content preparation"
+    },
+    {
+        title: "FSU vs Miami Rivalry Analysis",
+        date: new Date(2025, 2, 25),
+        time: "11:00",
+        stage: "graphics",
+        description: "Visual content creation"
+    }
+];
+
+// Calendar state
+let currentDate = new Date();
+let currentView = 'month';
+
+// DOM Elements
+const viewButtons = document.querySelectorAll('.view-btn');
+const prevButton = document.querySelector('.nav-btn:first-child');
+const nextButton = document.querySelector('.nav-btn:last-child');
+const dateDisplay = document.querySelector('.calendar-header h2');
+const monthView = document.querySelector('.monthly-view');
+const weekView = document.querySelector('.weekly-view');
+const dailyView = document.querySelector('.daily-view');
+
+// Helper functions
+function formatDate(date) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                   'July', 'August', 'September', 'October', 'November', 'December'];
+    return `${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function getDaysInMonth(date) {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+}
+
+function getFirstDayOfMonth(date) {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+}
+
+// View rendering functions
+function renderMonthView() {
+    monthView.innerHTML = '';
+    
+    // Add day headers
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    days.forEach(day => {
+        const headerCell = document.createElement('div');
+        headerCell.className = 'header-cell';
+        headerCell.textContent = day;
+        monthView.appendChild(headerCell);
+    });
+
+    const firstDay = getFirstDayOfMonth(currentDate);
+    const daysInMonth = getDaysInMonth(currentDate);
+
+    // Add empty cells for days before the first of the month
+    for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'day-cell';
+        monthView.appendChild(emptyCell);
+    }
+
+    // Add cells for each day of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'day-cell';
+        
+        // Add day number
+        const dayNumber = document.createElement('div');
+        dayNumber.className = 'day-number';
+        dayNumber.textContent = day;
+        dayCell.appendChild(dayNumber);
+
+        // Add events for this day
+        const dayEvents = events.filter(event => {
+            return event.date.getDate() === day && 
+                   event.date.getMonth() === currentDate.getMonth() &&
+                   event.date.getFullYear() === currentDate.getFullYear();
+        });
+
+        dayEvents.forEach(event => {
+            const eventCard = createEventCard(event);
+            dayCell.appendChild(eventCard);
+        });
+
+        monthView.appendChild(dayCell);
+    }
+}
+
+function renderWeekView() {
+    weekView.innerHTML = '';
+    
+    // Add header row
+    const headerRow = document.createElement('div');
+    headerRow.className = 'time-cell';
+    weekView.appendChild(headerRow);
+
+    // Get start of the week
+    const weekStart = new Date(currentDate);
+    weekStart.setDate(currentDate.getDate() - currentDate.getDay());
+
+    // Add day headers
+    for (let i = 0; i < 7; i++) {
+        const day = new Date(weekStart);
+        day.setDate(weekStart.getDate() + i);
+        const headerCell = document.createElement('div');
+        headerCell.className = 'header-cell';
+        headerCell.textContent = day.getDate() + ' ' + day.toLocaleString('default', { weekday: 'short' });
+        weekView.appendChild(headerCell);
+    }
+
+    // Add time slots
+    for (let hour = 9; hour <= 17; hour++) {
+        const timeCell = document.createElement('div');
+        timeCell.className = 'time-cell';
+        timeCell.textContent = `${hour}:00`;
+        weekView.appendChild(timeCell);
+
+        // Add event cells for each day
+        for (let day = 0; day < 7; day++) {
+            const currentDay = new Date(weekStart);
+            currentDay.setDate(weekStart.getDate() + day);
+            
+            const eventCell = document.createElement('div');
+            eventCell.className = 'event-cell';
+
+            // Find events for this time slot
+            const timeEvents = events.filter(event => {
+                return event.date.getDate() === currentDay.getDate() &&
+                       event.date.getMonth() === currentDay.getMonth() &&
+                       parseInt(event.time) === hour;
+            });
+
+            timeEvents.forEach(event => {
+                const eventCard = createEventCard(event);
+                eventCell.appendChild(eventCard);
+            });
+
+            weekView.appendChild(eventCell);
+        }
+    }
+}
+
+function renderDailyView() {
+    dailyView.innerHTML = '';
+    
+    // Add header
+    const headerRow = document.createElement('div');
+    headerRow.className = 'time-cell';
+    headerRow.textContent = 'Time';
+    dailyView.appendChild(headerRow);
+
+    const dateHeader = document.createElement('div');
+    dateHeader.className = 'header-cell';
+    dateHeader.textContent = currentDate.toLocaleDateString('default', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    dailyView.appendChild(dateHeader);
+
+    // Add time slots
+    for (let hour = 9; hour <= 17; hour++) {
+        const timeCell = document.createElement('div');
+        timeCell.className = 'time-cell';
+        timeCell.textContent = `${hour}:00`;
+        dailyView.appendChild(timeCell);
+
+        const eventCell = document.createElement('div');
+        eventCell.className = 'event-cell';
+
+        // Find events for this time slot
+        const timeEvents = events.filter(event => {
+            return event.date.getDate() === currentDate.getDate() &&
+                   event.date.getMonth() === currentDate.getMonth() &&
+                   parseInt(event.time) === hour;
+        });
+
+        timeEvents.forEach(event => {
+            const eventCard = createEventCard(event);
+            eventCell.appendChild(eventCard);
+        });
+
+        dailyView.appendChild(eventCell);
+    }
+}
+
+function createEventCard(event) {
+    const eventCard = document.createElement('div');
+    eventCard.className = 'event-card';
+    
+    const title = document.createElement('div');
+    title.className = 'title';
+    title.textContent = event.title;
+    
+    const stage = document.createElement('div');
+    stage.className = `stage ${event.stage}`;
+    stage.textContent = event.stage;
+    
+    eventCard.appendChild(title);
+    eventCard.appendChild(stage);
+    
+    return eventCard;
+}
+
+// View switching
+function switchView(view) {
+    currentView = view;
+    monthView.style.display = 'none';
+    weekView.style.display = 'none';
+    dailyView.style.display = 'none';
+
+    viewButtons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.view-btn:nth-child(${
+        view === 'month' ? 1 : view === 'week' ? 2 : 3
+    })`).classList.add('active');
+
+    switch(view) {
+        case 'month':
+            monthView.style.display = 'grid';
+            renderMonthView();
+            break;
+        case 'week':
+            weekView.style.display = 'grid';
+            renderWeekView();
+            break;
+        case 'day':
+            dailyView.style.display = 'grid';
+            renderDailyView();
+            break;
+    }
+    updateDateDisplay();
+}
+
+function updateDateDisplay() {
+    switch(currentView) {
+        case 'month':
+            dateDisplay.textContent = formatDate(currentDate);
+            break;
+        case 'week':
+            const weekStart = new Date(currentDate);
+            weekStart.setDate(currentDate.getDate() - currentDate.getDay());
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekStart.getDate() + 6);
+            dateDisplay.textContent = `${weekStart.toLocaleDateString()} - ${weekEnd.toLocaleDateString()}`;
+            break;
+        case 'day':
+            dateDisplay.textContent = currentDate.toLocaleDateString('default', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            break;
+    }
+}
+
+// Navigation
+function navigate(direction) {
+    switch(currentView) {
+        case 'month':
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            break;
+        case 'week':
+            currentDate.setDate(currentDate.getDate() + (7 * direction));
+            break;
+        case 'day':
+            currentDate.setDate(currentDate.getDate() + direction);
+            break;
+    }
+    switchView(currentView);
+}
+
+// Event Listeners
+viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const view = button.textContent.toLowerCase();
+        switchView(view);
+    });
+});
+
+prevButton.addEventListener('click', () => navigate(-1));
+nextButton.addEventListener('click', () => navigate(1));
+
+// Initialize calendar
+switchView('month');
+    </script>
+</body>
+</html>

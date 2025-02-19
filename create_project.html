@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create Project | Athlyte</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --fsu-garnet: #782f40;
+                --fsu-gold: #ceb888;
+            }
+
+            body {
+                background-color: var(--fsu-garnet);
+                color: #333;
+                padding: 20px 0;
+            }
+
+            .create-project-form {
+                background-color: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .page-title {
+                color: var(--fsu-garnet);
+                margin: 0;
+                padding-bottom: 20px;
+                border-bottom: 2px solid var(--fsu-gold);
+                margin-bottom: 30px;
+            }
+
+            .section-title {
+                color: var(--fsu-garnet);
+                font-size: 1.5rem;
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+
+            .team-member-chip {
+                display: inline-flex;
+                align-items: center;
+                background-color: #f5f5f5;
+                border-radius: 20px;
+                padding: 5px 15px 5px 5px;
+                margin: 5px;
+            }
+
+            .team-member-chip img {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                margin-right: 8px;
+            }
+
+            .team-member-chip .remove-member {
+                color: #999;
+                cursor: pointer;
+                margin-left: 8px;
+            }
+
+            .team-member-chip .remove-member:hover {
+                color: var(--fsu-garnet);
+            }
+
+            .add-member-button {
+                background-color: var(--fsu-garnet);
+                color: white;
+                margin-top: 10px;
+            }
+
+            .submit-button {
+                background-color: var(--fsu-garnet);
+                margin-top: 30px;
+            }
+
+            .cancel-button {
+                background-color: #9e9e9e;
+                margin-top: 30px;
+                margin-right: 15px;
+            }
+
+            /* Modal Styles */
+            .modal {
+                max-width: 500px;
+            }
+
+            .team-member-list {
+                margin-top: 20px;
+            }
+
+            .team-member-option {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .team-member-option:hover {
+                background-color: #f5f5f5;
+            }
+
+            .team-member-option img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+            .team-member-option.selected {
+                background-color: #f0f0f0;
+                border: 2px solid var(--fsu-garnet);
+            }
+
+            .input-field {
+                margin-bottom: 20px;
+            }
+
+            .input-field label {
+                color: #333;
+            }
+
+            .input-field input[type="text"]:focus + label,
+            .input-field textarea:focus + label {
+                color: var(--fsu-garnet) !important;
+            }
+
+            .input-field input[type="text"]:focus,
+            .input-field textarea:focus {
+                border-bottom: 1px solid var(--fsu-garnet) !important;
+                box-shadow: 0 1px 0 0 var(--fsu-garnet) !important;
+            }
+
+            .input-field .prefix.active {
+                color: var(--fsu-garnet);
+            }
+
+            /* Custom styling for date and select fields */
+            .input-field-custom {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .input-field-custom .prefix {
+                position: absolute;
+                width: 3rem;
+                font-size: 1.5rem;
+                transition: color 0.2s;
+                top: 0.5rem;
+            }
+
+            .input-field-custom > label {
+                position: absolute;
+                top: -14px;
+                left: 0;
+                font-size: 0.8rem;
+                cursor: text;
+                color: #9e9e9e;
+                margin-left: 3rem;
+            }
+
+            .input-field-custom .browser-default {
+                margin: 0;
+                padding-left: 3rem !important;
+            }
+
+            /* Browser default select styling */
+            .browser-default {
+                display: block !important;
+                width: 100% !important;
+                height: 3rem !important;
+                padding: 0 12px !important;
+                border: 1px solid #9e9e9e !important;
+                border-radius: 4px !important;
+                background-color: transparent !important;
+                background-clip: padding-box !important;
+                box-shadow: none !important;
+                box-sizing: border-box !important;
+                margin: 0 0 8px 0 !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="create-project-form">
+                <h4 class="page-title">Create New Project</h4>
+
+                <form id="createProjectForm">
+                    <!-- Basic Information -->
+                    <div class="section-title">Basic Information</div>
+                    <div class="input-field">
+                        <i class="material-icons prefix">title</i>
+                        <input id="project_title" type="text" required />
+                        <label for="project_title">Project Title</label>
+                    </div>
+
+                    <div class="input-field">
+                        <i class="material-icons prefix">description</i>
+                        <textarea
+                            id="project_description"
+                            class="materialize-textarea"
+                            required
+                        ></textarea>
+                        <label for="project_description"
+                            >Project Description</label
+                        >
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="input-field-custom">
+                                <i class="material-icons prefix">event</i>
+                                <label for="due_date">Due Date</label>
+                                <input
+                                    type="date"
+                                    id="due_date"
+                                    class="browser-default"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <div class="input-field-custom">
+                                <i class="material-icons prefix">lock</i>
+                                <label for="access_type">Access Type</label>
+                                <select
+                                    id="access_type"
+                                    class="browser-default"
+                                    required
+                                >
+                                    <option value="" disabled selected>
+                                        Select Access Type
+                                    </option>
+                                    <option value="Open">Open</option>
+                                    <option value="Staggered">Staggered</option>
+                                    <option value="Restricted">
+                                        Restricted
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Members -->
+                    <div class="section-title">Team Members</div>
+                    <div id="selected_team_members">
+                        <!-- Selected team members will appear here -->
+                    </div>
+                    <button
+                        type="button"
+                        class="btn add-member-button"
+                        onclick="openTeamMemberModal()"
+                    >
+                        <i class="material-icons left">person_add</i>Add Team
+                        Member
+                    </button>
+
+                    <!-- Form Actions -->
+                    <div class="right-align">
+                        <button
+                            type="button"
+                            class="btn cancel-button"
+                            onclick="cancelProject()"
+                        >
+                            <i class="material-icons left">cancel</i>Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            class="btn submit-button"
+                            onclick="window.location='projects_overview.html'"
+                        >
+                            <i class="material-icons left">save</i>Create
+                            Project
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Team Member Modal -->
+        <div id="teamMemberModal" class="modal">
+            <div class="modal-content">
+                <h5>Add Team Member</h5>
+                <div class="team-member-list">
+                    <div
+                        class="team-member-option"
+                        onclick="selectTeamMember(this)"
+                        data-member-id="1"
+                    >
+                        <img
+                            src="https://i.pravatar.cc/40?img=11"
+                            alt="John Smith"
+                        />
+                        <div>
+                            <div><strong>John Smith</strong></div>
+                            <div class="grey-text">Lead Researcher</div>
+                        </div>
+                    </div>
+                    <div
+                        class="team-member-option"
+                        onclick="selectTeamMember(this)"
+                        data-member-id="2"
+                    >
+                        <img
+                            src="https://i.pravatar.cc/40?img=9"
+                            alt="Sarah Johnson"
+                        />
+                        <div>
+                            <div><strong>Sarah Johnson</strong></div>
+                            <div class="grey-text">Content Writer</div>
+                        </div>
+                    </div>
+                    <div
+                        class="team-member-option"
+                        onclick="selectTeamMember(this)"
+                        data-member-id="3"
+                    >
+                        <img
+                            src="https://i.pravatar.cc/40?img=12"
+                            alt="Sarah Thompson"
+                        />
+                        <div>
+                            <div><strong>Sarah Thompson</strong></div>
+                            <div class="grey-text">Graphics Designer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close btn-flat">Cancel</button>
+                <button
+                    class="btn save-button"
+                    onclick="addSelectedTeamMembers()"
+                >
+                    <i class="material-icons left">save</i>Add Selected
+                </button>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize Materialize components
+                var modals = document.querySelectorAll(".modal");
+                M.Modal.init(modals);
+
+                // Initialize textareas
+                var textareas = document.querySelectorAll(
+                    ".materialize-textarea",
+                );
+                M.textareaAutoResize(textareas[0]);
+
+                // Form submission handler
+                document
+                    .getElementById("createProjectForm")
+                    .addEventListener("submit", function (e) {
+                        e.preventDefault();
+                        // Here you would typically collect all form data and submit to server
+                        M.toast({ html: "Project created successfully!" });
+                        setTimeout(
+                            () => (window.location.href = "projects.html"),
+                            1500,
+                        );
+                    });
+            });
+
+            function openTeamMemberModal() {
+                const modal = M.Modal.getInstance(
+                    document.getElementById("teamMemberModal"),
+                );
+                modal.open();
+            }
+
+            function selectTeamMember(element) {
+                element.classList.toggle("selected");
+            }
+
+            function addSelectedTeamMembers() {
+                const selectedMembers = document.querySelectorAll(
+                    ".team-member-option.selected",
+                );
+                const container = document.getElementById(
+                    "selected_team_members",
+                );
+
+                selectedMembers.forEach((member) => {
+                    const memberId = member.dataset.memberId;
+                    if (
+                        !document.querySelector(
+                            `.team-member-chip[data-member-id="${memberId}"]`,
+                        )
+                    ) {
+                        const img = member.querySelector("img").src;
+                        const name = member.querySelector("strong").textContent;
+                        const role =
+                            member.querySelector(".grey-text").textContent;
+
+                        const chip = document.createElement("div");
+                        chip.className = "team-member-chip";
+                        chip.dataset.memberId = memberId;
+                        chip.innerHTML = `
+                            <img src="${img}" alt="${name}">
+                            <span>${name}</span>
+                            <small class="grey-text">(${role})</small>
+                            <i class="material-icons remove-member" onclick="removeTeamMember(this)">close</i>
+                        `;
+                        container.appendChild(chip);
+                    }
+                    member.classList.remove("selected");
+                });
+
+                const modal = M.Modal.getInstance(
+                    document.getElementById("teamMemberModal"),
+                );
+                modal.close();
+            }
+
+            function removeTeamMember(element) {
+                element.closest(".team-member-chip").remove();
+            }
+
+            function cancelProject() {
+                if (
+                    confirm(
+                        "Are you sure you want to cancel? All entered data will be lost.",
+                    )
+                ) {
+                    window.location.href = "projects.html";
+                }
+            }
+        </script>
+    </body>
+</html>
