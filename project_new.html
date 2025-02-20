@@ -812,6 +812,72 @@
         margin-top: 16px;
     }
 
+    .status-bar-container {
+        margin-bottom: 24px;
+    }
+    
+    .status-bar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    
+    .status-bar-title {
+        color: var(--fsu-garnet);
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    
+    .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 16px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .status-indicator i {
+        font-size: 16px;
+        margin-right: 4px;
+    }
+    
+    .status-indicator.not-started {
+        background-color: #f0f0f0;
+        color: #666;
+    }
+    
+    .status-indicator.in-progress {
+        background-color: rgba(255, 193, 7, 0.2);
+        color: #ff9800;
+    }
+    
+    .status-indicator.completed {
+        background-color: rgba(40, 167, 69, 0.2);
+        color: #28a745;
+    }
+    
+    .status-indicator.overdue {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: #dc3545;
+    }
+    
+    .status-bar {
+        height: 8px;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    .status-bar-progress {
+        height: 100%;
+        background: linear-gradient(to right, var(--fsu-garnet), var(--fsu-gold));
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+
     </style>
 </head>
 <body>
@@ -1007,6 +1073,8 @@
                         </ul>
                     </div>
 
+                    <div id="project-status-container"></div>
+
                   
             
                     </div>
@@ -1042,7 +1110,7 @@
 
     <script>
         // Store coordinator names
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('team-assignment-form');
     const summary = document.getElementById('assignment-summary');
     const editButton = document.getElementById('edit-assignment-button');
@@ -1071,120 +1139,246 @@
     
     // Form submission
     form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form values
-    const departmentSelect = document.getElementById('coordinator-department');
-    const coordinatorSelect = document.getElementById('coordinator-name');
-    
-    const departmentId = departmentSelect.value;
-    const coordinatorId = coordinatorSelect.value;
-    
-    // Get due date and time values
-    const dueDateInput = document.getElementById('due-date');
-    const dueTimeInput = document.getElementById('due-time');
-    const dueDate = dueDateInput.value;
-    const dueTime = dueTimeInput.value;
-    
-    // Get selected team members from checkboxes
-    const selectedTeamMembers = [];
-    const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
-    checkboxes.forEach(checkbox => {
-        selectedTeamMembers.push(checkbox.value);
-    });
-    
-    // Validate required fields
-    if (!departmentId || !coordinatorId || selectedTeamMembers.length === 0) {
-        alert('Please complete all required fields');
-        return;
-    }
-    
-    if (!dueDate || !dueTime) {
-        alert('Please set both date and time for the deadline');
-        return;
-    }
-    
-    // Update summary view
-    const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
-    const coordinatorName = coordinatorNames[coordinatorId];
-    
-    document.getElementById('summary-coordinator-name').textContent = coordinatorName;
-    document.getElementById('summary-coordinator-department').textContent = departmentName;
-    
-    // Update team members list
-    const teamMembersList = document.getElementById('summary-team-members');
-    teamMembersList.innerHTML = '';
-    
-    selectedTeamMembers.forEach(memberId => {
-        const li = document.createElement('li');
-        li.textContent = teamMembers[memberId];
-        teamMembersList.appendChild(li);
-    });
-    
-    // Format the due date and time
-    const dueDateObj = new Date(`${dueDate}T${dueTime}:00`);
-    const formattedDate = dueDateObj.toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short', 
-        day: 'numeric',
-        year: 'numeric'
-    });
-    
-    const formattedTime = dueDateObj.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-    
-    // Calculate time remaining
-    const now = new Date();
-    const diffTime = dueDateObj - now;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    // Create due date section in summary
-    const dueDateSection = document.createElement('div');
-    dueDateSection.className = 'summary-section due-date-section';
-    dueDateSection.innerHTML = `
-        <h4>Project Deadline</h4>
-        <div id="summary-due-date" class="due-date-display">
-            <i class="material-icons">event</i>
-            <div class="due-date-info">Due: ${formattedDate} at ${formattedTime}</div>
-            <div class="time-remaining">${diffDays} days remaining</div>
-        </div>
-    `;
-    
-    // Insert due date section after coordinator section and before team members
-    const coordinatorSection = document.querySelector('#assignment-summary .summary-section');
-    const teamMembersSection = document.querySelector('#assignment-summary .summary-section:nth-child(2)');
-    summary.insertBefore(dueDateSection, teamMembersSection);
-    
-    // Update header due date display
-    const headerDueDateElement = document.querySelector('.header-meta div:nth-child(2) span');
-    headerDueDateElement.textContent = `Due: ${formattedDate}`;
-    
-    // Hide form, show summary
-    form.style.display = 'none';
-    summary.style.display = 'block';
-    
-    // Create notification with due date info
-    addNotification(`Team assignment updated by ${coordinatorName}. Project deadline: ${formattedDate} at ${formattedTime}`, 'Just now');
-    
-    console.log('Assignment saved:', {
-        coordinator: {
-            id: coordinatorId,
-            name: coordinatorName,
-            department: departmentName
-        },
-        teamMembers: selectedTeamMembers.map(id => ({
-            id: id,
-            name: teamMembers[id]
-        })),
-        deadline: {
-            date: formattedDate,
-            time: formattedTime,
-            daysRemaining: diffDays
+        e.preventDefault();
+        
+        // Get form values
+        const departmentSelect = document.getElementById('coordinator-department');
+        const coordinatorSelect = document.getElementById('coordinator-name');
+        
+        const departmentId = departmentSelect.value;
+        const coordinatorId = coordinatorSelect.value;
+        
+        // Get due date and time values
+        const dueDateInput = document.getElementById('due-date');
+        const dueTimeInput = document.getElementById('due-time');
+        const dueDate = dueDateInput.value;
+        const dueTime = dueTimeInput.value;
+        
+        // Get selected team members from checkboxes
+        const selectedTeamMembers = [];
+        const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
+        checkboxes.forEach(checkbox => {
+            selectedTeamMembers.push(checkbox.value);
+        });
+        
+        // Validate required fields
+        if (!departmentId || !coordinatorId || selectedTeamMembers.length === 0) {
+            alert('Please complete all required fields');
+            return;
         }
+        
+        if (!dueDate || !dueTime) {
+            alert('Please set both date and time for the deadline');
+            return;
+        }
+        
+        // Update summary view
+        const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
+        const coordinatorName = coordinatorNames[coordinatorId];
+        
+        document.getElementById('summary-coordinator-name').textContent = coordinatorName;
+        document.getElementById('summary-coordinator-department').textContent = departmentName;
+        
+        // Update team members list
+        const teamMembersList = document.getElementById('summary-team-members');
+        teamMembersList.innerHTML = '';
+        
+        selectedTeamMembers.forEach(memberId => {
+            const li = document.createElement('li');
+            li.textContent = teamMembers[memberId];
+            teamMembersList.appendChild(li);
+        });
+        
+        // Format the due date and time
+        const dueDateObj = new Date(`${dueDate}T${dueTime}:00`);
+        const formattedDate = dueDateObj.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short', 
+            day: 'numeric',
+            year: 'numeric'
+        });
+        
+        const formattedTime = dueDateObj.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        // Calculate time remaining
+        const now = new Date();
+        const diffTime = dueDateObj - now;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        // Create and add project status bar
+        const statusBarSection = document.createElement('div');
+        statusBarSection.className = 'summary-section status-bar-section';
+        
+        // Determine project status based on progress tracker and due date
+        const completedSteps = document.querySelectorAll('.progress-step.completed').length;
+        const totalSteps = document.querySelectorAll('.progress-step').length;
+        const progressPercentage = Math.round((completedSteps / totalSteps) * 100);
+        
+        let statusClass = 'not-started';
+        let statusText = 'Not Started';
+        let statusIcon = 'hourglass_empty';
+        
+        if (completedSteps === totalSteps) {
+            statusClass = 'completed';
+            statusText = 'Completed';
+            statusIcon = 'check_circle';
+        } else if (diffDays < 0) {
+            statusClass = 'overdue';
+            statusText = 'Overdue';
+            statusIcon = 'error_outline';
+        } else if (completedSteps > 0) {
+            statusClass = 'in-progress';
+            statusText = 'In Progress';
+            statusIcon = 'autorenew';
+        }
+        
+        statusBarSection.innerHTML = `
+            <h4>Project Status</h4>
+            <div class="status-bar-container">
+                <div class="status-bar-header">
+                    <div class="status-info">
+                        <div class="status-indicator ${statusClass}">
+                            <i class="material-icons">${statusIcon}</i>
+                            <span>${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="progress-percentage">${progressPercentage}% Complete</div>
+                </div>
+                <div class="status-bar">
+                    <div class="status-bar-progress" style="width: ${progressPercentage}%"></div>
+                </div>
+            </div>
+        `;
+        
+        // Create due date section in summary
+        const dueDateSection = document.createElement('div');
+        dueDateSection.className = 'summary-section due-date-section';
+        dueDateSection.innerHTML = `
+            <h4>Project Deadline</h4>
+            <div id="summary-due-date" class="due-date-display">
+                <i class="material-icons">event</i>
+                <div class="due-date-info">Due: ${formattedDate} at ${formattedTime}</div>
+                <div class="time-remaining">${diffDays} days remaining</div>
+            </div>
+        `;
+        
+        // Add status styles if not already in document
+        if (!document.getElementById('status-bar-styles')) {
+            const styleElement = document.createElement('style');
+            styleElement.id = 'status-bar-styles';
+            styleElement.textContent = `
+                .status-bar-container {
+                    margin-top: 12px;
+                }
+                
+                .status-bar-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 8px;
+                }
+                
+                .progress-percentage {
+                    font-size: 0.9rem;
+                    color: var(--fsu-garnet);
+                    font-weight: 500;
+                }
+                
+                .status-indicator {
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 4px 10px;
+                    border-radius: 16px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                }
+                
+                .status-indicator i {
+                    font-size: 16px;
+                    margin-right: 4px;
+                }
+                
+                .status-indicator.not-started {
+                    background-color: #f0f0f0;
+                    color: #666;
+                }
+                
+                .status-indicator.in-progress {
+                    background-color: rgba(255, 193, 7, 0.2);
+                    color: #ff9800;
+                }
+                
+                .status-indicator.completed {
+                    background-color: rgba(40, 167, 69, 0.2);
+                    color: #28a745;
+                }
+                
+                .status-indicator.overdue {
+                    background-color: rgba(220, 53, 69, 0.2);
+                    color: #dc3545;
+                }
+                
+                .status-bar {
+                    height: 8px;
+                    background-color: #f0f0f0;
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+                
+                .status-bar-progress {
+                    height: 100%;
+                    background: linear-gradient(to right, var(--fsu-garnet), var(--fsu-gold));
+                    border-radius: 4px;
+                    transition: width 0.5s ease;
+                }
+            `;
+            document.head.appendChild(styleElement);
+        }
+        
+        // Insert status bar at the top of the summary
+        summary.insertBefore(statusBarSection, summary.firstChild);
+        
+        // Insert due date section after coordinator section and before team members
+        const coordinatorSection = document.querySelector('#assignment-summary .summary-section:nth-child(2)');
+        const teamMembersSection = document.querySelector('#assignment-summary .summary-section:nth-child(3)');
+        summary.insertBefore(dueDateSection, teamMembersSection);
+        
+        // Update header due date display
+        const headerDueDateElement = document.querySelector('.header-meta div:nth-child(2) span');
+        headerDueDateElement.textContent = `Due: ${formattedDate}`;
+        
+        // Hide form, show summary
+        form.style.display = 'none';
+        summary.style.display = 'block';
+        
+        // Create notification with due date info
+        addNotification(`Team assignment updated by ${coordinatorName}. Project deadline: ${formattedDate} at ${formattedTime}`, 'Just now');
+        
+        console.log('Assignment saved:', {
+            coordinator: {
+                id: coordinatorId,
+                name: coordinatorName,
+                department: departmentName
+            },
+            teamMembers: selectedTeamMembers.map(id => ({
+                id: id,
+                name: teamMembers[id]
+            })),
+            deadline: {
+                date: formattedDate,
+                time: formattedTime,
+                daysRemaining: diffDays
+            },
+            status: {
+                text: statusText,
+                progress: progressPercentage
+            }
+        });
     });
-});
+    
     // Initialize multiselect dropdown
     function initMultiSelectDropdown() {
         const dropdown = document.getElementById('team-members-dropdown');
