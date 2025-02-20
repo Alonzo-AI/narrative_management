@@ -574,6 +574,7 @@
         transform: translateY(-1px);
     }
 
+   
     .text-button {
         background: none;
         border: none;
@@ -755,6 +756,62 @@
     .multi-select-checkbox-label {
         margin-bottom: 0 !important;
     }
+
+    /* Due date inputs styling */
+    input[type="date"],
+    input[type="time"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    input[type="date"]:focus,
+    input[type="time"]:focus {
+        border-color: var(--fsu-gold);
+        box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
+        outline: none;
+    }
+       
+    
+    /* Due date summary styling */
+    .due-date-display {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        padding: 12px;
+        background-color: rgba(120, 47, 64, 0.05);
+        border-radius: 6px;
+    }
+    
+    .due-date-display i {
+        color: var(--fsu-garnet);
+        margin-right: 12px;
+        font-size: 20px;
+    }
+    
+    .due-date-info {
+        font-weight: 500;
+        color: var(--fsu-garnet);
+    }
+    
+    .time-remaining {
+        margin-left: auto;
+        padding: 4px 8px;
+        background-color: var(--fsu-gold);
+        color: var(--fsu-garnet);
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .summary-section.due-date-section {
+        margin-top: 16px;
+    }
+
     </style>
 </head>
 <body>
@@ -908,33 +965,54 @@
                     <input type="hidden" name="team-members[]" id="team-members-input">
                     <div class="help-text">Click to select multiple team members</div>
                 </div>
-        
-                <div class="form-actions">
-                    <button type="submit" class="primary-button">Assign</button>
-                   </div>
-            </form>
-        
-            <div id="assignment-summary" style="display: none;">
-                
-                
-                <div class="summary-section">
-                    <h4>Project Coordinator</h4>
-                    <div class="assigned-item">
-                        <i class="material-icons">person</i>
-                        <span id="summary-coordinator-name">Not assigned</span>
-                        <span class="department-badge" id="summary-coordinator-department"></span>
+
+                <div class="form-section">
+                    <h3>Set Due Date</h3>
+                    <div class="form-group">
+                        <label for="due-date">Due Date</label>
+                        <input type="date" id="due-date" name="due-date" required>
+                        <div class="help-text">Select the project deadline date</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="due-time">Due Time</label>
+                        <input type="time" id="due-time" name="due-time" required>
+                        <div class="help-text">Specify the deadline time</div>
                     </div>
                 </div>
-        
-                <div class="summary-section">
-                    <h4>Team Members</h4>
-                    <ul id="summary-team-members" class="assigned-members-list">
-                        <!-- Members will be added here dynamically -->
-                    </ul>
+                
+                <!-- Modify the form-actions div to include the Start button -->
+                <div class="form-actions">
+                    <button type="submit" class="primary-button">Assign & Start</button>
+                    
                 </div>
-        
-                </div>
+                </form>
+                
+                <div id="assignment-summary" style="display: none;">
+                
+                
+                    <div class="summary-section">
+                        <h4>Project Coordinator</h4>
+                        <div class="assigned-item">
+                            <i class="material-icons">person</i>
+                            <span id="summary-coordinator-name">Not assigned</span>
+                            <span class="department-badge" id="summary-coordinator-department"></span>
+                        </div>
+                    </div>
+            
+                    <div class="summary-section">
+                        <h4>Team Members</h4>
+                        <ul id="summary-team-members" class="assigned-members-list">
+                            <!-- Members will be added here dynamically -->
+                        </ul>
+                    </div>
+
+                  
+            
+                    </div>
+            
         </section>
+       
     </div>
 
           
@@ -964,7 +1042,7 @@
 
     <script>
         // Store coordinator names
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('team-assignment-form');
     const summary = document.getElementById('assignment-summary');
     const editButton = document.getElementById('edit-assignment-button');
@@ -993,86 +1071,120 @@
     
     // Form submission
     form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const departmentSelect = document.getElementById('coordinator-department');
-        const coordinatorSelect = document.getElementById('coordinator-name');
-        
-        const departmentId = departmentSelect.value;
-        const coordinatorId = coordinatorSelect.value;
-        
-        // Get selected team members from checkboxes
-        const selectedTeamMembers = [];
-        const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
-        checkboxes.forEach(checkbox => {
-            selectedTeamMembers.push(checkbox.value);
-        });
-        
-        if (!departmentId || !coordinatorId || selectedTeamMembers.length === 0) {
-            alert('Please complete all required fields');
-            return;
-        }
-        
-        // Update summary view
-        const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
-        const coordinatorName = coordinatorNames[coordinatorId];
-        
-        document.getElementById('summary-coordinator-name').textContent = coordinatorName;
-        document.getElementById('summary-coordinator-department').textContent = departmentName;
-        
-        // Update team members list
-        const teamMembersList = document.getElementById('summary-team-members');
-        teamMembersList.innerHTML = '';
-        
-        selectedTeamMembers.forEach(memberId => {
-            const li = document.createElement('li');
-            li.textContent = teamMembers[memberId];
-            teamMembersList.appendChild(li);
-        });
-        
-        // Hide form, show summary
-        form.style.display = 'none';
-        summary.style.display = 'block';
-        
-        // Create notification
-        addNotification(`Team assignment updated by ${coordinatorName}`, 'Just now');
-        
-        console.log('Assignment saved:', {
-            coordinator: {
-                id: coordinatorId,
-                name: coordinatorName,
-                department: departmentName
-            },
-            teamMembers: selectedTeamMembers.map(id => ({
-                id: id,
-                name: teamMembers[id]
-            }))
-        });
+    e.preventDefault();
+    
+    // Get form values
+    const departmentSelect = document.getElementById('coordinator-department');
+    const coordinatorSelect = document.getElementById('coordinator-name');
+    
+    const departmentId = departmentSelect.value;
+    const coordinatorId = coordinatorSelect.value;
+    
+    // Get due date and time values
+    const dueDateInput = document.getElementById('due-date');
+    const dueTimeInput = document.getElementById('due-time');
+    const dueDate = dueDateInput.value;
+    const dueTime = dueTimeInput.value;
+    
+    // Get selected team members from checkboxes
+    const selectedTeamMembers = [];
+    const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
+    checkboxes.forEach(checkbox => {
+        selectedTeamMembers.push(checkbox.value);
     });
     
-    // Edit button handler
-    editButton.addEventListener('click', function() {
-        form.style.display = 'block';
-        summary.style.display = 'none';
-    });
-    
-    // Function to add notification
-    function addNotification(message, time) {
-        const notificationSidebar = document.querySelector('.notification-sidebar');
-        const newNotification = document.createElement('div');
-        newNotification.className = 'notification';
-        newNotification.innerHTML = `
-            <div class="notification-title">Team Update</div>
-            <div class="notification-content">${message}</div>
-            <div class="notification-time">${time}</div>
-        `;
-        
-        // Insert at the top of notifications
-        const firstNotification = notificationSidebar.querySelector('.notification');
-        notificationSidebar.insertBefore(newNotification, firstNotification);
+    // Validate required fields
+    if (!departmentId || !coordinatorId || selectedTeamMembers.length === 0) {
+        alert('Please complete all required fields');
+        return;
     }
     
+    if (!dueDate || !dueTime) {
+        alert('Please set both date and time for the deadline');
+        return;
+    }
+    
+    // Update summary view
+    const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
+    const coordinatorName = coordinatorNames[coordinatorId];
+    
+    document.getElementById('summary-coordinator-name').textContent = coordinatorName;
+    document.getElementById('summary-coordinator-department').textContent = departmentName;
+    
+    // Update team members list
+    const teamMembersList = document.getElementById('summary-team-members');
+    teamMembersList.innerHTML = '';
+    
+    selectedTeamMembers.forEach(memberId => {
+        const li = document.createElement('li');
+        li.textContent = teamMembers[memberId];
+        teamMembersList.appendChild(li);
+    });
+    
+    // Format the due date and time
+    const dueDateObj = new Date(`${dueDate}T${dueTime}:00`);
+    const formattedDate = dueDateObj.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short', 
+        day: 'numeric',
+        year: 'numeric'
+    });
+    
+    const formattedTime = dueDateObj.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    // Calculate time remaining
+    const now = new Date();
+    const diffTime = dueDateObj - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Create due date section in summary
+    const dueDateSection = document.createElement('div');
+    dueDateSection.className = 'summary-section due-date-section';
+    dueDateSection.innerHTML = `
+        <h4>Project Deadline</h4>
+        <div id="summary-due-date" class="due-date-display">
+            <i class="material-icons">event</i>
+            <div class="due-date-info">Due: ${formattedDate} at ${formattedTime}</div>
+            <div class="time-remaining">${diffDays} days remaining</div>
+        </div>
+    `;
+    
+    // Insert due date section after coordinator section and before team members
+    const coordinatorSection = document.querySelector('#assignment-summary .summary-section');
+    const teamMembersSection = document.querySelector('#assignment-summary .summary-section:nth-child(2)');
+    summary.insertBefore(dueDateSection, teamMembersSection);
+    
+    // Update header due date display
+    const headerDueDateElement = document.querySelector('.header-meta div:nth-child(2) span');
+    headerDueDateElement.textContent = `Due: ${formattedDate}`;
+    
+    // Hide form, show summary
+    form.style.display = 'none';
+    summary.style.display = 'block';
+    
+    // Create notification with due date info
+    addNotification(`Team assignment updated by ${coordinatorName}. Project deadline: ${formattedDate} at ${formattedTime}`, 'Just now');
+    
+    console.log('Assignment saved:', {
+        coordinator: {
+            id: coordinatorId,
+            name: coordinatorName,
+            department: departmentName
+        },
+        teamMembers: selectedTeamMembers.map(id => ({
+            id: id,
+            name: teamMembers[id]
+        })),
+        deadline: {
+            date: formattedDate,
+            time: formattedTime,
+            daysRemaining: diffDays
+        }
+    });
+});
     // Initialize multiselect dropdown
     function initMultiSelectDropdown() {
         const dropdown = document.getElementById('team-members-dropdown');
@@ -1146,6 +1258,10 @@
         }
     }
 });
-    </script>
+    
+    
+</script>
+  
+    
 </body>
 </html>
