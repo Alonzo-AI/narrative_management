@@ -495,39 +495,171 @@
             font-size: 1.2em;
         }
 
-        .dropdown-menu {
-            display: none;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
         
-        .dropdown-menu.show {
-            display: block;
-        }
-        
-        .dropdown-toggle {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .dropdown-item {
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-        
-        .dropdown-item:hover {
-            background: #f5f5f5;
-        }
+        .form-section {
+        background-color: white;
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .form-section h3 {
+        color: var(--fsu-garnet);
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--fsu-garnet);
+    }
+
+    .form-group select, 
+    .form-group input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group select:focus,
+    .form-group input:focus {
+        border-color: var(--fsu-gold);
+        box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
+        outline: none;
+    }
+
+    .form-group select[multiple] {
+        height: 200px;
+    }
+
+    .help-text {
+        margin-top: 6px;
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .primary-button, .secondary-button, .text-button {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .primary-button {
+        background-color: var(--fsu-garnet);
+        color: white;
+        border: none;
+    }
+
+    .primary-button:hover {
+        background-color: #692a38;
+        transform: translateY(-1px);
+    }
+
+    .secondary-button {
+        background-color: white;
+        color: var(--fsu-garnet);
+        border: 1px solid var(--fsu-garnet);
+    }
+
+    .secondary-button:hover {
+        background-color: #f9f9f9;
+    }
+
+    .text-button {
+        background: none;
+        border: none;
+        color: var(--fsu-garnet);
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+    }
+
+    .text-button i {
+        margin-right: 6px;
+    }
+
+    .text-button:hover {
+        color: var(--fsu-gold);
+    }
+
+    #assignment-summary {
+        background-color: white;
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .summary-section {
+        margin-bottom: 24px;
+    }
+
+    .summary-section h4 {
+        color: var(--fsu-garnet);
+        margin-bottom: 12px;
+        font-size: 1rem;
+    }
+
+    .assigned-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background-color: #f9f9f9;
+        border-radius: 6px;
+    }
+
+    .assigned-item i {
+        color: var(--fsu-garnet);
+        margin-right: 12px;
+    }
+
+    .department-badge {
+        margin-left: auto;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        background-color: var(--fsu-gold);
+        color: var(--fsu-garnet);
+    }
+
+    .assigned-members-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .assigned-members-list li {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        background-color: #f9f9f9;
+        border-radius: 6px;
+    }
+
+    .assigned-members-list li::before {
+        content: '•';
+        color: var(--fsu-gold);
+        font-size: 1.5em;
+        margin-right: 8px;
+    }
 
         @media (max-width: 768px) {
             .team-options {
@@ -538,6 +670,101 @@
                 padding: 16px;
             }    
         }
+
+        .multiselect-container {
+        position: relative;
+        width: 100%;
+    }
+    
+    .multiselect-dropdown {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .multiselect-dropdown:after {
+        content: '\25BC';
+        font-size: 0.8rem;
+        color: var(--fsu-garnet);
+    }
+    
+    .multiselect-dropdown-list {
+        position: absolute;
+        width: 100%;
+        max-height: 250px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: white;
+        z-index: 100;
+        display: none;
+        margin-top: 4px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .multiselect-dropdown-list.show {
+        display: block;
+    }
+    
+    .multiselect-dropdown-item {
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    
+    .multiselect-dropdown-item:hover {
+        background-color: #f5f5f5;
+    }
+    
+    .multiselect-dropdown-item input[type="checkbox"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    
+    .multiselect-dropdown-selected {
+        padding: 6px 0;
+        color: #666;
+    }
+    
+    .multiselect-dropdown-selected.placeholder {
+        color: #999;
+    }
+    
+    .selected-items {
+        margin-top: 8px;
+    }
+    
+    .selected-item {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--fsu-gold);
+        color: var(--fsu-garnet);
+        border-radius: 4px;
+        padding: 4px 8px;
+        margin: 4px;
+        font-size: 0.9rem;
+    }
+    
+    .selected-item .remove {
+        margin-left: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+    .multi-select-checkbox {
+        width: auto !important;
+    }
+    .multi-select-checkbox-label {
+        margin-bottom: 0 !important;
+    }
     </style>
 </head>
 <body>
@@ -622,83 +849,104 @@
    
 
         <section class="team-management">
-            <h2>Assign Research Team</h2>
-
-            <div class="team-options">
-                <div class="team-option" id="coordinator-container">
-                    <i class="material-icons">person_add</i>
-                    <div class="option-content">
-                        <h3>Assign Coordinator</h3>
+            <h2>Team Management</h2>
+        
+            <form id="team-assignment-form">
+                <div class="form-section">
+                    <h3>Project Coordinator</h3>
+                    <div class="form-group">
+                        <label for="coordinator-department">Department</label>
+                        <select id="coordinator-department" name="coordinator-department" required>
+                            <option value="">Select department</option>
+                            <option value="content">Content Team</option>
+                            <option value="design">Design Team</option>
+                            <option value="marketing">Marketing Team</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="coordinator-name">Coordinator</label>
+                        <select id="coordinator-name" name="coordinator-name" required>
+                            <option value="">Choose a coordinator</option>
+                            <option value="1">Sarah Johnson</option>
+                            <option value="2">Michael Chen</option>
+                            <option value="3">Emily Rodriguez</option>
+                            <option value="4">David Kim</option>
+                            <option value="5">Rachel Thompson</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="team-members-dropdown">Select Team Members</label>
+                    <div class="multiselect-container">
+                        <div class="multiselect-dropdown" id="team-members-dropdown">
+                            <div class="multiselect-dropdown-selected placeholder">Select team members</div>
+                        </div>
+                        <div class="multiselect-dropdown-list" id="team-members-options">
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-1" value="1" class="multi-select-checkbox">
+                                <label for="member-1" class="multi-select-checkbox-label">Alex Foster</label>
+                            </div>
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-2" value="2" class="multi-select-checkbox">
+                                <label for="member-2" class="multi-select-checkbox-label">Maria Garcia</label>
+                            </div>
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-3" value="3" class="multi-select-checkbox">
+                                <label for="member-3" class="multi-select-checkbox-label">James Wilson</label>
+                            </div>
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-4" value="4" class="multi-select-checkbox">
+                                <label for="member-4" class="multi-select-checkbox-label">Lisa Park</label>
+                            </div>
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-5" value="5" class="multi-select-checkbox">
+                                <label for="member-5" class="multi-select-checkbox-label">Andre Thomas</label>
+                            </div>
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-6" value="6" class="multi-select-checkbox">
+                                <label for="member-6" class="multi-select-checkbox-label">Sophie Martinez</label>
+                            </div>
+                            <div class="multiselect-dropdown-item">
+                                <input type="checkbox" id="member-7" value="7" class="multi-select-checkbox">
+                                <label for="member-7" class="multi-select-checkbox-label">Ryan Cooper</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selected-items" id="selected-team-members"></div>
+                    <input type="hidden" name="team-members[]" id="team-members-input">
+                    <div class="help-text">Click to select multiple team members</div>
+                </div>
+        
+                <div class="form-actions">
+                    <button type="submit" class="primary-button">Assign</button>
+                    <button type="reset" class="secondary-button">Reset</button>
+                </div>
+            </form>
+        
+            <div id="assignment-summary" style="display: none;">
+                <h3>Current Assignment</h3>
                 
-                        
-                        <div id="coordinator-selection" style="display: block;">
-                            <div class="coordinator-form">
-                                <div class="form-row">
-                                    <label for="coordinator-role">Department</label>
-                                    <select id="coordinator-role">
-                                        <option value="">Select department</option>
-                                        <option value="content">Content Team</option>
-                                        <option value="design">Design Team</option>
-                                        <option value="marketing">Marketing Team</option>
-                                    </select>
-                                </div>
-                                <div class="form-row">
-                                    <label for="coordinator-select">Select Coordinator</label>
-                                    <select id="coordinator-select">
-                                        <option value="">Choose a coordinator</option>
-                                        <option value="1">Sarah Johnson</option>
-                                        <option value="2">Michael Chen</option>
-                                        <option value="3">Emily Rodriguez</option>
-                                        <option value="4">David Kim</option>
-                                        <option value="5">Rachel Thompson</option>
-                                    </select>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="team-button" onclick="saveCoordinator()">Assign</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="assigned-coordinator-info" class="assigned-coordinator" style="display: none;">
-                            <i class="material-icons">check_circle</i>
-                            Coordinator: <span id="coordinator-name">Not assigned</span>
-                            <button class="team-button" style="margin-left: 12px; padding: 4px 8px; font-size: 0.8rem;" onclick="showCoordinatorSelection()">Change</button>
-                        </div>
+                <div class="summary-section">
+                    <h4>Project Coordinator</h4>
+                    <div class="assigned-item">
+                        <i class="material-icons">person</i>
+                        <span id="summary-coordinator-name">Not assigned</span>
+                        <span class="department-badge" id="summary-coordinator-department"></span>
                     </div>
                 </div>
-                <div class="team-option">
-                    <i class="material-icons">group_add</i>
-                    <div class="option-content">
-                        <h3>Team Members</h3>
-                        <button class="team-button" onclick="showTeamSelection()">Assign Team</button>
-                        <div id="team-selection" style="display: none; margin-top: 12px;">
-                            <div class="coordinator-form">
-                                <div class="form-row">
-                                    <label for="team-members-select">Select Team Members</label>
-                                    <select id="team-members-select" multiple class="multi-select">
-                                        <option value="1">Alex Foster</option>
-                                        <option value="2">Maria Garcia</option>
-                                        <option value="3">James Wilson</option>
-                                        <option value="4">Lisa Park</option>
-                                        <option value="5">Andre Thomas</option>
-                                        <option value="6">Sophie Martinez</option>
-                                        <option value="7">Ryan Cooper</option>
-                                    </select>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="cancel-button" onclick="hideTeamSelection()">Cancel</button>
-                                    <button class="team-button" onclick="saveTeamMembers()">Add Selected</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="assigned-team-info" class="assigned-members" style="display: none; margin-top: 12px;">
-                            <div class="team-members-list">
-                                <ul id="assigned-members-list"></ul>
-                            </div>
-                        </div>
-                    </div>
+        
+                <div class="summary-section">
+                    <h4>Team Members</h4>
+                    <ul id="summary-team-members" class="assigned-members-list">
+                        <!-- Members will be added here dynamically -->
+                    </ul>
                 </div>
+        
+                <button id="edit-assignment-button" class="text-button">
+                    <i class="material-icons">edit</i> Edit Assignment
+                </button>
             </div>
         </section>
     </div>
@@ -730,6 +978,12 @@
 
     <script>
         // Store coordinator names
+        document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('team-assignment-form');
+        const summary = document.getElementById('assignment-summary');
+        const editButton = document.getElementById('edit-assignment-button');
+        
+        // Store coordinator names and departments for reference
         const coordinatorNames = {
             "1": "Sarah Johnson",
             "2": "Michael Chen",
@@ -737,105 +991,79 @@
             "4": "David Kim",
             "5": "Rachel Thompson"
         };
-
-        function saveCoordinator() {
-            const coordinatorSelect = document.getElementById('coordinator-select');
-            const coordinatorId = coordinatorSelect.value;
-            const departmentSelect = document.getElementById('coordinator-role');
-            const department = departmentSelect.value;
-            
-            if (coordinatorId && department) {
-                const coordinatorName = coordinatorNames[coordinatorId];
-                const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
-                
-                // Update the UI to show the assigned coordinator
-                document.getElementById('coordinator-name').textContent = coordinatorName;
-                
-                // Hide the selection form and show the assigned info
-                document.getElementById('coordinator-selection').style.display = 'none';
-                document.getElementById('assigned-coordinator-info').style.display = 'flex';
-                
-                // Hide the "Select project coordinator" instruction
-                document.getElementById('coordinator-instruction').style.display = 'none';
-                
-                console.log('Coordinator assigned:', { 
-                    name: coordinatorName, 
-                    id: coordinatorId, 
-                    department: departmentName 
-                });
-                
-                // Create a notification about the assignment
-                addNotification(`${coordinatorName} assigned as ${departmentName} Coordinator`, 'Just now');
-            } else {
-                alert('Please select both a department and a coordinator');
-            }
-        }
-
-        function showCoordinatorSelection() {
-            document.getElementById('coordinator-selection').style.display = 'block';
-            document.getElementById('assigned-coordinator-info').style.display = 'none';
-            document.getElementById('coordinator-instruction').style.display = 'block';
-        }
-
-        function showTeamSelection() {
-            document.getElementById('team-selection').style.display = 'block';
-        }
-
-        function hideTeamSelection() {
-            document.getElementById('team-selection').style.display = 'none';
-        }
-
-        function saveTeamMembers() {
-            const selectElement = document.getElementById('team-members-select');
-            const selectedOptions = Array.from(selectElement.selectedOptions);
-            
-            const selectedMembers = selectedOptions.map(option => ({
-                id: option.value,
-                name: option.textContent
-            }));
-            
-            if (selectedMembers.length > 0) {
-                console.log('Team members assigned:', selectedMembers);
-                
-                // Create a notification
-                addNotification(`${selectedMembers.length} team members added`, 'Just now');
-                
-                // Display assigned team members
-                displayAssignedMembers(selectedMembers);
-                
-                // Hide the selection
-                hideTeamSelection();
-                
-                // Hide instruction text
-                document.getElementById('team-instruction').style.display = 'none';
-            } else {
-                alert('Please select at least one team member');
-            }
-        }
-
         
-        function displayAssignedMembers(members) {
-            const membersList = document.getElementById('assigned-members-list');
-            membersList.innerHTML = ''; // Clear existing list
+        const teamMembers = {
+            "1": "Alex Foster",
+            "2": "Maria Garcia",
+            "3": "James Wilson",
+            "4": "Lisa Park",
+            "5": "Andre Thomas",
+            "6": "Sophie Martinez",
+            "7": "Ryan Cooper"
+        };
+        
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            members.forEach(member => {
-                const listItem = document.createElement('li');
-                listItem.textContent = member.name;
-                membersList.appendChild(listItem);
+            // Get form values
+            const departmentSelect = document.getElementById('coordinator-department');
+            const coordinatorSelect = document.getElementById('coordinator-name');
+            const teamMembersSelect = document.getElementById('team-members');
+            
+            const departmentId = departmentSelect.value;
+            const coordinatorId = coordinatorSelect.value;
+            const selectedTeamMembers = Array.from(teamMembersSelect.selectedOptions).map(option => option.value);
+            
+            if (!departmentId || !coordinatorId || selectedTeamMembers.length === 0) {
+                alert('Please complete all required fields');
+                return;
+            }
+            
+            // Update summary view
+            const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
+            const coordinatorName = coordinatorNames[coordinatorId];
+            
+            document.getElementById('summary-coordinator-name').textContent = coordinatorName;
+            document.getElementById('summary-coordinator-department').textContent = departmentName;
+            
+            // Update team members list
+            const teamMembersList = document.getElementById('summary-team-members');
+            teamMembersList.innerHTML = '';
+            
+            selectedTeamMembers.forEach(memberId => {
+                const li = document.createElement('li');
+                li.textContent = teamMembers[memberId];
+                teamMembersList.appendChild(li);
             });
             
-            // Show the assigned members section
-            document.getElementById('assigned-team-info').style.display = 'block';
+            // Hide form, show summary
+            form.style.display = 'none';
+            summary.style.display = 'block';
             
-            // Update the manage button
-            const manageButton = document.querySelector('.team-option .team-button');
-            manageButton.textContent = 'Update Team';
-        }
+            // Create notification
+            addNotification(`Team assignment updated by ${coordinatorName}`, 'Just now');
+            
+            console.log('Assignment saved:', {
+                coordinator: {
+                    id: coordinatorId,
+                    name: coordinatorName,
+                    department: departmentName
+                },
+                teamMembers: selectedTeamMembers.map(id => ({
+                    id: id,
+                    name: teamMembers[id]
+                }))
+            });
+        });
         
-        function showTeamSelection() {
-            document.getElementById('team-selection').style.display = 'block';
-        }
-
+        // Edit button handler
+        editButton.addEventListener('click', function() {
+            form.style.display = 'block';
+            summary.style.display = 'none';
+        });
+        
+        // Function to add notification (keeping the same from original code)
         function addNotification(message, time) {
             const notificationSidebar = document.querySelector('.notification-sidebar');
             const newNotification = document.createElement('div');
@@ -850,6 +1078,101 @@
             const firstNotification = notificationSidebar.querySelector('.notification');
             notificationSidebar.insertBefore(newNotification, firstNotification);
         }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.getElementById('team-members-dropdown');
+    const optionsList = document.getElementById('team-members-options');
+    const selectedDisplay = dropdown.querySelector('.multiselect-dropdown-selected');
+    const selectedContainer = document.getElementById('selected-team-members');
+    const hiddenInput = document.getElementById('team-members-input');
+    
+    // Toggle dropdown
+    dropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+        optionsList.classList.toggle('show');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function() {
+        optionsList.classList.remove('show');
+    });
+    
+    // Prevent dropdown from closing when clicking inside options list
+    optionsList.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Handle checkbox changes
+    const checkboxes = optionsList.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelection);
+    });
+    
+    function updateSelection() {
+        const selectedOptions = [];
+        
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const value = checkbox.value;
+                const label = checkbox.nextElementSibling.textContent;
+                selectedOptions.push({ value, label });
+            }
+        });
+        
+        // Update hidden input value
+        hiddenInput.value = selectedOptions.map(option => option.value).join(',');
+        
+        // Update selected items display
+        selectedContainer.innerHTML = '';
+        if (selectedOptions.length > 0) {
+            selectedDisplay.textContent = `${selectedOptions.length} member${selectedOptions.length > 1 ? 's' : ''} selected`;
+            selectedDisplay.classList.remove('placeholder');
+            
+            selectedOptions.forEach(option => {
+                const item = document.createElement('div');
+                item.className = 'selected-item';
+                item.innerHTML = `
+                    ${option.label}
+                    <span class="remove" data-value="${option.value}">&times;</span>
+                `;
+                selectedContainer.appendChild(item);
+            });
+            
+            // Add event listeners to remove buttons
+            const removeButtons = selectedContainer.querySelectorAll('.remove');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    const checkbox = document.querySelector(`input[value="${value}"]`);
+                    checkbox.checked = false;
+                    updateSelection();
+                });
+            });
+        } else {
+            selectedDisplay.textContent = 'Select team members';
+            selectedDisplay.classList.add('placeholder');
+        }
+    }
+    
+    // Update form submission to handle the new input
+    const form = document.getElementById('team-assignment-form');
+    const originalSubmit = form.onsubmit;
+    
+    form.onsubmit = function(e) {
+        const selectedValues = hiddenInput.value.split(',').filter(Boolean);
+        if (selectedValues.length === 0) {
+            alert('Please select at least one team member');
+            e.preventDefault();
+            return false;
+        }
+        
+        // Continue with original submission logic
+        if (originalSubmit) {
+            return originalSubmit.call(this, e);
+        }
+    };
+});
     </script>
 </body>
 </html>
