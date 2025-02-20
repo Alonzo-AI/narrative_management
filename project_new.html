@@ -426,44 +426,6 @@
             font-size: 14px;
         }
 
-        .project-progress {
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .project-progress h3 {
-            color: var(--fsu-garnet);
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .progress-bar-container {
-            height: 12px;
-            background-color: #f0f0f0;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, var(--fsu-gold), var(--fsu-garnet));
-            border-radius: 6px;
-            transition: width 0.3s ease;
-        }
-        
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 12px;
-        }
-        
         .stat {
             display: flex;
             flex-direction: column;
@@ -483,59 +445,6 @@
             margin-top: 4px;
         }
 
-        .upcoming-deadlines {
-            margin-top: 20px;
-            border-top: 1px solid #eee;
-            padding-top: 16px;
-        }
-        
-        .upcoming-deadlines h4 {
-            color: var(--fsu-garnet);
-            font-size: 1rem;
-            margin-bottom: 12px;
-        }
-        
-        .deadline-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .deadline-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .deadline-info {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .deadline-task {
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 4px;
-        }
-        
-        .deadline-date {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .assigned-to {
-            font-size: 0.8rem;
-            color: #555;
-            display: block;
-            margin-top: 4px;
-        }
-        
-        .assigned-to b {
-            color: var(--fsu-garnet);
-        }
-        
         .status-badge {
             display: inline-block;
             padding: 4px 8px;
@@ -559,55 +468,7 @@
             background-color: rgba(40, 167, 69, 0.1);
             color: #28a745;
         }
-
-        deadlines-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .add-deadline-container {
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .add-deadline-btn {
-            display: flex;
-            align-items: center;
-        }
-        
-        .add-deadline-btn i {
-            font-size: 16px;
-            margin-right: 4px;
-        }
-        
-        .deadline-form {
-            background: #f8f8f8;
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 16px;
-        }
-        
-        .deadline-date-row {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .deadline-date-row > div {
-            flex: 1;
-        }
-        
-        .deadline-form input,
-        .deadline-form select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: white;
-        }
-
+       
         .assigned-members {
             background-color: #f8f8f8;
             border-radius: 6px;
@@ -762,120 +623,6 @@
 
         <section class="team-management">
             <h2>Assign Research Team</h2>
-            
-            <div class="project-progress">
-                <h3>Project Progress: 65%</h3>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 65%;"></div>
-                </div>
-                <div class="progress-stats">
-                    <div class="stat">
-                        <span class="stat-value">14</span>
-                        <span class="stat-label">Tasks Completed</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">8</span>
-                        <span class="stat-label">Tasks Remaining</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">25</span>
-                        <span class="stat-label">Days Left</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="upcoming-deadlines">
-                <div class="deadlines-header">
-                    <h4>Upcoming Deadlines</h4>
-                    
-                </div>
-
-                <div class="add-deadline-container">
-                    <button class="team-button add-deadline-btn" onclick="showAddDeadlineForm()">
-                        <i class="material-icons">add</i> Add Deadline
-                    </button>
-                </div>
-                
-                <div id="add-deadline-form" style="display: none;">
-                    <div class="deadline-form">
-                        <div class="form-row">
-                            <label for="deadline-task">Task Name</label>
-                            <input type="text" id="deadline-task" placeholder="Enter task name">
-                        </div>
-                        <div class="form-row deadline-date-row">
-                            <div>
-                                <label for="deadline-date">Due Date</label>
-                                <input type="date" id="deadline-date">
-                            </div>
-                            <div>
-                                <label for="deadline-time">Time</label>
-                                <input type="time" id="deadline-time">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <label for="deadline-priority">Priority</label>
-                            <select id="deadline-priority">
-                                <option value="normal">Normal</option>
-                                <option value="upcoming">Upcoming</option>
-                                <option value="urgent">Urgent</option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <label for="assigned-team-member">Assign To</label>
-                            <select id="assigned-team-member">
-                                <option value="">Select team member</option>
-                                <option value="1">Sarah Johnson</option>
-                                <option value="2">Michael Chen</option>
-                                <option value="3">Emily Rodriguez</option>
-                                <option value="4">David Kim</option>
-                                <option value="5">Rachel Thompson</option>
-                                <option value="6">Alex Foster</option>
-                                <option value="7">Maria Garcia</option>
-                            </select>
-                        </div>
-                        <div class="action-buttons">
-                            <button class="cancel-button" onclick="hideAddDeadlineForm()">Cancel</button>
-                            <button class="team-button" onclick="addNewDeadline()">Add Deadline</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <ul id="deadline-list" class="deadline-list">
-                    <li>
-                        <div class="deadline-info">
-                            <span class="deadline-task">Player Interview Transcripts</span>
-                            <span class="deadline-date">Feb 25, 2025 - 3:00 PM</span>
-                            <span class="assigned-to">Assigned to: <b>Sarah Johnson</b></span>
-                        </div>
-                        <div class="deadline-status">
-                            <span class="status-badge urgent">Urgent</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="deadline-info">
-                            <span class="deadline-task">Season Stats Analysis</span>
-                            <span class="deadline-date">Mar 03, 2025 - 11:00 AM</span>
-                            <span class="assigned-to">Assigned to: <b>Michael Chen</b></span>
-                        </div>
-                        <div class="deadline-status">
-                            <span class="status-badge upcoming">Upcoming</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="deadline-info">
-                            <span class="deadline-task">Game Highlights Selection</span>
-                            <span class="deadline-date">Mar 07, 2025 - 5:00 PM</span>
-                            <span class="assigned-to">Assigned to: <b>Emily Rodriguez</b></span>
-                        </div>
-                        <div class="deadline-status">
-                            <span class="status-badge upcoming">Upcoming</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-
 
             <div class="team-options">
                 <div class="team-option" id="coordinator-container">
@@ -956,6 +703,7 @@
         </section>
     </div>
 
+          
     <div class="notification-sidebar">
         <h2>Notifications</h2>
         <div class="notification">
@@ -1065,90 +813,6 @@
             }
         }
 
-        function showAddDeadlineForm() {
-            const deadlineForm = document.getElementById('add-deadline-form');
-            deadlineForm.style.display = 'block';
-            
-            // Set default date to today
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            document.getElementById('deadline-date').value = formattedDate;
-            
-            // Set default time to current time + 1 hour (rounded to nearest hour)
-            const nextHour = new Date(today.getTime() + 60 * 60 * 1000);
-            nextHour.setMinutes(0, 0, 0); // Round to hour
-            
-            const hours = String(nextHour.getHours()).padStart(2, '0');
-            const minutes = String(nextHour.getMinutes()).padStart(2, '0');
-            document.getElementById('deadline-time').value = `${hours}:${minutes}`;
-            
-            // Focus on task name field
-            setTimeout(() => {
-                document.getElementById('deadline-task').focus();
-            }, 100);
-        }
-        
-        function hideAddDeadlineForm() {
-            document.getElementById('add-deadline-form').style.display = 'none';
-        }
-        
-        function addNewDeadline() {
-            const taskName = document.getElementById('deadline-task').value;
-            const deadlineDate = document.getElementById('deadline-date').value;
-            const deadlineTime = document.getElementById('deadline-time').value;
-            const priority = document.getElementById('deadline-priority').value;
-            const assignedToSelect = document.getElementById('assigned-team-member');
-            const assignedToId = assignedToSelect.value;
-            const assignedToName = assignedToId ? assignedToSelect.options[assignedToSelect.selectedIndex].text : '';
-            
-            if (!taskName || !deadlineDate || !deadlineTime) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Format the date
-            const dateObj = new Date(deadlineDate + 'T' + deadlineTime);
-            const formattedDate = `${dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - ${dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`;
-            
-            // Create new deadline element
-            const deadlineList = document.getElementById('deadline-list');
-            const newDeadline = document.createElement('li');
-            
-            // Add assignment info if a team member was selected
-            const assignmentHtml = assignedToName ? 
-                `<span class="assigned-to">Assigned to: <b>${assignedToName}</b></span>` : '';
-            
-            newDeadline.innerHTML = `
-                <div class="deadline-info">
-                    <span class="deadline-task">${taskName}</span>
-                    <span class="deadline-date">${formattedDate}</span>
-                    ${assignmentHtml}
-                </div>
-                <div class="deadline-status">
-                    <span class="status-badge ${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
-                </div>
-            `;
-            
-            // Add to the list
-            deadlineList.prepend(newDeadline);
-            
-            // Clear form and hide it
-            document.getElementById('deadline-task').value = '';
-            document.getElementById('deadline-date').value = '';
-            document.getElementById('deadline-time').value = '';
-            document.getElementById('deadline-priority').value = 'normal';
-            document.getElementById('assigned-team-member').value = '';
-            hideAddDeadlineForm();
-            
-            // Create notification text based on assignment
-            let notificationText = `New deadline added: ${taskName}`;
-            if (assignedToName) {
-                notificationText += ` (assigned to ${assignedToName})`;
-            }
-            
-            // Add notification
-            addNotification(notificationText, 'Just now');
-        }
         
         function displayAssignedMembers(members) {
             const membersList = document.getElementById('assigned-members-list');
