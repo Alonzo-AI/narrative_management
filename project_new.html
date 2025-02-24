@@ -117,128 +117,103 @@
             color: var(--fsu-garnet);
         }
 
-        .progress-tracker {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-top: 32px;
-            position: relative;
-            padding: 0 24px;
-        }
+ /* Progress tracker container */
+.progress-tracker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+    position: relative;
+    padding: 0 24px;
+}
 
-        .progress-tracker::before {
-            content: '';
-            position: absolute;
-            height: 2px;
-            background: #e0e0e0;  /* Light grey line for incomplete */
-            width: calc(100% - 48px);
-            top: 20px;
-            left: 24px;
-            z-index: 1;
-        }
+/* Progress line */
+.progress-tracker::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background: #e0e0e0;
+    width: calc(100% - 48px);
+    top: 20px;
+    left: 24px;
+    z-index: 1;
+}
 
-        .progress-tracker::after {
-            content: '';
-            position: absolute;
-            height: 2px;
-            background: var(--fsu-garnet);  /* Colored line for complete */
-            width: 0%;  /* Will be updated via JavaScript */
-            top: 20px;
-            left: 24px;
-            z-index: 2;
-            transition: width 1s ease;
-        }
+.progress-tracker::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background: #782f40; /* FSU Garnet */
+    width: 0%;
+    top: 20px;
+    left: 24px;
+    z-index: 2;
+    transition: width 0.8s ease;
+}
 
-        .progress-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 3;
-            width: 80px;
-        }
+/* Progress step */
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+}
 
-        .progress-step-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            position: relative;
-            overflow: hidden;
-        }
+.progress-step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: all 0.5s ease;
+}
 
-        .progress-step-circle::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 0%;  /* Start at 0%, will be animated */
-            background: var(--fsu-garnet);
-            transition: height 0.6s ease;
-            z-index: -1;
-        }
+/* Initial state for icons */
+.progress-step i {
+    color: #e0e0e0;
+    font-size: 20px;
+    transition: color 0.5s ease;
+}
 
-        .progress-step.completed .progress-step-circle {
-            border-color: var(--fsu-garnet);
-        }
+.progress-step-label {
+    color: #e0e0e0;
+    font-size: 0.875rem;
+    text-align: center;
+    transition: color 0.5s ease;
+}
 
-        .progress-step.completed .progress-step-circle::before {
-            height: 100%;
-        }
+/* Completed state */
+.progress-step.completed .progress-step-circle {
+    background-color: #782f40;
+    border-color: #782f40;
+}
 
-        .progress-step.in-progress .progress-step-circle {
-            border-color: var(--fsu-gold);
-        }
+.progress-step.completed i {
+    color: white;
+}
 
-        .progress-step.in-progress .progress-step-circle::before {
-            background: var(--fsu-gold);
-            height: 50%;
-            animation: fillPulse 2s infinite;
-        }
+.progress-step.completed .progress-step-label {
+    color: #782f40;
+}
 
-        .progress-step i {
-            color: #757575;  /* Default gray color */
-            font-size: 20px;
-            position: relative;
-            z-index: 2;
-            transition: color 0.3s ease;
-        }
+/* Current (in-progress) state */
+.progress-step.current .progress-step-circle {
+    background-color: #782f40;
+    border-color: #782f40;
+}
 
-        .progress-step.completed .progress-step-circle i {
-            color: white;
-        }
+.progress-step.current i {
+    color: white;
+}
 
-        .progress-step.in-progress .progress-step-circle i {
-            color: var(--fsu-garnet);
-        }
-
-        .progress-step-label {
-            color: #757575;
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        .progress-step.completed .progress-step-label {
-            color: var(--fsu-garnet);
-        }
-
-        .progress-step.in-progress .progress-step-label {
-            color: var(--fsu-gold);
-        }
-
-        @keyframes fillPulse {
-            0% { height: 45%; }
-            50% { height: 55%; }
-            100% { height: 45%; }
-        }
+.progress-step.current .progress-step-label {
+    color: #782f40;
+}
 
         .header {
             background: white;
@@ -1034,8 +1009,7 @@
                 
                 <div style="display: flex; justify-content: space-between; margin-top: 16px;">
                     <div class="stage-status completed">
-                        <i class="material-icons">done_all</i>
-                        <span>3 of 5 stages completed</span>
+                     
                     </div>
                     <div class="stage-status in-progress">
                 
@@ -1182,243 +1156,193 @@
     
 
     <script>
-        // Function to update project status after team assignment
-function updateProjectStatus() {
-    // Update project status bar
-    const statusBarSection = document.querySelector('.status-bar-section');
-    if (statusBarSection) {
-        statusBarSection.innerHTML = `
-            <h4>Project Status</h4>
-            <div class="status-bar-container">
-                <div class="status-bar-header">
-                    <div class="status-info">
-                        <div class="status-indicator in-progress">
-                            <i class="material-icons">autorenew</i>
-                            <span>In Progress</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
+        // Function to update progress bar style
+function updateProgressBar() {
+    const progressStyles = `
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            background: #e0e0e0;
+            width: calc(100% - 48px);
+            top: 20px;
+            left: 24px;
+            z-index: 1;
+        }
 
-    // Update research icon in project overview
-    const researchStep = document.querySelector('.progress-step:first-child');
-    if (researchStep) {
-        researchStep.classList.add('in-progress');
+        .progress-tracker::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            background: var(--fsu-garnet);
+            width: 0%;
+            top: 20px;
+            left: 24px;
+            z-index: 2;
+            transition: width 0.8s ease;
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Initial state - colorless and static */
+        .progress-step-circle {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+
+        .progress-step i {
+            color: #e0e0e0;
+            transition: color 0.5s ease;
+        }
+
+        .progress-step-label {
+            color: #e0e0e0;
+            margin-top: 8px;
+            font-size: 0.875rem;
+        }
+
+        /* Remove hover effects */
+        .progress-step:hover {
+            transform: none;
+        }
+
+        .progress-step-circle:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Completed state */
+        .progress-step.completed .progress-step-circle {
+            background: var(--fsu-garnet);
+            border-color: var(--fsu-garnet);
+        }
+
+        .progress-step.completed i {
+            color: white;
+        }
+
+        .progress-step.completed .progress-step-label {
+            color: var(--fsu-garnet);
+        }
+    `;
+
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = progressStyles;
+    document.head.appendChild(styleSheet);
+}
+
+    function updateProjectStatus() {
+    // Initialize all steps as colorless
+    const steps = document.querySelectorAll('.progress-step');
+    steps.forEach(step => {
+        step.classList.remove('completed', 'current');
         
-        // Add animation for filling the background
-        const circle = researchStep.querySelector('.progress-step-circle');
+        const circle = step.querySelector('.progress-step-circle');
         if (circle) {
-            circle.style.transition = 'background-color 0.5s ease';
-            circle.style.backgroundColor = 'var(--fsu-gold)';
-            circle.style.borderColor = 'var(--fsu-gold)';
+            circle.style.backgroundColor = 'white';
+            circle.style.borderColor = '#e0e0e0';
         }
 
-        const icon = researchStep.querySelector('i');
+        const icon = step.querySelector('i');
         if (icon) {
-            icon.style.color = 'var(--fsu-garnet)';
+            icon.style.color = '#e0e0e0';
         }
-    }
 
-    // Update progress tracker line
+        const label = step.querySelector('.progress-step-label');
+        if (label) {
+            label.style.color = '#e0e0e0';
+        }
+    });
+
+    // Reset progress bar
     const progressTracker = document.querySelector('.progress-tracker');
     if (progressTracker) {
-        progressTracker.style.setProperty('--progress', '20%');
+        const progressBar = progressTracker.querySelector('::after');
+        if (progressBar) {
+            progressBar.style.width = '0%';
+        }
     }
 }
 
-// Add styles for status indicators
-const statusStyles = `
-    .progress-step.in-progress .progress-step-circle {
-        background-color: var(--fsu-gold);
-        border-color: var(--fsu-gold);
-        animation: pulse 1.5s infinite;
-    }
+function updateProgress(completedPhase) {
+    const progressTracker = document.querySelector('.progress-tracker');
+    const totalSteps = document.querySelectorAll('.progress-step').length;
+    const progressPercentage = (completedPhase / (totalSteps - 1)) * 100;
     
-    .progress-step.in-progress .progress-step-circle i {
-        color: var(--fsu-garnet);
-    }
-    
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(206, 184, 136, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(206, 184, 136, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(206, 184, 136, 0); }
-    }
-    
-    .status-indicator.in-progress {
-        background-color: rgba(255, 193, 7, 0.2);
-        color: #ff9800;
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 10px;
-        border-radius: 16px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    
-    .status-indicator.in-progress i {
-        font-size: 16px;
-        margin-right: 4px;
-        animation: spin 2s linear infinite;
-    }
-    
-    @keyframes spin {
-        100% { transform: rotate(360deg); }
-    }
-`;
+    const steps = document.querySelectorAll('.progress-step');
+    steps.forEach((step, index) => {
+        const icon = step.querySelector('i');
+        const label = step.querySelector('.progress-step-label');
+        const circle = step.querySelector('.progress-step-circle');
 
-// Add styles to document
-const styleSheet = document.createElement('style');
-styleSheet.textContent = statusStyles;
-document.head.appendChild(styleSheet);
-
- // Function to add fill animation to progress step icons
- function animateProgressIcons() {
-            // Get all completed steps
-            const completedSteps = document.querySelectorAll('.progress-step.completed');
-            const inProgressSteps = document.querySelectorAll('.progress-step.in-progress');
-            
-            // Delay animation for visual effect - first reset all
-            document.querySelectorAll('.progress-step').forEach(step => {
-                step.querySelector('.progress-step-circle').style.background = 'white';
-                step.querySelector('.progress-step-circle').style.color = '#aaa';
-            });
-            
-            // Animate completed steps with delay
-            completedSteps.forEach((step, index) => {
-                setTimeout(() => {
-                    step.querySelector('.progress-step-circle').style.background = 'var(--fsu-garnet)';
-                    step.querySelector('.progress-step-circle').style.color = 'white';
-                }, 300 * index);
-            });
-            
-            // Animate in-progress steps after completed
-            inProgressSteps.forEach((step) => {
-                setTimeout(() => {
-                    step.querySelector('.progress-step-circle').style.background = 'var(--fsu-gold)';
-                    step.querySelector('.progress-step-circle').style.color = 'var(--fsu-garnet)';
-                }, 300 * completedSteps.length);
-            });
+        if (index <= completedPhase) {
+            // Mark as completed including current phase
+            step.classList.add('completed');
+            step.classList.remove('current');
+            if (icon) {
+                if (index === 0) { // Research icon
+                    icon.textContent = icon.textContent; // Keep original icon
+                } else {
+                    icon.textContent = 'done'; // Change to checkmark for other completed steps
+                }
+                icon.style.color = 'white';
+            }
+            if (circle) {
+                circle.style.backgroundColor = '#782f40';
+                circle.style.borderColor = '#782f40';
+            }
+            if (label) {
+                label.style.color = '#782f40';
+            }
+        } else {
+            // Future phases remain colorless
+            step.classList.remove('completed', 'current');
+            if (icon) {
+                icon.style.color = '#e0e0e0';
+            }
+            if (circle) {
+                circle.style.backgroundColor = 'white';
+                circle.style.borderColor = '#e0e0e0';
+            }
+            if (label) {
+                label.style.color = '#e0e0e0';
+            }
         }
-        
-        // JavaScript to make the progress bar dynamic
-        document.addEventListener('DOMContentLoaded', function() {
-            // Calculate progress based on completed steps
-            const totalSteps = document.querySelectorAll('.progress-step').length;
-            const completedSteps = document.querySelectorAll('.progress-step.completed').length;
-            const inProgressSteps = document.querySelectorAll('.progress-step.in-progress').length;
+    });
+
+    // Update progress bar
+    const progressBar = progressTracker.querySelector('::after');
+    if (progressBar) {
+        progressBar.style.width = `${progressPercentage}%`;
+    }
+}
+
+// Initialize on document load
+document.addEventListener('DOMContentLoaded', function() {
+    updateProjectStatus(); // Set initial colorless state
+    
+    // Add to form submission handler
+    const form = document.getElementById('team-assignment-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Your existing form handling code...
             
-            // Calculate percentage: completed steps plus half of in-progress steps
-            const progressPercentage = ((completedSteps + (inProgressSteps * 0.5)) / totalSteps) * 100;
-            
-            // Update progress bar
-            document.querySelector('.progress-bar').style.width = progressPercentage + '%';
-            
-            // Update completed stages text
-            document.querySelector('.stage-status.completed span').textContent = 
-                `${completedSteps} of ${totalSteps} stages completed`;
-                
-            // Existing team assignment script...
-            const form = document.getElementById('team-assignment-form');
-            const summary = document.getElementById('assignment-summary');
-            
-            // Store coordinator names
-            const coordinatorNames = {
-                "1": "Sarah Johnson",
-                "2": "Michael Chen",
-                "3": "Emily Rodriguez",
-                "4": "David Kim",
-                "5": "Rachel Thompson"
-            };
-            
-            const teamMembers = {
-                "1": "Alex Foster",
-                "2": "Maria Garcia",
-                "3": "James Wilson",
-                "4": "Lisa Park",
-                "5": "Andre Thomas",
-                "6": "Sophie Martinez",
-                "7": "Ryan Cooper"
-            };
-            
-            // Initialize the multiselect dropdown if it exists
-            if (document.getElementById('team-members-dropdown')) {
-                initMultiSelectDropdown();
-            }
-            
-            // Form submission
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Form submission logic...
-                    
-                    // Update progress tracker based on form submission
-                    updateProgressTracker();
-                });
-            }
-            
-            // Initialize multiselect dropdown
-            function initMultiSelectDropdown() {
-                // Dropdown initialization...
-            }
-            
-            // New function to update progress tracker
-            function updateProgressTracker() {
-                const progressSteps = document.querySelectorAll('.progress-step');
-                
-                // Example logic to update progress steps based on form data
-                // This would need to be customized based on your specific requirements
-                
-                // Update completed steps count
-                const newCompletedSteps = document.querySelectorAll('.progress-step.completed').length;
-                const newInProgressSteps = document.querySelectorAll('.progress-step.in-progress').length;
-                
-                // Update progress bar
-                const newProgressPercentage = ((newCompletedSteps + (newInProgressSteps * 0.5)) / progressSteps.length) * 100;
-                document.querySelector('.progress-bar').style.width = newProgressPercentage + '%';
-                
-                // Update text
-                document.querySelector('.stage-status.completed span').textContent = 
-                    `${newCompletedSteps} of ${progressSteps.length} stages completed`;
-            }
-            
-            // Add click events to progress steps for testing
-            document.querySelectorAll('.progress-step').forEach((step, index) => {
-                step.addEventListener('click', function() {
-                    const progressSteps = document.querySelectorAll('.progress-step');
-                    
-                    // Clear all classes
-                    progressSteps.forEach((s, i) => {
-                        if (i < index) {
-                            s.classList.add('completed');
-                            s.classList.remove('in-progress');
-                            s.querySelector('i').textContent = 'done';
-                        } else if (i === index) {
-                            s.classList.remove('completed');
-                            s.classList.add('in-progress');
-                            s.querySelector('i').textContent = 'sync';
-                        } else {
-                            s.classList.remove('completed');
-                            s.classList.remove('in-progress');
-                            s.querySelector('i').textContent = 'hourglass_empty';
-                        }
-                    });
-                    
-                    // Update progress bar
-                    const newCompletedSteps = document.querySelectorAll('.progress-step.completed').length;
-                    const newInProgressSteps = document.querySelectorAll('.progress-step.in-progress').length;
-                    const newProgressPercentage = ((newCompletedSteps + (newInProgressSteps * 0.5)) / progressSteps.length) * 100;
-                    document.querySelector('.progress-bar').style.width = newProgressPercentage + '%';
-                    
-                    // Update text
-                    document.querySelector('.stage-status.completed span').textContent = 
-                        `${newCompletedSteps} of ${progressSteps.length} stages completed`;
-                });
-            });
+            // Start with first phase (Research) completed
+            updateProgress(0);
         });
-        
+    }
+});       
         // Function to add notification (stub)
         function addNotification(message, time) {
             const notificationSidebar = document.querySelector('.notification-sidebar');
