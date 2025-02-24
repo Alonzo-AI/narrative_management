@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSU Research Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--fsu-garnet);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--fsu-garnet);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(120, 47, 64, 0.1);
+        }
+
+        .nav-item.active {
+            background: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+        }
+
+        /* Main content styles */
+        .main-content {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .header {
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            color: var(--fsu-garnet);
+            margin-bottom: 16px;
+            font-size: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--fsu-gold);
+            box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
+        }
+
+        /* Research cards grid */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .research-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.active {
+            background: rgba(120, 47, 64, 0.1);
+            color: var(--fsu-garnet);
+        }
+
+        .status-badge.completed {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .card-title {
+            color: var(--fsu-garnet);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--fsu-garnet);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--fsu-garnet);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #692a38;
+        }
+
+        .btn-secondary {
+            background: var(--fsu-gold);
+            color: var(--fsu-garnet);
+        }
+
+        .btn-secondary:hover {
+            background: #bea97d;
+        }
+
+        /* Header styles update */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-new-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--fsu-garnet);
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--fsu-garnet);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .content-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .content-type-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .content-type-card:hover {
+            transform: translateY(-5px);
+            background: white;
+            border-color: var(--fsu-gold);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-type-card i {
+            font-size: 2.5rem;
+            color: var(--fsu-garnet);
+            margin-bottom: 15px;
+        }
+
+        .content-type-card h3 {
+            color: var(--fsu-garnet);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Upload modal styles */
+        .upload-container {
+            padding: 20px;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--fsu-garnet);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #f8f8f8;
+        }
+
+        .drop-zone.drag-over {
+            background: rgba(120, 47, 64, 0.1);
+            border-color: var(--fsu-gold);
+        }
+
+        .drop-zone i {
+            font-size: 48px;
+            color: var(--fsu-garnet);
+            margin-bottom: 15px;
+        }
+
+        .drop-zone h3 {
+            color: var(--fsu-garnet);
+            margin-bottom: 10px;
+        }
+
+        .drop-zone p {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .browse-btn {
+            margin-top: 15px;
+        }
+
+        .upload-progress {
+            margin-top: 20px;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .progress-item-name {
+            flex: 1;
+            margin-right: 15px;
+            color: var(--fsu-garnet);
+        }
+
+        .progress-bar-container {
+            flex: 2;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--fsu-garnet);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-percentage {
+            margin-left: 15px;
+            min-width: 40px;
+            text-align: right;
+            color: #666;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .file-preview {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .file-preview i {
+            margin-right: 8px;
+            color: var(--fsu-garnet);
+        }
+
+        .file-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .remove-file {
+            cursor: pointer;
+            color: #666;
+            padding: 4px;
+        }
+
+        .remove-file:hover {
+            color: var(--fsu-garnet);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Navigation</h2>
+            <div class="nav-item active">
+                <i class="material-icons">search</i>
+                Research
+            </div>
+            <div class="nav-item">
+                <i class="material-icons">description</i>
+                Documents
+            </div>
+            <div class="nav-item">
+                <i class="material-icons">people</i>
+                Team
+            </div>
+            <div class="nav-item">
+                <i class="material-icons">timeline</i>
+                Analytics
+            </div>
+            <div class="nav-item">
+                <i class="material-icons">settings</i>
+                Settings
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <div class="header-top">
+                    <h1>Research Projects</h1>
+                    <button class="btn btn-primary add-new-btn" onclick="openModal()">
+                        <i class="material-icons">add</i>
+                        Add New
+                    </button>
+                </div>
+            
+            </div>
+
+            <!-- Modal -->
+            <div id="addNewModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add New Research Content</h2>
+                        <button class="close-btn" onclick="closeModal()">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content-type-grid">
+                            <div class="content-type-card" onclick="showUploadArea('documents')">
+                                <i class="material-icons">description</i>
+                                <h3>Documents</h3>
+                                <p>Upload and manage research documents</p>
+                            </div>
+                            <div class="content-type-card" onclick="showUploadArea('web-links')">
+                                <i class="material-icons">link</i>
+                                <h3>Web Links</h3>
+                                <p>Add relevant web resources and articles</p>
+                            </div>
+                            <div class="content-type-card" onclick="showUploadArea('breaking-news')">
+                                <i class="material-icons">flash_on</i>
+                                <h3>Breaking News</h3>
+                                <p>Add latest news and updates</p>
+                            </div>
+                            <div class="content-type-card" onclick="showUploadArea('media')">
+                                <i class="material-icons">perm_media</i>
+                                <h3>Media</h3>
+                                <p>Upload images, videos, and other media</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Area Modal -->
+            <div id="uploadModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="uploadModalTitle">Upload Content</h2>
+                        <button class="close-btn" onclick="closeUploadModal()">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="upload-container">
+                            <div id="dropZone" class="drop-zone">
+                                <i class="material-icons">cloud_upload</i>
+                                <h3>Drag & Drop Files Here</h3>
+                                <p>or</p>
+                                <button class="btn btn-primary browse-btn">
+                                    <i class="material-icons">folder_open</i>
+                                    Browse Files
+                                </button>
+                                <input type="file" id="fileInput" multiple hidden>
+                            </div>
+                            <div id="uploadProgress" class="upload-progress" style="display: none;">
+                                <div class="progress-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeUploadModal()">Cancel</button>
+                        <button class="btn btn-primary" onclick="handleUpload()">Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="research-grid">
+                <div class="grid-header">
+                    <h2>Research Phase Content</h2>
+                    <div class="view-controls">
+                        <button class="btn btn-icon" title="Grid View">
+                            <i class="material-icons">grid_view</i>
+                        </button>
+                        <button class="btn btn-icon" title="List View">
+                            <i class="material-icons">view_list</i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-type-sections">
+                    <!-- Documents Section -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h3><i class="material-icons">description</i> Documents</h3>
+                            <span class="item-count">3 items</span>
+                        </div>
+                        <div class="content-grid">
+                            <div class="content-card">
+                                <div class="file-icon">
+                                    <i class="material-icons">picture_as_pdf</i>
+                                </div>
+                                <div class="file-info">
+                                    <span class="file-name">Research_Report.pdf</span>
+                                    <span class="file-meta">PDF • 2.5 MB</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-icon" title="Download">
+                                        <i class="material-icons">download</i>
+                                    </button>
+                                    <button class="btn btn-icon" title="Share">
+                                        <i class="material-icons">share</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web Links Section -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h3><i class="material-icons">link</i> Web Links</h3>
+                            <span class="item-count">2 items</span>
+                        </div>
+                        <div class="content-grid">
+                            <div class="content-card link-card">
+                                <div class="link-preview">
+                                    <i class="material-icons">public</i>
+                                </div>
+                                <div class="link-info">
+                                    <span class="link-title">FSU Athletics Statistics</span>
+                                    <span class="link-url">https://seminoles.com/stats/</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-icon" title="Open Link">
+                                        <i class="material-icons">open_in_new</i>
+                                    </button>
+                                    <button class="btn btn-icon" title="Copy Link">
+                                        <i class="material-icons">content_copy</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Media Section -->
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h3><i class="material-icons">perm_media</i> Media</h3>
+                            <span class="item-count">4 items</span>
+                        </div>
+                        <div class="content-grid">
+                            <div class="content-card media-card">
+                                <div class="media-preview">
+                                    <img src="/api/placeholder/200/150" alt="Game Highlights">
+                                    <span class="media-duration">2:15</span>
+                                </div>
+                                <div class="media-info">
+                                    <span class="media-title">Game Highlights</span>
+                                    <span class="media-meta">MP4 • 45 MB</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-icon" title="Play">
+                                        <i class="material-icons">play_arrow</i>
+                                    </button>
+                                    <button class="btn btn-icon" title="Download">
+                                        <i class="material-icons">download</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal() {
+            const modal = document.getElementById('addNewModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('addNewModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showUploadArea(type) {
+            // Close the first modal
+            closeModal();
+            
+            // Update upload modal title based on content type
+            const titles = {
+                'documents': 'Upload Documents',
+                'web-links': 'Add Web Links',
+                'breaking-news': 'Create Breaking News',
+                'media': 'Upload Media'
+            };
+            
+            document.getElementById('uploadModalTitle').textContent = titles[type];
+            
+            // Show upload modal
+            const uploadModal = document.getElementById('uploadModal');
+            uploadModal.classList.add('show');
+        }
+
+        function closeUploadModal() {
+            const modal = document.getElementById('uploadModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            
+            // Reset the upload area
+            const dropZone = document.getElementById('dropZone');
+            const progressArea = document.getElementById('uploadProgress');
+            dropZone.classList.remove('drag-over');
+            progressArea.style.display = 'none';
+            progressArea.querySelector('.progress-list').innerHTML = '';
+        }
+
+        // Drag and drop functionality
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        // Highlight drop zone when dragging over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        // Handle dropped files
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            dropZone.classList.add('drag-over');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // Handle browse button
+        const browseBtn = dropZone.querySelector('.browse-btn');
+        browseBtn.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            const progressArea = document.getElementById('uploadProgress');
+            const progressList = progressArea.querySelector('.progress-list');
+            progressArea.style.display = 'block';
+            progressList.innerHTML = '';
+
+            [...files].forEach(file => {
+                // Create progress item
+                const progressItem = document.createElement('div');
+                progressItem.className = 'progress-item';
+                progressItem.innerHTML = `
+                    <div class="progress-item-name">${file.name}</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-percentage">0%</div>
+                `;
+                progressList.appendChild(progressItem);
+
+                // Simulate upload progress
+                simulateUpload(progressItem);
+            });
+        }
+
+        function simulateUpload(progressItem) {
+            let progress = 0;
+            const progressBar = progressItem.querySelector('.progress-bar-fill');
+            const progressText = progressItem.querySelector('.progress-percentage');
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}%`;
+            }, 200);
+        }
+
+        function handleUpload() {
+            // Here you would typically send the files to your server
+            alert('Files uploaded successfully!');
+            closeUploadModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            Array.from(modals).forEach(modal => {
+                if (event.target === modal) {
+                    if (modal.id === 'uploadModal') {
+                        closeUploadModal();
+                    } else {
+                        closeModal();
+                    }
+                }
+            });
+        }
+
+        // Search functionality remains the same
+        var searchInput = document.querySelector('.search-input');
+        var researchCards = document.querySelectorAll('.research-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            researchCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const description = card.querySelector('.card-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Navigation functionality remains the same
+        var navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });console.log('Selected content type:', type);
+            
+            // Example notification
+            const contentTypes = {
+                'documents': 'Document upload form',
+                'web-links': 'Web link submission form',
+                'breaking-news': 'Breaking news creation form',
+                'media': 'Media upload form'
+            };
+            
+            alert(`Opening ${contentTypes[type]}...`);
+            // closeModal(); // Uncomment this if you want to close the modal after selection
+        
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('addNewModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Search functionality
+        var searchInput = document.querySelector('.search-input');
+        var researchCards = document.querySelectorAll('.research-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            researchCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const description = card.querySelector('.card-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Navigation item click handler
+        var navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                // Add active class to clicked item
+                item.classList.add('active');
+            });
+        });
+
+        // Card hover animation
+        researchCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+                card.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // All DOM elements
+    const addNewBtn = document.querySelector('.add-new-btn');
+    const contentTypeCards = document.querySelectorAll('.content-type-card');
+    const modals = {
+        addNew: document.getElementById('addNewModal'),
+        upload: document.getElementById('uploadModal')
+    };
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const progressList = uploadProgress.querySelector('.progress-list');
+
+    // Modal Control Functions
+    function openModal(modalId) {
+        modals[modalId].classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        modals[modalId].classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    function showUploadArea(type) {
+        // Close the first modal
+        const addNewModal = document.getElementById('addNewModal');
+        addNewModal.classList.remove('show');
+        
+        // Update upload modal title based on content type
+        const titles = {
+            'documents': 'Upload Documents',
+            'web-links': 'Add Web Links',
+            'breaking-news': 'Create Breaking News',
+            'media': 'Upload Media'
+        };
+        
+        const uploadModal = document.getElementById('uploadModal');
+        const uploadTitle = document.getElementById('uploadModalTitle');
+        
+        // Set the title and show the upload modal
+        uploadTitle.textContent = titles[type] || `Upload ${type}`;
+        uploadModal.classList.add('show');
+    }
+
+    // Drag and Drop Event Handlers
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight() {
+        dropZone.classList.add('drag-over');
+    }
+
+    function unhighlight() {
+        dropZone.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+        unhighlight();
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+
+    // File Handling Functions
+    function handleFiles(files) {
+        uploadProgress.style.display = 'block';
+        progressList.innerHTML = '';
+
+        Array.from(files).forEach(file => {
+            createProgressItem(file);
+        });
+    }
+
+    function createProgressItem(file) {
+        const progressItem = document.createElement('div');
+        progressItem.className = 'progress-item';
+        
+        // Create file preview with appropriate icon
+        const fileIcon = getFileIcon(file.type);
+        
+        progressItem.innerHTML = `
+            <div class="file-preview">
+                <i class="material-icons">${fileIcon}</i>
+                <span class="file-name">${file.name}</span>
+                <i class="material-icons remove-file" role="button">close</i>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <span class="progress-percentage">0%</span>
+        `;
+
+        // Add remove functionality
+        const removeBtn = progressItem.querySelector('.remove-file');
+        removeBtn.addEventListener('click', () => removeFile(progressItem));
+        
+        progressList.appendChild(progressItem);
+        simulateUpload(progressItem);
+    }
+
+    function getFileIcon(fileType) {
+        const icons = {
+            'image': 'image',
+            'video': 'videocam',
+            'audio': 'audiotrack',
+            'application/pdf': 'picture_as_pdf',
+            'text': 'description',
+            'default': 'insert_drive_file'
+        };
+
+        for (const [type, icon] of Object.entries(icons)) {
+            if (fileType.includes(type)) return icon;
+        }
+        return icons.default;
+    }
+
+    function simulateUpload(progressItem) {
+        const progressBar = progressItem.querySelector('.progress-bar-fill');
+        const progressText = progressItem.querySelector('.progress-percentage');
+        let progress = 0;
+
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+            }
+            progressBar.style.width = `${Math.round(progress)}%`;
+            progressText.textContent = `${Math.round(progress)}%`;
+        }, 200);
+    }
+
+    function removeFile(progressItem) {
+        progressItem.remove();
+        if (progressList.children.length === 0) {
+            uploadProgress.style.display = 'none';
+        }
+    }
+
+    function validateFileType(file, allowedTypes) {
+        return allowedTypes.some(type => file.type.startsWith(type));
+    }
+
+    // Event Listeners for content type cards in the first modal
+    document.querySelectorAll('.content-type-card').forEach(card => {
+        card.addEventListener('click', function() {
+            // Get the content type from the card's h3 text
+            const type = this.querySelector('h3').textContent.toLowerCase().replace(/\s+/g, '-');
+            showUploadArea(type);
+        });
+    });
+
+    // Drag and drop event listeners
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults);
+        document.body.addEventListener(eventName, preventDefaults);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, highlight);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, unhighlight);
+    });
+
+    dropZone.addEventListener('drop', handleDrop);
+
+    // File input handling
+    const browseBtn = dropZone.querySelector('.browse-btn');
+    browseBtn?.addEventListener('click', () => fileInput.click());
+
+    fileInput?.addEventListener('change', (e) => {
+        handleFiles(e.target.files);
+    });
+
+    // Close modals when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === modals.addNew) {
+            closeModal('addNew');
+        } else if (event.target === modals.upload) {
+            closeModal('upload');
+        }
+    });
+
+    // Upload button handler
+    document.querySelector('.modal-footer .btn-primary')?.addEventListener('click', () => {
+        if (progressList.children.length > 0) {
+            // Here you would typically handle the actual file upload to your server
+            alert('Files uploaded successfully!');
+            closeModal('upload');
+        } else {
+            alert('Please select files to upload');
+        }
+    });
+
+    // Cancel button handler
+    document.querySelector('.modal-footer .btn-secondary')?.addEventListener('click', () => {
+        closeModal('upload');
+    });
+
+    // File type restrictions (customize as needed)
+    const fileTypeRestrictions = {
+        'documents': ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument'],
+        'media': ['image/', 'video/', 'audio/'],
+        'web-links': ['text/url'],
+        'breaking-news': ['text/plain', 'text/html']
+    };
+});
+
+// Helper functions for error handling and user feedback
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 3000);
+}
+
+function showSuccess(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = message;
+    document.body.appendChild(successDiv);
+    setTimeout(() => successDiv.remove(), 3000);
+}
+    </script>
+</body>
+</html>
