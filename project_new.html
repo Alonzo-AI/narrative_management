@@ -1509,17 +1509,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         message: `${memberNames} ${selectedMembers.length > 1 ? 'have' : 'has'} been assigned to the project.`
                         
                     };
-                }
-
-                // Add notifications in sequence with proper delay
-                if (notifications.team) {
                     notificationSystem.addNotification(
                         notifications.team.type,
                         notifications.team.title,
                         notifications.team.message
 
                     );
-                }
+                    notificationSystem.addNotification(
+                        notifications.coordinator.type,
+                        'Acknowledgement from Team Members',
+                        `${memberNames} ${selectedMembers.length > 1 ? 'have' : 'has' } acknowledged the assignment`,
+                     );
+
+                };
+
+              
+
 
                 // Ensure coordinator notification is always added
                 // setTimeout(() => {
