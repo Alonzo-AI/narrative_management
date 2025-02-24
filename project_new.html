@@ -950,7 +950,7 @@
 </head>
 <body>
     <nav class="sidebar">
-        <h2>Athlyte</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
         <div class="sidebar-item">
             <i class="material-icons">search</i>
             Research
@@ -1038,9 +1038,12 @@
                         <span>3 of 5 stages completed</span>
                     </div>
                     <div class="stage-status in-progress">
-                    
+                
                     </div>
+
                 </div>
+            </section>
+
             </section>
    
 
@@ -1049,7 +1052,7 @@
         
             <form id="team-assignment-form">
                 <div class="form-section">
-                    <h3>Project Coordinator</h3>
+                    <h3>Coordinator</h3>
                     <div class="form-group">
                         <label for="coordinator-department">Department</label>
                         <select id="coordinator-department" name="coordinator-department" required>
@@ -1074,7 +1077,7 @@
                 </div>
         
                 <div class="form-group">
-                    <label for="team-members-dropdown">Select Team Members</label>
+                    <label for="team-members-dropdown">Team Members</label>
                     <div class="multiselect-container">
                         <div class="multiselect-dropdown" id="team-members-dropdown">
                             <div class="multiselect-dropdown-selected placeholder">Select team members</div>
@@ -1141,7 +1144,7 @@
                 
                 
                     <div class="summary-section">
-                        <h4>Project Coordinator</h4>
+                        <h4>Coordinator</h4>
                         <div class="assigned-item">
                             <i class="material-icons">person</i>
                             <span id="summary-coordinator-name">Not assigned</span>
@@ -1169,13 +1172,14 @@
         <div class="notification-sidebar">
             <div class="notification-header">
                 <h2>Notifications</h2>
-                <span class="notification-counter">0</span>
+              
             </div>
             <div class="notification-list">
                 <!-- Notifications will be dynamically inserted here -->
             </div>
         </div>
     </div>
+    
 
     <script>
         // Function to update project status after team assignment
@@ -1224,44 +1228,6 @@ function updateProjectStatus() {
     }
 }
 
-// Modify the existing form submission handler
-document.getElementById('team-assignment-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form values
-    const departmentSelect = document.getElementById('coordinator-department');
-    const coordinatorSelect = document.getElementById('coordinator-name');
-    
-    const departmentId = departmentSelect.value;
-    const coordinatorId = coordinatorSelect.value;
-    
-    // Validate form
-    if (!departmentId || !coordinatorId) {
-        alert('Please complete all required fields');
-        return;
-    }
-    
-    // Your existing form handling code...
-    
-    // After successful form submission:
-    
-    // 1. Update project status
-    updateProjectStatus();
-    
-    // 2. Add notification
-    const coordinatorName = coordinatorSelect.options[coordinatorSelect.selectedIndex].text;
-    const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
-    notificationSystem.addNotification(
-        'assignment',
-        'Team Assignment Complete',
-        `${coordinatorName} has been assigned as coordinator for ${departmentName}`
-    );
-    
-    // 3. Show summary view
-    document.getElementById('team-assignment-form').style.display = 'none';
-    document.getElementById('assignment-summary').style.display = 'block';
-});
-
 // Add styles for status indicators
 const statusStyles = `
     .progress-step.in-progress .progress-step-circle {
@@ -1307,8 +1273,8 @@ const styleSheet = document.createElement('style');
 styleSheet.textContent = statusStyles;
 document.head.appendChild(styleSheet);
 
-// Function to add fill animation to progress step icons
-        function animateProgressIcons() {
+ // Function to add fill animation to progress step icons
+ function animateProgressIcons() {
             // Get all completed steps
             const completedSteps = document.querySelectorAll('.progress-step.completed');
             const inProgressSteps = document.querySelectorAll('.progress-step.in-progress');
@@ -1453,6 +1419,19 @@ document.head.appendChild(styleSheet);
             });
         });
         
+        // Function to add notification (stub)
+        function addNotification(message, time) {
+            const notificationSidebar = document.querySelector('.notification-sidebar');
+            const newNotification = document.createElement('div');
+            newNotification.className = 'notification';
+            newNotification.innerHTML = `
+                <div class="notification-title">Status Update</div>
+                <div class="notification-content">${message}</div>
+                <div class="notification-time">${time}</div>
+            `;
+            notificationSidebar.insertBefore(newNotification, notificationSidebar.children[1]);
+        }
+        
         // Notification System
 class NotificationSystem {
     constructor() {
@@ -1522,8 +1501,8 @@ class NotificationSystem {
 
     updateCounter() {
         const newCount = this.notifications.filter(n => n.isNew).length;
-        this.counter.textContent = newCount;
-        this.counter.style.display = newCount > 0 ? 'block' : 'none';
+        // this.counter.textContent = newCount;
+        // this.counter.style.display = newCount > 0 ? 'block' : 'none';
     }
 
     renderNotifications() {
@@ -1549,91 +1528,91 @@ class NotificationSystem {
 // Initialize notification system
 const notificationSystem = new NotificationSystem();
 
-// For team assignments
-notificationSystem.addNotification(
-    'assignment',
-    'New Team Member',
-    'Alex Foster has joined the research team'
-);
-
-// For project progress
-notificationSystem.addNotification(
-    'progress',
-    'Research Complete',
-    'Initial research phase has been completed'
-);
-
-// For review requests
-notificationSystem.addNotification(
-    'review',
-    'Review Required',
-    'New content ready for editorial review'
-);
-
 // Example usage for project stages
 document.addEventListener('DOMContentLoaded', () => {
     // Listen for form submission
     const form = document.getElementById('team-assignment-form');
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const coordinator = document.getElementById('coordinator-name');
             const department = document.getElementById('coordinator-department');
             
             if (coordinator.value && department.value) {
+                // Get values
                 const coordinatorName = coordinator.options[coordinator.selectedIndex].text;
                 const departmentName = department.options[department.selectedIndex].text;
                 
+                // Create notifications object for better organization
+                const notifications = {
+                    coordinator: {
+                        type: 'assignment',
+                        title: 'Team Coordinator Assigned',
+                        message: `${coordinatorName} has been assigned as coordinator for ${departmentName}`
+                    }
+                };
+
                 notificationSystem.addNotification(
-                    'assignment',
-                    'Team Coordinator Assigned',
-                    `${coordinatorName} has been assigned as coordinator for ${departmentName}`
+                        notifications.coordinator.type,
+                        notifications.coordinator.title,
+                        notifications.coordinator.message
                 );
+
+                notificationSystem.addNotification(
+                        notifications.coordinator.type,
+                        'Acknowledgement from Team Coordinator',
+                        `${coordinatorName} has acknowledged the assignment as coordinator`,
+                );
+
+                // Get selected team members
+                const selectedMembers = [];
+                const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
+                checkboxes.forEach(checkbox => {
+                    const memberName = checkbox.nextElementSibling.textContent;
+                    selectedMembers.push(memberName);
+                });
+
+                // Add team members notification if any members are selected
+                if (selectedMembers.length > 0) {
+                    const memberNames = selectedMembers.length > 2 
+                        ? `${selectedMembers.slice(0, 2).join(', ')} and ${selectedMembers.length - 2} others` 
+                        : selectedMembers.join(' and ');
+                    
+                    notifications.team = {
+                        type: 'assignment',
+                        title: 'Team Members Added',
+                        message: `${memberNames} ${selectedMembers.length > 1 ? 'have' : 'has'} been assigned to the project.`
+                        
+                    };
+                }
+
+                // Add notifications in sequence with proper delay
+                if (notifications.team) {
+                    notificationSystem.addNotification(
+                        notifications.team.type,
+                        notifications.team.title,
+                        notifications.team.message
+
+                    );
+                }
+
+                // Ensure coordinator notification is always added
+                // setTimeout(() => {
+                //     notificationSystem.addNotification(
+                //         notifications.coordinator.type,
+                //         notifications.coordinator.title,
+                //         notifications.coordinator.message
+                //     );
+                // }, 500);
+
+                // Debug log to verify notifications are being created
+                console.log('Adding notifications:', notifications);
             }
         });
     }
 });
 
-// Example function to trigger notifications based on project stages
-function updateProjectStage(stage, details) {
-    const notifications = {
-        research: {
-            type: 'progress',
-            title: 'Research Phase Started',
-            message: 'Team has begun gathering season statistics and highlights.'
-        },
-        content: {
-            type: 'progress',
-            title: 'Content Development',
-            message: 'Writing team has started drafting the season recap.'
-        },
-        review: {
-            type: 'review',
-            title: 'Content Review Required',
-            message: 'New content is ready for editorial review.'
-        },
-        graphics: {
-            type: 'progress',
-            title: 'Graphics Production',
-            message: 'Design team has started creating visual assets.'
-        },
-        final: {
-            type: 'alert',
-            title: 'Final Review Needed',
-            message: 'Complete season recap ready for final approval.'
-        }
-    };
-
-    if (notifications[stage]) {
-        const notification = notifications[stage];
-        notificationSystem.addNotification(
-            notification.type,
-            notification.title,
-            details || notification.message
-        );
-    }
-}
         
         // Store coordinator names
 document.addEventListener('DOMContentLoaded', function() {
@@ -1762,7 +1741,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         statusBarSection.innerHTML = `
-            <h4>Project Status</h4>
+            <h4>Status</h4>
             <div class="status-bar-container">
                 <div class="status-bar-header">
                     <div class="status-info">
@@ -1779,7 +1758,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dueDateSection = document.createElement('div');
         dueDateSection.className = 'summary-section due-date-section';
         dueDateSection.innerHTML = `
-            <h4>Project Deadline</h4>
+            <h4>Phase Deadline</h4>
             <div id="summary-due-date" class="due-date-display">
                 <i class="material-icons">event</i>
                 <div class="due-date-info">Due: ${formattedDate} at ${formattedTime}</div>
