@@ -1166,26 +1166,14 @@
 
           
     <div class="notification-sidebar">
-        <h2>Notifications</h2>
-        <div class="notification">
-            <div class="notification-title">Graphics Review Complete</div>
-            <div class="notification-content">All game highlight graphics have been approved.</div>
-            <div class="notification-time">2 hours ago</div>
-        </div>
-        <div class="notification">
-            <div class="notification-title">Content Update Required</div>
-            <div class="notification-content">Please add final game statistics to the recap.</div>
-            <div class="notification-time">1 day ago</div>
-        </div>
-        <div class="notification">
-            <div class="notification-title">Marketing Review Scheduled</div>
-            <div class="notification-content">Team meeting tomorrow at 10 AM.</div>
-            <div class="notification-time">2 days ago</div>
-        </div>
-        <div class="notification">
-            <div class="notification-title">New Team Member Added</div>
-            <div class="notification-content">Welcome John Smith to the content team!</div>
-            <div class="notification-time">3 days ago</div>
+        <div class="notification-sidebar">
+            <div class="notification-header">
+                <h2>Notifications</h2>
+                <span class="notification-counter">0</span>
+            </div>
+            <div class="notification-list">
+                <!-- Notifications will be dynamically inserted here -->
+            </div>
         </div>
     </div>
 
@@ -1465,18 +1453,187 @@ document.head.appendChild(styleSheet);
             });
         });
         
-        // Function to add notification (stub)
-        function addNotification(message, time) {
-            const notificationSidebar = document.querySelector('.notification-sidebar');
-            const newNotification = document.createElement('div');
-            newNotification.className = 'notification';
-            newNotification.innerHTML = `
-                <div class="notification-title">Status Update</div>
-                <div class="notification-content">${message}</div>
-                <div class="notification-time">${time}</div>
-            `;
-            notificationSidebar.insertBefore(newNotification, notificationSidebar.children[1]);
+        // Notification System
+class NotificationSystem {
+    constructor() {
+        this.notifications = [];
+        this.container = document.querySelector('.notification-list');
+        this.counter = document.querySelector('.notification-counter');
+    }
+
+    addNotification(type, title, message) {
+        const notification = {
+            id: Date.now(),
+            type,
+            title,
+            message,
+            timestamp: new Date(),
+            isNew: true
+        };
+
+        // Add to beginning of array
+        this.notifications.unshift(notification);
+        
+        // Keep only latest 10 notifications
+        if (this.notifications.length > 10) {
+            this.notifications.pop();
         }
+
+        this.renderNotifications();
+        this.updateCounter();
+
+        // Remove 'new' tag after 1 hour
+        setTimeout(() => {
+            notification.isNew = false;
+            this.renderNotifications();
+        }, 3600000);
+    }
+
+    getIconForType(type) {
+        const icons = {
+            assignment: 'person_add',
+            progress: 'trending_up',
+            review: 'rate_review',
+            alert: 'warning'
+        };
+        return icons[type] || 'info';
+    }
+
+    formatTimeAgo(timestamp) {
+        const seconds = Math.floor((new Date() - timestamp) / 1000);
+        
+        let interval = Math.floor(seconds / 31536000);
+        if (interval > 1) return interval + ' years ago';
+        
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) return interval + ' months ago';
+        
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) return interval + ' days ago';
+        
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) return interval + ' hours ago';
+        
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) return interval + ' minutes ago';
+        
+        return 'just now';
+    }
+
+    updateCounter() {
+        const newCount = this.notifications.filter(n => n.isNew).length;
+        this.counter.textContent = newCount;
+        this.counter.style.display = newCount > 0 ? 'block' : 'none';
+    }
+
+    renderNotifications() {
+        this.container.innerHTML = this.notifications
+            .map(notification => `
+                <div class="notification type-${notification.type} ${notification.isNew ? 'new' : ''}">
+                    <i class="material-icons notification-icon">
+                        ${this.getIconForType(notification.type)}
+                    </i>
+                    <div class="notification-content">
+                        <div class="notification-title">${notification.title}</div>
+                        <div class="notification-message">${notification.message}</div>
+                        <div class="notification-time">
+                            ${this.formatTimeAgo(notification.timestamp)}
+                        </div>
+                    </div>
+                </div>
+            `)
+            .join('');
+    }
+}
+
+// Initialize notification system
+const notificationSystem = new NotificationSystem();
+
+// For team assignments
+notificationSystem.addNotification(
+    'assignment',
+    'New Team Member',
+    'Alex Foster has joined the research team'
+);
+
+// For project progress
+notificationSystem.addNotification(
+    'progress',
+    'Research Complete',
+    'Initial research phase has been completed'
+);
+
+// For review requests
+notificationSystem.addNotification(
+    'review',
+    'Review Required',
+    'New content ready for editorial review'
+);
+
+// Example usage for project stages
+document.addEventListener('DOMContentLoaded', () => {
+    // Listen for form submission
+    const form = document.getElementById('team-assignment-form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const coordinator = document.getElementById('coordinator-name');
+            const department = document.getElementById('coordinator-department');
+            
+            if (coordinator.value && department.value) {
+                const coordinatorName = coordinator.options[coordinator.selectedIndex].text;
+                const departmentName = department.options[department.selectedIndex].text;
+                
+                notificationSystem.addNotification(
+                    'assignment',
+                    'Team Coordinator Assigned',
+                    `${coordinatorName} has been assigned as coordinator for ${departmentName}`
+                );
+            }
+        });
+    }
+});
+
+// Example function to trigger notifications based on project stages
+function updateProjectStage(stage, details) {
+    const notifications = {
+        research: {
+            type: 'progress',
+            title: 'Research Phase Started',
+            message: 'Team has begun gathering season statistics and highlights.'
+        },
+        content: {
+            type: 'progress',
+            title: 'Content Development',
+            message: 'Writing team has started drafting the season recap.'
+        },
+        review: {
+            type: 'review',
+            title: 'Content Review Required',
+            message: 'New content is ready for editorial review.'
+        },
+        graphics: {
+            type: 'progress',
+            title: 'Graphics Production',
+            message: 'Design team has started creating visual assets.'
+        },
+        final: {
+            type: 'alert',
+            title: 'Final Review Needed',
+            message: 'Complete season recap ready for final approval.'
+        }
+    };
+
+    if (notifications[stage]) {
+        const notification = notifications[stage];
+        notificationSystem.addNotification(
+            notification.type,
+            notification.title,
+            details || notification.message
+        );
+    }
+}
         
         // Store coordinator names
 document.addEventListener('DOMContentLoaded', function() {
