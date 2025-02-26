@@ -574,9 +574,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 id="uploadModalTitle">Upload Content</h2>
-                        <button class="close-btn" onclick="closeUploadModal()">
-                            <i class="material-icons">close</i>
-                        </button>
+                       
                     </div>
                     <div class="modal-body">
                         <div class="upload-container">
@@ -605,11 +603,12 @@
                                     <input type="text" id="tags" class="search-input" placeholder="research, fsu, science...">
                                 </div>
                             </div>
-                            <div class="upload-actions">
-                                <button class="upload-btn cancel" onclick="closeUploadModal()">Cancel</button>
-                                <button class="upload-btn submit" id="continue-btn" onclick="showDetailsForm()">Continue</button>
-                                <button class="upload-btn submit" id="upload-btn" style="display: none;" onclick="uploadFiles()">Upload</button>
-                            </div>
+                            <!-- Make sure your cancel button has the correct ID -->
+                               <div class="upload-actions">
+                                   <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
+                                   <button class="upload-btn submit" id="continue-btn" onclick="showDetailsForm()">Continue</button>
+                                   <button class="upload-btn submit" id="upload-btn" style="display: none;" onclick="uploadFiles()">Upload</button>
+                               </div>
                         </div>
                     </div>
                 </div>
@@ -672,6 +671,19 @@ function closeUploadModal() {
     const modal = document.getElementById('uploadModal');
     modal.classList.remove('show');
     document.body.style.overflow = 'auto';
+}
+
+// This is the new function to handle cancel button click
+function cancelUpload() {
+    // Close the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.remove('show');
+    
+    // Open the Add New modal again
+    const addNewModal = document.getElementById('addNewModal');
+    addNewModal.classList.add('show');
+    
+    console.log('Canceled upload, returning to Add New popup');
 }
 
 function resetUploadForm() {
@@ -937,6 +949,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const uploadBtn = document.getElementById('upload-btn');
     if (uploadBtn) {
         uploadBtn.addEventListener('click', uploadFiles);
+    }
+    
+    // Add event listener to the cancel button - modified to go back to Add New popup
+    const cancelBtn = document.getElementById('cancel-upload');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', cancelUpload);
+    } else {
+        console.error('Cancel button not found');
     }
     
     // Close modal when clicking outside
