@@ -534,86 +534,40 @@
             
             </div>
 
-            <!-- Modal -->
-            <div id="addNewModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Add New Research Content</h2>
-                        <button class="close-btn" onclick="closeModal()">
-                            <i class="material-icons">close</i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="content-type-grid">
-                            <div class="content-type-card" onclick="selectContentType('documents')">
-                                <i class="material-icons">description</i>
-                                <h3>Documents</h3>
-                                <p>Upload and manage research documents</p>
-                            </div>
-                            <div class="content-type-card" onclick="selectContentType('web-links')">
-                                <i class="material-icons">link</i>
-                                <h3>Web Links</h3>
-                                <p>Add relevant web resources and articles</p>
-                            </div>
-                            <div class="content-type-card" onclick="selectContentType('breaking-news')">
-                                <i class="material-icons">flash_on</i>
-                                <h3>Breaking News</h3>
-                                <p>Add latest news and updates</p>
-                            </div>
-                            <div class="content-type-card" onclick="selectContentType('media')">
-                                <i class="material-icons">perm_media</i>
-                                <h3>Media</h3>
-                                <p>Upload images, videos, and other media</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Content Type Selection Modal -->
+<div id="addNewModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Research Content</h2>
+            <button class="btn btn-primary add-new-btn" onclick="openModal()">
+                <i class="material-icons">add</i>
+                Add New
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="content-type-card" data-type="documents" onclick="showUploadForm('documents')">
+                <i class="material-icons">description</i>
+                <h3>Documents</h3>
+                <p>Upload and manage research documents</p>
             </div>
- <!-- Upload Modal -->
-            <div id="uploadModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 id="uploadModalTitle">Upload Content</h2>
-                        <button class="close-btn" onclick="closeUploadModal()">
-                            <i class="material-icons">close</i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="upload-container">
-                            <div class="upload-area" id="upload-area">
-                                <i class="material-icons upload-icon">cloud_upload</i>
-                                <div class="upload-text">
-                                    <h3>Drag & Drop files here</h3>
-                                    <p>or click to browse files</p>
-                                </div>
-                                <input type="file" class="upload-file-input" id="file-input" multiple>
-                            </div>
-                            <div class="file-list" id="file-list">
-                                <!-- Files will be listed here -->
-                            </div>
-                            <div class="form-container" id="upload-details" style="display: none;">
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" id="title" class="search-input" placeholder="Enter a title...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea id="description" class="search-input" rows="4" placeholder="Enter a description..."></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tags">Tags (comma separated)</label>
-                                    <input type="text" id="tags" class="search-input" placeholder="research, fsu, science...">
-                                </div>
-                            </div>
-                            <div class="upload-actions">
-                                <button class="upload-btn cancel" onclick="closeUploadModal()">Cancel</button>
-                                <button class="upload-btn submit" id="continue-btn" onclick="showDetailsForm()">Continue</button>
-                                <button class="upload-btn submit" id="upload-btn" style="display: none;" onclick="uploadFiles()">Upload</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="content-type-card" data-type="web-links" onclick="showUploadForm('web-links')">
+                <i class="material-icons">link</i>
+                <h3>Web Links</h3>
+                <p>Add relevant web resources and articles</p>
             </div>
+            <div class="content-type-card" data-type="breaking-news" onclick="showUploadForm('breaking-news')">
+                <i class="material-icons">flash_on</i>
+                <h3>Breaking News</h3>
+                <p>Add latest news and updates</p>
+            </div>
+            <div class="content-type-card" data-type="media" onclick="showUploadForm('media')">
+                <i class="material-icons">perm_media</i>
+                <h3>Media</h3>
+                <p>Upload images, videos, and other media</p>
+            </div>
+        </div>
+    </div>
+</div>
 
              <!-- Upload Modal -->
              <div id="uploadModal" class="modal">
@@ -670,304 +624,348 @@
 
 
     <script>
-        // Modal functionality
-        function openModal() {
-            const modal = document.getElementById('addNewModal');
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
+        // Global variables
+let selectedFiles = [];
+let currentContentType = '';
 
-        function closeModal() {
-            const modal = document.getElementById('addNewModal');
-            modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
+// Modal functionality
+function openModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    console.log('Opening Add New modal');
+}
 
-        function selectContentType(type) {
-            // You can customize this function based on the content type selected
-            console.log('Selected content type:', type);
-            
-            // Example notification
-            const contentTypes = {
-                'documents': 'Document upload form',
-                'web-links': 'Web link submission form',
-                'breaking-news': 'Breaking news creation form',
-                'media': 'Media upload form'
-            };
-            
-            alert(`Opening ${contentTypes[type]}...`);
-            // closeModal(); // Uncomment this if you want to close the modal after selection
-        }
+function closeModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('addNewModal');
-            if (event.target === modal) {
-                closeModal();
+function showUploadForm(type) {
+    currentContentType = type;
+    
+    // Set the appropriate title based on content type
+    const titles = {
+        'documents': 'Upload Documents',
+        'web-links': 'Add Web Links',
+        'breaking-news': 'Create Breaking News',
+        'media': 'Upload Media'
+    };
+    
+    document.getElementById('uploadModalTitle').textContent = titles[type];
+    
+    // Close the first modal
+    closeModal();
+    
+    // Reset the upload form
+    resetUploadForm();
+    
+    // Open the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.add('show');
+    
+    console.log('Opening upload form for type:', type);
+}
+
+function closeUploadModal() {
+    const modal = document.getElementById('uploadModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+function resetUploadForm() {
+    // Clear selected files
+    selectedFiles = [];
+    document.getElementById('file-list').innerHTML = '';
+    
+    // Reset form elements
+    document.getElementById('upload-details').style.display = 'none';
+    document.getElementById('continue-btn').style.display = 'block';
+    document.getElementById('upload-btn').style.display = 'none';
+    
+    if (document.getElementById('title')) {
+        document.getElementById('title').value = '';
+    }
+    if (document.getElementById('description')) {
+        document.getElementById('description').value = '';
+    }
+    if (document.getElementById('tags')) {
+        document.getElementById('tags').value = '';
+    }
+}
+
+// File handling functionality
+function handleFileSelect(event) {
+    const files = event.target.files || event.dataTransfer.files;
+    
+    if (files.length > 0) {
+        // Convert FileList to Array and add to selectedFiles
+        Array.from(files).forEach(file => {
+            // Check if file is already in the list
+            if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                selectedFiles.push(file);
             }
-        }
-
-        // Navigation item click handler
-        const navItems = document.querySelectorAll('.nav-item');
+        });
         
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // Remove active class from all items
-                navItems.forEach(nav => nav.classList.remove('active'));
-                // Add active class to clicked item
-                item.classList.add('active');
-            });
+        // Update the file list
+        updateFileList();
+    }
+}
+
+function updateFileList() {
+    const fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+    
+    selectedFiles.forEach((file, index) => {
+        // Create a file item element
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        
+        // Format the file size
+        const fileSize = formatFileSize(file.size);
+        
+        // Get file icon based on type
+        const fileIcon = getFileIcon(file.type);
+        
+        // Set the file item content
+        fileItem.innerHTML = `
+            <div class="file-info">
+                <i class="material-icons file-icon">${fileIcon}</i>
+                <span class="file-name">${file.name}</span>
+                <span class="file-size">${fileSize}</span>
+            </div>
+            <i class="material-icons file-remove" data-index="${index}">close</i>
+        `;
+        
+        fileList.appendChild(fileItem);
+    });
+    
+    // Add click event to remove buttons
+    document.querySelectorAll('.file-remove').forEach(button => {
+        button.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            selectedFiles.splice(index, 1);
+            updateFileList();
         });
+    });
+}
 
-        // Card hover animation
-        researchCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px)';
-                card.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-            });
+function formatFileSize(size) {
+    if (size < 1024) {
+        return size + ' B';
+    } else if (size < 1024 * 1024) {
+        return (size / 1024).toFixed(1) + ' KB';
+    } else {
+        return (size / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+}
 
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-                card.style.boxShadow = 'none';
-            });
-        });
+function getFileIcon(fileType) {
+    if (fileType.includes('image')) {
+        return 'image';
+    } else if (fileType.includes('video')) {
+        return 'videocam';
+    } else if (fileType.includes('audio')) {
+        return 'audiotrack';
+    } else if (fileType.includes('pdf')) {
+        return 'picture_as_pdf';
+    } else if (fileType.includes('word') || fileType.includes('document')) {
+        return 'description';
+    } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
+        return 'table_chart';
+    } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+        return 'slideshow';
+    } else {
+        return 'insert_drive_file';
+    }
+}
 
-        // Global variables to store files
-        let selectedFiles = [];
-        let currentContentType = '';
+function showDetailsForm() {
+    if (selectedFiles.length === 0) {
+        alert('Please select at least one file to upload.');
+        return;
+    }
+    
+    // Show the details form
+    document.getElementById('upload-details').style.display = 'block';
+    // Hide continue button, show upload button
+    document.getElementById('continue-btn').style.display = 'none';
+    document.getElementById('upload-btn').style.display = 'block';
+}
 
-        // Modal functionality
-        function openModal() {
-            const modal = document.getElementById('addNewModal');
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
+function uploadFiles() {
+    const title = document.getElementById('title').value;
+    
+    if (!title) {
+        alert('Please enter a title.');
+        return;
+    }
+    
+    // In a real application, you would send the files and details to a server
+    // For demonstration, show a success message
+    alert(`${selectedFiles.length} file(s) uploaded successfully!`);
+    
+    // Close the modal
+    closeUploadModal();
+}
 
-        function closeModal() {
-            const modal = document.getElementById('addNewModal');
-            modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
+// Helper functions for error handling and user feedback
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 3000);
+}
 
-        function showUploadForm(type) {
-            currentContentType = type;
-            
-            // Set the appropriate title based on content type
-            const titles = {
-                'documents': 'Upload Documents',
-                'web-links': 'Add Web Links',
-                'breaking-news': 'Create Breaking News',
-                'media': 'Upload Media'
-            };
-            
-            document.getElementById('uploadModalTitle').textContent = titles[type];
-            
-            // Close the first modal
-            closeModal();
-            
-            // Reset the upload form
-            resetUploadForm();
-            
-            // Open the upload modal
-            const uploadModal = document.getElementById('uploadModal');
-            uploadModal.classList.add('show');
-        }
+function showSuccess(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = message;
+    document.body.appendChild(successDiv);
+    setTimeout(() => successDiv.remove(), 3000);
+}
 
-        function closeUploadModal() {
-            const modal = document.getElementById('uploadModal');
-            modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        function resetUploadForm() {
-            // Clear selected files
-            selectedFiles = [];
-            document.getElementById('file-list').innerHTML = '';
-            
-            // Reset form elements
-            document.getElementById('upload-details').style.display = 'none';
-            document.getElementById('continue-btn').style.display = 'block';
-            document.getElementById('upload-btn').style.display = 'none';
-            
-            if (document.getElementById('title')) {
-                document.getElementById('title').value = '';
-            }
-            if (document.getElementById('description')) {
-                document.getElementById('description').value = '';
-            }
-            if (document.getElementById('tags')) {
-                document.getElementById('tags').value = '';
-            }
-        }
-
-        function showDetailsForm() {
-            if (selectedFiles.length === 0) {
-                alert('Please select at least one file to upload.');
-                return;
-            }
-            
-            // Show the details form
-            document.getElementById('upload-details').style.display = 'block';
-            // Hide continue button, show upload button
-            document.getElementById('continue-btn').style.display = 'none';
-            document.getElementById('upload-btn').style.display = 'block';
-        }
-
-        // File handling functionality
-        function handleFileSelect(event) {
-            const files = event.target.files || event.dataTransfer.files;
-            
-            if (files.length > 0) {
-                // Convert FileList to Array and add to selectedFiles
-                Array.from(files).forEach(file => {
-                    // Check if file is already in the list
-                    if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
-                        selectedFiles.push(file);
+// Initialize everything when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+    
+    // Add event listener to the Add New button
+    const addNewBtn = document.querySelector('.add-new-btn');
+    if (addNewBtn) {
+        addNewBtn.addEventListener('click', openModal);
+        console.log('Add New button event listener added');
+    } else {
+        console.error('Add New button not found');
+    }
+    
+    // Add event listeners to the close buttons
+    const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
+    if (closeAddModalBtn) {
+        closeAddModalBtn.addEventListener('click', closeModal);
+    }
+    
+    const closeUploadModalBtn = document.querySelector('#uploadModal .close-btn');
+    if (closeUploadModalBtn) {
+        closeUploadModalBtn.addEventListener('click', closeUploadModal);
+    }
+    
+    // Add event listeners to all content type cards
+    const contentTypeCards = document.querySelectorAll('.content-type-card');
+    if (contentTypeCards.length > 0) {
+        console.log(`Found ${contentTypeCards.length} content type cards`);
+        contentTypeCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Get the type from data attribute or heading
+                let type;
+                
+                // Try to get from onclick attribute first
+                const onclickAttr = this.getAttribute('onclick');
+                if (onclickAttr && (onclickAttr.includes('selectContentType') || onclickAttr.includes('showUploadForm'))) {
+                    // Extract the type parameter from the onclick attribute
+                    const match = onclickAttr.match(/'([^']+)'/);
+                    if (match && match[1]) {
+                        type = match[1];
                     }
-                });
+                }
                 
-                // Update the file list
-                updateFileList();
-            }
-        }
-
-        function updateFileList() {
-            const fileList = document.getElementById('file-list');
-            fileList.innerHTML = '';
-            
-            selectedFiles.forEach((file, index) => {
-                // Create a file item element
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
+                // If we couldn't get it from onclick, look for data-type attribute
+                if (!type) {
+                    type = this.getAttribute('data-type');
+                }
                 
-                // Format the file size
-                const fileSize = formatFileSize(file.size);
+                // If we still don't have a type, use the heading text
+                if (!type) {
+                    const heading = this.querySelector('h3');
+                    if (heading) {
+                        type = heading.textContent.toLowerCase().replace(/\s+/g, '-');
+                    }
+                }
                 
-                // Get file icon based on type
-                const fileIcon = getFileIcon(file.type);
-                
-                // Set the file item content
-                fileItem.innerHTML = `
-                    <div class="file-info">
-                        <i class="material-icons file-icon">${fileIcon}</i>
-                        <span class="file-name">${file.name}</span>
-                        <span class="file-size">${fileSize}</span>
-                    </div>
-                    <i class="material-icons file-remove" data-index="${index}">close</i>
-                `;
-                
-                fileList.appendChild(fileItem);
+                // Now that we have the type, show the upload form
+                if (type) {
+                    console.log('Content type card clicked:', type);
+                    showUploadForm(type);
+                }
             });
-            
-            // Add click event to remove buttons
-            document.querySelectorAll('.file-remove').forEach(button => {
-                button.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    selectedFiles.splice(index, 1);
-                    updateFileList();
-                });
-            });
+        });
+    } else {
+        console.error('No content type cards found');
+    }
+    
+    // Set up drag and drop functionality
+    const uploadArea = document.getElementById('upload-area');
+    if (uploadArea) {
+        // Drag and drop events
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+            handleFileSelect(e);
+        });
+    } else {
+        console.error('Upload area not found');
+    }
+    
+    // File input change event
+    const fileInput = document.getElementById('file-input');
+    if (fileInput) {
+        fileInput.addEventListener('change', handleFileSelect);
+    } else {
+        console.error('File input not found');
+    }
+    
+    // Add event listeners to action buttons
+    const continueBtn = document.getElementById('continue-btn');
+    if (continueBtn) {
+        continueBtn.addEventListener('click', showDetailsForm);
+    }
+    
+    const uploadBtn = document.getElementById('upload-btn');
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', uploadFiles);
+    }
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const addNewModal = document.getElementById('addNewModal');
+        const uploadModal = document.getElementById('uploadModal');
+        
+        if (event.target === addNewModal) {
+            closeModal();
         }
-
-        function formatFileSize(size) {
-            if (size < 1024) {
-                return size + ' B';
-            } else if (size < 1024 * 1024) {
-                return (size / 1024).toFixed(1) + ' KB';
-            } else {
-                return (size / (1024 * 1024)).toFixed(1) + ' MB';
-            }
-        }
-
-        function getFileIcon(fileType) {
-            if (fileType.includes('image')) {
-                return 'image';
-            } else if (fileType.includes('video')) {
-                return 'videocam';
-            } else if (fileType.includes('audio')) {
-                return 'audiotrack';
-            } else if (fileType.includes('pdf')) {
-                return 'picture_as_pdf';
-            } else if (fileType.includes('word') || fileType.includes('document')) {
-                return 'description';
-            } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
-                return 'table_chart';
-            } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
-                return 'slideshow';
-            } else {
-                return 'insert_drive_file';
-            }
-        }
-
-        function uploadFiles() {
-            const title = document.getElementById('title').value;
-            
-            if (!title) {
-                alert('Please enter a title.');
-                return;
-            }
-            
-            // In a real application, you would send the files and details to a server
-            // For demonstration, show a success message
-            alert(`${selectedFiles.length} file(s) uploaded successfully!`);
-            
-            // Close the modal
+        
+        if (event.target === uploadModal) {
             closeUploadModal();
         }
-
-        // Initialize drag and drop functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const uploadArea = document.getElementById('upload-area');
-            const fileInput = document.getElementById('file-input');
-            
-            // File input change event
-            fileInput.addEventListener('change', handleFileSelect);
-            
-            // Drag and drop events
-            uploadArea.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.classList.add('dragover');
-            });
-            
-            uploadArea.addEventListener('dragleave', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.classList.remove('dragover');
-            });
-            
-            uploadArea.addEventListener('drop', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.classList.remove('dragover');
-                handleFileSelect(e);
-            });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                const addNewModal = document.getElementById('addNewModal');
-                const uploadModal = document.getElementById('uploadModal');
-                
-                if (event.target === addNewModal) {
-                    closeModal();
-                }
-                
-                if (event.target === uploadModal) {
-                    closeUploadModal();
-                }
-            });
-            
-            // Navigation item click handler
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    // Remove active class from all items
-                    navItems.forEach(nav => nav.classList.remove('active'));
-                    // Add active class to clicked item
-                    item.classList.add('active');
-                });
-            });
+    });
+    
+    // Navigation item click handler
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active class from all items
+            navItems.forEach(nav => nav.classList.remove('active'));
+            // Add active class to clicked item
+            this.classList.add('active');
         });
+    });
+});
+
+
     </script>
 </body>
 </html>
