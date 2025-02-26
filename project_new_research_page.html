@@ -493,6 +493,140 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Simple Grid View Styles */
+.research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.research-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+}
+
+.research-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    background-color: var(--fsu-garnet);
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-icon i {
+    font-size: 2rem;
+}
+
+.card-content {
+    padding: 16px;
+    flex: 1;
+}
+
+.card-title {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: var(--fsu-garnet);
+    font-weight: 600;
+}
+
+.card-description {
+    color: #666;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.card-file {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.card-file i {
+    color: var(--fsu-garnet);
+    font-size: 18px;
+}
+
+.card-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.card-actions {
+    display: flex;
+    padding: 12px 16px;
+    background: #f8f8f8;
+    gap: 8px;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #692a38;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--fsu-garnet);
+    border: 1px solid var(--fsu-garnet);
+}
+
+.btn-secondary:hover {
+    background-color: #f0f0f0;
+}
+
+/* Icon colors by type */
+.research-card:nth-child(2) .card-icon {
+    background-color: #2196F3; /* Blue for media */
+}
+
+.research-card:nth-child(3) .card-icon {
+    background-color: #4CAF50; /* Green for web links */
+}
+
+.research-card:nth-child(4) .card-icon {
+    background-color: #FF5722; /* Red-orange for videos */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
     </style>
 </head>
@@ -534,15 +668,94 @@
             
             </div>
 
+            <!-- Simple Grid View for Research Projects -->
+<div class="research-grid">
+    <!-- Document item -->
+    <div class="research-card">
+        <div class="card-icon">
+            <i class="material-icons">description</i>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Quantum Computing Research</h3>
+            <p class="card-description">Analysis of quantum computing applications in medical research</p>
+            <div class="card-file">
+                <i class="material-icons">insert_drive_file</i>
+                <span>quantum_research.pdf (2.4 MB)</span>
+            </div>
+            <div class="card-date">Added: Feb 26, 2025</div>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-secondary">View</button>
+            <button class="btn btn-primary">Download</button>
+        </div>
+    </div>
+
+    <!-- Media item -->
+    <div class="research-card">
+        <div class="card-icon">
+            <i class="material-icons">perm_media</i>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Lab Experiment Results</h3>
+            <p class="card-description">Visual documentation of biochemistry lab results</p>
+            <div class="card-file">
+                <i class="material-icons">image</i>
+                <span>experiment_results.jpg (3.2 MB)</span>
+            </div>
+            <div class="card-date">Added: Feb 24, 2025</div>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-secondary">View</button>
+            <button class="btn btn-primary">Download</button>
+        </div>
+    </div>
+
+    <!-- Web Link item -->
+    <div class="research-card">
+        <div class="card-icon">
+            <i class="material-icons">link</i>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Journal of Medical Research</h3>
+            <p class="card-description">Official website of the Journal of Medical Research</p>
+            <div class="card-file">
+                <i class="material-icons">language</i>
+                <span>journal-med-research.org</span>
+            </div>
+            <div class="card-date">Added: Feb 22, 2025</div>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-secondary">Visit</button>
+            <button class="btn btn-primary">Copy Link</button>
+        </div>
+    </div>
+
+    <!-- Video item -->
+    <div class="research-card">
+        <div class="card-icon">
+            <i class="material-icons">videocam</i>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Research Presentation</h3>
+            <p class="card-description">Video presentation of the latest research findings</p>
+            <div class="card-file">
+                <i class="material-icons">movie</i>
+                <span>presentation.mp4 (18.7 MB)</span>
+            </div>
+            <div class="card-date">Added: Feb 21, 2025</div>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-secondary">Play</button>
+            <button class="btn btn-primary">Download</button>
+        </div>
+    </div>
+</div>
+
             <!-- Content Type Selection Modal -->
 <div id="addNewModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Add New Research Content</h2>
-            <button class="btn btn-primary add-new-btn" onclick="openModal()">
-                <i class="material-icons">add</i>
-                Add New
-            </button>
         </div>
         <div class="modal-body">
             <div class="content-type-card" data-type="documents" onclick="showUploadForm('documents')">
@@ -574,7 +787,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 id="uploadModalTitle">Upload Content</h2>
-                       
+                    
                     </div>
                     <div class="modal-body">
                         <div class="upload-container">
@@ -626,6 +839,325 @@
         // Global variables
 let selectedFiles = [];
 let currentContentType = '';
+
+// Function to add uploaded content to the research grid
+function addToResearchGrid(title, description, files, type) {
+    console.log("Adding to research grid:", {title, description, files, type});
+    
+    // Get current date for display
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+    
+    // Create a new research card
+    const researchCard = document.createElement('div');
+    researchCard.className = 'research-card';
+    
+    // Determine icon based on content type
+    let iconName = 'description';
+    if (type === 'media') {
+        iconName = 'perm_media';
+    } else if (type === 'web-links') {
+        iconName = 'link';
+    } else if (type === 'breaking-news') {
+        iconName = 'flash_on';
+    }
+    
+    // Create card header with icon
+    let cardIcon = `
+        <div class="card-icon">
+            <i class="material-icons">${iconName}</i>
+        </div>
+    `;
+    
+    // Set up the content section
+    let cardContent = `
+        <div class="card-content">
+            <h3 class="card-title">${title}</h3>
+            <p class="card-description">${description}</p>
+    `;
+    
+    // Add file information based on content type
+    if (type === 'web-links') {
+        // For web links, we'd typically get URLs from a form field in a real implementation
+        // For now, use the description as a fallback or mock URL
+        const urlText = description.includes('http') ? 
+            new URL(description).hostname : 
+            'example.com/research';
+            
+        cardContent += `
+            <div class="card-file">
+                <i class="material-icons">language</i>
+                <span>${urlText}</span>
+            </div>
+        `;
+    } else if (type === 'breaking-news') {
+        // For news items
+        cardContent += `
+            <div class="card-file">
+                <i class="material-icons">article</i>
+                <span>Research announcement</span>
+            </div>
+        `;
+    } else {
+        // For files (documents, media)
+        // If we have actual files
+        if (files && files.length > 0) {
+            // Sort through the files to display them in order
+            files.forEach((file, index) => {
+                // Only show first 2 files directly
+                if (index < 2) {
+                    const fileIcon = getFileIconName(file.type);
+                    const fileSize = formatFileSize(file.size);
+                    
+                    cardContent += `
+                        <div class="card-file">
+                            <i class="material-icons">${fileIcon}</i>
+                            <span>${file.name} (${fileSize})</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            // If there are more files, indicate that
+            if (files.length > 2) {
+                cardContent += `
+                    <div class="card-file">
+                        <i class="material-icons">more_horiz</i>
+                        <span>+${files.length - 2} more files</span>
+                    </div>
+                `;
+            }
+        } else {
+            // Fallback if no files
+            cardContent += `
+                <div class="card-file">
+                    <i class="material-icons">insert_drive_file</i>
+                    <span>No files attached</span>
+                </div>
+            `;
+        }
+    }
+    
+    // Add date and close content div
+    cardContent += `
+            <div class="card-date">Added: ${dateString}</div>
+        </div>
+    `;
+    
+    // Set up action buttons based on content type and actual files
+    let cardActions = '<div class="card-actions">';
+    
+    if (type === 'web-links') {
+        cardActions += `
+            <button class="btn btn-secondary">Visit</button>
+            <button class="btn btn-primary">Copy Link</button>
+        `;
+    } else if (type === 'media' && files && files.length > 0) {
+        // Check the first file type to determine appropriate buttons
+        const firstFile = files[0];
+        
+        if (firstFile.type.includes('video')) {
+            cardActions += `
+                <button class="btn btn-secondary">Play</button>
+                <button class="btn btn-primary">Download</button>
+            `;
+        } else if (firstFile.type.includes('image')) {
+            cardActions += `
+                <button class="btn btn-secondary">View</button>
+                <button class="btn btn-primary">Download</button>
+            `;
+        } else if (firstFile.type.includes('audio')) {
+            cardActions += `
+                <button class="btn btn-secondary">Listen</button>
+                <button class="btn btn-primary">Download</button>
+            `;
+        } else {
+            // Default for other media types
+            cardActions += `
+                <button class="btn btn-secondary">View</button>
+                <button class="btn btn-primary">Download</button>
+            `;
+        }
+    } else {
+        // Default actions for documents and other types
+        cardActions += `
+            <button class="btn btn-secondary">View</button>
+            <button class="btn btn-primary">Download</button>
+        `;
+    }
+    
+    cardActions += '</div>';
+    
+    // Combine all parts
+    researchCard.innerHTML = cardIcon + cardContent + cardActions;
+    
+    // Add custom background color based on type
+    if (type === 'media') {
+        researchCard.querySelector('.card-icon').style.backgroundColor = '#2196F3';
+    } else if (type === 'web-links') {
+        researchCard.querySelector('.card-icon').style.backgroundColor = '#4CAF50';
+    } else if (type === 'breaking-news') {
+        researchCard.querySelector('.card-icon').style.backgroundColor = '#FF9800';
+    }
+    
+    // Add the card to the research grid
+    const researchGrid = document.querySelector('.research-grid');
+    if (researchGrid) {
+        // Add to the beginning so newest appears first
+        if (researchGrid.firstChild) {
+            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
+        } else {
+            researchGrid.appendChild(researchCard);
+        }
+        console.log("Card added to grid");
+    } else {
+        console.error("Research grid container not found");
+    }
+    
+    // Add event listeners for the new card
+    addCardEventListeners(researchCard, type, files);
+}
+
+// Helper function to get appropriate icon name based on file type
+function getFileIconName(fileType) {
+    if (!fileType) return 'insert_drive_file';
+    
+    if (fileType.includes('image')) {
+        return 'image';
+    } else if (fileType.includes('video')) {
+        return 'movie';
+    } else if (fileType.includes('audio')) {
+        return 'audiotrack';
+    } else if (fileType.includes('pdf')) {
+        return 'picture_as_pdf';
+    } else if (fileType.includes('word') || fileType.includes('document')) {
+        return 'description';
+    } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
+        return 'table_chart';
+    } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+        return 'slideshow';
+    } else {
+        return 'insert_drive_file';
+    }
+}
+
+// Helper function to format file size
+function formatFileSize(size) {
+    if (size < 1024) {
+        return size + ' B';
+    } else if (size < 1024 * 1024) {
+        return (size / 1024).toFixed(1) + ' KB';
+    } else {
+        return (size / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+}
+
+// Add event listeners to a card
+function addCardEventListeners(card, type, files) {
+    // Get the buttons
+    const buttons = card.querySelectorAll('.btn');
+    if (buttons.length >= 2) {
+        // First button (View/Visit/Play)
+        buttons[0].addEventListener('click', function() {
+            const title = card.querySelector('.card-title').textContent;
+            if (type === 'web-links') {
+                alert(`Visiting website: ${title}`);
+            } else if (type === 'media' && files && files.length > 0 && files[0].type.includes('video')) {
+                alert(`Playing video: ${files[0].name}`);
+            } else if (type === 'media' && files && files.length > 0 && files[0].type.includes('image')) {
+                alert(`Viewing image: ${files[0].name}`);
+            } else {
+                alert(`Viewing: ${title}`);
+            }
+        });
+        
+        // Second button (Download/Copy Link)
+        buttons[1].addEventListener('click', function() {
+            const title = card.querySelector('.card-title').textContent;
+            if (type === 'web-links') {
+                alert(`Link copied: ${title}`);
+            } else if (files && files.length > 0) {
+                alert(`Downloading: ${files[0].name}`);
+            } else {
+                alert(`Downloading: ${title}`);
+            }
+        });
+    }
+}
+
+// This is the function that will be called when files are uploaded through the drag and drop interface
+function uploadFiles() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value || 'No description provided.';
+    const tags = document.getElementById('tags')?.value || '';
+    
+    if (!title) {
+        alert('Please enter a title.');
+        return;
+    }
+    
+    // Only require files for document and media uploads
+    if (selectedFiles.length === 0 && (currentContentType === 'documents' || currentContentType === 'media')) {
+        alert('Please select at least one file to upload.');
+        return;
+    }
+
+    console.log("Files to be uploaded:", selectedFiles);
+    console.log("Content type:", currentContentType);
+    
+    // Add the uploaded content to the research grid
+    addToResearchGrid(title, description, selectedFiles, currentContentType);
+    
+    // Show success message
+    alert(`${title} has been added to your research projects.`);
+    
+    // Close the modal
+    closeUploadModal();
+}
+
+// Initialize event listeners when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded - setting up Grid View integration");
+    
+    // Add event listeners to the existing cards
+    const existingCards = document.querySelectorAll('.research-card');
+    existingCards.forEach(card => {
+        // Determine type based on icon
+        const iconElement = card.querySelector('.card-icon i');
+        if (!iconElement) return;
+        
+        const iconName = iconElement.textContent;
+        let type = 'documents';
+        
+        if (iconName === 'perm_media') {
+            type = 'media';
+        } else if (iconName === 'link') {
+            type = 'web-links';
+        } else if (iconName === 'flash_on') {
+            type = 'breaking-news';
+        }
+        
+        addCardEventListeners(card, type);
+    });
+    
+    // Override the upload function to include grid functionality
+    const uploadBtn = document.getElementById('upload-btn');
+    if (uploadBtn) {
+        console.log("Upload button found, adding event listener");
+        // Use our own listener separately from any inline handlers
+        uploadBtn.addEventListener('click', function(e) {
+            // Prevent default to avoid duplicate form submissions if there's an inline handler
+            e.preventDefault();
+            uploadFiles();
+        });
+    } else {
+        console.error("Upload button not found");
+    }
+});
 
 // Modal functionality
 function openModal() {
