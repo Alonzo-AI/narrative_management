@@ -227,19 +227,22 @@
         }
 
         /* Header styles update */
-        .header-top {
+        .header-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
 
-        .add-new-btn {
+        #addNewButton {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             padding: 10px 20px;
             font-size: 1rem;
+            cursor: pointer;
         }
 
-        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -247,17 +250,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--modal-overlay);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .modal.show {
             display: flex;
             justify-content: center;
             align-items: center;
-            opacity: 1;
         }
 
         .modal-content {
@@ -266,7 +266,7 @@
             width: 90%;
             max-width: 800px;
             position: relative;
-            transform: translateY(-20px);
+            transform: translateY(0);
             transition: transform 0.3s ease;
         }
 
@@ -485,22 +485,22 @@
 <body>
     <div class="dashboard">
         <aside class="sidebar">
-            <h2>Navigation</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
             <div class="nav-item active">
                 <i class="material-icons">search</i>
                 Research
             </div>
             <div class="nav-item">
                 <i class="material-icons">description</i>
-                Documents
+                Content Draft
             </div>
             <div class="nav-item">
-                <i class="material-icons">people</i>
-                Team
+                <i class="material-icons">brush</i>
+                Graphics
             </div>
             <div class="nav-item">
-                <i class="material-icons">timeline</i>
-                Analytics
+                <i class="material-icons">share</i>
+                Marketing
             </div>
             <div class="nav-item">
                 <i class="material-icons">settings</i>
@@ -569,12 +569,8 @@
                         <div class="upload-container">
                             <div id="dropZone" class="drop-zone">
                                 <i class="material-icons">cloud_upload</i>
-                                <h3>Drag & Drop Files Here</h3>
-                                <p>or</p>
-                                <button class="btn btn-primary browse-btn">
-                                    <i class="material-icons">folder_open</i>
-                                    Browse Files
-                                </button>
+                                <h3>Drag & Drop Files Here or Click to Upload</h3>
+                               
                                 <input type="file" id="fileInput" multiple hidden>
                             </div>
                             <div id="uploadProgress" class="upload-progress" style="display: none;">
@@ -582,10 +578,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" onclick="closeUploadModal()">Cancel</button>
-                        <button class="btn btn-primary" onclick="handleUpload()">Upload</button>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -593,10 +586,10 @@
                 <div class="grid-header">
                     <h2>Research Phase Content</h2>
                     <div class="view-controls">
-                        <button class="btn btn-icon" title="Grid View">
+                        <button class="btn btn-icon active" id="gridViewBtn" title="Grid View">
                             <i class="material-icons">grid_view</i>
                         </button>
-                        <button class="btn btn-icon" title="List View">
+                        <button class="btn btn-icon" id="listViewBtn" title="List View">
                             <i class="material-icons">view_list</i>
                         </button>
                     </div>
@@ -609,8 +602,8 @@
                             <h3><i class="material-icons">description</i> Documents</h3>
                             <span class="item-count">3 items</span>
                         </div>
-                        <div class="content-grid">
-                            <div class="content-card">
+                        <div class="content-grid" id="documents-grid">
+                            <div class="content-card" onclick="previewFile('Research_Report.pdf', 'pdf')">
                                 <div class="file-icon">
                                     <i class="material-icons">picture_as_pdf</i>
                                 </div>
@@ -619,37 +612,91 @@
                                     <span class="file-meta">PDF • 2.5 MB</span>
                                 </div>
                                 <div class="card-actions">
-                                    <button class="btn btn-icon" title="Download">
+                                    <button class="btn btn-icon" title="Download" onclick="event.stopPropagation(); downloadFile('Research_Report.pdf')">
                                         <i class="material-icons">download</i>
                                     </button>
-                                    <button class="btn btn-icon" title="Share">
+                                    <button class="btn btn-icon" title="Share" onclick="event.stopPropagation(); shareFile('Research_Report.pdf')">
+                                        <i class="material-icons">share</i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="content-card" onclick="previewFile('Season_Stats.xlsx', 'excel')">
+                                <div class="file-icon">
+                                    <i class="material-icons">table_chart</i>
+                                </div>
+                                <div class="file-info">
+                                    <span class="file-name">Season_Stats.xlsx</span>
+                                    <span class="file-meta">Excel • 1.8 MB</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-icon" title="Download" onclick="event.stopPropagation(); downloadFile('Season_Stats.xlsx')">
+                                        <i class="material-icons">download</i>
+                                    </button>
+                                    <button class="btn btn-icon" title="Share" onclick="event.stopPropagation(); shareFile('Season_Stats.xlsx')">
+                                        <i class="material-icons">share</i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="content-card" onclick="previewFile('Player_Analysis.docx', 'word')">
+                                <div class="file-icon">
+                                    <i class="material-icons">description</i>
+                                </div>
+                                <div class="file-info">
+                                    <span class="file-name">Player_Analysis.docx</span>
+                                    <span class="file-meta">Word • 3.2 MB</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-icon" title="Download" onclick="event.stopPropagation(); downloadFile('Player_Analysis.docx')">
+                                        <i class="material-icons">download</i>
+                                    </button>
+                                    <button class="btn btn-icon" title="Share" onclick="event.stopPropagation(); shareFile('Player_Analysis.docx')">
                                         <i class="material-icons">share</i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
 
-                    <!-- Web Links Section -->
-                    <div class="content-section">
+                     <!-- Web Links Section -->
+                     <div class="content-section">
                         <div class="section-header">
                             <h3><i class="material-icons">link</i> Web Links</h3>
                             <span class="item-count">2 items</span>
                         </div>
-                        <div class="content-grid">
-                            <div class="content-card link-card">
+                        <div class="content-grid" id="weblinks-grid">
+                            <div class="content-card link-card" onclick="openLink('https://seminoles.com/stats/')">
                                 <div class="link-preview">
                                     <i class="material-icons">public</i>
                                 </div>
                                 <div class="link-info">
                                     <span class="link-title">FSU Athletics Statistics</span>
-                                    <span class="link-url">https://seminoles.com/stats/</span>
+                                    <span class="link-url">seminoles.com/stats/</span>
                                 </div>
                                 <div class="card-actions">
-                                    <button class="btn btn-icon" title="Open Link">
+                                    <button class="btn btn-icon" title="Open Link" onclick="event.stopPropagation(); openLink('https://seminoles.com/stats/')">
                                         <i class="material-icons">open_in_new</i>
                                     </button>
-                                    <button class="btn btn-icon" title="Copy Link">
+                                    <button class="btn btn-icon" title="Copy Link" onclick="event.stopPropagation(); copyLink('https://seminoles.com/stats/')">
+                                        <i class="material-icons">content_copy</i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="content-card link-card" onclick="openLink('https://espn.com/college-basketball/')">
+                                <div class="link-preview">
+                                    <i class="material-icons">sports_basketball</i>
+                                </div>
+                                <div class="link-info">
+                                    <span class="link-title">ESPN College Basketball</span>
+                                    <span class="link-url">espn.com/college-basketball/</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-icon" title="Open Link" onclick="event.stopPropagation(); openLink('https://espn.com/college-basketball/')">
+                                        <i class="material-icons">open_in_new</i>
+                                    </button>
+                                    <button class="btn btn-icon" title="Copy Link" onclick="event.stopPropagation(); copyLink('https://espn.com/college-basketball/')">
                                         <i class="material-icons">content_copy</i>
                                     </button>
                                 </div>
@@ -663,26 +710,70 @@
                             <h3><i class="material-icons">perm_media</i> Media</h3>
                             <span class="item-count">4 items</span>
                         </div>
-                        <div class="content-grid">
-                            <div class="content-card media-card">
+                        <div class="content-grid" id="media-grid">
+                            <div class="content-card media-card" onclick="playMedia('game_highlights.mp4')">
                                 <div class="media-preview">
-                                    <img src="/api/placeholder/200/150" alt="Game Highlights">
+                                    <img src="/api/placeholder/300/150" alt="Game Highlights">
+                                    <div class="media-play-button">
+                                        <i class="material-icons">play_arrow</i>
+                                    </div>
                                     <span class="media-duration">2:15</span>
                                 </div>
                                 <div class="media-info">
                                     <span class="media-title">Game Highlights</span>
                                     <span class="media-meta">MP4 • 45 MB</span>
                                 </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-icon" title="Play">
+                            </div>
+                            
+                            <div class="content-card media-card" onclick="playMedia('player_interview.mp4')">
+                                <div class="media-preview">
+                                    <img src="/api/placeholder/300/150" alt="Player Interview">
+                                    <div class="media-play-button">
                                         <i class="material-icons">play_arrow</i>
-                                    </button>
-                                    <button class="btn btn-icon" title="Download">
-                                        <i class="material-icons">download</i>
-                                    </button>
+                                    </div>
+                                    <span class="media-duration">5:33</span>
+                                </div>
+                                <div class="media-info">
+                                    <span class="media-title">Player Interview</span>
+                                    <span class="media-meta">MP4 • 120 MB</span>
+                                </div>
+                            </div>
+                            
+                            <div class="content-card media-card" onclick="previewImage('team_photo.jpg')">
+                                <div class="media-preview">
+                                    <img src="/api/placeholder/300/150" alt="Team Photo">
+                                </div>
+                                <div class="media-info">
+                                    <span class="media-title">Team Photo</span>
+                                    <span class="media-meta">JPG • 2.4 MB</span>
+                                </div>
+                            </div>
+                            
+                            <div class="content-card media-card" onclick="previewImage('court_diagram.png')">
+                                <div class="media-preview">
+                                    <img src="/api/placeholder/300/150" alt="Court Diagram">
+                                </div>
+                                <div class="media-info">
+                                    <span class="media-title">Court Diagram</span>
+                                    <span class="media-meta">PNG • 1.8 MB</span>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- File Preview Modal -->
+            <div class="modal" id="filePreviewModal">
+                <div class="modal-content preview-content">
+                    <div class="modal-header">
+                        <h2 id="previewTitle">File Preview</h2>
+                        <button class="close-btn" onclick="closePreviewModal()">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                    <div class="modal-body preview-body">
+                        <div id="previewContainer"></div>
                     </div>
                 </div>
             </div>
@@ -937,235 +1028,7 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-    // All DOM elements
-    const addNewBtn = document.querySelector('.add-new-btn');
-    const contentTypeCards = document.querySelectorAll('.content-type-card');
-    const modals = {
-        addNew: document.getElementById('addNewModal'),
-        upload: document.getElementById('uploadModal')
-    };
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const uploadProgress = document.getElementById('uploadProgress');
-    const progressList = uploadProgress.querySelector('.progress-list');
-
-    // Modal Control Functions
-    function openModal(modalId) {
-        modals[modalId].classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(modalId) {
-        modals[modalId].classList.remove('show');
-        document.body.style.overflow = 'auto';
-    }
-
-    function showUploadArea(type) {
-        // Close the first modal
-        const addNewModal = document.getElementById('addNewModal');
-        addNewModal.classList.remove('show');
         
-        // Update upload modal title based on content type
-        const titles = {
-            'documents': 'Upload Documents',
-            'web-links': 'Add Web Links',
-            'breaking-news': 'Create Breaking News',
-            'media': 'Upload Media'
-        };
-        
-        const uploadModal = document.getElementById('uploadModal');
-        const uploadTitle = document.getElementById('uploadModalTitle');
-        
-        // Set the title and show the upload modal
-        uploadTitle.textContent = titles[type] || `Upload ${type}`;
-        uploadModal.classList.add('show');
-    }
-
-    // Drag and Drop Event Handlers
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
-    function highlight() {
-        dropZone.classList.add('drag-over');
-    }
-
-    function unhighlight() {
-        dropZone.classList.remove('drag-over');
-    }
-
-    function handleDrop(e) {
-        unhighlight();
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        handleFiles(files);
-    }
-
-    // File Handling Functions
-    function handleFiles(files) {
-        uploadProgress.style.display = 'block';
-        progressList.innerHTML = '';
-
-        Array.from(files).forEach(file => {
-            createProgressItem(file);
-        });
-    }
-
-    function createProgressItem(file) {
-        const progressItem = document.createElement('div');
-        progressItem.className = 'progress-item';
-        
-        // Create file preview with appropriate icon
-        const fileIcon = getFileIcon(file.type);
-        
-        progressItem.innerHTML = `
-            <div class="file-preview">
-                <i class="material-icons">${fileIcon}</i>
-                <span class="file-name">${file.name}</span>
-                <i class="material-icons remove-file" role="button">close</i>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar-fill"></div>
-            </div>
-            <span class="progress-percentage">0%</span>
-        `;
-
-        // Add remove functionality
-        const removeBtn = progressItem.querySelector('.remove-file');
-        removeBtn.addEventListener('click', () => removeFile(progressItem));
-        
-        progressList.appendChild(progressItem);
-        simulateUpload(progressItem);
-    }
-
-    function getFileIcon(fileType) {
-        const icons = {
-            'image': 'image',
-            'video': 'videocam',
-            'audio': 'audiotrack',
-            'application/pdf': 'picture_as_pdf',
-            'text': 'description',
-            'default': 'insert_drive_file'
-        };
-
-        for (const [type, icon] of Object.entries(icons)) {
-            if (fileType.includes(type)) return icon;
-        }
-        return icons.default;
-    }
-
-    function simulateUpload(progressItem) {
-        const progressBar = progressItem.querySelector('.progress-bar-fill');
-        const progressText = progressItem.querySelector('.progress-percentage');
-        let progress = 0;
-
-        const interval = setInterval(() => {
-            progress += Math.random() * 10;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-            }
-            progressBar.style.width = `${Math.round(progress)}%`;
-            progressText.textContent = `${Math.round(progress)}%`;
-        }, 200);
-    }
-
-    function removeFile(progressItem) {
-        progressItem.remove();
-        if (progressList.children.length === 0) {
-            uploadProgress.style.display = 'none';
-        }
-    }
-
-    function validateFileType(file, allowedTypes) {
-        return allowedTypes.some(type => file.type.startsWith(type));
-    }
-
-    // Event Listeners for content type cards in the first modal
-    document.querySelectorAll('.content-type-card').forEach(card => {
-        card.addEventListener('click', function() {
-            // Get the content type from the card's h3 text
-            const type = this.querySelector('h3').textContent.toLowerCase().replace(/\s+/g, '-');
-            showUploadArea(type);
-        });
-    });
-
-    // Drag and drop event listeners
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, preventDefaults);
-        document.body.addEventListener(eventName, preventDefaults);
-    });
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, highlight);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, unhighlight);
-    });
-
-    dropZone.addEventListener('drop', handleDrop);
-
-    // File input handling
-    const browseBtn = dropZone.querySelector('.browse-btn');
-    browseBtn?.addEventListener('click', () => fileInput.click());
-
-    fileInput?.addEventListener('change', (e) => {
-        handleFiles(e.target.files);
-    });
-
-    // Close modals when clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target === modals.addNew) {
-            closeModal('addNew');
-        } else if (event.target === modals.upload) {
-            closeModal('upload');
-        }
-    });
-
-    // Upload button handler
-    document.querySelector('.modal-footer .btn-primary')?.addEventListener('click', () => {
-        if (progressList.children.length > 0) {
-            // Here you would typically handle the actual file upload to your server
-            alert('Files uploaded successfully!');
-            closeModal('upload');
-        } else {
-            alert('Please select files to upload');
-        }
-    });
-
-    // Cancel button handler
-    document.querySelector('.modal-footer .btn-secondary')?.addEventListener('click', () => {
-        closeModal('upload');
-    });
-
-    // File type restrictions (customize as needed)
-    const fileTypeRestrictions = {
-        'documents': ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument'],
-        'media': ['image/', 'video/', 'audio/'],
-        'web-links': ['text/url'],
-        'breaking-news': ['text/plain', 'text/html']
-    };
-});
-
-// Helper functions for error handling and user feedback
-function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    document.body.appendChild(errorDiv);
-    setTimeout(() => errorDiv.remove(), 3000);
-}
-
-function showSuccess(message) {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.textContent = message;
-    document.body.appendChild(successDiv);
-    setTimeout(() => successDiv.remove(), 3000);
-}
     </script>
 </body>
 </html>
