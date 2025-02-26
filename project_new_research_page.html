@@ -634,6 +634,10 @@
     <div class="dashboard">
         <aside class="sidebar">
             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+            <div class="nav-item">
+                <i class="material-icons">home</i>
+                Home
+            </div>
             <div class="nav-item active">
                 <i class="material-icons">search</i>
                 Research
@@ -790,39 +794,24 @@
                     
                     </div>
                     <div class="modal-body">
-                        <div class="upload-container">
-                            <div class="upload-area" id="upload-area">
-                                <i class="material-icons upload-icon">cloud_upload</i>
-                                <div class="upload-text">
-                                    <h3>Drag & Drop files here</h3>
-                                    <p>or click to browse files</p>
-                                </div>
-                                <input type="file" class="upload-file-input" id="file-input" multiple>
-                            </div>
-                            <div class="file-list" id="file-list">
-                                <!-- Files will be listed here -->
-                            </div>
-                            <div class="form-container" id="upload-details" style="display: none;">
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" id="title" class="search-input" placeholder="Enter a title...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea id="description" class="search-input" rows="4" placeholder="Enter a description..."></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tags">Tags (comma separated)</label>
-                                    <input type="text" id="tags" class="search-input" placeholder="research, fsu, science...">
-                                </div>
-                            </div>
-                            <!-- Make sure your cancel button has the correct ID -->
-                               <div class="upload-actions">
-                                   <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
-                                   <button class="upload-btn submit" id="continue-btn" onclick="showDetailsForm()">Continue</button>
-                                   <button class="upload-btn submit" id="upload-btn" style="display: none;" onclick="uploadFiles()">Upload</button>
-                               </div>
-                        </div>
+    <div class="upload-container">
+        <div class="upload-area" id="upload-area">
+            <i class="material-icons upload-icon">cloud_upload</i>
+            <div class="upload-text">
+                <h3>Drag & Drop files here</h3>
+                <p>or click to browse files</p>
+            </div>
+            <input type="file" class="upload-file-input" id="file-input" multiple>
+        </div>
+        <div class="file-list" id="file-list">
+            <!-- Files will be listed here -->
+        </div>
+        <div class="upload-actions">
+            <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
+            <button class="upload-btn submit" id="upload-btn" onclick="uploadFiles()">Upload</button>
+        </div>
+    </div>
+</div>
                     </div>
                 </div>
             </div>
@@ -841,8 +830,8 @@ let selectedFiles = [];
 let currentContentType = '';
 
 // Function to add uploaded content to the research grid
-function addToResearchGrid(title, description, files, type) {
-    console.log("Adding to research grid:", {title, description, files, type});
+function addToResearchGrid(files, type) {
+    console.log("Adding to research grid:", {files, type});
     
     // Get current date for display
     const today = new Date();
@@ -856,14 +845,35 @@ function addToResearchGrid(title, description, files, type) {
     const researchCard = document.createElement('div');
     researchCard.className = 'research-card';
     
-    // Determine icon based on content type
+    // Determine icon and title based on content type
     let iconName = 'description';
+    let title = 'Document';
+    let description = '';
+    
     if (type === 'media') {
         iconName = 'perm_media';
+        title = 'Media';
+        description = 'Uploaded media files';
     } else if (type === 'web-links') {
         iconName = 'link';
+        title = 'Web Resource';
+        description = 'Web resource link';
     } else if (type === 'breaking-news') {
         iconName = 'flash_on';
+        title = 'Breaking News';
+        description = 'Latest research update';
+    } else {
+        title = 'Research Document';
+        description = 'Uploaded research document';
+    }
+    
+    // If we have files, use the first file name as title
+    if (files && files.length > 0) {
+        // Get the file name without extension
+        const fileName = files[0].name.split('.').slice(0, -1).join('.');
+        if (fileName) {
+            title = fileName;
+        }
     }
     
     // Create card header with icon
@@ -882,20 +892,13 @@ function addToResearchGrid(title, description, files, type) {
     
     // Add file information based on content type
     if (type === 'web-links') {
-        // For web links, we'd typically get URLs from a form field in a real implementation
-        // For now, use the description as a fallback or mock URL
-        const urlText = description.includes('http') ? 
-            new URL(description).hostname : 
-            'example.com/research';
-            
         cardContent += `
             <div class="card-file">
                 <i class="material-icons">language</i>
-                <span>${urlText}</span>
+                <span>example.com/research</span>
             </div>
         `;
     } else if (type === 'breaking-news') {
-        // For news items
         cardContent += `
             <div class="card-file">
                 <i class="material-icons">article</i>
@@ -904,7 +907,6 @@ function addToResearchGrid(title, description, files, type) {
         `;
     } else {
         // For files (documents, media)
-        // If we have actual files
         if (files && files.length > 0) {
             // Sort through the files to display them in order
             files.forEach((file, index) => {
@@ -1045,17 +1047,6 @@ function getFileIconName(fileType) {
     }
 }
 
-// Helper function to format file size
-function formatFileSize(size) {
-    if (size < 1024) {
-        return size + ' B';
-    } else if (size < 1024 * 1024) {
-        return (size / 1024).toFixed(1) + ' KB';
-    } else {
-        return (size / (1024 * 1024)).toFixed(1) + ' MB';
-    }
-}
-
 // Add event listeners to a card
 function addCardEventListeners(card, type, files) {
     // Get the buttons
@@ -1089,75 +1080,16 @@ function addCardEventListeners(card, type, files) {
     }
 }
 
-// This is the function that will be called when files are uploaded through the drag and drop interface
-function uploadFiles() {
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value || 'No description provided.';
-    const tags = document.getElementById('tags')?.value || '';
-    
-    if (!title) {
-        alert('Please enter a title.');
-        return;
-    }
-    
-    // Only require files for document and media uploads
-    if (selectedFiles.length === 0 && (currentContentType === 'documents' || currentContentType === 'media')) {
-        alert('Please select at least one file to upload.');
-        return;
-    }
-
-    console.log("Files to be uploaded:", selectedFiles);
-    console.log("Content type:", currentContentType);
-    
-    // Add the uploaded content to the research grid
-    addToResearchGrid(title, description, selectedFiles, currentContentType);
-    
-    // Show success message
-    alert(`${title} has been added to your research projects.`);
-    
-    // Close the modal
-    closeUploadModal();
-}
-
-// Initialize event listeners when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM fully loaded - setting up Grid View integration");
-    
-    // Add event listeners to the existing cards
-    const existingCards = document.querySelectorAll('.research-card');
-    existingCards.forEach(card => {
-        // Determine type based on icon
-        const iconElement = card.querySelector('.card-icon i');
-        if (!iconElement) return;
-        
-        const iconName = iconElement.textContent;
-        let type = 'documents';
-        
-        if (iconName === 'perm_media') {
-            type = 'media';
-        } else if (iconName === 'link') {
-            type = 'web-links';
-        } else if (iconName === 'flash_on') {
-            type = 'breaking-news';
-        }
-        
-        addCardEventListeners(card, type);
-    });
-    
-    // Override the upload function to include grid functionality
-    const uploadBtn = document.getElementById('upload-btn');
-    if (uploadBtn) {
-        console.log("Upload button found, adding event listener");
-        // Use our own listener separately from any inline handlers
-        uploadBtn.addEventListener('click', function(e) {
-            // Prevent default to avoid duplicate form submissions if there's an inline handler
-            e.preventDefault();
-            uploadFiles();
-        });
+// Helper function to format file size
+function formatFileSize(size) {
+    if (size < 1024) {
+        return size + ' B';
+    } else if (size < 1024 * 1024) {
+        return (size / 1024).toFixed(1) + ' KB';
     } else {
-        console.error("Upload button not found");
+        return (size / (1024 * 1024)).toFixed(1) + ' MB';
     }
-});
+}
 
 // Modal functionality
 function openModal() {
@@ -1192,6 +1124,14 @@ function showUploadForm(type) {
     // Reset the upload form
     resetUploadForm();
     
+    // If it's a web link or breaking news, enable the upload button right away
+    if (type === 'web-links' || type === 'breaking-news') {
+        document.getElementById('upload-btn').disabled = false;
+    } else {
+        // Otherwise, disable until files are selected
+        document.getElementById('upload-btn').disabled = true;
+    }
+    
     // Open the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.add('show');
@@ -1205,7 +1145,7 @@ function closeUploadModal() {
     document.body.style.overflow = 'auto';
 }
 
-// This is the new function to handle cancel button click
+// This is the function to handle cancel button click
 function cancelUpload() {
     // Close the upload modal
     const uploadModal = document.getElementById('uploadModal');
@@ -1223,25 +1163,15 @@ function resetUploadForm() {
     selectedFiles = [];
     document.getElementById('file-list').innerHTML = '';
     
-    // Reset form elements
-    document.getElementById('upload-details').style.display = 'none';
-    document.getElementById('continue-btn').style.display = 'block';
-    document.getElementById('upload-btn').style.display = 'none';
-    
-    if (document.getElementById('title')) {
-        document.getElementById('title').value = '';
-    }
-    if (document.getElementById('description')) {
-        document.getElementById('description').value = '';
-    }
-    if (document.getElementById('tags')) {
-        document.getElementById('tags').value = '';
-    }
+    // Reset upload button
+    document.getElementById('upload-btn').disabled = true;
 }
 
 // File handling functionality
 function handleFileSelect(event) {
     const files = event.target.files || event.dataTransfer.files;
+    
+    console.log("Files selected:", files.length);
     
     if (files.length > 0) {
         // Convert FileList to Array and add to selectedFiles
@@ -1252,8 +1182,13 @@ function handleFileSelect(event) {
             }
         });
         
+        console.log("Selected files after adding:", selectedFiles.length);
+        
         // Update the file list
         updateFileList();
+        
+        // Enable the upload button if we have files
+        document.getElementById('upload-btn').disabled = false;
     }
 }
 
@@ -1291,21 +1226,19 @@ function updateFileList() {
             const index = parseInt(this.getAttribute('data-index'));
             selectedFiles.splice(index, 1);
             updateFileList();
+            
+            // Disable upload button if no files left
+            if (selectedFiles.length === 0 && 
+                (currentContentType === 'documents' || currentContentType === 'media')) {
+                document.getElementById('upload-btn').disabled = true;
+            }
         });
     });
 }
 
-function formatFileSize(size) {
-    if (size < 1024) {
-        return size + ' B';
-    } else if (size < 1024 * 1024) {
-        return (size / 1024).toFixed(1) + ' KB';
-    } else {
-        return (size / (1024 * 1024)).toFixed(1) + ' MB';
-    }
-}
-
 function getFileIcon(fileType) {
+    if (!fileType) return 'insert_drive_file';
+    
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -1325,50 +1258,35 @@ function getFileIcon(fileType) {
     }
 }
 
-function showDetailsForm() {
-    if (selectedFiles.length === 0) {
+// Upload function - no title/description/tags, just files
+function uploadFiles() {
+    console.log("Upload function called");
+    
+    // Check if we need files but don't have any
+    if (selectedFiles.length === 0 && 
+        (currentContentType === 'documents' || currentContentType === 'media')) {
         alert('Please select at least one file to upload.');
         return;
     }
-    
-    // Show the details form
-    document.getElementById('upload-details').style.display = 'block';
-    // Hide continue button, show upload button
-    document.getElementById('continue-btn').style.display = 'none';
-    document.getElementById('upload-btn').style.display = 'block';
-}
 
-function uploadFiles() {
-    const title = document.getElementById('title').value;
+    console.log("Files to be uploaded:", selectedFiles);
+    console.log("Content type:", currentContentType);
     
-    if (!title) {
-        alert('Please enter a title.');
-        return;
-    }
+    // Add the uploaded content to the research grid
+    addToResearchGrid(selectedFiles, currentContentType);
     
-    // In a real application, you would send the files and details to a server
-    // For demonstration, show a success message
-    alert(`${selectedFiles.length} file(s) uploaded successfully!`);
+    // Show success message
+    const contentTypeNames = {
+        'documents': 'Document',
+        'web-links': 'Web Link',
+        'breaking-news': 'News', 
+        'media': 'Media'
+    };
+    
+    alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
     
     // Close the modal
     closeUploadModal();
-}
-
-// Helper functions for error handling and user feedback
-function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    document.body.appendChild(errorDiv);
-    setTimeout(() => errorDiv.remove(), 3000);
-}
-
-function showSuccess(message) {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.textContent = message;
-    document.body.appendChild(successDiv);
-    setTimeout(() => successDiv.remove(), 3000);
 }
 
 // Initialize everything when the DOM is fully loaded
@@ -1379,12 +1297,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const addNewBtn = document.querySelector('.add-new-btn');
     if (addNewBtn) {
         addNewBtn.addEventListener('click', openModal);
-        console.log('Add New button event listener added');
-    } else {
-        console.error('Add New button not found');
     }
     
-    // Add event listeners to the close buttons
+    // Add event listeners to the close buttons in the modals
     const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
     if (closeAddModalBtn) {
         closeAddModalBtn.addEventListener('click', closeModal);
@@ -1395,48 +1310,50 @@ document.addEventListener('DOMContentLoaded', function() {
         closeUploadModalBtn.addEventListener('click', closeUploadModal);
     }
     
+    // Setup content type grid for the Add New modal
+    const contentTypeGrid = document.createElement('div');
+    contentTypeGrid.className = 'content-type-grid';
+    contentTypeGrid.innerHTML = `
+        <div class="content-type-card" data-type="documents">
+            <i class="material-icons">description</i>
+            <h3>Documents</h3>
+            <p>Upload and manage research documents</p>
+        </div>
+        <div class="content-type-card" data-type="web-links">
+            <i class="material-icons">link</i>
+            <h3>Web Links</h3>
+            <p>Add relevant web resources and articles</p>
+        </div>
+        <div class="content-type-card" data-type="breaking-news">
+            <i class="material-icons">flash_on</i>
+            <h3>Breaking News</h3>
+            <p>Add latest news and updates</p>
+        </div>
+        <div class="content-type-card" data-type="media">
+            <i class="material-icons">perm_media</i>
+            <h3>Media</h3>
+            <p>Upload images, videos, and other media</p>
+        </div>
+    `;
+    
+    // Add the grid to the modal body
+    const modalBody = document.querySelector('#addNewModal .modal-body');
+    if (modalBody) {
+        modalBody.innerHTML = '';
+        modalBody.appendChild(contentTypeGrid);
+    }
+    
     // Add event listeners to all content type cards
     const contentTypeCards = document.querySelectorAll('.content-type-card');
-    if (contentTypeCards.length > 0) {
-        console.log(`Found ${contentTypeCards.length} content type cards`);
-        contentTypeCards.forEach(card => {
-            card.addEventListener('click', function() {
-                // Get the type from data attribute or heading
-                let type;
-                
-                // Try to get from onclick attribute first
-                const onclickAttr = this.getAttribute('onclick');
-                if (onclickAttr && (onclickAttr.includes('selectContentType') || onclickAttr.includes('showUploadForm'))) {
-                    // Extract the type parameter from the onclick attribute
-                    const match = onclickAttr.match(/'([^']+)'/);
-                    if (match && match[1]) {
-                        type = match[1];
-                    }
-                }
-                
-                // If we couldn't get it from onclick, look for data-type attribute
-                if (!type) {
-                    type = this.getAttribute('data-type');
-                }
-                
-                // If we still don't have a type, use the heading text
-                if (!type) {
-                    const heading = this.querySelector('h3');
-                    if (heading) {
-                        type = heading.textContent.toLowerCase().replace(/\s+/g, '-');
-                    }
-                }
-                
-                // Now that we have the type, show the upload form
-                if (type) {
-                    console.log('Content type card clicked:', type);
-                    showUploadForm(type);
-                }
-            });
+    contentTypeCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const type = this.getAttribute('data-type');
+            if (type) {
+                console.log('Content type card clicked:', type);
+                showUploadForm(type);
+            }
         });
-    } else {
-        console.error('No content type cards found');
-    }
+    });
     
     // Set up drag and drop functionality
     const uploadArea = document.getElementById('upload-area');
@@ -1460,35 +1377,24 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.remove('dragover');
             handleFileSelect(e);
         });
-    } else {
-        console.error('Upload area not found');
     }
     
     // File input change event
     const fileInput = document.getElementById('file-input');
     if (fileInput) {
         fileInput.addEventListener('change', handleFileSelect);
-    } else {
-        console.error('File input not found');
     }
     
-    // Add event listeners to action buttons
-    const continueBtn = document.getElementById('continue-btn');
-    if (continueBtn) {
-        continueBtn.addEventListener('click', showDetailsForm);
-    }
-    
+    // Add event listener to the upload button
     const uploadBtn = document.getElementById('upload-btn');
     if (uploadBtn) {
         uploadBtn.addEventListener('click', uploadFiles);
     }
     
-    // Add event listener to the cancel button - modified to go back to Add New popup
+    // Add event listener to the cancel button
     const cancelBtn = document.getElementById('cancel-upload');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', cancelUpload);
-    } else {
-        console.error('Cancel button not found');
     }
     
     // Close modal when clicking outside
