@@ -627,6 +627,121 @@
             background: #e6e6e6;
         }
 
+        /* Web Links Form Styles */
+.form-container {
+    width: 100%;
+    padding: 15px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--fsu-garnet);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23782f40'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Link validation styles */
+.form-input.valid {
+    border-color: #28a745;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2328a745'%3e%3cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 40px; /* Space for the icon */
+}
+
+.form-input.invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc3545'%3e%3cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 40px; /* Space for the icon */
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* Upload actions */
+.upload-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.upload-btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.upload-btn.submit {
+    background: var(--fsu-garnet);
+    color: white;
+}
+
+.upload-btn.submit:hover {
+    background: #692a38;
+}
+
+.upload-btn.submit:disabled {
+    background: #b98293;
+    cursor: not-allowed;
+}
+
+.upload-btn.cancel {
+    background: #f2f2f2;
+    color: #666;
+}
+
+.upload-btn.cancel:hover {
+    background: #e6e6e6;
+}
+
         /* Form styles */
         .form-container {
             width: 100%;
@@ -1047,8 +1162,8 @@
         <header class="fsu-header">
             <div class="header-container">
                 <div class="logo-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" class="fsu-logo">
-                    <h1 class="site-title">Research Dashboard</h1>
+                    
+                    <h1 class="site-title">FSU Football Season 2025</h1>
                 </div>
                 <div class="project-info">
                     <div class="info-item">
@@ -1159,7 +1274,7 @@
     </div>
 </div>
 
-<!-- Upload Modal -->
+<!-- Upload Modal with Web Links Form -->
 <div id="uploadModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -1169,6 +1284,7 @@
             </button>
         </div>
         <div class="modal-body">
+            <!-- Standard File Upload Container (for documents, media) -->
             <div class="upload-container">
                 <div class="upload-area" id="upload-area">
                     <i class="material-icons upload-icon">cloud_upload</i>
@@ -1185,6 +1301,27 @@
                     <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
                     <button class="upload-btn submit" id="upload-btn" onclick="uploadFiles()">Upload</button>
                 </div>
+            </div>
+            
+            <!-- Web Links Form (hidden by default) -->
+            <div id="webLinksForm" class="form-container" style="display: none;">
+                <div class="form-group">
+                    <label for="linkTitle">Link Title</label>
+                    <input type="text" id="linkTitle" class="form-input" placeholder="Enter website title or description">
+                    <div class="error-message" id="titleError">Please enter a title with at least 3 characters.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="linkUrl">URL</label>
+                    <input type="url" id="linkUrl" class="form-input" placeholder="https://example.com/resource">
+                    <div class="error-message" id="urlError">Please enter a valid URL starting with http:// or https://</div>
+                </div>
+                
+                <div class="upload-actions">
+                    <button class="upload-btn cancel" id="cancel-weblink" onclick="cancelUpload()">Cancel</button>
+                    <button class="upload-btn submit" id="submit-weblink" onclick="submitWebLink()" disabled>Add Link</button>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -2016,6 +2153,231 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
+});
+
+// Modified showUploadForm function to handle web links differently
+function showUploadForm(type) {
+    currentContentType = type;
+
+    // Set the appropriate title based on content type
+    const titles = {
+        'documents': 'Upload Documents',
+        'web-links': 'Add Web Links',
+        'breaking-news': 'Create Breaking News',
+        'media': 'Upload Media'
+    };
+
+    document.getElementById('uploadModalTitle').textContent = titles[type];
+
+    // Close the first modal
+    closeModal();
+
+    // Reset forms
+    resetUploadForm();
+
+    // Show the appropriate form based on content type
+    if (type === 'web-links') {
+        // Show web links form instead of file upload
+        document.getElementById('webLinksForm').style.display = 'block';
+        document.querySelector('.upload-container').style.display = 'none';
+        
+        // Focus on the first field
+        setTimeout(() => {
+            document.getElementById('linkTitle').focus();
+        }, 100);
+    } else {
+        // For other content types, show the regular file upload
+        document.getElementById('webLinksForm').style.display = 'none';
+        document.querySelector('.upload-container').style.display = 'block';
+        
+        // If it's a breaking news, enable the upload button right away
+        if (type === 'breaking-news') {
+            document.getElementById('upload-btn').disabled = false;
+        } else {
+            // Otherwise, disable until files are selected
+            document.getElementById('upload-btn').disabled = true;
+        }
+    }
+
+    // Open the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.add('show');
+
+    console.log('Opening upload form for type:', type);
+}
+
+// Web link validation function
+function validateWebLink() {
+    const titleInput = document.getElementById('linkTitle');
+    const urlInput = document.getElementById('linkUrl');
+    const submitBtn = document.getElementById('submit-weblink');
+    
+    // Validate title (required, at least 3 characters)
+    const titleValid = titleInput.value.trim().length >= 3;
+    
+    // Validate URL (required, must be a valid URL)
+    let urlValid = false;
+    try {
+        const url = new URL(urlInput.value);
+        urlValid = url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (_) {
+        urlValid = false;
+    }
+    
+    // Add visual validation feedback
+    titleInput.classList.toggle('valid', titleValid);
+    titleInput.classList.toggle('invalid', !titleValid && titleInput.value.trim() !== '');
+    
+    urlInput.classList.toggle('valid', urlValid);
+    urlInput.classList.toggle('invalid', !urlValid && urlInput.value.trim() !== '');
+    
+    // Enable/disable submit button
+    submitBtn.disabled = !(titleValid && urlValid);
+    
+    return titleValid && urlValid;
+}
+
+// Function to submit web link
+function submitWebLink() {
+    // Validate inputs
+    if (!validateWebLink()) {
+        return;
+    }
+    
+    // Get form values
+    const title = document.getElementById('linkTitle').value.trim();
+    const url = document.getElementById('linkUrl').value.trim();
+    
+    console.log("Submitting web link:", { title, url });
+    
+    // Create a web link object
+    const webLink = {
+        title: title,
+        url: url,
+        date: new Date()
+    };
+    
+    // Add to research grid
+    addWebLinkToResearchGrid(webLink);
+    
+    // Show success message
+    alert(`Web link "${title}" has been added to your research projects.`);
+    
+    // Close the modal
+    closeUploadModal();
+}
+
+// Function to add web link to research grid
+function addWebLinkToResearchGrid(webLink) {
+    console.log("Adding web link to research grid:", webLink);
+
+    // Get current date for display
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    // Create a new research card
+    const researchCard = document.createElement('div');
+    researchCard.className = 'research-card';
+
+    // Create card header with icon
+    let cardIcon = `
+        <div class="card-icon" style="background-color: #4CAF50;">
+            <i class="material-icons">link</i>
+        </div>
+    `;
+
+    // Set up the content section
+    let cardContent = `
+        <div class="card-content">
+            <h3 class="card-title">${webLink.title}</h3>
+            <p class="card-description">Web Resource</p>
+            <div class="card-file">
+                <i class="material-icons">language</i>
+                <span>${new URL(webLink.url).hostname}</span>
+            </div>
+            <div class="card-date">Added: ${dateString}</div>
+        </div>
+    `;
+
+    // Set up action buttons
+    let cardActions = `
+        <div class="card-actions">
+            <button class="btn btn-secondary" onclick="window.open('${webLink.url}', '_blank')">Visit</button>
+            <button class="btn btn-primary" onclick="copyToClipboard('${webLink.url}')">Copy Link</button>
+        </div>
+    `;
+
+    // Combine all parts
+    researchCard.innerHTML = cardIcon + cardContent + cardActions;
+
+    // Get the research grid
+    const researchGrid = document.querySelector('.research-grid');
+    
+    if (researchGrid) {
+        // Add to the beginning so newest appears first
+        if (researchGrid.firstChild) {
+            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
+        } else {
+            researchGrid.appendChild(researchCard);
+        }
+        console.log("Web link card added to grid");
+    } else {
+        console.error("Research grid container not found");
+    }
+}
+
+// Helper function to copy URL to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            // Show a temporary tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'clipboard-tooltip';
+            tooltip.textContent = 'Link copied!';
+            document.body.appendChild(tooltip);
+            
+            // Remove after animation
+            setTimeout(() => {
+                tooltip.remove();
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Could not copy text: ', err);
+            alert('Link copied: ' + text);
+        });
+}
+
+// Reset form function
+function resetWebLinkForm() {
+    const titleInput = document.getElementById('linkTitle');
+    const urlInput = document.getElementById('linkUrl');
+    
+    if (titleInput && urlInput) {
+        titleInput.value = '';
+        urlInput.value = '';
+        
+        titleInput.classList.remove('valid', 'invalid');
+        urlInput.classList.remove('valid', 'invalid');
+        
+        document.getElementById('submit-weblink').disabled = true;
+    }
+}
+
+// Add event listeners for web link form validation
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up validation for web link form
+    const linkTitle = document.getElementById('linkTitle');
+    const linkUrl = document.getElementById('linkUrl');
+    
+    if (linkTitle && linkUrl) {
+        linkTitle.addEventListener('input', validateWebLink);
+        linkUrl.addEventListener('input', validateWebLink);
+        linkUrl.addEventListener('blur', validateWebLink);
+    }
 });
 
 // Comments Functionality - Updated Version
