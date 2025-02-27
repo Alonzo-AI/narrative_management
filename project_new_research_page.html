@@ -479,165 +479,231 @@
             resize: vertical;
         }
 
-        /* Comments Section */
-        .comments-section {
-            background: white;
-            border-radius: 10px;
-            padding: 24px;
-        }
+        /* Enhanced Comments Section Styles */
+.comments-section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+}
 
-        /* Add space between main content sections */
-        .main-content + .main-content {
-            margin-top: 20px;
-        }
+.section-title {
+    color: var(--fsu-garnet);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--fsu-gold);
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .section-title {
-            color: var(--fsu-garnet);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--fsu-gold);
-            padding-bottom: 10px;
-        }
+.comments-counter {
+    background: var(--fsu-garnet);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
 
-        .comment-form {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
 
-        .comment-input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            resize: vertical;
-            min-height: 60px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: border-color 0.3s ease;
-        }
+@media (min-width: 768px) {
+    .comment-form {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
 
-        .comment-input:focus {
-            outline: none;
-            border-color: var(--fsu-garnet);
-        }
+.comment-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, height 0.2s ease;
+    overflow: hidden;
+}
 
-        .comments-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+.comment-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
 
-        .comment-item {
-            display: flex;
-            gap: 15px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
+#postCommentBtn {
+    padding: 12px 20px;
+    height: fit-content;
+}
 
-        .comment-avatar img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
+@media (max-width: 767px) {
+    #postCommentBtn {
+        align-self: flex-end;
+    }
+}
 
-        .comment-content {
-            flex: 1;
-        }
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    transition: opacity 0.3s ease;
+}
 
-        .comment-author {
-            font-weight: 600;
-            color: var(--fsu-garnet);
-        }
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
 
-        .comment-date {
-            color: #888;
-            font-size: 0.85rem;
-        }
+.comment-content {
+    flex: 1;
+    min-width: 0; /* Ensures proper text wrapping */
+}
 
-        .comment-text {
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
 
-        .comment-actions {
-            display: flex;
-            gap: 10px;
-        }
+.comment-author {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
 
-        .comment-action-btn {
-            background: none;
-            border: none;
-            color: var(--fsu-garnet);
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 0;
-            transition: opacity 0.2s ease;
-        }
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
 
-        .comment-action-btn:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
+.comment-text {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
 
-        /* Comment edit interface */
-        .comment-edit-interface {
-            margin-top: 10px;
-            margin-bottom: 15px;
-        }
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-        .comment-edit-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            min-height: 80px;
-            margin-bottom: 10px;
-            resize: vertical;
-        }
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: var(--fsu-garnet);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
 
-        .comment-edit-input:focus {
-            outline: none;
-            border-color: var(--fsu-garnet);
-        }
+.comment-action-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
 
-        .comment-edit-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
+/* Comment edit interface */
+.comment-edit-interface {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
 
-        .save-edit-btn, .cancel-edit-btn {
-            padding: 6px 12px;
-            font-size: 0.85rem;
-        }
+.comment-edit-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+    max-height: 200px;
+    overflow: hidden;
+}
 
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+.comment-edit-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
 
-            .sidebar {
-                position: static;
-                margin-bottom: 20px;
-            }
+.comment-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
 
-            .research-grid {
-                grid-template-columns: 1fr;
-            }
+.save-edit-btn, .cancel-edit-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
 
-            .comment-form {
-                flex-direction: column;
-            }
-        }
+/* No comments message */
+.no-comments-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Loading indicator */
+.comment-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.comment-loading .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(120, 47, 64, 0.2);
+    border-top-color: var(--fsu-garnet);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation for new comments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-item.new {
+    animation: fadeIn 0.3s ease forwards;
+}
         /* Simple Grid View Styles */
 .research-grid {
     display: grid;
@@ -887,44 +953,21 @@
 
                 <main class="main-content">
                     <div class="comments-section">
-                        <h2 class="section-title">Comments</h2>
+                        <h2 class="section-title">
+                            Comments
+                            <span class="comments-counter">2</span>
+                        </h2>
+                        
                         <div class="comment-form">
                             <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
                             <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
                         </div>
+                        
                         <div class="comments-list" id="commentsList">
-                            <!-- Example comments -->
-                            <div class="comment-item">
-                                <div class="comment-avatar">
-                                    <img src="https://i.pravatar.cc/40?img=11" alt="John Smith">
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-header">
-                                        <span class="comment-author">John Smith</span>
-                                        <span class="comment-date">Feb 25, 2025</span>
-                                    </div>
-                                    <p class="comment-text">Please include more details on the quantum computing applications in the next update.</p>
-                                    <div class="comment-actions">
-                                        <button class="comment-action-btn">Reply</button>
-                                        <button class="comment-action-btn">Edit</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-item">
-                                <div class="comment-avatar">
-                                    <img src="https://i.pravatar.cc/40?img=9" alt="Sarah Johnson">
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-header">
-                                        <span class="comment-author">Sarah Johnson</span>
-                                        <span class="comment-date">Feb 24, 2025</span>
-                                    </div>
-                                    <p class="comment-text">I've updated the lab experiment results with the latest data. Let me know if you need any clarification.</p>
-                                    <div class="comment-actions">
-                                        <button class="comment-action-btn">Reply</button>
-                                        <button class="comment-action-btn">Edit</button>
-                                    </div>
-                                </div>
+                       
+                            <!-- This will be shown when there are no comments -->
+                            <div class="no-comments-message" style="display: none;">
+                                No comments yet. Be the first to comment!
                             </div>
                         </div>
                     </div>
@@ -936,7 +979,7 @@
             </div>
         </main>
 
-        <!-- Comments Section - In separate main container to control width -->
+      
 
     </div>
 
@@ -1699,7 +1742,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 });
 
-// Comments Functionality - Fixed Version
+// Comments Functionality - Updated Version
 function initializeComments() {
     console.log("Initializing comments functionality");
     
@@ -1734,6 +1777,14 @@ function initializeComments() {
         if (commentText) {
             addNewComment(commentText, commentsList);
             commentInput.value = '';
+            
+            // Scroll to the new comment
+            setTimeout(() => {
+                const firstComment = commentsList.firstChild;
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
         } else {
             alert('Please enter a comment');
         }
@@ -1745,6 +1796,12 @@ function initializeComments() {
             e.preventDefault();
             newPostBtn.click();
         }
+    });
+    
+    // Auto-resize the textarea as user types
+    commentInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
     });
     
     // Add event listeners to existing comment buttons
@@ -1776,12 +1833,10 @@ function addNewComment(text, commentsList) {
     const newComment = document.createElement('div');
     newComment.className = 'comment-item';
     
-    // Generate random avatar (for demo purposes)
-    const avatarNum = Math.floor(Math.random() * 20) + 1;
-    
+    // Create comment HTML without avatar image
     newComment.innerHTML = `
         <div class="comment-avatar">
-            <img src="https://i.pravatar.cc/40?img=${avatarNum}" alt="User">
+            <!-- No avatar image -->
         </div>
         <div class="comment-content">
             <div class="comment-header">
@@ -1796,17 +1851,36 @@ function addNewComment(text, commentsList) {
         </div>
     `;
     
-    // Add to the beginning of the list
+    // Add to the beginning of the list with a fade-in effect
+    newComment.style.opacity = '0';
+    newComment.style.transition = 'opacity 0.3s ease';
+    
     if (commentsList.firstChild) {
         commentsList.insertBefore(newComment, commentsList.firstChild);
     } else {
         commentsList.appendChild(newComment);
     }
     
+    // Trigger the fade-in animation
+    setTimeout(() => {
+        newComment.style.opacity = '1';
+    }, 10);
+    
     console.log("Comment added to list");
     
     // Add event listeners to the new comment's buttons
     setupCommentButtonsForElement(newComment);
+    
+    // Update the comments counter if it exists
+    updateCommentsCounter();
+}
+
+function updateCommentsCounter() {
+    const counter = document.querySelector('.comments-counter');
+    if (counter) {
+        const count = document.querySelectorAll('.comment-item').length;
+        counter.textContent = count;
+    }
 }
 
 function setupCommentButtons() {
@@ -1843,6 +1917,14 @@ function setupCommentButtonsForElement(element) {
             if (commentInput) {
                 commentInput.value = `@${commentAuthor} `;
                 commentInput.focus();
+                
+                // Auto-resize the textarea after setting value
+                commentInput.style.height = 'auto';
+                commentInput.style.height = (commentInput.scrollHeight) + 'px';
+                
+                // Scroll to the comment form
+                commentInput.scrollIntoView({ behavior: 'smooth' });
+                
                 console.log(`Set reply to ${commentAuthor}`);
             } else {
                 console.error("Comment input not found");
@@ -1892,9 +1974,19 @@ function setupCommentButtonsForElement(element) {
             commentText.style.display = 'none';
             commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
             
-            // Focus the textarea
+            // Focus the textarea and auto-resize
             const textarea = editInterface.querySelector('.comment-edit-input');
             textarea.focus();
+            
+            // Set initial height based on content
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            
+            // Add auto-resize on input
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
             
             // Add event listeners for save and cancel buttons
             const saveBtn = editInterface.querySelector('.save-edit-btn');
