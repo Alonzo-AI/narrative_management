@@ -35,6 +35,74 @@
             margin: 0 auto;
         }
 
+        /* FSU Header Styles */
+.fsu-header {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fsu-logo {
+    width: 60px;
+    height: auto;
+}
+
+.site-title {
+    color: var(--fsu-garnet);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.project-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.info-item i {
+    color: var(--fsu-garnet);
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
         /* Sidebar styles */
         .sidebar {
             background: var(--fsu-gold);
@@ -219,6 +287,100 @@
             font-size: 1rem;
         }
 
+        /* Header Buttons Styles */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn i {
+    font-size: 1.2rem;
+}
+
+.btn-primary {
+    background: var(--fsu-garnet);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #692a38;
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--fsu-garnet);
+    border: 1px solid var(--fsu-garnet);
+}
+
+.btn-secondary:hover {
+    background: #f8f2e7;
+}
+
+.submit-review-btn {
+    position: relative;
+}
+
+.submit-review-btn::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--fsu-gold);
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .project-info {
+        width: 100%;
+    }
+    
+    .info-item {
+        flex: 1;
+        min-width: 150px;
+    }
+}
+
+
         /* Modal styles */
         .modal {
             display: none;
@@ -254,34 +416,41 @@
             transform: translateY(0);
         }
 
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* Modal Header with Close Button Styles */
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .modal-header h2 {
-            color: var(--fsu-garnet);
-            margin: 0;
-        }
+.modal-header h2 {
+    color: var(--fsu-garnet);
+    margin: 0;
+}
 
-        .close-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #666;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.2s ease;
-        }
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    border-radius: 50%;
+}
 
-        .close-btn:hover {
-            color: var(--fsu-garnet);
-        }
+.close-btn:hover {
+    color: var(--fsu-garnet);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.close-btn i {
+    font-size: 24px;
+}
 
         .modal-body {
             padding: 20px;
@@ -562,7 +731,6 @@
     display: flex;
     gap: 15px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
     transition: opacity 0.3s ease;
 }
 
@@ -842,57 +1010,129 @@
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <aside class="sidebar">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
-            <div class="nav-item">
-                <i class="material-icons">home</i>
-                Home
-            </div>
-            <div class="nav-item active">
-                <i class="material-icons">search</i>
-                Research
-            </div>
-            <div class="nav-item">
-                <i class="material-icons">description</i>
-                Content Draft
-            </div>
-            <div class="nav-item">
-                <i class="material-icons">brush</i>
-                Graphics
-            </div>
-            <div class="nav-item">
-                <i class="material-icons">share</i>
-                Marketing
-            </div>
-            <div class="nav-item">
-                <i class="material-icons">equalizer</i>
-                Analytics
-            </div>
-        </aside>
+    <!-- Comprehensive Dashboard Structure with Header and Buttons -->
+<div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+        <div class="nav-item">
+            <i class="material-icons">home</i>
+            Home
+        </div>
+        <div class="nav-item active">
+            <i class="material-icons">search</i>
+            Research
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">description</i>
+            Content Draft
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">brush</i>
+            Graphics
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">share</i>
+            Marketing
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">equalizer</i>
+            Analytics
+        </div>
+    </aside>
 
+    <!-- Main Content Area -->
+    <div class="content-area">
+        <!-- FSU Header with Coordinator and Deadline -->
+        <header class="fsu-header">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" class="fsu-logo">
+                    <h1 class="site-title">Research Dashboard</h1>
+                </div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <i class="material-icons">person</i>
+                        <div class="info-content">
+                            <span class="info-label">Project Coordinator</span>
+                            <span class="info-value">Dr. Sarah Johnson</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="material-icons">event</i>
+                        <div class="info-content">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">March 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content with research grid -->
         <main class="main-content">
             <div class="header">
                 <div class="header-top">
                     <h1>Research Projects</h1>
-                    <button class="btn btn-primary add-new-btn" onclick="openModal()">
-                        <i class="material-icons">add</i>
-                        Add New
-                    </button>
+                    <div class="header-buttons">
+                        <button class="btn btn-secondary submit-review-btn" onclick="submitReview()">
+                            <i class="material-icons">rate_review</i>
+                            Submit Review
+                        </button>
+                        <button class="btn btn-primary add-new-btn" onclick="openModal()">
+                            <i class="material-icons">add</i>
+                            Add New
+                        </button>
+                    </div>
                 </div>
             </div>
-        
-           
-            <div class="research-grid">
-                <!-- Research items will appear here -->
-            </div>
-     
 
-            <!-- Content Type Selection Modal -->
+            <!-- ONLY ONE research grid in the entire document -->
+            <div class="research-grid">
+                <!-- Research items will be populated here -->
+            </div>
+        </main>
+
+        <!-- Comments Section -->
+        <main class="main-content">
+            <div class="comments-section">
+                <h2 class="section-title">
+                    Comments
+                    
+                </h2>
+                
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                    <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+                </div>
+                
+                <div class="comments-list" id="commentsList">
+                    <!-- Example comments -->
+                    <div class="comment-item">
+                      
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-item">
+                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Add New Modal -->
 <div id="addNewModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Add New Research Content</h2>
+            <button class="close-btn" onclick="closeModal()">
+                <i class="material-icons">close</i>
+            </button>
         </div>
         <div class="modal-body">
             <div class="content-type-card" data-type="documents" onclick="showUploadForm('documents')">
@@ -919,69 +1159,36 @@
     </div>
 </div>
 
-             <!-- Upload Modal -->
-             <div id="uploadModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 id="uploadModalTitle">Upload Content</h2>
-                        <button class="close-btn">
-                            <i class="material-icons">close</i>
-                        </button>
-
+<!-- Upload Modal -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="uploadModalTitle">Upload Content</h2>
+            <button class="close-btn" onclick="closeUploadModal()">
+                <i class="material-icons">close</i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="upload-container">
+                <div class="upload-area" id="upload-area">
+                    <i class="material-icons upload-icon">cloud_upload</i>
+                    <div class="upload-text">
+                        <h3>Drag & Drop files here</h3>
+                        <p>or click to browse files</p>
                     </div>
-                    <div class="modal-body">
-    <div class="upload-container">
-        <div class="upload-area" id="upload-area">
-            <i class="material-icons upload-icon">cloud_upload</i>
-            <div class="upload-text">
-                <h3>Drag & Drop files here</h3>
-                <p>or click to browse files</p>
+                    <input type="file" class="upload-file-input" id="file-input" multiple>
+                </div>
+                <div class="file-list" id="file-list">
+                    <!-- Files will be listed here -->
+                </div>
+                <div class="upload-actions">
+                    <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
+                    <button class="upload-btn submit" id="upload-btn" onclick="uploadFiles()">Upload</button>
+                </div>
             </div>
-            <input type="file" class="upload-file-input" id="file-input" multiple>
-        </div>
-        <div class="file-list" id="file-list">
-            <!-- Files will be listed here -->
-        </div>
-        <div class="upload-actions">
-            <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
-            <button class="upload-btn submit" id="upload-btn" onclick="uploadFiles()">Upload</button>
         </div>
     </div>
 </div>
-                    </div>
-                </div>
-
-                <main class="main-content">
-                    <div class="comments-section">
-                        <h2 class="section-title">
-                            Comments
-                            <span class="comments-counter">2</span>
-                        </h2>
-                        
-                        <div class="comment-form">
-                            <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
-                            <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
-                        </div>
-                        
-                        <div class="comments-list" id="commentsList">
-                       
-                            <!-- This will be shown when there are no comments -->
-                            <div class="no-comments-message" style="display: none;">
-                                No comments yet. Be the first to comment!
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
-
-            <div class="research-grid">
-                <!-- Research projects would be populated here -->
-            </div>
-        </main>
-
-      
-
-    </div>
 
 
 
@@ -1010,6 +1217,39 @@ function getFileIconName(fileType) {
         return 'slideshow';
     } else {
         return 'insert_drive_file';
+    }
+}
+
+// Submit Review functionality
+function submitReview() {
+    // You can customize this function based on your requirements
+    console.log("Submit Review button clicked");
+    
+    // Show confirmation dialog
+    const confirmSubmit = confirm("Are you sure you want to submit your review? This action can't be undone.");
+    
+    if (confirmSubmit) {
+        // Show loading state
+        const submitBtn = document.querySelector('.submit-review-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Submitting...';
+        submitBtn.disabled = true;
+        
+        // Simulate API call with timeout
+        setTimeout(() => {
+            // Show success message
+            alert("Your review has been successfully submitted!");
+            
+            // Reset button
+            submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Submitted';
+            
+            // Optionally redirect or reload after a delay
+            setTimeout(() => {
+                // Reset button to original state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 3000);
+        }, 1500);
     }
 }
 
@@ -1132,6 +1372,42 @@ function resetUploadForm() {
     // Reset upload button
     document.getElementById('upload-btn').disabled = true;
 }
+
+// Modal functionality
+function openModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling behind the modal
+    console.log('Opening Add New modal');
+}
+
+function closeModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+    console.log('Closing modal, returning to main page');
+}
+
+// Close modal when clicking outside of it (optional feature)
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('addNewModal');
+    if (modal && modal.classList.contains('show')) {
+        // Check if the click was outside the modal content
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+});
+
+// Close modal with Escape key (optional feature)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('addNewModal');
+        if (modal && modal.classList.contains('show')) {
+            closeModal();
+        }
+    }
+});
 
 // File handling functionality
 function handleFileSelect(event) {
