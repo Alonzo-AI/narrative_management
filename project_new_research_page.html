@@ -479,6 +479,147 @@
             resize: vertical;
         }
 
+        /* Comments Section */
+        .comments-section {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        /* Add space between main content sections */
+        .main-content + .main-content {
+            margin-top: 20px;
+        }
+
+        .section-title {
+            color: var(--fsu-garnet);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--fsu-gold);
+            padding-bottom: 10px;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--fsu-garnet);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comment-avatar img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--fsu-garnet);
+        }
+
+        .comment-date {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .comment-text {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-action-btn {
+            background: none;
+            border: none;
+            color: var(--fsu-garnet);
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .comment-action-btn:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Comment edit interface */
+        .comment-edit-interface {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .comment-edit-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            min-height: 80px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        .comment-edit-input:focus {
+            outline: none;
+            border-color: var(--fsu-garnet);
+        }
+
+        .comment-edit-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .save-edit-btn, .cancel-edit-btn {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
         @media (max-width: 768px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -491,6 +632,10 @@
 
             .research-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .comment-form {
+                flex-direction: column;
             }
         }
         /* Simple Grid View Styles */
@@ -669,10 +814,12 @@
                         Add New
                     </button>
                 </div>
-            
+
             </div>
 
             <!-- Simple Grid View for Research Projects -->
+
+
 <div class="research-grid">
     <!-- Document item -->
     <div class="research-card">
@@ -791,7 +938,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 id="uploadModalTitle">Upload Content</h2>
-                    
+
                     </div>
                     <div class="modal-body">
     <div class="upload-container">
@@ -814,12 +961,59 @@
 </div>
                     </div>
                 </div>
+                <main class="main-content">
+                    <div class="comments-section">
+                        <h2 class="section-title">Comments</h2>
+                        <div class="comment-form">
+                            <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                            <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+                        </div>
+                        <div class="comments-list" id="commentsList">
+                            <!-- Example comments -->
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <img src="https://i.pravatar.cc/40?img=11" alt="John Smith">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">John Smith</span>
+                                        <span class="comment-date">Feb 25, 2025</span>
+                                    </div>
+                                    <p class="comment-text">Please include more details on the quantum computing applications in the next update.</p>
+                                    <div class="comment-actions">
+                                        <button class="comment-action-btn">Reply</button>
+                                        <button class="comment-action-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <img src="https://i.pravatar.cc/40?img=9" alt="Sarah Johnson">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">Sarah Johnson</span>
+                                        <span class="comment-date">Feb 24, 2025</span>
+                                    </div>
+                                    <p class="comment-text">I've updated the lab experiment results with the latest data. Let me know if you need any clarification.</p>
+                                    <div class="comment-actions">
+                                        <button class="comment-action-btn">Reply</button>
+                                        <button class="comment-action-btn">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
             </div>
 
             <div class="research-grid">
                 <!-- Research projects would be populated here -->
             </div>
         </main>
+
+        <!-- Comments Section - In separate main container to control width -->
+
     </div>
 
 
@@ -832,24 +1026,24 @@ let currentContentType = '';
 // Function to add uploaded content to the research grid
 function addToResearchGrid(files, type) {
     console.log("Adding to research grid:", {files, type});
-    
+
     // Get current date for display
     const today = new Date();
-    const dateString = today.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
     });
-    
+
     // Create a new research card
     const researchCard = document.createElement('div');
     researchCard.className = 'research-card';
-    
+
     // Determine icon and title based on content type
     let iconName = 'description';
     let title = 'Document';
     let description = '';
-    
+
     if (type === 'media') {
         iconName = 'perm_media';
         title = 'Media';
@@ -866,7 +1060,7 @@ function addToResearchGrid(files, type) {
         title = 'Research Document';
         description = 'Uploaded research document';
     }
-    
+
     // If we have files, use the first file name as title
     if (files && files.length > 0) {
         // Get the file name without extension
@@ -875,21 +1069,21 @@ function addToResearchGrid(files, type) {
             title = fileName;
         }
     }
-    
+
     // Create card header with icon
     let cardIcon = `
         <div class="card-icon">
             <i class="material-icons">${iconName}</i>
         </div>
     `;
-    
+
     // Set up the content section
     let cardContent = `
         <div class="card-content">
             <h3 class="card-title">${title}</h3>
             <p class="card-description">${description}</p>
     `;
-    
+
     // Add file information based on content type
     if (type === 'web-links') {
         cardContent += `
@@ -914,7 +1108,7 @@ function addToResearchGrid(files, type) {
                 if (index < 2) {
                     const fileIcon = getFileIconName(file.type);
                     const fileSize = formatFileSize(file.size);
-                    
+
                     cardContent += `
                         <div class="card-file">
                             <i class="material-icons">${fileIcon}</i>
@@ -923,7 +1117,7 @@ function addToResearchGrid(files, type) {
                     `;
                 }
             });
-            
+
             // If there are more files, indicate that
             if (files.length > 2) {
                 cardContent += `
@@ -943,16 +1137,16 @@ function addToResearchGrid(files, type) {
             `;
         }
     }
-    
+
     // Add date and close content div
     cardContent += `
             <div class="card-date">Added: ${dateString}</div>
         </div>
     `;
-    
+
     // Set up action buttons based on content type and actual files
     let cardActions = '<div class="card-actions">';
-    
+
     if (type === 'web-links') {
         cardActions += `
             <button class="btn btn-secondary">Visit</button>
@@ -961,7 +1155,7 @@ function addToResearchGrid(files, type) {
     } else if (type === 'media' && files && files.length > 0) {
         // Check the first file type to determine appropriate buttons
         const firstFile = files[0];
-        
+
         if (firstFile.type.includes('video')) {
             cardActions += `
                 <button class="btn btn-secondary">Play</button>
@@ -991,12 +1185,12 @@ function addToResearchGrid(files, type) {
             <button class="btn btn-primary">Download</button>
         `;
     }
-    
+
     cardActions += '</div>';
-    
+
     // Combine all parts
     researchCard.innerHTML = cardIcon + cardContent + cardActions;
-    
+
     // Add custom background color based on type
     if (type === 'media') {
         researchCard.querySelector('.card-icon').style.backgroundColor = '#2196F3';
@@ -1005,7 +1199,7 @@ function addToResearchGrid(files, type) {
     } else if (type === 'breaking-news') {
         researchCard.querySelector('.card-icon').style.backgroundColor = '#FF9800';
     }
-    
+
     // Add the card to the research grid
     const researchGrid = document.querySelector('.research-grid');
     if (researchGrid) {
@@ -1019,7 +1213,7 @@ function addToResearchGrid(files, type) {
     } else {
         console.error("Research grid container not found");
     }
-    
+
     // Add event listeners for the new card
     addCardEventListeners(researchCard, type, files);
 }
@@ -1027,7 +1221,7 @@ function addToResearchGrid(files, type) {
 // Helper function to get appropriate icon name based on file type
 function getFileIconName(fileType) {
     if (!fileType) return 'insert_drive_file';
-    
+
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -1065,7 +1259,7 @@ function addCardEventListeners(card, type, files) {
                 alert(`Viewing: ${title}`);
             }
         });
-        
+
         // Second button (Download/Copy Link)
         buttons[1].addEventListener('click', function() {
             const title = card.querySelector('.card-title').textContent;
@@ -1107,7 +1301,7 @@ function closeModal() {
 
 function showUploadForm(type) {
     currentContentType = type;
-    
+
     // Set the appropriate title based on content type
     const titles = {
         'documents': 'Upload Documents',
@@ -1115,15 +1309,15 @@ function showUploadForm(type) {
         'breaking-news': 'Create Breaking News',
         'media': 'Upload Media'
     };
-    
+
     document.getElementById('uploadModalTitle').textContent = titles[type];
-    
+
     // Close the first modal
     closeModal();
-    
+
     // Reset the upload form
     resetUploadForm();
-    
+
     // If it's a web link or breaking news, enable the upload button right away
     if (type === 'web-links' || type === 'breaking-news') {
         document.getElementById('upload-btn').disabled = false;
@@ -1131,11 +1325,11 @@ function showUploadForm(type) {
         // Otherwise, disable until files are selected
         document.getElementById('upload-btn').disabled = true;
     }
-    
+
     // Open the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.add('show');
-    
+
     console.log('Opening upload form for type:', type);
 }
 
@@ -1150,11 +1344,11 @@ function cancelUpload() {
     // Close the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.remove('show');
-    
+
     // Open the Add New modal again
     const addNewModal = document.getElementById('addNewModal');
     addNewModal.classList.add('show');
-    
+
     console.log('Canceled upload, returning to Add New popup');
 }
 
@@ -1162,7 +1356,7 @@ function resetUploadForm() {
     // Clear selected files
     selectedFiles = [];
     document.getElementById('file-list').innerHTML = '';
-    
+
     // Reset upload button
     document.getElementById('upload-btn').disabled = true;
 }
@@ -1170,9 +1364,9 @@ function resetUploadForm() {
 // File handling functionality
 function handleFileSelect(event) {
     const files = event.target.files || event.dataTransfer.files;
-    
+
     console.log("Files selected:", files.length);
-    
+
     if (files.length > 0) {
         // Convert FileList to Array and add to selectedFiles
         Array.from(files).forEach(file => {
@@ -1181,12 +1375,12 @@ function handleFileSelect(event) {
                 selectedFiles.push(file);
             }
         });
-        
+
         console.log("Selected files after adding:", selectedFiles.length);
-        
+
         // Update the file list
         updateFileList();
-        
+
         // Enable the upload button if we have files
         document.getElementById('upload-btn').disabled = false;
     }
@@ -1195,18 +1389,18 @@ function handleFileSelect(event) {
 function updateFileList() {
     const fileList = document.getElementById('file-list');
     fileList.innerHTML = '';
-    
+
     selectedFiles.forEach((file, index) => {
         // Create a file item element
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
-        
+
         // Format the file size
         const fileSize = formatFileSize(file.size);
-        
+
         // Get file icon based on type
         const fileIcon = getFileIcon(file.type);
-        
+
         // Set the file item content
         fileItem.innerHTML = `
             <div class="file-info">
@@ -1216,19 +1410,19 @@ function updateFileList() {
             </div>
             <i class="material-icons file-remove" data-index="${index}">close</i>
         `;
-        
+
         fileList.appendChild(fileItem);
     });
-    
+
     // Add click event to remove buttons
     document.querySelectorAll('.file-remove').forEach(button => {
         button.addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
             selectedFiles.splice(index, 1);
             updateFileList();
-            
+
             // Disable upload button if no files left
-            if (selectedFiles.length === 0 && 
+            if (selectedFiles.length === 0 &&
                 (currentContentType === 'documents' || currentContentType === 'media')) {
                 document.getElementById('upload-btn').disabled = true;
             }
@@ -1238,7 +1432,7 @@ function updateFileList() {
 
 function getFileIcon(fileType) {
     if (!fileType) return 'insert_drive_file';
-    
+
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -1261,9 +1455,9 @@ function getFileIcon(fileType) {
 // Upload function - no title/description/tags, just files
 function uploadFiles() {
     console.log("Upload function called");
-    
+
     // Check if we need files but don't have any
-    if (selectedFiles.length === 0 && 
+    if (selectedFiles.length === 0 &&
         (currentContentType === 'documents' || currentContentType === 'media')) {
         alert('Please select at least one file to upload.');
         return;
@@ -1271,20 +1465,20 @@ function uploadFiles() {
 
     console.log("Files to be uploaded:", selectedFiles);
     console.log("Content type:", currentContentType);
-    
+
     // Add the uploaded content to the research grid
     addToResearchGrid(selectedFiles, currentContentType);
-    
+
     // Show success message
     const contentTypeNames = {
         'documents': 'Document',
         'web-links': 'Web Link',
-        'breaking-news': 'News', 
+        'breaking-news': 'News',
         'media': 'Media'
     };
-    
+
     alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
-    
+
     // Close the modal
     closeUploadModal();
 }
@@ -1292,24 +1486,27 @@ function uploadFiles() {
 // Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
-    
+
+    // Set up comment functionality
+    initializeComments();
+
     // Add event listener to the Add New button
     const addNewBtn = document.querySelector('.add-new-btn');
     if (addNewBtn) {
         addNewBtn.addEventListener('click', openModal);
     }
-    
+
     // Add event listeners to the close buttons in the modals
     const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
     if (closeAddModalBtn) {
         closeAddModalBtn.addEventListener('click', closeModal);
     }
-    
+
     const closeUploadModalBtn = document.querySelector('#uploadModal .close-btn');
     if (closeUploadModalBtn) {
         closeUploadModalBtn.addEventListener('click', closeUploadModal);
     }
-    
+
     // Setup content type grid for the Add New modal
     const contentTypeGrid = document.createElement('div');
     contentTypeGrid.className = 'content-type-grid';
@@ -1335,14 +1532,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Upload images, videos, and other media</p>
         </div>
     `;
-    
+
     // Add the grid to the modal body
     const modalBody = document.querySelector('#addNewModal .modal-body');
     if (modalBody) {
         modalBody.innerHTML = '';
         modalBody.appendChild(contentTypeGrid);
     }
-    
+
     // Add event listeners to all content type cards
     const contentTypeCards = document.querySelectorAll('.content-type-card');
     contentTypeCards.forEach(card => {
@@ -1354,7 +1551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Set up drag and drop functionality
     const uploadArea = document.getElementById('upload-area');
     if (uploadArea) {
@@ -1364,13 +1561,13 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             this.classList.add('dragover');
         });
-        
+
         uploadArea.addEventListener('dragleave', function(e) {
             e.preventDefault();
             e.stopPropagation();
             this.classList.remove('dragover');
         });
-        
+
         uploadArea.addEventListener('drop', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -1378,39 +1575,39 @@ document.addEventListener('DOMContentLoaded', function() {
             handleFileSelect(e);
         });
     }
-    
+
     // File input change event
     const fileInput = document.getElementById('file-input');
     if (fileInput) {
         fileInput.addEventListener('change', handleFileSelect);
     }
-    
+
     // Add event listener to the upload button
     const uploadBtn = document.getElementById('upload-btn');
     if (uploadBtn) {
         uploadBtn.addEventListener('click', uploadFiles);
     }
-    
+
     // Add event listener to the cancel button
     const cancelBtn = document.getElementById('cancel-upload');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', cancelUpload);
     }
-    
+
     // Close modal when clicking outside
     window.addEventListener('click', function(event) {
         const addNewModal = document.getElementById('addNewModal');
         const uploadModal = document.getElementById('uploadModal');
-        
+
         if (event.target === addNewModal) {
             closeModal();
         }
-        
+
         if (event.target === uploadModal) {
             closeUploadModal();
         }
     });
-    
+
     // Navigation item click handler
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
@@ -1422,6 +1619,140 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Comments Functionality
+function initializeComments() {
+    const commentInput = document.getElementById('commentInput');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const commentsList = document.getElementById('commentsList');
+
+    if (postCommentBtn) {
+        postCommentBtn.addEventListener('click', function() {
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                addNewComment(commentText);
+                commentInput.value = '';
+            } else {
+                alert('Please enter a comment');
+            }
+        });
+    }
+
+    // Add event listeners to existing comment buttons
+    setupCommentButtons();
+}
+
+function addNewComment(text) {
+    const commentsList = document.getElementById('commentsList');
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    // Create a new comment element
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item';
+
+    // Generate random avatar (for demo purposes)
+    const avatarNum = Math.floor(Math.random() * 20) + 1;
+
+    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <img src="https://i.pravatar.cc/40?img=${avatarNum}" alt="User">
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn">Reply</button>
+                <button class="comment-action-btn">Edit</button>
+            </div>
+        </div>
+    `;
+
+    // Add to the beginning of the list
+    if (commentsList.firstChild) {
+        commentsList.insertBefore(newComment, commentsList.firstChild);
+    } else {
+        commentsList.appendChild(newComment);
+    }
+
+    // Add event listeners to the new comment's buttons
+    setupCommentButtonsForElement(newComment);
+}
+
+function setupCommentButtons() {
+    // Get all comment items
+    const commentItems = document.querySelectorAll('.comment-item');
+    commentItems.forEach(item => {
+        setupCommentButtonsForElement(item);
+    });
+}
+
+function setupCommentButtonsForElement(element) {
+    // Reply button
+    const replyBtn = element.querySelector('.comment-action-btn:first-child');
+    if (replyBtn) {
+        replyBtn.addEventListener('click', function() {
+            const commentAuthor = element.querySelector('.comment-author').textContent;
+            const commentInput = document.getElementById('commentInput');
+            commentInput.value = `@${commentAuthor} `;
+            commentInput.focus();
+        });
+    }
+
+    // Edit button
+    const editBtn = element.querySelector('.comment-action-btn:nth-child(2)');
+    if (editBtn) {
+        editBtn.addEventListener('click', function() {
+            const commentText = element.querySelector('.comment-text');
+            const originalText = commentText.textContent;
+
+            // Create edit interface
+            const editInterface = document.createElement('div');
+            editInterface.className = 'comment-edit-interface';
+            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+
+            // Replace comment text with edit interface
+            commentText.style.display = 'none';
+            commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
+
+            // Focus the textarea
+            const textarea = editInterface.querySelector('.comment-edit-input');
+            textarea.focus();
+
+            // Add event listeners for save and cancel buttons
+            const saveBtn = editInterface.querySelector('.save-edit-btn');
+            saveBtn.addEventListener('click', function() {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    commentText.textContent = newText;
+                }
+                // Clean up
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+
+            const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Just clean up without saving
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+        });
+    }
+}
 
 
     </script>
