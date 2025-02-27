@@ -1250,31 +1250,33 @@ textarea.form-input {
             </button>
         </div>
         <div class="modal-body">
-            <div class="content-type-card" data-type="documents" onclick="showUploadForm('documents')">
-                <i class="material-icons">description</i>
-                <h3>Documents</h3>
-                <p>Upload and manage research documents</p>
-            </div>
-            <div class="content-type-card" data-type="web-links" onclick="showUploadForm('web-links')">
-                <i class="material-icons">link</i>
-                <h3>Web Links</h3>
-                <p>Add relevant web resources and articles</p>
-            </div>
-            <div class="content-type-card" data-type="breaking-news" onclick="showUploadForm('breaking-news')">
-                <i class="material-icons">flash_on</i>
-                <h3>Breaking News</h3>
-                <p>Add latest news and updates</p>
-            </div>
-            <div class="content-type-card" data-type="media" onclick="showUploadForm('media')">
-                <i class="material-icons">perm_media</i>
-                <h3>Media</h3>
-                <p>Upload images, videos, and other media</p>
+            <div class="content-type-grid">
+                <div class="content-type-card" data-type="documents" onclick="showUploadForm('documents')">
+                    <i class="material-icons">description</i>
+                    <h3>Documents</h3>
+                    <p>Upload and manage research documents</p>
+                </div>
+                <div class="content-type-card" data-type="web-links" onclick="showUploadForm('web-links')">
+                    <i class="material-icons">link</i>
+                    <h3>Web Links</h3>
+                    <p>Add relevant web resources and articles</p>
+                </div>
+                <div class="content-type-card" data-type="breaking-news" onclick="showUploadForm('breaking-news')">
+                    <i class="material-icons">flash_on</i>
+                    <h3>Breaking News</h3>
+                    <p>Add latest news and updates</p>
+                </div>
+                <div class="content-type-card" data-type="media" onclick="showUploadForm('media')">
+                    <i class="material-icons">perm_media</i>
+                    <h3>Media</h3>
+                    <p>Upload images, videos, and other media</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Upload Modal with Web Links Form -->
+<!-- Upload Modal -->
 <div id="uploadModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -1321,7 +1323,6 @@ textarea.form-input {
                     <button class="upload-btn cancel" id="cancel-weblink" onclick="cancelUpload()">Cancel</button>
                     <button class="upload-btn submit" id="submit-weblink" onclick="submitWebLink()" disabled>Add Link</button>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -2378,6 +2379,129 @@ document.addEventListener('DOMContentLoaded', function() {
         linkUrl.addEventListener('input', validateWebLink);
         linkUrl.addEventListener('blur', validateWebLink);
     }
+});
+
+// Modal navigation functionality
+function openModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling behind the modal
+    console.log('Opening Add New modal');
+}
+
+function closeModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+    console.log('Closing modal, returning to main page');
+}
+
+function showUploadForm(type) {
+    currentContentType = type;
+
+    // Set the appropriate title based on content type
+    const titles = {
+        'documents': 'Upload Documents',
+        'web-links': 'Add Web Links',
+        'breaking-news': 'Create Breaking News',
+        'media': 'Upload Media'
+    };
+
+    document.getElementById('uploadModalTitle').textContent = titles[type];
+
+    // Close the first modal
+    closeModal();
+
+    // Reset forms
+    resetUploadForm();
+    if (type === 'web-links') {
+        resetWebLinkForm();
+    }
+
+    // Show the appropriate form based on content type
+    if (type === 'web-links') {
+        // Show web links form instead of file upload
+        document.getElementById('webLinksForm').style.display = 'block';
+        document.querySelector('.upload-container').style.display = 'none';
+        
+        // Focus on the first field
+        setTimeout(() => {
+            document.getElementById('linkTitle').focus();
+        }, 100);
+    } else {
+        // For other content types, show the regular file upload
+        document.getElementById('webLinksForm').style.display = 'none';
+        document.querySelector('.upload-container').style.display = 'block';
+        
+        // If it's a breaking news, enable the upload button right away
+        if (type === 'breaking-news') {
+            document.getElementById('upload-btn').disabled = false;
+        } else {
+            // Otherwise, disable until files are selected
+            document.getElementById('upload-btn').disabled = true;
+        }
+    }
+
+    // Open the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.add('show');
+
+    console.log('Opening upload form for type:', type);
+}
+
+function closeUploadModal() {
+    // Close the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.remove('show');
+    
+    // Open the Add New modal again instead of returning to main page
+    const addNewModal = document.getElementById('addNewModal');
+    addNewModal.classList.add('show');
+    
+    console.log('Closing upload modal, returning to Add New popup');
+}
+
+// Function to handle cancel button click (used in both file upload and web links)
+function cancelUpload() {
+    console.log('Cancel upload button clicked');
+    
+    // Same behavior as close button - return to Add New modal
+    closeUploadModal();
+}
+
+// This function is used when the X button is clicked in the upload modal
+function closeUploadModalButton() {
+    const closeBtn = document.querySelector('#uploadModal .close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            closeUploadModal();
+        });
+    }
+}
+
+// Initialize the close button functionality when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up the close button in the upload modal
+    closeUploadModalButton();
+    
+    // Optional: Also handle Escape key to return to Add New modal instead of closing completely
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const uploadModal = document.getElementById('uploadModal');
+            const addNewModal = document.getElementById('addNewModal');
+            
+            if (uploadModal && uploadModal.classList.contains('show')) {
+                event.preventDefault(); // Prevent default Escape behavior
+                closeUploadModal(); // Return to Add New modal
+                return;
+            }
+            
+            // Only close completely if we're in the Add New modal
+            if (addNewModal && addNewModal.classList.contains('show')) {
+                closeModal();
+            }
+        }
+    });
 });
 
 // Comments Functionality - Updated Version
