@@ -814,26 +814,13 @@
                         Add New
                     </button>
                 </div>
-
             </div>
-
-            <!-- Simple Grid View for Research Projects -->
-
-
-<div class="research-grid">
-    <!-- Document item -->
-   
-
-    <!-- Media item -->
-    
-
-    <!-- Web Link item -->
-    
-
-    <!-- Video item -->
-    
-  
-</div>
+        
+           
+            <div class="research-grid">
+                <!-- Research items will appear here -->
+            </div>
+     
 
             <!-- Content Type Selection Modal -->
 <div id="addNewModal" class="modal">
@@ -960,205 +947,10 @@
 let selectedFiles = [];
 let currentContentType = '';
 
-// Function to add uploaded content to the research grid
-function addToResearchGrid(files, type) {
-    console.log("Adding to research grid:", {files, type});
-
-    // Get current date for display
-    const today = new Date();
-    const dateString = today.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-
-    // Create a new research card
-    const researchCard = document.createElement('div');
-    researchCard.className = 'research-card';
-
-    // Determine icon and title based on content type
-    let iconName = 'description';
-    let title = 'Document';
-    let description = '';
-
-    if (type === 'media') {
-        iconName = 'perm_media';
-        title = 'Media';
-        description = 'Uploaded media files';
-    } else if (type === 'web-links') {
-        iconName = 'link';
-        title = 'Web Resource';
-        description = 'Web resource link';
-    } else if (type === 'breaking-news') {
-        iconName = 'flash_on';
-        title = 'Breaking News';
-        description = 'Latest research update';
-    } else {
-        title = 'Research Document';
-        description = 'Uploaded research document';
-    }
-
-    // If we have files, use the first file name as title
-    if (files && files.length > 0) {
-        // Get the file name without extension
-        const fileName = files[0].name.split('.').slice(0, -1).join('.');
-        if (fileName) {
-            title = fileName;
-        }
-    }
-
-    // Create card header with icon
-    let cardIcon = `
-        <div class="card-icon">
-            <i class="material-icons">${iconName}</i>
-        </div>
-    `;
-
-    // Set up the content section
-    let cardContent = `
-        <div class="card-content">
-            <h3 class="card-title">${title}</h3>
-            <p class="card-description">${description}</p>
-    `;
-
-    // Add file information based on content type
-    if (type === 'web-links') {
-        cardContent += `
-            <div class="card-file">
-                <i class="material-icons">language</i>
-                <span>example.com/research</span>
-            </div>
-        `;
-    } else if (type === 'breaking-news') {
-        cardContent += `
-            <div class="card-file">
-                <i class="material-icons">article</i>
-                <span>Research announcement</span>
-            </div>
-        `;
-    } else {
-        // For files (documents, media)
-        if (files && files.length > 0) {
-            // Sort through the files to display them in order
-            files.forEach((file, index) => {
-                // Only show first 2 files directly
-                if (index < 2) {
-                    const fileIcon = getFileIconName(file.type);
-                    const fileSize = formatFileSize(file.size);
-
-                    cardContent += `
-                        <div class="card-file">
-                            <i class="material-icons">${fileIcon}</i>
-                            <span>${file.name} (${fileSize})</span>
-                        </div>
-                    `;
-                }
-            });
-
-            // If there are more files, indicate that
-            if (files.length > 2) {
-                cardContent += `
-                    <div class="card-file">
-                        <i class="material-icons">more_horiz</i>
-                        <span>+${files.length - 2} more files</span>
-                    </div>
-                `;
-            }
-        } else {
-            // Fallback if no files
-            cardContent += `
-                <div class="card-file">
-                    <i class="material-icons">insert_drive_file</i>
-                    <span>No files attached</span>
-                </div>
-            `;
-        }
-    }
-
-    // Add date and close content div
-    cardContent += `
-            <div class="card-date">Added: ${dateString}</div>
-        </div>
-    `;
-
-    // Set up action buttons based on content type and actual files
-    let cardActions = '<div class="card-actions">';
-
-    if (type === 'web-links') {
-        cardActions += `
-            <button class="btn btn-secondary">Visit</button>
-            <button class="btn btn-primary">Copy Link</button>
-        `;
-    } else if (type === 'media' && files && files.length > 0) {
-        // Check the first file type to determine appropriate buttons
-        const firstFile = files[0];
-
-        if (firstFile.type.includes('video')) {
-            cardActions += `
-                <button class="btn btn-secondary">Play</button>
-                <button class="btn btn-primary">Download</button>
-            `;
-        } else if (firstFile.type.includes('image')) {
-            cardActions += `
-                <button class="btn btn-secondary">View</button>
-                <button class="btn btn-primary">Download</button>
-            `;
-        } else if (firstFile.type.includes('audio')) {
-            cardActions += `
-                <button class="btn btn-secondary">Listen</button>
-                <button class="btn btn-primary">Download</button>
-            `;
-        } else {
-            // Default for other media types
-            cardActions += `
-                <button class="btn btn-secondary">View</button>
-                <button class="btn btn-primary">Download</button>
-            `;
-        }
-    } else {
-        // Default actions for documents and other types
-        cardActions += `
-            <button class="btn btn-secondary">View</button>
-            <button class="btn btn-primary">Download</button>
-        `;
-    }
-
-    cardActions += '</div>';
-
-    // Combine all parts
-    researchCard.innerHTML = cardIcon + cardContent + cardActions;
-
-    // Add custom background color based on type
-    if (type === 'media') {
-        researchCard.querySelector('.card-icon').style.backgroundColor = '#2196F3';
-    } else if (type === 'web-links') {
-        researchCard.querySelector('.card-icon').style.backgroundColor = '#4CAF50';
-    } else if (type === 'breaking-news') {
-        researchCard.querySelector('.card-icon').style.backgroundColor = '#FF9800';
-    }
-
-    // Add the card to the research grid
-    const researchGrid = document.querySelector('.research-grid');
-    if (researchGrid) {
-        // Add to the beginning so newest appears first
-        if (researchGrid.firstChild) {
-            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
-        } else {
-            researchGrid.appendChild(researchCard);
-        }
-        console.log("Card added to grid");
-    } else {
-        console.error("Research grid container not found");
-    }
-
-    // Add event listeners for the new card
-    addCardEventListeners(researchCard, type, files);
-}
-
 // Helper function to get appropriate icon name based on file type
 function getFileIconName(fileType) {
     if (!fileType) return 'insert_drive_file';
-
+    
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -1196,7 +988,7 @@ function addCardEventListeners(card, type, files) {
                 alert(`Viewing: ${title}`);
             }
         });
-
+        
         // Second button (Download/Copy Link)
         buttons[1].addEventListener('click', function() {
             const title = card.querySelector('.card-title').textContent;
@@ -1238,7 +1030,7 @@ function closeModal() {
 
 function showUploadForm(type) {
     currentContentType = type;
-
+    
     // Set the appropriate title based on content type
     const titles = {
         'documents': 'Upload Documents',
@@ -1246,15 +1038,15 @@ function showUploadForm(type) {
         'breaking-news': 'Create Breaking News',
         'media': 'Upload Media'
     };
-
+    
     document.getElementById('uploadModalTitle').textContent = titles[type];
-
+    
     // Close the first modal
     closeModal();
-
+    
     // Reset the upload form
     resetUploadForm();
-
+    
     // If it's a web link or breaking news, enable the upload button right away
     if (type === 'web-links' || type === 'breaking-news') {
         document.getElementById('upload-btn').disabled = false;
@@ -1262,11 +1054,11 @@ function showUploadForm(type) {
         // Otherwise, disable until files are selected
         document.getElementById('upload-btn').disabled = true;
     }
-
+    
     // Open the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.add('show');
-
+    
     console.log('Opening upload form for type:', type);
 }
 
@@ -1281,11 +1073,11 @@ function cancelUpload() {
     // Close the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.remove('show');
-
+    
     // Open the Add New modal again
     const addNewModal = document.getElementById('addNewModal');
     addNewModal.classList.add('show');
-
+    
     console.log('Canceled upload, returning to Add New popup');
 }
 
@@ -1293,7 +1085,7 @@ function resetUploadForm() {
     // Clear selected files
     selectedFiles = [];
     document.getElementById('file-list').innerHTML = '';
-
+    
     // Reset upload button
     document.getElementById('upload-btn').disabled = true;
 }
@@ -1301,9 +1093,9 @@ function resetUploadForm() {
 // File handling functionality
 function handleFileSelect(event) {
     const files = event.target.files || event.dataTransfer.files;
-
+    
     console.log("Files selected:", files.length);
-
+    
     if (files.length > 0) {
         // Convert FileList to Array and add to selectedFiles
         Array.from(files).forEach(file => {
@@ -1312,12 +1104,12 @@ function handleFileSelect(event) {
                 selectedFiles.push(file);
             }
         });
-
+        
         console.log("Selected files after adding:", selectedFiles.length);
-
+        
         // Update the file list
         updateFileList();
-
+        
         // Enable the upload button if we have files
         document.getElementById('upload-btn').disabled = false;
     }
@@ -1326,18 +1118,18 @@ function handleFileSelect(event) {
 function updateFileList() {
     const fileList = document.getElementById('file-list');
     fileList.innerHTML = '';
-
+    
     selectedFiles.forEach((file, index) => {
         // Create a file item element
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
-
+        
         // Format the file size
         const fileSize = formatFileSize(file.size);
-
+        
         // Get file icon based on type
         const fileIcon = getFileIcon(file.type);
-
+        
         // Set the file item content
         fileItem.innerHTML = `
             <div class="file-info">
@@ -1347,19 +1139,19 @@ function updateFileList() {
             </div>
             <i class="material-icons file-remove" data-index="${index}">close</i>
         `;
-
+        
         fileList.appendChild(fileItem);
     });
-
+    
     // Add click event to remove buttons
     document.querySelectorAll('.file-remove').forEach(button => {
         button.addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
             selectedFiles.splice(index, 1);
             updateFileList();
-
+            
             // Disable upload button if no files left
-            if (selectedFiles.length === 0 &&
+            if (selectedFiles.length === 0 && 
                 (currentContentType === 'documents' || currentContentType === 'media')) {
                 document.getElementById('upload-btn').disabled = true;
             }
@@ -1369,7 +1161,7 @@ function updateFileList() {
 
 function getFileIcon(fileType) {
     if (!fileType) return 'insert_drive_file';
-
+    
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -1392,9 +1184,9 @@ function getFileIcon(fileType) {
 // Upload function - completely revised
 function uploadFiles() {
     console.log("Upload function called");
-
+    
     // Check if we need files but don't have any
-    if (selectedFiles.length === 0 &&
+    if (selectedFiles.length === 0 && 
         (currentContentType === 'documents' || currentContentType === 'media')) {
         alert('Please select at least one file to upload.');
         return;
@@ -1402,31 +1194,352 @@ function uploadFiles() {
 
     console.log("Files to be uploaded:", selectedFiles);
     console.log("Content type:", currentContentType);
+    
+    try {
+        // Generate automatic title and description
+        let title = '';
+        let description = '';
+        
+        if (currentContentType === 'media') {
+            title = 'Media';
+            description = 'Uploaded media files';
+        } else if (currentContentType === 'web-links') {
+            title = 'Web Resource';
+            description = 'Web resource link';
+        } else if (currentContentType === 'breaking-news') {
+            title = 'Breaking News';
+            description = 'Latest research update';
+        } else {
+            title = 'Research Document';
+            description = 'Uploaded research document';
+        }
+        
+        // If we have files, use the first file name as title
+        if (selectedFiles.length > 0) {
+            // Get the file name without extension
+            const fileName = selectedFiles[0].name.split('.').slice(0, -1).join('.');
+            if (fileName) {
+                title = fileName;
+            }
+        }
+        
+        // Call the original addToResearchGrid function with title and description
+        const researchGrid = document.querySelector('.research-grid');
+        if (!researchGrid) {
+            alert("Error: Cannot find research grid element");
+            return;
+        }
+        
+        // Get current date for display
+        const today = new Date();
+        const dateString = today.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+        
+        // Create a new research card
+        const researchCard = document.createElement('div');
+        researchCard.className = 'research-card';
+        
+        // Determine icon based on content type
+        let iconName = 'description';
+        if (currentContentType === 'media') {
+            iconName = 'perm_media';
+        } else if (currentContentType === 'web-links') {
+            iconName = 'link';
+        } else if (currentContentType === 'breaking-news') {
+            iconName = 'flash_on';
+        }
+        
+        // Create card header with icon
+        let cardIcon = `
+            <div class="card-icon">
+                <i class="material-icons">${iconName}</i>
+            </div>
+        `;
+        
+        // Set up the content section
+        let cardContent = `
+            <div class="card-content">
+                <h3 class="card-title">${title}</h3>
+                <p class="card-description">${description}</p>
+        `;
+        
+        // Add file information based on content type
+        if (currentContentType === 'web-links') {
+            cardContent += `
+                <div class="card-file">
+                    <i class="material-icons">language</i>
+                    <span>example.com/research</span>
+                </div>
+            `;
+        } else if (currentContentType === 'breaking-news') {
+            cardContent += `
+                <div class="card-file">
+                    <i class="material-icons">article</i>
+                    <span>Research announcement</span>
+                </div>
+            `;
+        } else {
+            // For files (documents, media)
+            if (selectedFiles.length > 0) {
+                // Sort through the files to display them in order
+                selectedFiles.forEach((file, index) => {
+                    // Only show first 2 files directly
+                    if (index < 2) {
+                        const fileIcon = getFileIconName(file.type);
+                        const fileSize = formatFileSize(file.size);
+                        
+                        cardContent += `
+                            <div class="card-file">
+                                <i class="material-icons">${fileIcon}</i>
+                                <span>${file.name} (${fileSize})</span>
+                            </div>
+                        `;
+                    }
+                });
+                
+                // If there are more files, indicate that
+                if (selectedFiles.length > 2) {
+                    cardContent += `
+                        <div class="card-file">
+                            <i class="material-icons">more_horiz</i>
+                            <span>+${selectedFiles.length - 2} more files</span>
+                        </div>
+                    `;
+                }
+            } else {
+                // Fallback if no files
+                cardContent += `
+                    <div class="card-file">
+                        <i class="material-icons">insert_drive_file</i>
+                        <span>No files attached</span>
+                    </div>
+                `;
+            }
+        }
+        
+        // Add date and close content div
+        cardContent += `
+                <div class="card-date">Added: ${dateString}</div>
+            </div>
+        `;
+        
+        // Set up action buttons based on content type
+        let cardActions = '<div class="card-actions">';
+        
+        if (currentContentType === 'web-links') {
+            cardActions += `
+                <button class="btn btn-secondary">Visit</button>
+                <button class="btn btn-primary">Copy Link</button>
+            `;
+        } else if (currentContentType === 'media' && selectedFiles.length > 0) {
+            // Check the first file type to determine appropriate buttons
+            const firstFile = selectedFiles[0];
+            
+            if (firstFile.type.includes('video')) {
+                cardActions += `
+                    <button class="btn btn-secondary">Play</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            } else if (firstFile.type.includes('image')) {
+                cardActions += `
+                    <button class="btn btn-secondary">View</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            } else if (firstFile.type.includes('audio')) {
+                cardActions += `
+                    <button class="btn btn-secondary">Listen</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            } else {
+                // Default for other media types
+                cardActions += `
+                    <button class="btn btn-secondary">View</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            }
+        } else {
+            // Default actions for documents and other types
+            cardActions += `
+                <button class="btn btn-secondary">View</button>
+                <button class="btn btn-primary">Download</button>
+            `;
+        }
+        
+        cardActions += '</div>';
+        
+        // Combine all parts
+        researchCard.innerHTML = cardIcon + cardContent + cardActions;
+        
+        // Add custom background color based on type
+        if (currentContentType === 'media') {
+            researchCard.querySelector('.card-icon').style.backgroundColor = '#2196F3';
+        } else if (currentContentType === 'web-links') {
+            researchCard.querySelector('.card-icon').style.backgroundColor = '#4CAF50';
+        } else if (currentContentType === 'breaking-news') {
+            researchCard.querySelector('.card-icon').style.backgroundColor = '#FF9800';
+        }
+        
+        // Insert the card at the beginning of the grid
+        if (researchGrid.firstChild) {
+            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
+        } else {
+            researchGrid.appendChild(researchCard);
+        }
+        
+        console.log("Card added to grid");
+        
+        // Add event listeners to the new card's buttons
+        const buttons = researchCard.querySelectorAll('.btn');
+        if (buttons.length >= 2) {
+            // First button (View/Visit/Play)
+            buttons[0].addEventListener('click', function() {
+                const cardTitle = researchCard.querySelector('.card-title').textContent;
+                if (currentContentType === 'web-links') {
+                    alert(`Visiting website: ${cardTitle}`);
+                } else if (currentContentType === 'media' && selectedFiles.length > 0 && selectedFiles[0].type.includes('video')) {
+                    alert(`Playing video: ${selectedFiles[0].name}`);
+                } else if (currentContentType === 'media' && selectedFiles.length > 0 && selectedFiles[0].type.includes('image')) {
+                    alert(`Viewing image: ${selectedFiles[0].name}`);
+                } else {
+                    alert(`Viewing: ${cardTitle}`);
+                }
+            });
+            
+            // Second button (Download/Copy Link)
+            buttons[1].addEventListener('click', function() {
+                const cardTitle = researchCard.querySelector('.card-title').textContent;
+                if (currentContentType === 'web-links') {
+                    alert(`Link copied: ${cardTitle}`);
+                } else if (selectedFiles.length > 0) {
+                    alert(`Downloading: ${selectedFiles[0].name}`);
+                } else {
+                    alert(`Downloading: ${cardTitle}`);
+                }
+            });
+        }
+        
+        // Show success message
+        const contentTypeNames = {
+            'documents': 'Document',
+            'web-links': 'Web Link',
+            'breaking-news': 'News', 
+            'media': 'Media'
+        };
+        
+        alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
+        
+        // Close the modal
+        closeUploadModal();
+        
+        // Clear selected files
+        selectedFiles = [];
+        
+    } catch (error) {
+        console.error("Error during upload:", error);
+        alert("An error occurred while adding content to the grid. Please try again.");
+    }
+}
 
-    // Add the uploaded content to the research grid
-    addToResearchGrid(selectedFiles, currentContentType);
-
-    // Show success message
-    const contentTypeNames = {
-        'documents': 'Document',
-        'web-links': 'Web Link',
-        'breaking-news': 'News',
-        'media': 'Media'
-    };
-
-    alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
-
-    // Close the modal
+// Simplified test upload function
+function testUpload() {
+    const grid = document.querySelector('.research-grid');
+    if (!grid) {
+        alert("Can't find research grid!");
+        return;
+    }
+    
+    const testCard = document.createElement('div');
+    testCard.className = 'research-card';
+    testCard.innerHTML = `
+        <div class="card-icon" style="background-color: #782f40;">
+            <i class="material-icons">check</i>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Test Upload</h3>
+            <p class="card-description">This is a test upload card</p>
+            <div class="card-date">Added: ${new Date().toLocaleDateString()}</div>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-secondary">Test</button>
+            <button class="btn btn-primary">OK</button>
+        </div>
+    `;
+    
+    if (grid.firstChild) {
+        grid.insertBefore(testCard, grid.firstChild);
+    } else {
+        grid.appendChild(testCard);
+    }
+    
+    alert("Test card added!");
     closeUploadModal();
+}
+
+// Fix the file input handling
+function setupFileInput() {
+    const fileInput = document.getElementById('file-input');
+    if (fileInput) {
+        console.log("File input found, setting up event listener");
+        
+        // Remove any existing listeners by cloning
+        const newFileInput = fileInput.cloneNode(true);
+        fileInput.parentNode.replaceChild(newFileInput, fileInput);
+        
+        // Add new event listener
+        newFileInput.addEventListener('change', function(event) {
+            console.log("File input changed");
+            handleFileSelect(event);
+        });
+    } else {
+        console.error("File input element not found");
+    }
+}
+
+// Add a debug function to help troubleshoot
+function addDebugButton() {
+    const uploadActions = document.querySelector('.upload-actions');
+    if (uploadActions) {
+        const debugBtn = document.createElement('button');
+        debugBtn.textContent = 'Debug';
+        debugBtn.className = 'upload-btn';
+        debugBtn.style.backgroundColor = '#333';
+        debugBtn.style.color = 'white';
+        
+        debugBtn.addEventListener('click', function() {
+            console.log("--- DEBUG INFO ---");
+            console.log("Selected Files:", selectedFiles);
+            console.log("Content Type:", currentContentType);
+            console.log("Upload Button:", document.getElementById('upload-btn'));
+            console.log("File Input:", document.getElementById('file-input'));
+            console.log("Research Grid:", document.querySelector('.research-grid'));
+            alert("Debug info printed to console");
+        });
+        
+        uploadActions.appendChild(debugBtn);
+    }
+}
+
+// Add a test button
+function addTestButton() {
+    const uploadActions = document.querySelector('.upload-actions');
+    if (uploadActions) {
+        const testBtn = document.createElement('button');
+        testBtn.textContent = 'Test Upload';
+        testBtn.className = 'upload-btn';
+        testBtn.style.backgroundColor = 'green';
+        
+        testBtn.addEventListener('click', testUpload);
+        uploadActions.appendChild(testBtn);
+    }
 }
 
 // Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
-
-    // Set up comment functionality
-    initializeComments();
-
+    
     // Add event listener to the Add New button
     const addNewBtn = document.querySelector('.add-new-btn');
     if (addNewBtn) {
@@ -1440,7 +1553,7 @@ document.addEventListener('DOMContentLoaded', function() {
             openModal();
         });
     }
-
+    
     // Add event listeners to the close buttons in the modals
     const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
     if (closeAddModalBtn) {
@@ -1454,7 +1567,7 @@ document.addEventListener('DOMContentLoaded', function() {
             closeModal();
         });
     }
-
+    
     const closeUploadModalBtn = document.querySelector('#uploadModal .close-btn');
     if (closeUploadModalBtn) {
         // Remove any previous listeners by cloning
@@ -1467,7 +1580,7 @@ document.addEventListener('DOMContentLoaded', function() {
             closeUploadModal();
         });
     }
-
+    
     // Setup content type grid for the Add New modal
     const modalBody = document.querySelector('#addNewModal .modal-body');
     if (modalBody) {
@@ -1503,8 +1616,8 @@ document.addEventListener('DOMContentLoaded', function() {
             modalBody.appendChild(contentTypeGrid);
         }
     }
-
-    // Add event listeners to all content type cards
+    
+    // Add event listeners to all content type cards, but first remove any existing ones
     const contentTypeCards = document.querySelectorAll('.content-type-card');
     contentTypeCards.forEach(card => {
         // Remove existing event listeners by cloning the node
@@ -1520,7 +1633,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
+    
     // Set up drag and drop functionality
     const uploadArea = document.getElementById('upload-area');
     if (uploadArea) {
@@ -1548,26 +1661,7 @@ document.addEventListener('DOMContentLoaded', function() {
             handleFileSelect(e);
         });
     }
-    // Fix the file input handling
-function setupFileInput() {
-    const fileInput = document.getElementById('file-input');
-    if (fileInput) {
-        console.log("File input found, setting up event listener");
-        
-        // Remove any existing listeners by cloning
-        const newFileInput = fileInput.cloneNode(true);
-        fileInput.parentNode.replaceChild(newFileInput, fileInput);
-        
-        // Add new event listener
-        newFileInput.addEventListener('change', function(event) {
-            console.log("File input changed");
-            handleFileSelect(event);
-        });
-    } else {
-        console.error("File input element not found");
-    }
-}
-
+    
     // Setup file input
     setupFileInput();
     
@@ -1602,25 +1696,7 @@ function setupFileInput() {
         });
     }
     
-    // Add debug and test buttons to help troubleshoot
-    addDebugButton();
-    addTestButton();
     
-    // Navigation item click handler
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        // Remove existing listeners by cloning
-        const newItem = item.cloneNode(true);
-        item.parentNode.replaceChild(newItem, item);
-        
-        // Add listener to the new item
-        newItem.addEventListener('click', function() {
-            // Remove active class from all items
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            // Add active class to clicked item
-            this.classList.add('active');
-        });
-    });
 });
 
 // Comments Functionality
