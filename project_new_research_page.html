@@ -822,84 +822,17 @@
 
 <div class="research-grid">
     <!-- Document item -->
-    <div class="research-card">
-        <div class="card-icon">
-            <i class="material-icons">description</i>
-        </div>
-        <div class="card-content">
-            <h3 class="card-title">Quantum Computing Research</h3>
-            <p class="card-description">Analysis of quantum computing applications in medical research</p>
-            <div class="card-file">
-                <i class="material-icons">insert_drive_file</i>
-                <span>quantum_research.pdf (2.4 MB)</span>
-            </div>
-            <div class="card-date">Added: Feb 26, 2025</div>
-        </div>
-        <div class="card-actions">
-            <button class="btn btn-secondary">View</button>
-            <button class="btn btn-primary">Download</button>
-        </div>
-    </div>
+   
 
     <!-- Media item -->
-    <div class="research-card">
-        <div class="card-icon">
-            <i class="material-icons">perm_media</i>
-        </div>
-        <div class="card-content">
-            <h3 class="card-title">Lab Experiment Results</h3>
-            <p class="card-description">Visual documentation of biochemistry lab results</p>
-            <div class="card-file">
-                <i class="material-icons">image</i>
-                <span>experiment_results.jpg (3.2 MB)</span>
-            </div>
-            <div class="card-date">Added: Feb 24, 2025</div>
-        </div>
-        <div class="card-actions">
-            <button class="btn btn-secondary">View</button>
-            <button class="btn btn-primary">Download</button>
-        </div>
-    </div>
+    
 
     <!-- Web Link item -->
-    <div class="research-card">
-        <div class="card-icon">
-            <i class="material-icons">link</i>
-        </div>
-        <div class="card-content">
-            <h3 class="card-title">Journal of Medical Research</h3>
-            <p class="card-description">Official website of the Journal of Medical Research</p>
-            <div class="card-file">
-                <i class="material-icons">language</i>
-                <span>journal-med-research.org</span>
-            </div>
-            <div class="card-date">Added: Feb 22, 2025</div>
-        </div>
-        <div class="card-actions">
-            <button class="btn btn-secondary">Visit</button>
-            <button class="btn btn-primary">Copy Link</button>
-        </div>
-    </div>
+    
 
     <!-- Video item -->
-    <div class="research-card">
-        <div class="card-icon">
-            <i class="material-icons">videocam</i>
-        </div>
-        <div class="card-content">
-            <h3 class="card-title">Research Presentation</h3>
-            <p class="card-description">Video presentation of the latest research findings</p>
-            <div class="card-file">
-                <i class="material-icons">movie</i>
-                <span>presentation.mp4 (18.7 MB)</span>
-            </div>
-            <div class="card-date">Added: Feb 21, 2025</div>
-        </div>
-        <div class="card-actions">
-            <button class="btn btn-secondary">Play</button>
-            <button class="btn btn-primary">Download</button>
-        </div>
-    </div>
+    
+  
 </div>
 
             <!-- Content Type Selection Modal -->
@@ -938,6 +871,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 id="uploadModalTitle">Upload Content</h2>
+                        <button class="close-btn">
+                            <i class="material-icons">close</i>
+                        </button>
 
                     </div>
                     <div class="modal-body">
@@ -961,6 +897,7 @@
 </div>
                     </div>
                 </div>
+
                 <main class="main-content">
                     <div class="comments-section">
                         <h2 class="section-title">Comments</h2>
@@ -1452,7 +1389,7 @@ function getFileIcon(fileType) {
     }
 }
 
-// Upload function - no title/description/tags, just files
+// Upload function - completely revised
 function uploadFiles() {
     console.log("Upload function called");
 
@@ -1493,57 +1430,89 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to the Add New button
     const addNewBtn = document.querySelector('.add-new-btn');
     if (addNewBtn) {
-        addNewBtn.addEventListener('click', openModal);
+        // Remove any previous listeners by cloning
+        const newAddBtn = addNewBtn.cloneNode(true);
+        addNewBtn.parentNode.replaceChild(newAddBtn, addNewBtn);
+        
+        // Add direct click event listener
+        newAddBtn.addEventListener('click', function() {
+            console.log("Add New button clicked");
+            openModal();
+        });
     }
 
     // Add event listeners to the close buttons in the modals
     const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
     if (closeAddModalBtn) {
-        closeAddModalBtn.addEventListener('click', closeModal);
+        // Remove any previous listeners by cloning
+        const newCloseBtn = closeAddModalBtn.cloneNode(true);
+        closeAddModalBtn.parentNode.replaceChild(newCloseBtn, closeAddModalBtn);
+        
+        // Add direct click event listener
+        newCloseBtn.addEventListener('click', function() {
+            console.log("Close Add modal button clicked");
+            closeModal();
+        });
     }
 
     const closeUploadModalBtn = document.querySelector('#uploadModal .close-btn');
     if (closeUploadModalBtn) {
-        closeUploadModalBtn.addEventListener('click', closeUploadModal);
+        // Remove any previous listeners by cloning
+        const newCloseBtn = closeUploadModalBtn.cloneNode(true);
+        closeUploadModalBtn.parentNode.replaceChild(newCloseBtn, closeUploadModalBtn);
+        
+        // Add direct click event listener
+        newCloseBtn.addEventListener('click', function() {
+            console.log("Close Upload modal button clicked");
+            closeUploadModal();
+        });
     }
 
     // Setup content type grid for the Add New modal
-    const contentTypeGrid = document.createElement('div');
-    contentTypeGrid.className = 'content-type-grid';
-    contentTypeGrid.innerHTML = `
-        <div class="content-type-card" data-type="documents">
-            <i class="material-icons">description</i>
-            <h3>Documents</h3>
-            <p>Upload and manage research documents</p>
-        </div>
-        <div class="content-type-card" data-type="web-links">
-            <i class="material-icons">link</i>
-            <h3>Web Links</h3>
-            <p>Add relevant web resources and articles</p>
-        </div>
-        <div class="content-type-card" data-type="breaking-news">
-            <i class="material-icons">flash_on</i>
-            <h3>Breaking News</h3>
-            <p>Add latest news and updates</p>
-        </div>
-        <div class="content-type-card" data-type="media">
-            <i class="material-icons">perm_media</i>
-            <h3>Media</h3>
-            <p>Upload images, videos, and other media</p>
-        </div>
-    `;
-
-    // Add the grid to the modal body
     const modalBody = document.querySelector('#addNewModal .modal-body');
     if (modalBody) {
-        modalBody.innerHTML = '';
-        modalBody.appendChild(contentTypeGrid);
+        // Check if the grid already exists to prevent duplicates
+        if (!modalBody.querySelector('.content-type-grid')) {
+            const contentTypeGrid = document.createElement('div');
+            contentTypeGrid.className = 'content-type-grid';
+            contentTypeGrid.innerHTML = `
+                <div class="content-type-card" data-type="documents">
+                    <i class="material-icons">description</i>
+                    <h3>Documents</h3>
+                    <p>Upload and manage research documents</p>
+                </div>
+                <div class="content-type-card" data-type="web-links">
+                    <i class="material-icons">link</i>
+                    <h3>Web Links</h3>
+                    <p>Add relevant web resources and articles</p>
+                </div>
+                <div class="content-type-card" data-type="breaking-news">
+                    <i class="material-icons">flash_on</i>
+                    <h3>Breaking News</h3>
+                    <p>Add latest news and updates</p>
+                </div>
+                <div class="content-type-card" data-type="media">
+                    <i class="material-icons">perm_media</i>
+                    <h3>Media</h3>
+                    <p>Upload images, videos, and other media</p>
+                </div>
+            `;
+            
+            // Clear any existing content and add the grid
+            modalBody.innerHTML = '';
+            modalBody.appendChild(contentTypeGrid);
+        }
     }
 
     // Add event listeners to all content type cards
     const contentTypeCards = document.querySelectorAll('.content-type-card');
     contentTypeCards.forEach(card => {
-        card.addEventListener('click', function() {
+        // Remove existing event listeners by cloning the node
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        // Add the event listener to the new card
+        newCard.addEventListener('click', function() {
             const type = this.getAttribute('data-type');
             if (type) {
                 console.log('Content type card clicked:', type);
@@ -1555,65 +1524,99 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up drag and drop functionality
     const uploadArea = document.getElementById('upload-area');
     if (uploadArea) {
-        // Drag and drop events
-        uploadArea.addEventListener('dragover', function(e) {
+        // Create a new element to replace the old one (removes all existing listeners)
+        const newUploadArea = uploadArea.cloneNode(true);
+        uploadArea.parentNode.replaceChild(newUploadArea, uploadArea);
+        
+        // Drag and drop events on the new element
+        newUploadArea.addEventListener('dragover', function(e) {
             e.preventDefault();
             e.stopPropagation();
             this.classList.add('dragover');
         });
-
-        uploadArea.addEventListener('dragleave', function(e) {
+        
+        newUploadArea.addEventListener('dragleave', function(e) {
             e.preventDefault();
             e.stopPropagation();
             this.classList.remove('dragover');
         });
-
-        uploadArea.addEventListener('drop', function(e) {
+        
+        newUploadArea.addEventListener('drop', function(e) {
             e.preventDefault();
             e.stopPropagation();
             this.classList.remove('dragover');
             handleFileSelect(e);
         });
     }
-
-    // File input change event
+    // Fix the file input handling
+function setupFileInput() {
     const fileInput = document.getElementById('file-input');
     if (fileInput) {
-        fileInput.addEventListener('change', handleFileSelect);
+        console.log("File input found, setting up event listener");
+        
+        // Remove any existing listeners by cloning
+        const newFileInput = fileInput.cloneNode(true);
+        fileInput.parentNode.replaceChild(newFileInput, fileInput);
+        
+        // Add new event listener
+        newFileInput.addEventListener('change', function(event) {
+            console.log("File input changed");
+            handleFileSelect(event);
+        });
+    } else {
+        console.error("File input element not found");
     }
+}
 
-    // Add event listener to the upload button
+    // Setup file input
+    setupFileInput();
+    
+    // Add direct event listener to upload button
     const uploadBtn = document.getElementById('upload-btn');
     if (uploadBtn) {
-        uploadBtn.addEventListener('click', uploadFiles);
+        // Remove any previous event listeners by cloning the button
+        const newBtn = uploadBtn.cloneNode(true);
+        uploadBtn.parentNode.replaceChild(newBtn, uploadBtn);
+        
+        // Add a direct click event listener
+        newBtn.addEventListener('click', function(e) {
+            console.log("Upload button clicked directly");
+            e.preventDefault();
+            uploadFiles();
+        });
+        console.log("Direct upload button event listener added");
     }
-
-    // Add event listener to the cancel button
+    
+    // Add direct event listener to cancel button
     const cancelBtn = document.getElementById('cancel-upload');
     if (cancelBtn) {
-        cancelBtn.addEventListener('click', cancelUpload);
+        // Remove any previous event listeners by cloning the button
+        const newBtn = cancelBtn.cloneNode(true);
+        cancelBtn.parentNode.replaceChild(newBtn, cancelBtn);
+        
+        // Add a direct click event listener
+        newBtn.addEventListener('click', function(e) {
+            console.log("Cancel button clicked directly");
+            e.preventDefault();
+            cancelUpload();
+        });
     }
-
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        const addNewModal = document.getElementById('addNewModal');
-        const uploadModal = document.getElementById('uploadModal');
-
-        if (event.target === addNewModal) {
-            closeModal();
-        }
-
-        if (event.target === uploadModal) {
-            closeUploadModal();
-        }
-    });
-
+    
+    // Add debug and test buttons to help troubleshoot
+    addDebugButton();
+    addTestButton();
+    
     // Navigation item click handler
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
-        item.addEventListener('click', function() {
+        // Remove existing listeners by cloning
+        const newItem = item.cloneNode(true);
+        item.parentNode.replaceChild(newItem, item);
+        
+        // Add listener to the new item
+        newItem.addEventListener('click', function() {
             // Remove active class from all items
-            navItems.forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
             // Add active class to clicked item
             this.classList.add('active');
         });
