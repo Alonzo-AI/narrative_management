@@ -1714,7 +1714,6 @@ function submitReview() {
     if (confirmSubmit) {
         // Show loading state
         const submitBtn = document.querySelector('.submit-review-btn');
-        const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Submitting...';
         submitBtn.disabled = true;
         
@@ -1723,15 +1722,44 @@ function submitReview() {
             // Show success message
             alert("Your review has been successfully submitted!");
             
-            // Reset button
-            submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Submitted';
+            // Change the button to "Accept Review" instead of resetting to original state
+            submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+            submitBtn.disabled = false;
             
-            // Optionally redirect or reload after a delay
-            setTimeout(() => {
-                // Reset button to original state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 3000);
+            // You might want to change the class name or add a new class to style it differently
+            submitBtn.classList.remove('submit-review-btn');
+            submitBtn.classList.add('accept-review-btn');
+            
+            // Optionally change the onclick function
+            submitBtn.onclick = function() {
+                acceptReview();
+            };
+            
+        }, 1500);
+    }
+}
+
+// New function for Accept Review functionality
+function acceptReview() {
+    console.log("Accept Review button clicked");
+    
+    // Show confirmation dialog
+    const confirmAccept = confirm("Are you sure you want to accept this review?");
+    
+    if (confirmAccept) {
+        // Show loading state
+        const acceptBtn = document.querySelector('.accept-review-btn');
+        acceptBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Processing...';
+        acceptBtn.disabled = true;
+        
+        // Simulate API call with timeout
+        setTimeout(() => {
+            // Show success message
+            alert("Review has been accepted successfully!");
+            
+            // Update button state
+            acceptBtn.innerHTML = '<i class="material-icons">done_all</i> Accepted';
+            acceptBtn.disabled = true;
         }, 1500);
     }
 }
