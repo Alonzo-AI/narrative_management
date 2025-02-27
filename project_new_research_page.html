@@ -1699,44 +1699,86 @@ document.addEventListener('DOMContentLoaded', function() {
     
 });
 
-// Comments Functionality
+// Comments Functionality - Fixed Version
 function initializeComments() {
+    console.log("Initializing comments functionality");
+    
+    // Get DOM elements
     const commentInput = document.getElementById('commentInput');
     const postCommentBtn = document.getElementById('postCommentBtn');
     const commentsList = document.getElementById('commentsList');
-
-    if (postCommentBtn) {
-        postCommentBtn.addEventListener('click', function() {
-            const commentText = commentInput.value.trim();
-            if (commentText) {
-                addNewComment(commentText);
-                commentInput.value = '';
-            } else {
-                alert('Please enter a comment');
-            }
-        });
+    
+    // Debug log to check if elements are found
+    console.log("Comment elements:", {
+        input: commentInput,
+        button: postCommentBtn,
+        list: commentsList
+    });
+    
+    // Ensure elements exist before adding event listeners
+    if (!commentInput || !postCommentBtn || !commentsList) {
+        console.error("Could not find required comment elements");
+        return;
     }
-
+    
+    // Remove any existing event listeners by cloning
+    const newPostBtn = postCommentBtn.cloneNode(true);
+    postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
+    
+    // Add event listener to post button
+    newPostBtn.addEventListener('click', function(e) {
+        console.log("Post comment button clicked");
+        e.preventDefault();
+        
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            addNewComment(commentText, commentsList);
+            commentInput.value = '';
+        } else {
+            alert('Please enter a comment');
+        }
+    });
+    
+    // Add keypress event to also submit on Enter
+    commentInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            newPostBtn.click();
+        }
+    });
+    
     // Add event listeners to existing comment buttons
     setupCommentButtons();
+    
+    console.log("Comments functionality initialized");
 }
 
-function addNewComment(text) {
-    const commentsList = document.getElementById('commentsList');
+function addNewComment(text, commentsList) {
+    // Ensure commentsList is provided or find it
+    if (!commentsList) {
+        commentsList = document.getElementById('commentsList');
+        if (!commentsList) {
+            console.error("Comments list element not found");
+            return;
+        }
+    }
+    
+    console.log("Adding new comment:", text);
+    
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
     });
-
+    
     // Create a new comment element
     const newComment = document.createElement('div');
     newComment.className = 'comment-item';
-
+    
     // Generate random avatar (for demo purposes)
     const avatarNum = Math.floor(Math.random() * 20) + 1;
-
+    
     newComment.innerHTML = `
         <div class="comment-avatar">
             <img src="https://i.pravatar.cc/40?img=${avatarNum}" alt="User">
@@ -1748,50 +1790,93 @@ function addNewComment(text) {
             </div>
             <p class="comment-text">${text}</p>
             <div class="comment-actions">
-                <button class="comment-action-btn">Reply</button>
-                <button class="comment-action-btn">Edit</button>
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
             </div>
         </div>
     `;
-
+    
     // Add to the beginning of the list
     if (commentsList.firstChild) {
         commentsList.insertBefore(newComment, commentsList.firstChild);
     } else {
         commentsList.appendChild(newComment);
     }
-
+    
+    console.log("Comment added to list");
+    
     // Add event listeners to the new comment's buttons
     setupCommentButtonsForElement(newComment);
 }
 
 function setupCommentButtons() {
+    console.log("Setting up comment buttons for all comments");
+    
     // Get all comment items
     const commentItems = document.querySelectorAll('.comment-item');
-    commentItems.forEach(item => {
+    console.log(`Found ${commentItems.length} comments`);
+    
+    commentItems.forEach((item, index) => {
+        console.log(`Setting up buttons for comment ${index}`);
         setupCommentButtonsForElement(item);
     });
 }
 
 function setupCommentButtonsForElement(element) {
-    // Reply button
-    const replyBtn = element.querySelector('.comment-action-btn:first-child');
+    if (!element) {
+        console.error("No element provided to setupCommentButtonsForElement");
+        return;
+    }
+    
+    // Reply button - using more specific selector with the added class
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+                     element.querySelector('.comment-action-btn:first-child');
+                     
     if (replyBtn) {
-        replyBtn.addEventListener('click', function() {
+        // Remove existing event listeners by cloning
+        const newReplyBtn = replyBtn.cloneNode(true);
+        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+        
+        newReplyBtn.addEventListener('click', function() {
             const commentAuthor = element.querySelector('.comment-author').textContent;
             const commentInput = document.getElementById('commentInput');
-            commentInput.value = `@${commentAuthor} `;
-            commentInput.focus();
+            if (commentInput) {
+                commentInput.value = `@${commentAuthor} `;
+                commentInput.focus();
+                console.log(`Set reply to ${commentAuthor}`);
+            } else {
+                console.error("Comment input not found");
+            }
         });
+    } else {
+        console.warn("Reply button not found in comment", element);
     }
-
-    // Edit button
-    const editBtn = element.querySelector('.comment-action-btn:nth-child(2)');
+    
+    // Edit button - using more specific selector with the added class
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+                    element.querySelector('.comment-action-btn:nth-child(2)');
+                    
     if (editBtn) {
-        editBtn.addEventListener('click', function() {
+        // Remove existing event listeners by cloning
+        const newEditBtn = editBtn.cloneNode(true);
+        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+        
+        newEditBtn.addEventListener('click', function() {
             const commentText = element.querySelector('.comment-text');
+            if (!commentText) {
+                console.error("Comment text element not found");
+                return;
+            }
+            
             const originalText = commentText.textContent;
-
+            console.log("Editing comment:", originalText);
+            
+            // Check if we're already editing this comment
+            if (element.querySelector('.comment-edit-interface')) {
+                console.warn("Edit interface already open");
+                return;
+            }
+            
             // Create edit interface
             const editInterface = document.createElement('div');
             editInterface.className = 'comment-edit-interface';
@@ -1802,35 +1887,51 @@ function setupCommentButtonsForElement(element) {
                     <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
                 </div>
             `;
-
+            
             // Replace comment text with edit interface
             commentText.style.display = 'none';
             commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
-
+            
             // Focus the textarea
             const textarea = editInterface.querySelector('.comment-edit-input');
             textarea.focus();
-
+            
             // Add event listeners for save and cancel buttons
             const saveBtn = editInterface.querySelector('.save-edit-btn');
             saveBtn.addEventListener('click', function() {
                 const newText = textarea.value.trim();
                 if (newText) {
                     commentText.textContent = newText;
+                    console.log("Comment updated:", newText);
                 }
                 // Clean up
                 commentText.style.display = 'block';
                 editInterface.remove();
             });
-
+            
             const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
             cancelBtn.addEventListener('click', function() {
                 // Just clean up without saving
                 commentText.style.display = 'block';
                 editInterface.remove();
+                console.log("Edit cancelled");
             });
         });
+    } else {
+        console.warn("Edit button not found in comment", element);
     }
+}
+
+// Make sure comments are initialized after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing comments");
+    initializeComments();
+});
+
+// In case DOMContentLoaded already fired, also try to initialize now
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    console.log("Document already loaded, initializing comments immediately");
+    setTimeout(initializeComments, 100); // Short timeout to ensure execution
 }
 
 
