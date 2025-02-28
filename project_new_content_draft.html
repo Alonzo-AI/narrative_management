@@ -299,6 +299,84 @@
             color: #666;
         }
 
+        /* Press Release Dialog */
+        .press-release-dialog {
+            display: none; /* Initially hidden */
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+            width: 100%; /* Ensure full width */
+        }
+        
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dialog-title {
+            font-size: 18px;
+            color: var(--fsu-black);
+            font-weight: 500;
+        }
+        
+        /* Text editor area */
+        .press-release-editor {
+            width: 100%;
+            min-height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            margin-bottom: 16px;
+        }
+        
+        /* Dialog action buttons */
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .dialog-btn {
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .rewrite-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+        }
+        
+        .rewrite-btn:hover {
+            background-color: #682a38;
+        }
+        
+        .save-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+        }
+        
+        .save-btn:hover {
+            background-color: #682a38;
+        }
+
         /* Form actions */
         .form-actions {
             display: flex;
@@ -384,7 +462,7 @@
             <div class="content-types">
                 <div class="content-type-card" data-type="press-release">
                     <div class="content-type-icon">
-                        <i class="material-icons">article</i>
+                        <i class="material-icons">description</i>
                     </div>
                     <h3 class="content-type-title">Press Release</h3>
                     <p class="content-type-desc">Create an official announcement for media distribution</p>
@@ -407,6 +485,26 @@
                 </div>
             </div>
             
+            <!-- Press Release Dialog -->
+            <div id="press-release-dialog" class="press-release-dialog">
+                <div class="dialog-header">
+                    <h3 class="dialog-title">Press Release Editor</h3>
+                </div>
+                
+                <textarea class="press-release-editor" placeholder="Enter your press release content here..."></textarea>
+                
+                <div class="dialog-actions">
+                    <button class="dialog-btn rewrite-btn" id="rewriteBtn">
+                        <i class="material-icons">auto_fix_high</i>
+                        Rewrite with AI
+                    </button>
+                    <button class="dialog-btn save-btn" id="saveVersionBtn">
+                        <i class="material-icons">save</i>
+                        Save Version
+                    </button>
+                </div>
+            </div>
+            
             <div class="form-actions">
                 <button class="cancel-btn" id="cancelBtn">Cancel</button>
                 <button class="continue-btn" id="continueBtn">Continue</button>
@@ -423,27 +521,40 @@
             const cancelBtn = document.getElementById('cancelBtn');
             const continueBtn = document.getElementById('continueBtn');
             const contentTypeCards = document.querySelectorAll('.content-type-card');
+            const pressReleaseDialog = document.getElementById('press-release-dialog');
+            const dialogOptions = document.querySelectorAll('.dialog-option');
             
             let selectedContentType = null;
             
             // Show dashboard when create button is clicked
             createBtn.addEventListener('click', function() {
                 dashboardContainer.style.display = 'block';
+                // Make sure dialog is hidden when dashboard opens
+                pressReleaseDialog.style.display = 'none';
+                // Reset selection
+                contentTypeCards.forEach(c => c.classList.remove('selected'));
+                selectedContentType = null;
+                continueBtn.classList.remove('active');
+                continueBtn.style.display = 'block';
             });
             
             // Hide dashboard when close button is clicked
             closeDashboardBtn.addEventListener('click', function() {
                 dashboardContainer.style.display = 'none';
+                pressReleaseDialog.style.display = 'none';
             });
             
             // Hide dashboard when cancel button is clicked
             cancelBtn.addEventListener('click', function() {
                 dashboardContainer.style.display = 'none';
+                pressReleaseDialog.style.display = 'none';
             });
             
             // Handle content type selection
             contentTypeCards.forEach(card => {
                 card.addEventListener('click', function() {
+                    console.log('Card clicked:', this.getAttribute('data-type'));
+                    
                     // Remove selection from all cards
                     contentTypeCards.forEach(c => c.classList.remove('selected'));
                     
@@ -452,19 +563,66 @@
                     
                     // Store selected content type
                     selectedContentType = this.getAttribute('data-type');
+                    console.log('Selected content type:', selectedContentType);
                     
-                    // Enable continue button
-                    continueBtn.classList.add('active');
+                    // Show press release dialog if press-release is selected
+                    if (selectedContentType === 'press-release') {
+                        // First ensure dialog exists
+                        if (pressReleaseDialog) {
+                            console.log('Showing press release dialog');
+                            pressReleaseDialog.style.display = 'block';
+                            // Hide continue button as we'll use the dialog options directly
+                            continueBtn.style.display = 'none';
+                        } else {
+                            console.error('Press release dialog element not found');
+                        }
+                    } else {
+                        // For other content types
+                        if (pressReleaseDialog) {
+                            pressReleaseDialog.style.display = 'none';
+                        }
+                        // Show and enable continue button for other content types
+                        continueBtn.style.display = 'block';
+                        continueBtn.classList.add('active');
+                    }
                 });
             });
+            
+            // Handle dialog button actions
+            const rewriteBtn = document.getElementById('rewriteBtn');
+            const saveVersionBtn = document.getElementById('saveVersionBtn');
+            const pressReleaseEditor = document.querySelector('.press-release-editor');
+            
+            if (rewriteBtn) {
+                rewriteBtn.addEventListener('click', function() {
+                    const content = pressReleaseEditor ? pressReleaseEditor.value : '';
+                    console.log('Rewriting content with AI:', content);
+                    
+                    // Here you would typically send the content to an AI service
+                    alert('Content sent for AI rewriting. This would integrate with your AI service.');
+                });
+            }
+            
+            if (saveVersionBtn) {
+                saveVersionBtn.addEventListener('click', function() {
+                    const content = pressReleaseEditor ? pressReleaseEditor.value : '';
+                    console.log('Saving content version:', content);
+                    
+                    // Here you would typically save the content to your system
+                    alert('Content version saved successfully!');
+                    
+                    // Hide the dashboard
+                    dashboardContainer.style.display = 'none';
+                    pressReleaseDialog.style.display = 'none';
+                });
+            }
             
             // Handle continue button click
             continueBtn.addEventListener('click', function() {
                 if (!selectedContentType) return;
                 
                 // Here you can redirect to specific form or load the appropriate template
-                // based on the selectedContentType value
-                console.log('Selected content type:', selectedContentType);
+                console.log('Continue clicked with content type:', selectedContentType);
                 
                 // Hide the dashboard
                 dashboardContainer.style.display = 'none';
@@ -472,6 +630,11 @@
                 // You would typically redirect or load a template here
                 alert(`You selected: ${selectedContentType}. Redirecting to the editor...`);
             });
+            
+            // Initialize: ensure press release dialog is hidden at start
+            if (pressReleaseDialog) {
+                pressReleaseDialog.style.display = 'none';
+            }
         });
 
    
