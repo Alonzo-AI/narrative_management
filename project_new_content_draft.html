@@ -444,6 +444,18 @@
             pointer-events: all;
         }
 
+        /* Format message styling */
+        .format-message {
+            background-color: #f0f0f0;
+            border-left: 4px solid var(--fsu-garnet);
+            padding: 12px 16px;
+            margin: 16px 0;
+            color: var(--fsu-black);
+            font-size: 14px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -556,7 +568,12 @@
                     </button>
                 </div>
             </div>
-            
+
+              <!-- Format message that appears when Add more is clicked -->
+              <div id="format-message" class="format-message" style="display: none;">
+                Select a content format from the navigation to get started
+            </div>
+
             <div class="form-actions">
                 <button class="cancel-btn" id="cancelBtn">Cancel</button>
                 <button class="continue-btn" id="continueBtn">Continue</button>
@@ -574,7 +591,8 @@
             const continueBtn = document.getElementById('continueBtn');
             const contentTypeCards = document.querySelectorAll('.content-type-card');
             const pressReleaseDialog = document.getElementById('press-release-dialog');
-            const socialMediaDialog = document.getElementById('social-media-dialog'); // Add this line
+            const socialMediaDialog = document.getElementById('social-media-dialog');
+            const formatMessage = document.getElementById('format-message');
             const dialogOptions = document.querySelectorAll('.dialog-option');
             
             let selectedContentType = null;
@@ -585,6 +603,7 @@
                 // Make sure dialogs are hidden when dashboard opens
                 if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
                 if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                if (formatMessage) formatMessage.style.display = 'none';
                 // Reset selection
                 contentTypeCards.forEach(c => c.classList.remove('selected'));
                 selectedContentType = null;
@@ -597,6 +616,7 @@
                 dashboardContainer.style.display = 'none';
                 if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
                 if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                if (formatMessage) formatMessage.style.display = 'none';
             });
             
             // Hide dashboard when cancel button is clicked
@@ -604,58 +624,69 @@
                 dashboardContainer.style.display = 'none';
                 if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
                 if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                if (formatMessage) formatMessage.style.display = 'none';
             });
             
             // Handle content type selection
-contentTypeCards.forEach(card => {
-    card.addEventListener('click', function() {
-        console.log('Card clicked:', this.getAttribute('data-type'));
-        
-        // Remove selection from all cards
-        contentTypeCards.forEach(c => c.classList.remove('selected'));
-        
-        // Add selection to clicked card
-        this.classList.add('selected');
-        
-        // Store selected content type
-        selectedContentType = this.getAttribute('data-type');
-        console.log('Selected content type:', selectedContentType);
-        
-        // Hide all dialogs first
-        if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-        if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-        
-        // Show appropriate dialog based on selection
-        if (selectedContentType === 'press-release') {
-            // Show press release dialog
-            if (pressReleaseDialog) {
-                console.log('Showing press release dialog');
-                pressReleaseDialog.style.display = 'block';
-                // Hide continue button
-                continueBtn.style.display = 'none';
-            } else {
-                console.error('Press release dialog element not found');
-            }
-        } 
-        else if (selectedContentType === 'social-media') {
-            // Show social media dialog
-            if (socialMediaDialog) {
-                console.log('Showing social media dialog');
-                socialMediaDialog.style.display = 'block';
-                // Hide continue button
-                continueBtn.style.display = 'none';
-            } else {
-                console.error('Social media dialog element not found');
-            }
-        } 
-        else {
-            // For other content types
-            // Show and enable continue button
-            continueBtn.style.display = 'block';
-            continueBtn.classList.add('active');
-        }
-    });
-});
+            contentTypeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    console.log('Card clicked:', this.getAttribute('data-type'));
+                    
+                    // Remove selection from all cards
+                    contentTypeCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selection to clicked card
+                    this.classList.add('selected');
+                    
+                    // Store selected content type
+                    selectedContentType = this.getAttribute('data-type');
+                    console.log('Selected content type:', selectedContentType);
+                    
+                    // Hide all dialogs first
+                    if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                    if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                    if (formatMessage) formatMessage.style.display = 'none';
+                    
+                    // Show appropriate dialog based on selection
+                    if (selectedContentType === 'press-release') {
+                        // Show press release dialog
+                        if (pressReleaseDialog) {
+                            console.log('Showing press release dialog');
+                            pressReleaseDialog.style.display = 'block';
+                            // Hide continue button
+                            continueBtn.style.display = 'none';
+                        } else {
+                            console.error('Press release dialog element not found');
+                        }
+                    } 
+                    else if (selectedContentType === 'social-media') {
+                        // Show social media dialog
+                        if (socialMediaDialog) {
+                            console.log('Showing social media dialog');
+                            socialMediaDialog.style.display = 'block';
+                            // Hide continue button
+                            continueBtn.style.display = 'none';
+                        } else {
+                            console.error('Social media dialog element not found');
+                        }
+                    } 
+                    else if (selectedContentType === 'newsletter') {
+                        // For the "Add more" option, show the message
+                        if (formatMessage) {
+                            formatMessage.style.display = 'block';
+                        }
+                        // Show and enable continue button
+                        continueBtn.style.display = 'block';
+                        continueBtn.classList.add('active');
+                    }
+                    else {
+                        // For other content types
+                        // Show and enable continue button
+                        continueBtn.style.display = 'block';
+                        continueBtn.classList.add('active');
+                    }
+                });
+            });
             
             // Handle dialog button actions
             const rewriteBtn = document.getElementById('rewriteBtn');
@@ -737,6 +768,9 @@ contentTypeCards.forEach(card => {
             }
             if (socialMediaDialog) {
                 socialMediaDialog.style.display = 'none';
+            }
+            if (formatMessage) {
+                formatMessage.style.display = 'none';
             }
         });
 
