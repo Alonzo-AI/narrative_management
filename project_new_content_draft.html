@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Draft - FSU Basketball Season Recap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+    --fsu-garnet: #782f40;
+    --fsu-gold: #ceb888;
+    --fsu-black: #231f20;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+    --fsu-garnet: #782f40;
+    --fsu-gold: #ceb888;
+    --fsu-black: #231f20;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@font-face {
+    font-family: 'GothicCustom';
+    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: var(--fsu-garnet);
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    min-height: 100vh;
+    gap: 24px;
+    padding: 24px;
+}
+
+.sidebar {
+    background: var(--fsu-gold);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+}
+
+.sidebar h2 {
+    color: var(--fsu-garnet);
+    font-family: 'GothicCustom', sans-serif;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--fsu-garnet);
+}
+
+.sidebar-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+.sidebar-item.active {
+    background-color: var(--fsu-garnet);
+    color: var(--fsu-gold);
+}
+
+.sidebar-item.active i {
+    color: var(--fsu-gold);
+}
+
+.sidebar-item i {
+    margin-right: 12px;
+    color: var(--fsu-garnet);
+    font-size: 20px;
+}
+
+
+
+</style>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Draft - FSU Basketball Season Recap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+        <div class="sidebar-item">
+            <i class="material-icons">search</i>
+            <span>Research</span>
+        </div>
+        <div class="sidebar-item active">
+            <i class="material-icons">description</i>
+            <span>Content draft</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">brush</i>
+            <span>Graphics</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">share</i>
+            <span>Marketing</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">equalizer</i>
+            <span>Analytics</span>
+        </div>
+    </nav>
+
+    
+    </div>
+        
+</body>
+</html>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Set up tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Hide all tab contents
+            tabContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show the corresponding tab content
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(`${tabId}-content`).style.display = 'block';
+        });
+    });
+    
+    // Section toggle functionality
+    window.toggleSection = function(element) {
+        const sectionContent = element.nextElementSibling;
+        
+        // Toggle display of section content
+        if (sectionContent.style.display === 'block') {
+            sectionContent.style.display = 'none';
+        } else {
+            sectionContent.style.display = 'block';
+        }
+    };
+    
+    
+});
+    </script>
+</body>
+</html>
