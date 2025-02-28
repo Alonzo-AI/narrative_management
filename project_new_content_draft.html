@@ -7,102 +7,334 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
         :root {
-    --fsu-garnet: #782f40;
-    --fsu-gold: #ceb888;
-    --fsu-black: #231f20;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-:root {
-    --fsu-garnet: #782f40;
-    --fsu-gold: #ceb888;
-    --fsu-black: #231f20;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
 
-@font-face {
-    font-family: 'GothicCustom';
-    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
+        body {
+            background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
 
-body {
-    background-color: var(--fsu-garnet);
-    display: grid;
-    grid-template-columns: 250px 1fr 300px;
-    min-height: 100vh;
-    gap: 24px;
-    padding: 24px;
-}
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
 
-.sidebar {
-    background: var(--fsu-gold);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    height: fit-content;
-    position: sticky;
-    top: 24px;
-}
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+            font-family: 'GothicCustom', sans-serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.sidebar h2 {
-    color: var(--fsu-garnet);
-    font-family: 'GothicCustom', sans-serif;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--fsu-garnet);
+        }
 
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--fsu-garnet);
-}
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
 
-.sidebar-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-}
+        .sidebar-item.active {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
 
-.sidebar-item.active {
-    background-color: var(--fsu-garnet);
-    color: var(--fsu-gold);
-}
+        .sidebar-item.active i {
+            color: var(--fsu-gold);
+        }
 
-.sidebar-item.active i {
-    color: var(--fsu-gold);
-}
+        .sidebar-item i {
+            margin-right: 12px;
+            color: var(--fsu-garnet);
+            font-size: 20px;
+        }
 
-.sidebar-item i {
-    margin-right: 12px;
-    color: var(--fsu-garnet);
-    font-size: 20px;
-}
+        /* Main content area */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            height: min-content;
+            width: 1200px;
+            overflow-y: auto;
+        }
 
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
 
+        .content-header h1 {
+            color: var(--fsu-black);
+            font-size: 24px;
+        }
 
-</style>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Draft - FSU Basketball Season Recap</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+        .create-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .create-btn:hover {
+            background-color: #631d2e;
+        }
+
+        /* Content list */
+        .content-list {
+            list-style: none;
+        }
+
+        .content-item {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .content-info {
+            flex: 1;
+        }
+
+        .content-title {
+            font-weight: 500;
+            color: var(--fsu-black);
+            margin-bottom: 4px;
+        }
+
+        .content-meta {
+            display: flex;
+            gap: 16px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .content-type, .content-status, .content-date {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .status-draft {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-published {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-review {
+            background-color: #fff8e1;
+            color: #ffa000;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover {
+            color: var(--fsu-garnet);
+        }
+
+        /* Dashboard styles */
+        .dashboard-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            margin-top: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dashboard-title {
+            font-size: 20px;
+            color: var(--fsu-black);
+        }
+
+        .close-dashboard {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        /* Content type selection */
+        .content-types {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .content-type-card {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            flex: 1;
+        }
+
+        .content-type-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #f2f2f2;
+        }
+
+        .content-type-card.selected {
+            border-color: var(--fsu-garnet);
+            background-color: rgba(120, 47, 64, 0.05);
+        }
+
+        .content-type-icon {
+            background-color: var(--fsu-garnet);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 12px;
+        }
+
+        .content-type-icon i {
+            font-size: 28px;
+        }
+
+        .content-type-title {
+            font-weight: 600;
+            color: var(--fsu-black);
+            margin-bottom: 4px;
+        }
+
+        .content-type-desc {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Form actions */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+        }
+
+        .cancel-btn {
+            background-color: #f5f5f5;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .continue-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .continue-btn.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+    </style>
 </head>
 <body>
     <nav class="sidebar">
@@ -129,51 +361,120 @@ body {
         </div>
     </nav>
 
-    
+    <main class="main-content">
+        <div class="content-header">
+            <h1>Content Drafts</h1>
+            <button class="create-btn" id="createContentBtn">
+                <i class="material-icons">add</i> Create New Content
+            </button>
+        </div>
+
     </div>
+
+    <!-- Dashboard container that will appear in-page -->
+    <div id="dashboard-container" class="dashboard-container">
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Select Content Type</h2>
+            <button class="close-dashboard" id="closeDashboardBtn">&times;</button>
+        </div>
         
-</body>
-</html>
+        <div class="dashboard-body">
+            <p>Select content type to create:</p>
+            
+            <div class="content-types">
+                <div class="content-type-card" data-type="press-release">
+                    <div class="content-type-icon">
+                        <i class="material-icons">article</i>
+                    </div>
+                    <h3 class="content-type-title">Press Release</h3>
+                    <p class="content-type-desc">Create an official announcement for media distribution</p>
+                </div>
+                
+                <div class="content-type-card" data-type="social-media">
+                    <div class="content-type-icon">
+                        <i class="material-icons">share</i>
+                    </div>
+                    <h3 class="content-type-title">Social Media Post</h3>
+                    <p class="content-type-desc">Create content for social media platforms</p>
+                </div>
+                
+                <div class="content-type-card" data-type="newsletter">
+                    <div class="content-type-icon">
+                        <i class="material-icons">mail</i>
+                    </div>
+                    <h3 class="content-type-title">Newsletter</h3>
+                    <p class="content-type-desc">Create content for email distribution</p>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="cancel-btn" id="cancelBtn">Cancel</button>
+                <button class="continue-btn" id="continueBtn">Continue</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    // Set up tab switching functionality
-    const tabs = document.querySelectorAll('.tab');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
+            // Get DOM elements
+            const dashboardContainer = document.getElementById('dashboard-container');
+            const createBtn = document.getElementById('createContentBtn');
+            const closeDashboardBtn = document.getElementById('closeDashboardBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const continueBtn = document.getElementById('continueBtn');
+            const contentTypeCards = document.querySelectorAll('.content-type-card');
             
-            // Add active class to clicked tab
-            this.classList.add('active');
+            let selectedContentType = null;
             
-            // Hide all tab contents
-            tabContents.forEach(content => {
-                content.style.display = 'none';
+            // Show dashboard when create button is clicked
+            createBtn.addEventListener('click', function() {
+                dashboardContainer.style.display = 'block';
             });
             
-            // Show the corresponding tab content
-            const tabId = this.getAttribute('data-tab');
-            document.getElementById(`${tabId}-content`).style.display = 'block';
+            // Hide dashboard when close button is clicked
+            closeDashboardBtn.addEventListener('click', function() {
+                dashboardContainer.style.display = 'none';
+            });
+            
+            // Hide dashboard when cancel button is clicked
+            cancelBtn.addEventListener('click', function() {
+                dashboardContainer.style.display = 'none';
+            });
+            
+            // Handle content type selection
+            contentTypeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selection from all cards
+                    contentTypeCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selection to clicked card
+                    this.classList.add('selected');
+                    
+                    // Store selected content type
+                    selectedContentType = this.getAttribute('data-type');
+                    
+                    // Enable continue button
+                    continueBtn.classList.add('active');
+                });
+            });
+            
+            // Handle continue button click
+            continueBtn.addEventListener('click', function() {
+                if (!selectedContentType) return;
+                
+                // Here you can redirect to specific form or load the appropriate template
+                // based on the selectedContentType value
+                console.log('Selected content type:', selectedContentType);
+                
+                // Hide the dashboard
+                dashboardContainer.style.display = 'none';
+                
+                // You would typically redirect or load a template here
+                alert(`You selected: ${selectedContentType}. Redirecting to the editor...`);
+            });
         });
-    });
-    
-    // Section toggle functionality
-    window.toggleSection = function(element) {
-        const sectionContent = element.nextElementSibling;
-        
-        // Toggle display of section content
-        if (sectionContent.style.display === 'block') {
-            sectionContent.style.display = 'none';
-        } else {
-            sectionContent.style.display = 'block';
-        }
-    };
-    
-    
-});
+
+   
     </script>
 </body>
 </html>
