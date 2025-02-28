@@ -241,6 +241,38 @@
             cursor: pointer;
         }
 
+        /* Dashboard styles */
+        .dashboard-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            margin-top: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dashboard-title {
+            font-size: 20px;
+            color: var(--fsu-black);
+        }
+
+        .close-dashboard {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
         /* Content type selection */
         .content-types {
             display: flex;
@@ -299,8 +331,8 @@
             color: #666;
         }
 
-        /* Press Release Dialog */
-        .press-release-dialog {
+        /* Dialog styles - apply to both press release and social media */
+        .content-editor-dialog {
             display: none; /* Initially hidden */
             background-color: white;
             border-radius: 8px;
@@ -465,7 +497,7 @@
                         <i class="material-icons">description</i>
                     </div>
                     <h3 class="content-type-title">Press Release</h3>
-                    <p class="content-type-desc">Create an official announcement for media distribution</p>
+                    
                 </div>
                 
                 <div class="content-type-card" data-type="social-media">
@@ -473,15 +505,15 @@
                         <i class="material-icons">share</i>
                     </div>
                     <h3 class="content-type-title">Social Media Post</h3>
-                    <p class="content-type-desc">Create content for social media platforms</p>
+                    
                 </div>
                 
                 <div class="content-type-card" data-type="newsletter">
                     <div class="content-type-icon">
-                        <i class="material-icons">mail</i>
+                        <i class="material-icons">add</i>
                     </div>
-                    <h3 class="content-type-title">Newsletter</h3>
-                    <p class="content-type-desc">Create content for email distribution</p>
+                    <h3 class="content-type-title">Add more</h3>
+                    
                 </div>
             </div>
             
@@ -505,6 +537,26 @@
                 </div>
             </div>
             
+            <!-- Social Media Dialog -->
+            <div id="social-media-dialog" class="content-editor-dialog">
+                <div class="dialog-header">
+                    <h3 class="dialog-title">Social Media Post Editor</h3>
+                </div>
+                
+                <textarea class="press-release-editor" placeholder="Enter your social media content here..."></textarea>
+                
+                <div class="dialog-actions">
+                    <button class="dialog-btn rewrite-btn" id="socialRewriteBtn">
+                        <i class="material-icons">auto_fix_high</i>
+                        Rewrite with AI
+                    </button>
+                    <button class="dialog-btn save-btn" id="socialSaveBtn">
+                        <i class="material-icons">save</i>
+                        Save Version
+                    </button>
+                </div>
+            </div>
+            
             <div class="form-actions">
                 <button class="cancel-btn" id="cancelBtn">Cancel</button>
                 <button class="continue-btn" id="continueBtn">Continue</button>
@@ -522,6 +574,7 @@
             const continueBtn = document.getElementById('continueBtn');
             const contentTypeCards = document.querySelectorAll('.content-type-card');
             const pressReleaseDialog = document.getElementById('press-release-dialog');
+            const socialMediaDialog = document.getElementById('social-media-dialog'); // Add this line
             const dialogOptions = document.querySelectorAll('.dialog-option');
             
             let selectedContentType = null;
@@ -529,8 +582,9 @@
             // Show dashboard when create button is clicked
             createBtn.addEventListener('click', function() {
                 dashboardContainer.style.display = 'block';
-                // Make sure dialog is hidden when dashboard opens
-                pressReleaseDialog.style.display = 'none';
+                // Make sure dialogs are hidden when dashboard opens
+                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
                 // Reset selection
                 contentTypeCards.forEach(c => c.classList.remove('selected'));
                 selectedContentType = null;
@@ -541,79 +595,125 @@
             // Hide dashboard when close button is clicked
             closeDashboardBtn.addEventListener('click', function() {
                 dashboardContainer.style.display = 'none';
-                pressReleaseDialog.style.display = 'none';
+                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
             });
             
             // Hide dashboard when cancel button is clicked
             cancelBtn.addEventListener('click', function() {
                 dashboardContainer.style.display = 'none';
-                pressReleaseDialog.style.display = 'none';
+                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
             });
             
             // Handle content type selection
-            contentTypeCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    console.log('Card clicked:', this.getAttribute('data-type'));
-                    
-                    // Remove selection from all cards
-                    contentTypeCards.forEach(c => c.classList.remove('selected'));
-                    
-                    // Add selection to clicked card
-                    this.classList.add('selected');
-                    
-                    // Store selected content type
-                    selectedContentType = this.getAttribute('data-type');
-                    console.log('Selected content type:', selectedContentType);
-                    
-                    // Show press release dialog if press-release is selected
-                    if (selectedContentType === 'press-release') {
-                        // First ensure dialog exists
-                        if (pressReleaseDialog) {
-                            console.log('Showing press release dialog');
-                            pressReleaseDialog.style.display = 'block';
-                            // Hide continue button as we'll use the dialog options directly
-                            continueBtn.style.display = 'none';
-                        } else {
-                            console.error('Press release dialog element not found');
-                        }
-                    } else {
-                        // For other content types
-                        if (pressReleaseDialog) {
-                            pressReleaseDialog.style.display = 'none';
-                        }
-                        // Show and enable continue button for other content types
-                        continueBtn.style.display = 'block';
-                        continueBtn.classList.add('active');
-                    }
-                });
-            });
+contentTypeCards.forEach(card => {
+    card.addEventListener('click', function() {
+        console.log('Card clicked:', this.getAttribute('data-type'));
+        
+        // Remove selection from all cards
+        contentTypeCards.forEach(c => c.classList.remove('selected'));
+        
+        // Add selection to clicked card
+        this.classList.add('selected');
+        
+        // Store selected content type
+        selectedContentType = this.getAttribute('data-type');
+        console.log('Selected content type:', selectedContentType);
+        
+        // Hide all dialogs first
+        if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+        if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+        
+        // Show appropriate dialog based on selection
+        if (selectedContentType === 'press-release') {
+            // Show press release dialog
+            if (pressReleaseDialog) {
+                console.log('Showing press release dialog');
+                pressReleaseDialog.style.display = 'block';
+                // Hide continue button
+                continueBtn.style.display = 'none';
+            } else {
+                console.error('Press release dialog element not found');
+            }
+        } 
+        else if (selectedContentType === 'social-media') {
+            // Show social media dialog
+            if (socialMediaDialog) {
+                console.log('Showing social media dialog');
+                socialMediaDialog.style.display = 'block';
+                // Hide continue button
+                continueBtn.style.display = 'none';
+            } else {
+                console.error('Social media dialog element not found');
+            }
+        } 
+        else {
+            // For other content types
+            // Show and enable continue button
+            continueBtn.style.display = 'block';
+            continueBtn.classList.add('active');
+        }
+    });
+});
             
             // Handle dialog button actions
             const rewriteBtn = document.getElementById('rewriteBtn');
             const saveVersionBtn = document.getElementById('saveVersionBtn');
-            const pressReleaseEditor = document.querySelector('.press-release-editor');
+            const pressReleaseEditor = document.querySelector('#press-release-dialog .press-release-editor');
             
+            // Social media buttons
+            const socialRewriteBtn = document.getElementById('socialRewriteBtn');
+            const socialSaveBtn = document.getElementById('socialSaveBtn');
+            const socialMediaEditor = document.querySelector('#social-media-dialog .press-release-editor');
+            
+            // Press Release button handlers
             if (rewriteBtn) {
                 rewriteBtn.addEventListener('click', function() {
                     const content = pressReleaseEditor ? pressReleaseEditor.value : '';
-                    console.log('Rewriting content with AI:', content);
+                    console.log('Rewriting press release content with AI:', content);
                     
                     // Here you would typically send the content to an AI service
-                    alert('Content sent for AI rewriting. This would integrate with your AI service.');
+                    alert('Press release content sent for AI rewriting. This would integrate with your AI service.');
                 });
             }
             
             if (saveVersionBtn) {
                 saveVersionBtn.addEventListener('click', function() {
                     const content = pressReleaseEditor ? pressReleaseEditor.value : '';
-                    console.log('Saving content version:', content);
+                    console.log('Saving press release version:', content);
                     
                     // Here you would typically save the content to your system
-                    alert('Content version saved successfully!');
+                    alert('Press release version saved successfully!');
                     
                     // Hide the dashboard
                     dashboardContainer.style.display = 'none';
                     pressReleaseDialog.style.display = 'none';
+                });
+            }
+            
+            // Social Media button handlers
+            if (socialRewriteBtn) {
+                socialRewriteBtn.addEventListener('click', function() {
+                    const content = socialMediaEditor ? socialMediaEditor.value : '';
+                    console.log('Rewriting social media content with AI:', content);
+                    
+                    // Here you would typically send the content to an AI service
+                    alert('Social media content sent for AI rewriting. This would integrate with your AI service.');
+                });
+            }
+            
+            if (socialSaveBtn) {
+                socialSaveBtn.addEventListener('click', function() {
+                    const content = socialMediaEditor ? socialMediaEditor.value : '';
+                    console.log('Saving social media version:', content);
+                    
+                    // Here you would typically save the content to your system
+                    alert('Social media post saved successfully!');
+                    
+                    // Hide the dashboard
+                    dashboardContainer.style.display = 'none';
+                    socialMediaDialog.style.display = 'none';
                 });
             }
             
@@ -631,9 +731,12 @@
                 alert(`You selected: ${selectedContentType}. Redirecting to the editor...`);
             });
             
-            // Initialize: ensure press release dialog is hidden at start
+            // Initialize: ensure all dialogs are hidden at start
             if (pressReleaseDialog) {
                 pressReleaseDialog.style.display = 'none';
+            }
+            if (socialMediaDialog) {
+                socialMediaDialog.style.display = 'none';
             }
         });
 
