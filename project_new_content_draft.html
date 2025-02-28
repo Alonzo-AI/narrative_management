@@ -7,454 +7,428 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
         :root {
-            --fsu-garnet: #782f40;
-            --fsu-gold: #ceb888;
-            --fsu-black: #231f20;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    --fsu-garnet: #782f40;
+    --fsu-gold: #ceb888;
+    --fsu-black: #231f20;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        @font-face {
-            font-family: 'GothicCustom';
-            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-        }
+@font-face {
+    font-family: 'GothicCustom';
+    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
 
-        body {
-            background-color: var(--fsu-garnet);
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            height: 100vh;
-            gap: 24px;
-            padding: 24px;
-        }
+body {
+    background-color: var(--fsu-garnet);
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    height: 100vh;
+    gap: 24px;
+    padding: 24px;
+}
 
-        .sidebar {
-            background: var(--fsu-gold);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 24px;
-        }
+.sidebar {
+    background: var(--fsu-gold);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+}
 
-        .sidebar h2 {
-            color: var(--fsu-garnet);
-            font-family: 'GothicCustom', sans-serif;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.sidebar h2 {
+    color: var(--fsu-garnet);
+    font-family: 'GothicCustom', sans-serif;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--fsu-garnet);
-        }
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--fsu-garnet);
+}
 
-        .sidebar-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
+.sidebar-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
 
-        .sidebar-item.active {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
-        }
+.sidebar-item.active {
+    background-color: var(--fsu-garnet);
+    color: var(--fsu-gold);
+}
 
-        .sidebar-item.active i {
-            color: var(--fsu-gold);
-        }
+.sidebar-item.active i {
+    color: var(--fsu-gold);
+}
 
-        .sidebar-item i {
-            margin-right: 12px;
-            color: var(--fsu-garnet);
-            font-size: 20px;
-        }
+.sidebar-item i {
+    margin-right: 12px;
+    color: var(--fsu-garnet);
+    font-size: 20px;
+}
 
-        /* Main content area */
-        .main-content {
-            background: white;
-            border-radius: 8px;
-            padding: 24px;
-            box-shadow: var(--shadow);
-            height: min-content;
-            width: 1200px;
-            overflow-y: auto;
-        }
+/* Main content area */
+.main-content {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    height: min-content;
+    width: 1200px;
+    overflow-y: auto;
+}
 
-        .content-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #eee;
-        }
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+}
 
-        .content-header h1 {
-            color: var(--fsu-black);
-            font-size: 24px;
-        }
+.content-header h1 {
+    color: var(--fsu-black);
+    font-size: 24px;
+}
 
-        .create-btn {
-            background-color: var(--fsu-garnet);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
+.create-btn {
+    background-color: var(--fsu-garnet);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
 
-        .create-btn:hover {
-            background-color: #631d2e;
-        }
+.create-btn:hover {
+    background-color: #631d2e;
+}
 
-        /* Content list */
-        .content-list {
-            list-style: none;
-        }
+/* Content list */
+.content-list {
+    list-style: none;
+}
 
-        .content-item {
-            padding: 16px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.content-item {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .content-item:last-child {
-            border-bottom: none;
-        }
+.content-item:last-child {
+    border-bottom: none;
+}
 
-        .content-item:hover {
-            background-color: #f9f9f9;
-        }
+.content-item:hover {
+    background-color: #f9f9f9;
+}
 
-        .content-info {
-            flex: 1;
-        }
+.content-info {
+    flex: 1;
+}
 
-        .content-title {
-            font-weight: 500;
-            color: var(--fsu-black);
-            margin-bottom: 4px;
-        }
+.content-title {
+    font-weight: 500;
+    color: var(--fsu-black);
+    margin-bottom: 4px;
+}
 
-        .content-meta {
-            display: flex;
-            gap: 16px;
-            color: #666;
-            font-size: 14px;
-        }
+.content-meta {
+    display: flex;
+    gap: 16px;
+    color: #666;
+    font-size: 14px;
+}
 
-        .content-type, .content-status, .content-date {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+.content-type, .content-status, .content-date {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
 
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
 
-        .status-draft {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
+.status-draft {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
 
-        .status-published {
-            background-color: #e8f5e9;
-            color: #388e3c;
-        }
+.status-published {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
 
-        .status-review {
-            background-color: #fff8e1;
-            color: #ffa000;
-        }
+.status-review {
+    background-color: #fff8e1;
+    color: #ffa000;
+}
 
-        .content-actions {
-            display: flex;
-            gap: 8px;
-        }
+.content-actions {
+    display: flex;
+    gap: 8px;
+}
 
-        .action-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #666;
-            transition: color 0.2s;
-        }
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+}
 
-        .action-btn:hover {
-            color: var(--fsu-garnet);
-        }
+.action-btn:hover {
+    color: var(--fsu-garnet);
+}
 
-        /* Dashboard styles */
-        .dashboard-container {
-            display: none;
-            background-color: white;
-            border-radius: 8px;
-            margin-top: 20px;
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
+/* Dashboard styles */
+.dashboard-container {
+    display: none;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
 
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #eee;
-        }
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
 
-        .dashboard-title {
-            font-size: 20px;
-            color: var(--fsu-black);
-        }
+.dashboard-title {
+    font-size: 20px;
+    color: var(--fsu-black);
+}
 
-        .close-dashboard {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #666;
-            cursor: pointer;
-        }
+.close-dashboard {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+}
 
-        /* Dashboard styles */
-        .dashboard-container {
-            display: none;
-            background-color: white;
-            border-radius: 8px;
-            margin-top: 20px;
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
+/* Content type selection */
+.content-types {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+}
 
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #eee;
-        }
+.content-type-card {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    flex: 1;
+}
 
-        .dashboard-title {
-            font-size: 20px;
-            color: var(--fsu-black);
-        }
+.content-type-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #f2f2f2;
+}
 
-        .close-dashboard {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #666;
-            cursor: pointer;
-        }
+.content-type-card.selected {
+    border-color: var(--fsu-garnet);
+    background-color: rgba(120, 47, 64, 0.05);
+}
 
-        /* Content type selection */
-        .content-types {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            margin-top: 20px;
-        }
+.content-type-icon {
+    background-color: var(--fsu-garnet);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 12px;
+}
 
-        .content-type-card {
-            background-color: #f8f8f8;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 2px solid transparent;
-            flex: 1;
-        }
+.content-type-icon i {
+    font-size: 28px;
+}
 
-        .content-type-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background-color: #f2f2f2;
-        }
+.content-type-title {
+    font-weight: 600;
+    color: var(--fsu-black);
+    margin-bottom: 4px;
+}
 
-        .content-type-card.selected {
-            border-color: var(--fsu-garnet);
-            background-color: rgba(120, 47, 64, 0.05);
-        }
+.content-type-desc {
+    font-size: 13px;
+    color: #666;
+}
 
-        .content-type-icon {
-            background-color: var(--fsu-garnet);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 12px;
-        }
+/* Dialog styles - apply to both press release and social media */
+.content-editor-dialog {
+    display: none; /* Initially hidden */
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: var(--shadow);
+    width: 100%; /* Ensure full width */
+}
 
-        .content-type-icon i {
-            font-size: 28px;
-        }
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
 
-        .content-type-title {
-            font-weight: 600;
-            color: var(--fsu-black);
-            margin-bottom: 4px;
-        }
+.dialog-title {
+    font-size: 18px;
+    color: var(--fsu-black);
+    font-weight: 500;
+}
 
-        .content-type-desc {
-            font-size: 13px;
-            color: #666;
-        }
+/* Dialog action buttons */
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+}
 
-        /* Dialog styles - apply to both press release and social media */
-        .content-editor-dialog {
-            display: none; /* Initially hidden */
-            background-color: white;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: var(--shadow);
-            width: 100%; /* Ensure full width */
-        }
-        
-        .dialog-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .dialog-title {
-            font-size: 18px;
-            color: var(--fsu-black);
-            font-weight: 500;
-        }
-        
-        /* Text editor area */
-        .press-release-editor {
-            width: 100%;
-            min-height: 200px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 12px;
-            font-size: 14px;
-            line-height: 1.5;
-            resize: vertical;
-            margin-bottom: 16px;
-        }
-        
-        /* Dialog action buttons */
-        .dialog-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 16px;
-        }
-        
-        .dialog-btn {
-            padding: 10px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .rewrite-btn {
-            background-color: var(--fsu-garnet);
-            color: white;
-            border: none;
-        }
-        
-        .rewrite-btn:hover {
-            background-color: #682a38;
-        }
-        
-        .save-btn {
-            background-color: var(--fsu-garnet);
-            color: white;
-            border: none;
-        }
-        
-        .save-btn:hover {
-            background-color: #682a38;
-        }
+/* Format message styling */
+.format-message {
+    background-color: #f0f0f0;
+    border-left: 4px solid var(--fsu-garnet);
+    padding: 12px 16px;
+    margin: 16px 0;
+    color: var(--fsu-black);
+    font-size: 14px;
+    border-radius: 4px;
+    text-align: center;
+}
 
-        /* Form actions */
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid #eee;
-        }
+/* Consistent text area styling */
+.text-editor {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    margin-bottom: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
 
-        .cancel-btn {
-            background-color: #f5f5f5;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #333;
-        }
+/* Consistent button styling */
+.btn {
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
 
-        .continue-btn {
-            background-color: var(--fsu-garnet);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            opacity: 0.7;
-            pointer-events: none;
-        }
+.btn:hover {
+    transform: translateY(-1px);
+}
 
-        .continue-btn.active {
-            opacity: 1;
-            pointer-events: all;
-        }
+.btn:active {
+    transform: translateY(1px);
+}
 
-        /* Format message styling */
-        .format-message {
-            background-color: #f0f0f0;
-            border-left: 4px solid var(--fsu-garnet);
-            padding: 12px 16px;
-            margin: 16px 0;
-            color: var(--fsu-black);
-            font-size: 14px;
-            border-radius: 4px;
-            text-align: center;
-        }
+.btn i {
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Primary button (Save Draft) */
+.btn-primary {
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #682a38;
+}
+
+.btn-primary i {
+    color: white;
+}
+
+/* Secondary button (Rewrite with AI) */
+.btn-secondary {
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #682a38;
+}
+
+.btn-secondary i {
+    color: white;
+}
+
+/* Tertiary button (Upload) */
+.btn-tertiary {
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.btn-tertiary:hover {
+    background-color: #682a38;
+}
+
+.btn-tertiary i {
+    color: white;
+}
 
     </style>
 </head>
@@ -530,249 +504,268 @@
             </div>
             
             <!-- Press Release Dialog -->
-            <div id="press-release-dialog" class="press-release-dialog">
-                <div class="dialog-header">
-                    <h3 class="dialog-title">Press Release Editor</h3>
-                </div>
-                
-                <textarea class="press-release-editor" placeholder="Enter your press release content here..."></textarea>
-                
-                <div class="dialog-actions">
-                    <button class="dialog-btn rewrite-btn" id="rewriteBtn">
-                        <i class="material-icons">auto_fix_high</i>
-                        Rewrite with AI
-                    </button>
-                    <button class="dialog-btn save-btn" id="saveVersionBtn">
-                        <i class="material-icons">save</i>
-                        Save Version
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Social Media Dialog -->
-            <div id="social-media-dialog" class="content-editor-dialog">
-                <div class="dialog-header">
-                    <h3 class="dialog-title">Social Media Post Editor</h3>
-                </div>
-                
-                <textarea class="press-release-editor" placeholder="Enter your social media content here..."></textarea>
-                
-                <div class="dialog-actions">
-                    <button class="dialog-btn rewrite-btn" id="socialRewriteBtn">
-                        <i class="material-icons">auto_fix_high</i>
-                        Rewrite with AI
-                    </button>
-                    <button class="dialog-btn save-btn" id="socialSaveBtn">
-                        <i class="material-icons">save</i>
-                        Save Version
-                    </button>
-                </div>
-            </div>
+<div id="press-release-dialog" class="content-editor-dialog">
+    <div class="dialog-header">
+        <h3 class="dialog-title">Press Release Editor</h3>
+    </div>
+    
+    <textarea class="text-editor" placeholder="Enter your press release content here..."></textarea>
+    
+    <div class="dialog-actions">
+        
+        <button class="btn btn-secondary" id="uploadPressReleaseBtn">
+            <i class="material-icons">edit</i>
+            Rewrite with AI
+        </button>
+        <button class="btn btn-primary" id="saveVersionBtn">
+            <i class="material-icons">save</i>
+            Save Draft
+        </button>
+        <button class="btn btn-tertiary" id="rewriteBtn">
+            <i class="material-icons">file_upload</i>
+            Upload
+        </button>
+    </div>
+</div>
 
-              <!-- Format message that appears when Add more is clicked -->
-              <div id="format-message" class="format-message" style="display: none;">
-                Select a content format from the navigation to get started
-            </div>
+<!-- Social Media Dialog -->
+<div id="social-media-dialog" class="content-editor-dialog">
+    <div class="dialog-header">
+        <h3 class="dialog-title">Social Media Post Editor</h3>
+    </div>
+    
+    <textarea class="text-editor" placeholder="Enter your social media content here..."></textarea>
+    
+    <div class="dialog-actions">
+       
+        <button class="btn btn-secondary" id="uploadPressReleaseBtn">
+            <i class="material-icons">edit</i>
+            Rewrite with AI
+        </button>
+        <button class="btn btn-primary" id="socialSaveBtn">
+            <i class="material-icons">save</i>
+            Save Draft
+        </button>
+        <button class="btn btn-tertiary" id="rewriteBtn">
+            <i class="material-icons">file_upload</i>
+            Upload
+        </button>
+    </div>
+</div>
 
-            <div class="form-actions">
-                <button class="cancel-btn" id="cancelBtn">Cancel</button>
-                <button class="continue-btn" id="continueBtn">Continue</button>
-            </div>
+<!-- Format message that appears when Add more is clicked -->
+<div id="format-message" class="format-message" style="display: none;">
+    Select a content format from the navigation to get started
+    <div class="dialog-actions" style="margin-top: 15px; justify-content: center;">
+        
+        <button class="btn btn-secondary" id="uploadPressReleaseBtn">
+            <i class="material-icons">edit</i>
+            Rewrite with AI
+        </button>
+        <button class="btn btn-primary" id="saveMoreBtn">
+            <i class="material-icons">save</i>
+            Save Draft
+        </button>
+        <button class="btn btn-tertiary" id="rewriteBtn">
+            <i class="material-icons">file_upload</i>
+            Upload
+        </button>
+    </div>
+</div>
+
+              <!-- Form actions removed as requested -->
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get DOM elements
-            const dashboardContainer = document.getElementById('dashboard-container');
-            const createBtn = document.getElementById('createContentBtn');
-            const closeDashboardBtn = document.getElementById('closeDashboardBtn');
-            const cancelBtn = document.getElementById('cancelBtn');
-            const continueBtn = document.getElementById('continueBtn');
-            const contentTypeCards = document.querySelectorAll('.content-type-card');
-            const pressReleaseDialog = document.getElementById('press-release-dialog');
-            const socialMediaDialog = document.getElementById('social-media-dialog');
-            const formatMessage = document.getElementById('format-message');
-            const dialogOptions = document.querySelectorAll('.dialog-option');
+    // Get DOM elements
+    const dashboardContainer = document.getElementById('dashboard-container');
+    const createBtn = document.getElementById('createContentBtn');
+    const closeDashboardBtn = document.getElementById('closeDashboardBtn');
+    const contentTypeCards = document.querySelectorAll('.content-type-card');
+    const pressReleaseDialog = document.getElementById('press-release-dialog');
+    const socialMediaDialog = document.getElementById('social-media-dialog');
+    const formatMessage = document.getElementById('format-message');
+    const dialogOptions = document.querySelectorAll('.dialog-option');
+    
+    let selectedContentType = null;
+    
+    // Show dashboard when create button is clicked
+    createBtn.addEventListener('click', function() {
+        dashboardContainer.style.display = 'block';
+        // Make sure dialogs are hidden when dashboard opens
+        if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+        if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+        if (formatMessage) formatMessage.style.display = 'none';
+        // Reset selection
+        contentTypeCards.forEach(c => c.classList.remove('selected'));
+        selectedContentType = null;
+    });
+    
+    // Hide dashboard when close button is clicked
+    closeDashboardBtn.addEventListener('click', function() {
+        dashboardContainer.style.display = 'none';
+        if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+        if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+        if (formatMessage) formatMessage.style.display = 'none';
+    });
+    
+    // Handle content type selection
+    contentTypeCards.forEach(card => {
+        card.addEventListener('click', function() {
+            console.log('Card clicked:', this.getAttribute('data-type'));
             
-            let selectedContentType = null;
+            // Remove selection from all cards
+            contentTypeCards.forEach(c => c.classList.remove('selected'));
             
-            // Show dashboard when create button is clicked
-            createBtn.addEventListener('click', function() {
-                dashboardContainer.style.display = 'block';
-                // Make sure dialogs are hidden when dashboard opens
-                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-                if (formatMessage) formatMessage.style.display = 'none';
-                // Reset selection
-                contentTypeCards.forEach(c => c.classList.remove('selected'));
-                selectedContentType = null;
-                continueBtn.classList.remove('active');
-                continueBtn.style.display = 'block';
-            });
+            // Add selection to clicked card
+            this.classList.add('selected');
             
-            // Hide dashboard when close button is clicked
-            closeDashboardBtn.addEventListener('click', function() {
-                dashboardContainer.style.display = 'none';
-                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-                if (formatMessage) formatMessage.style.display = 'none';
-            });
+            // Store selected content type
+            selectedContentType = this.getAttribute('data-type');
+            console.log('Selected content type:', selectedContentType);
             
-            // Hide dashboard when cancel button is clicked
-            cancelBtn.addEventListener('click', function() {
-                dashboardContainer.style.display = 'none';
-                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-                if (formatMessage) formatMessage.style.display = 'none';
-            });
+            // Hide all dialogs first
+            if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+            if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+            if (formatMessage) formatMessage.style.display = 'none';
             
-            // Handle content type selection
-            contentTypeCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    console.log('Card clicked:', this.getAttribute('data-type'));
-                    
-                    // Remove selection from all cards
-                    contentTypeCards.forEach(c => c.classList.remove('selected'));
-                    
-                    // Add selection to clicked card
-                    this.classList.add('selected');
-                    
-                    // Store selected content type
-                    selectedContentType = this.getAttribute('data-type');
-                    console.log('Selected content type:', selectedContentType);
-                    
-                    // Hide all dialogs first
-                    if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-                    if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-                    if (formatMessage) formatMessage.style.display = 'none';
-                    
-                    // Show appropriate dialog based on selection
-                    if (selectedContentType === 'press-release') {
-                        // Show press release dialog
-                        if (pressReleaseDialog) {
-                            console.log('Showing press release dialog');
-                            pressReleaseDialog.style.display = 'block';
-                            // Hide continue button
-                            continueBtn.style.display = 'none';
-                        } else {
-                            console.error('Press release dialog element not found');
-                        }
-                    } 
-                    else if (selectedContentType === 'social-media') {
-                        // Show social media dialog
-                        if (socialMediaDialog) {
-                            console.log('Showing social media dialog');
-                            socialMediaDialog.style.display = 'block';
-                            // Hide continue button
-                            continueBtn.style.display = 'none';
-                        } else {
-                            console.error('Social media dialog element not found');
-                        }
-                    } 
-                    else if (selectedContentType === 'newsletter') {
-                        // For the "Add more" option, show the message
-                        if (formatMessage) {
-                            formatMessage.style.display = 'block';
-                        }
-                        // Show and enable continue button
-                        continueBtn.style.display = 'block';
-                        continueBtn.classList.add('active');
-                    }
-                    else {
-                        // For other content types
-                        // Show and enable continue button
-                        continueBtn.style.display = 'block';
-                        continueBtn.classList.add('active');
-                    }
-                });
-            });
-            
-            // Handle dialog button actions
-            const rewriteBtn = document.getElementById('rewriteBtn');
-            const saveVersionBtn = document.getElementById('saveVersionBtn');
-            const pressReleaseEditor = document.querySelector('#press-release-dialog .press-release-editor');
-            
-            // Social media buttons
-            const socialRewriteBtn = document.getElementById('socialRewriteBtn');
-            const socialSaveBtn = document.getElementById('socialSaveBtn');
-            const socialMediaEditor = document.querySelector('#social-media-dialog .press-release-editor');
-            
-            // Press Release button handlers
-            if (rewriteBtn) {
-                rewriteBtn.addEventListener('click', function() {
-                    const content = pressReleaseEditor ? pressReleaseEditor.value : '';
-                    console.log('Rewriting press release content with AI:', content);
-                    
-                    // Here you would typically send the content to an AI service
-                    alert('Press release content sent for AI rewriting. This would integrate with your AI service.');
-                });
-            }
-            
-            if (saveVersionBtn) {
-                saveVersionBtn.addEventListener('click', function() {
-                    const content = pressReleaseEditor ? pressReleaseEditor.value : '';
-                    console.log('Saving press release version:', content);
-                    
-                    // Here you would typically save the content to your system
-                    alert('Press release version saved successfully!');
-                    
-                    // Hide the dashboard
-                    dashboardContainer.style.display = 'none';
-                    pressReleaseDialog.style.display = 'none';
-                });
-            }
-            
-            // Social Media button handlers
-            if (socialRewriteBtn) {
-                socialRewriteBtn.addEventListener('click', function() {
-                    const content = socialMediaEditor ? socialMediaEditor.value : '';
-                    console.log('Rewriting social media content with AI:', content);
-                    
-                    // Here you would typically send the content to an AI service
-                    alert('Social media content sent for AI rewriting. This would integrate with your AI service.');
-                });
-            }
-            
-            if (socialSaveBtn) {
-                socialSaveBtn.addEventListener('click', function() {
-                    const content = socialMediaEditor ? socialMediaEditor.value : '';
-                    console.log('Saving social media version:', content);
-                    
-                    // Here you would typically save the content to your system
-                    alert('Social media post saved successfully!');
-                    
-                    // Hide the dashboard
-                    dashboardContainer.style.display = 'none';
-                    socialMediaDialog.style.display = 'none';
-                });
-            }
-            
-            // Handle continue button click
-            continueBtn.addEventListener('click', function() {
-                if (!selectedContentType) return;
-                
-                // Here you can redirect to specific form or load the appropriate template
-                console.log('Continue clicked with content type:', selectedContentType);
-                
-                // Hide the dashboard
-                dashboardContainer.style.display = 'none';
-                
-                // You would typically redirect or load a template here
-                alert(`You selected: ${selectedContentType}. Redirecting to the editor...`);
-            });
-            
-            // Initialize: ensure all dialogs are hidden at start
-            if (pressReleaseDialog) {
-                pressReleaseDialog.style.display = 'none';
-            }
-            if (socialMediaDialog) {
-                socialMediaDialog.style.display = 'none';
-            }
-            if (formatMessage) {
-                formatMessage.style.display = 'none';
+            // Show appropriate dialog based on selection
+            if (selectedContentType === 'press-release') {
+                // Show press release dialog
+                if (pressReleaseDialog) {
+                    console.log('Showing press release dialog');
+                    pressReleaseDialog.style.display = 'block';
+                } else {
+                    console.error('Press release dialog element not found');
+                }
+            } 
+            else if (selectedContentType === 'social-media') {
+                // Show social media dialog
+                if (socialMediaDialog) {
+                    console.log('Showing social media dialog');
+                    socialMediaDialog.style.display = 'block';
+                } else {
+                    console.error('Social media dialog element not found');
+                }
+            } 
+            else if (selectedContentType === 'newsletter') {
+                // For the "Add more" option, show the message
+                if (formatMessage) {
+                    formatMessage.style.display = 'block';
+                }
             }
         });
+    });
+    
+    // Handle dialog button actions
+    const rewriteBtn = document.getElementById('rewriteBtn');
+    const saveVersionBtn = document.getElementById('saveVersionBtn');
+    const uploadPressReleaseBtn = document.getElementById('uploadPressReleaseBtn');
+    const pressReleaseEditor = document.querySelector('#press-release-dialog .press-release-editor');
+    
+    // Social media buttons
+    const socialRewriteBtn = document.getElementById('socialRewriteBtn');
+    const socialSaveBtn = document.getElementById('socialSaveBtn');
+    const uploadSocialBtn = document.getElementById('uploadSocialBtn');
+    const socialMediaEditor = document.querySelector('#social-media-dialog .press-release-editor');
+    
+    // Add more buttons
+    const uploadMoreBtn = document.getElementById('uploadMoreBtn');
+    const saveMoreBtn = document.getElementById('saveMoreBtn');
+    
+    // Press Release button handlers
+    if (rewriteBtn) {
+        rewriteBtn.addEventListener('click', function() {
+            const content = pressReleaseEditor ? pressReleaseEditor.value : '';
+            console.log('Rewriting press release content with AI:', content);
+            
+            // Here you would typically send the content to an AI service
+            alert('Press release content sent for AI rewriting. This would integrate with your AI service.');
+        });
+    }
+    
+    if (uploadPressReleaseBtn) {
+        uploadPressReleaseBtn.addEventListener('click', function() {
+            console.log('Upload press release clicked');
+            alert('Press release upload functionality would be implemented here.');
+        });
+    }
+    
+    if (saveVersionBtn) {
+        saveVersionBtn.addEventListener('click', function() {
+            const content = pressReleaseEditor ? pressReleaseEditor.value : '';
+            console.log('Saving press release version:', content);
+            
+            // Here you would typically save the content to your system
+            alert('Press release saved as draft successfully!');
+            
+            // Hide the dashboard
+            dashboardContainer.style.display = 'none';
+            pressReleaseDialog.style.display = 'none';
+        });
+    }
+    
+    // Social Media button handlers
+    if (socialRewriteBtn) {
+        socialRewriteBtn.addEventListener('click', function() {
+            const content = socialMediaEditor ? socialMediaEditor.value : '';
+            console.log('Rewriting social media content with AI:', content);
+            
+            // Here you would typically send the content to an AI service
+            alert('Social media content sent for AI rewriting. This would integrate with your AI service.');
+        });
+    }
+    
+    if (uploadSocialBtn) {
+        uploadSocialBtn.addEventListener('click', function() {
+            console.log('Upload social media post clicked');
+            alert('Social media post upload functionality would be implemented here.');
+        });
+    }
+    
+    if (socialSaveBtn) {
+        socialSaveBtn.addEventListener('click', function() {
+            const content = socialMediaEditor ? socialMediaEditor.value : '';
+            console.log('Saving social media version:', content);
+            
+            // Here you would typically save the content to your system
+            alert('Social media post saved as draft successfully!');
+            
+            // Hide the dashboard
+            dashboardContainer.style.display = 'none';
+            socialMediaDialog.style.display = 'none';
+        });
+    }
+    
+    // Add more button handlers
+    if (uploadMoreBtn) {
+        uploadMoreBtn.addEventListener('click', function() {
+            console.log('Upload more content clicked');
+            alert('Additional content upload functionality would be implemented here.');
+        });
+    }
+    
+    if (saveMoreBtn) {
+        saveMoreBtn.addEventListener('click', function() {
+            console.log('Save additional content clicked');
+            alert('Additional content saved as draft.');
+            dashboardContainer.style.display = 'none';
+        });
+    }
+    
+    // Initialize: ensure all dialogs are hidden at start
+    if (pressReleaseDialog) {
+        pressReleaseDialog.style.display = 'none';
+    }
+    if (socialMediaDialog) {
+        socialMediaDialog.style.display = 'none';
+    }
+    if (formatMessage) {
+        formatMessage.style.display = 'none';
+    }
+});
 
    
     </script>
