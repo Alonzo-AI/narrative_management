@@ -103,6 +103,66 @@
     color: var(--fsu-garnet);
 }
 
+/* Phase Status Styles */
+.info-item:nth-child(2) .info-value {
+    font-weight: 600;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Status Colors */
+.status-in-progress .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.status-under-review .info-value {
+    color: #FF9800; /* Orange */
+}
+
+.status-completed .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Status Icon Animations */
+.info-item:nth-child(2) i.material-icons {
+    transition: transform 0.3s ease;
+}
+
+/* Status Badge (Optional) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-badge.in-progress {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.status-badge.under-review {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.status-badge.completed {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+/* Pulse animation for "Under Review" status (optional) */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.status-under-review .info-value {
+    animation: pulse 2s infinite ease-in-out;
+}
+
         /* Sidebar styles */
         .sidebar {
             background: var(--fsu-gold);
@@ -1402,6 +1462,13 @@ textarea.form-input {
                         </div>
                     </div>
                     <div class="info-item">
+                     <div class="info-content">
+                            <span class="info-label">Phase Status</span>
+                            <span class="info-value">In Progress</span>
+                        </div>
+                    </div>    
+                    
+                        <div class="info-item">
                         <i class="material-icons">event</i>
                         <div class="info-content">
                             <span class="info-label">Deadline</span>
@@ -1703,7 +1770,7 @@ function getFileIconName(fileType) {
     }
 }
 
-// Submit Review functionality
+// Enhanced Submit Review functionality with Phase Status updates
 function submitReview() {
     // You can customize this function based on your requirements
     console.log("Submit Review button clicked");
@@ -1721,6 +1788,9 @@ function submitReview() {
         setTimeout(() => {
             // Show success message
             alert("Your review has been successfully submitted!");
+            
+            // Update Phase Status to "Under Review"
+            updatePhaseStatus("Under Review", "reviews");
             
             // Change the button to "Accept Review" instead of resetting to original state
             submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
@@ -1757,12 +1827,72 @@ function acceptReview() {
             // Show success message
             alert("Review has been accepted successfully!");
             
+            // Update Phase Status to "Completed"
+            updatePhaseStatus("Completed", "task_alt");
+            
             // Update button state
             acceptBtn.innerHTML = '<i class="material-icons">done_all</i> Accepted';
             acceptBtn.disabled = true;
         }, 1500);
     }
 }
+
+// Function to update the Phase Status
+function updatePhaseStatus(status, iconName) {
+    const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
+    const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
+    
+    if (statusElement) {
+        // Apply fade-out effect
+        statusElement.style.transition = 'opacity 0.3s ease';
+        statusElement.style.opacity = '0';
+        
+        // Update status text and fade back in
+        setTimeout(() => {
+            statusElement.textContent = status;
+            
+            // Add color based on status
+            if (status === "In Progress") {
+                statusElement.style.color = '#2196F3'; // Blue
+            } else if (status === "Under Review") {
+                statusElement.style.color = '#FF9800'; // Orange
+            } else if (status === "Completed") {
+                statusElement.style.color = '#4CAF50'; // Green
+            }
+            
+            statusElement.style.opacity = '1';
+        }, 300);
+    }
+    
+    if (iconElement && iconName) {
+        // Update icon with animation
+        iconElement.style.transform = 'scale(0)';
+        setTimeout(() => {
+            iconElement.textContent = iconName;
+            iconElement.style.transform = 'scale(1)';
+        }, 300);
+    }
+}
+
+// Initialize styles for phase status animations
+function initPhaseStatusStyles() {
+    const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
+    const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
+    
+    if (statusElement) {
+        statusElement.style.transition = 'opacity 0.3s ease, color 0.3s ease';
+    }
+    
+    if (iconElement) {
+        iconElement.style.transition = 'transform 0.3s ease';
+    }
+    
+    // Set initial status color
+    updatePhaseStatus("In Progress", "pending_actions");
+}
+
+// Call initialization when document is ready
+document.addEventListener('DOMContentLoaded', initPhaseStatusStyles);
 
 // Add event listeners to a card
 function addCardEventListeners(card, type, files) {
