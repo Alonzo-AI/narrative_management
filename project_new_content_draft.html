@@ -96,7 +96,7 @@
             padding: 24px;
             box-shadow: var(--shadow);
             height: min-content;
-            width: 80%;
+            width: 70%;
             overflow-y: auto;
         }
 
@@ -458,21 +458,22 @@
 
         /* Related Content Sidebar Styles */
         .related-content-sidebar {
-        background-color: #f5f5f5;
-        border-radius: 8px;
-        padding: 20px;
-        border-left: 2px solid var(--fsu-gold);
-        height: min-content;
-        position: sticky;
-        top: 24px;
-    }
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 2px solid var(--fsu-gold);
+            height: min-content;
+            position: fixed;
+            left: 1550px;
+            top: 52px;
+        }
 
-    .related-content-title {
-        color: var(--fsu-garnet);
-        margin-bottom: 20px;
-        border-bottom: 2px solid var(--fsu-gold);
-        padding-bottom: 10px;
-    }   
+        .related-content-title {
+            color: var(--fsu-garnet);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--fsu-gold);
+            padding-bottom: 10px;
+        }   
 
             .related-sections {
                 display: flex;
@@ -822,387 +823,348 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements
-    const dashboardContainer = document.getElementById('dashboard-container');
-    const createBtn = document.getElementById('createContentBtn');
-    const closeDashboardBtn = document.getElementById('closeDashboardBtn');
-    const contentTypeCards = document.querySelectorAll('.content-type-card');
-    const pressReleaseDialog = document.getElementById('press-release-dialog');
-    const socialMediaDialog = document.getElementById('social-media-dialog');
-    const formatMessage = document.getElementById('format-message');
-    
-    let selectedContentType = null;
-    
-    // Show dashboard when create button is clicked
-    createBtn.addEventListener('click', function() {
-        dashboardContainer.style.display = 'block';
-        // Make sure dialogs are hidden when dashboard opens
-        if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-        if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-        if (formatMessage) formatMessage.style.display = 'none';
-        // Reset selection
-        contentTypeCards.forEach(c => c.classList.remove('selected'));
-        selectedContentType = null;
-    });
-    
-    // Hide dashboard when close button is clicked
-    closeDashboardBtn.addEventListener('click', function() {
-        dashboardContainer.style.display = 'none';
-        if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-        if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-        if (formatMessage) formatMessage.style.display = 'none';
-    });
-    
-    // Handle content type selection
-    contentTypeCards.forEach(card => {
-        card.addEventListener('click', function() {
-            console.log('Card clicked:', this.getAttribute('data-type'));
+            // Get DOM elements
+            const dashboardContainer = document.getElementById('dashboard-container');
+            const createBtn = document.getElementById('createContentBtn');
+            const closeDashboardBtn = document.getElementById('closeDashboardBtn');
+            const contentTypeCards = document.querySelectorAll('.content-type-card');
+            const pressReleaseDialog = document.getElementById('press-release-dialog');
+            const socialMediaDialog = document.getElementById('social-media-dialog');
+            const formatMessage = document.getElementById('format-message');
             
-            // Remove selection from all cards
-            contentTypeCards.forEach(c => c.classList.remove('selected'));
+            let selectedContentType = null;
             
-            // Add selection to clicked card
-            this.classList.add('selected');
+            // Show dashboard when create button is clicked
+            createBtn.addEventListener('click', function() {
+                dashboardContainer.style.display = 'block';
+                // Make sure dialogs are hidden when dashboard opens
+                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                if (formatMessage) formatMessage.style.display = 'none';
+                // Reset selection
+                contentTypeCards.forEach(c => c.classList.remove('selected'));
+                selectedContentType = null;
+            });
             
-            // Store selected content type
-            selectedContentType = this.getAttribute('data-type');
-            console.log('Selected content type:', selectedContentType);
+            // Hide dashboard when close button is clicked
+            closeDashboardBtn.addEventListener('click', function() {
+                dashboardContainer.style.display = 'none';
+                if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                if (formatMessage) formatMessage.style.display = 'none';
+            });
             
-            // Hide all dialogs first
-            if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
-            if (socialMediaDialog) socialMediaDialog.style.display = 'none';
-            if (formatMessage) formatMessage.style.display = 'none';
+            // Handle content type selection
+            contentTypeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    console.log('Card clicked:', this.getAttribute('data-type'));
+                    
+                    // Remove selection from all cards
+                    contentTypeCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selection to clicked card
+                    this.classList.add('selected');
+                    
+                    // Store selected content type
+                    selectedContentType = this.getAttribute('data-type');
+                    console.log('Selected content type:', selectedContentType);
+                    
+                    // Hide all dialogs first
+                    if (pressReleaseDialog) pressReleaseDialog.style.display = 'none';
+                    if (socialMediaDialog) socialMediaDialog.style.display = 'none';
+                    if (formatMessage) formatMessage.style.display = 'none';
+                    
+                    // Show appropriate dialog based on selection
+                    if (selectedContentType === 'press-release') {
+                        // Show press release dialog
+                        if (pressReleaseDialog) {
+                            console.log('Showing press release dialog');
+                            pressReleaseDialog.style.display = 'block';
+                        } else {
+                            console.error('Press release dialog element not found');
+                        }
+                    } 
+                    else if (selectedContentType === 'social-media') {
+                        // Show social media dialog
+                        if (socialMediaDialog) {
+                            console.log('Showing social media dialog');
+                            socialMediaDialog.style.display = 'block';
+                        } else {
+                            console.error('Social media dialog element not found');
+                        }
+                    } 
+                    else if (selectedContentType === 'newsletter') {
+                        // For the "Add more" option, show the message
+                        if (formatMessage) {
+                            formatMessage.style.display = 'block';
+                        }
+                    }
+                });
+            });
             
-            // Show appropriate dialog based on selection
-            if (selectedContentType === 'press-release') {
-                // Show press release dialog
-                if (pressReleaseDialog) {
-                    console.log('Showing press release dialog');
-                    pressReleaseDialog.style.display = 'block';
-                } else {
-                    console.error('Press release dialog element not found');
-                }
-            } 
-            else if (selectedContentType === 'social-media') {
-                // Show social media dialog
-                if (socialMediaDialog) {
-                    console.log('Showing social media dialog');
-                    socialMediaDialog.style.display = 'block';
-                } else {
-                    console.error('Social media dialog element not found');
-                }
-            } 
-            else if (selectedContentType === 'newsletter') {
-                // For the "Add more" option, show the message
-                if (formatMessage) {
-                    formatMessage.style.display = 'block';
-                }
+            // Handle dialog button actions for Press Release
+            const rewritePressReleaseBtn = document.getElementById('rewritePressReleaseBtn');
+            const saveVersionBtn = document.getElementById('saveVersionBtn');
+            const uploadPressReleaseBtn = document.getElementById('uploadPressReleaseBtn');
+            const pressReleaseEditor = document.querySelector('#press-release-dialog .text-editor');
+            
+            // Social media buttons
+            const rewriteSocialBtn = document.getElementById('rewriteSocialBtn');
+            const socialSaveBtn = document.getElementById('socialSaveBtn');
+            const uploadSocialBtn = document.getElementById('uploadSocialBtn');
+            const socialMediaEditor = document.querySelector('#social-media-dialog .text-editor');
+            
+            // Add more buttons
+            const uploadMoreBtn = document.getElementById('uploadMoreBtn');
+            const saveMoreBtn = document.getElementById('saveMoreBtn');
+            
+            // Press Release button handlers
+            if (rewritePressReleaseBtn) {
+                rewritePressReleaseBtn.addEventListener('click', function() {
+                    const content = pressReleaseEditor ? pressReleaseEditor.value : '';
+                    console.log('Rewriting press release content with AI:', content);
+                    
+                    // Here you would typically send the content to an AI service
+                    alert('Press release content sent for AI rewriting. This would integrate with your AI service.');
+                });
             }
-        });
-    });
-    
-    // Handle dialog button actions for Press Release
-    const rewritePressReleaseBtn = document.getElementById('rewritePressReleaseBtn');
-    const saveVersionBtn = document.getElementById('saveVersionBtn');
-    const uploadPressReleaseBtn = document.getElementById('uploadPressReleaseBtn');
-    const pressReleaseEditor = document.querySelector('#press-release-dialog .text-editor');
-    
-    // Social media buttons
-    const rewriteSocialBtn = document.getElementById('rewriteSocialBtn');
-    const socialSaveBtn = document.getElementById('socialSaveBtn');
-    const uploadSocialBtn = document.getElementById('uploadSocialBtn');
-    const socialMediaEditor = document.querySelector('#social-media-dialog .text-editor');
-    
-    // Add more buttons
-    const uploadMoreBtn = document.getElementById('uploadMoreBtn');
-    const saveMoreBtn = document.getElementById('saveMoreBtn');
-    
-    // Press Release button handlers
-    if (rewritePressReleaseBtn) {
-        rewritePressReleaseBtn.addEventListener('click', function() {
-            const content = pressReleaseEditor ? pressReleaseEditor.value : '';
-            console.log('Rewriting press release content with AI:', content);
             
-            // Here you would typically send the content to an AI service
-            alert('Press release content sent for AI rewriting. This would integrate with your AI service.');
-        });
-    }
-    
-    if (uploadPressReleaseBtn) {
-        uploadPressReleaseBtn.addEventListener('click', function() {
-            console.log('Upload press release clicked');
-            alert('Press release upload functionality would be implemented here.');
-        });
-    }
-    
-    if (saveVersionBtn) {
-        saveVersionBtn.addEventListener('click', function() {
-            const content = pressReleaseEditor ? pressReleaseEditor.value : '';
-            console.log('Saving press release version:', content);
+            if (uploadPressReleaseBtn) {
+                uploadPressReleaseBtn.addEventListener('click', function() {
+                    console.log('Upload press release clicked');
+                    alert('Press release upload functionality would be implemented here.');
+                });
+            }
             
-            // Here you would typically save the content to your system
-            alert('Press release saved as draft successfully!');
+            if (saveVersionBtn) {
+                saveVersionBtn.addEventListener('click', function() {
+                    const content = pressReleaseEditor ? pressReleaseEditor.value : '';
+                    console.log('Saving press release version:', content);
+                    
+                    // Here you would typically save the content to your system
+                    alert('Press release saved as draft successfully!');
+                    
+                    // Hide the dashboard
+                    dashboardContainer.style.display = 'none';
+                    pressReleaseDialog.style.display = 'none';
+                });
+            }
             
-            // Hide the dashboard
-            dashboardContainer.style.display = 'none';
-            pressReleaseDialog.style.display = 'none';
-        });
-    }
-    
-    // Social Media button handlers
-    if (rewriteSocialBtn) {
-        rewriteSocialBtn.addEventListener('click', function() {
-            const content = socialMediaEditor ? socialMediaEditor.value : '';
-            console.log('Rewriting social media content with AI:', content);
+            // Social Media button handlers
+            if (rewriteSocialBtn) {
+                rewriteSocialBtn.addEventListener('click', function() {
+                    const content = socialMediaEditor ? socialMediaEditor.value : '';
+                    console.log('Rewriting social media content with AI:', content);
+                    
+                    // Here you would typically send the content to an AI service
+                    alert('Social media content sent for AI rewriting. This would integrate with your AI service.');
+                });
+            }
             
-            // Here you would typically send the content to an AI service
-            alert('Social media content sent for AI rewriting. This would integrate with your AI service.');
-        });
-    }
-    
-    if (uploadSocialBtn) {
-        uploadSocialBtn.addEventListener('click', function() {
-            console.log('Upload social media post clicked');
-            alert('Social media post upload functionality would be implemented here.');
-        });
-    }
-    
-    if (socialSaveBtn) {
-        socialSaveBtn.addEventListener('click', function() {
-            const content = socialMediaEditor ? socialMediaEditor.value : '';
-            console.log('Saving social media version:', content);
+            if (uploadSocialBtn) {
+                uploadSocialBtn.addEventListener('click', function() {
+                    console.log('Upload social media post clicked');
+                    alert('Social media post upload functionality would be implemented here.');
+                });
+            }
             
-            // Here you would typically save the content to your system
-            alert('Social media post saved as draft successfully!');
+            if (socialSaveBtn) {
+                socialSaveBtn.addEventListener('click', function() {
+                    const content = socialMediaEditor ? socialMediaEditor.value : '';
+                    console.log('Saving social media version:', content);
+                    
+                    // Here you would typically save the content to your system
+                    alert('Social media post saved as draft successfully!');
+                    
+                    // Hide the dashboard
+                    dashboardContainer.style.display = 'none';
+                    socialMediaDialog.style.display = 'none';
+                });
+            }
             
-            // Hide the dashboard
-            dashboardContainer.style.display = 'none';
-            socialMediaDialog.style.display = 'none';
-        });
-    }
-    
-    // Add more button handlers
-    if (uploadMoreBtn) {
-        uploadMoreBtn.addEventListener('click', function() {
-            console.log('Upload more content clicked');
-            alert('Additional content upload functionality would be implemented here.');
-        });
-    }
-    
-    if (saveMoreBtn) {
-        saveMoreBtn.addEventListener('click', function() {
-            console.log('Save additional content clicked');
-            alert('Additional content saved as draft.');
-            dashboardContainer.style.display = 'none';
-        });
-    }
-    
-    // Initialize: ensure all dialogs are hidden at start
-    if (pressReleaseDialog) {
-        pressReleaseDialog.style.display = 'none';
-    }
-    if (socialMediaDialog) {
-        socialMediaDialog.style.display = 'none';
-    }
-    if (formatMessage) {
-        formatMessage.style.display = 'none';
-    }
+            // Add more button handlers
+            if (uploadMoreBtn) {
+                uploadMoreBtn.addEventListener('click', function() {
+                    console.log('Upload more content clicked');
+                    alert('Additional content upload functionality would be implemented here.');
+                });
+            }
+            
+            if (saveMoreBtn) {
+                saveMoreBtn.addEventListener('click', function() {
+                    console.log('Save additional content clicked');
+                    alert('Additional content saved as draft.');
+                    dashboardContainer.style.display = 'none';
+                });
+            }
+            
+            // Initialize: ensure all dialogs are hidden at start
+            if (pressReleaseDialog) {
+                pressReleaseDialog.style.display = 'none';
+            }
+            if (socialMediaDialog) {
+                socialMediaDialog.style.display = 'none';
+            }
+            if (formatMessage) {
+                formatMessage.style.display = 'none';
+            }
 
-    // Function to populate related content
-    // Static related content for documents and links
-    const staticDocuments = [
-        {
-            name: "FSU Football Season Overview",
-            content:
-                "Jordan Travis emerged as a pivotal quarterback, showcasing exceptional leadership and strategic playmaking throughout the 2025 season. His ability to read defensive formations and make split-second decisions significantly contributed to the team's offensive success.",
-            citation: "pp. 23-25",
-        },
-        {
-            name: "Team Performance Analysis",
-            content:
-                "The offensive line demonstrated remarkable improvement, reducing sack rates by 22% compared to the previous season. Key players like Rod Dent and Qae'shon Sapp provided crucial protection, creating vital spaces for running backs and quarterbacks.",
-            citation: "pp. 47-49",
-        },
-    ];
+            // Function to populate related content
+            // Static related content for documents and links
+            const staticDocuments = [
+                {
+                    name: "FSU Football Season Overview",
+                    content:
+                        "Jordan Travis emerged as a pivotal quarterback, showcasing exceptional leadership and strategic playmaking throughout the 2025 season. His ability to read defensive formations and make split-second decisions significantly contributed to the team's offensive success.",
+                    citation: "pp. 23-25",
+                },
+                {
+                    name: "Team Performance Analysis",
+                    content:
+                        "The offensive line demonstrated remarkable improvement, reducing sack rates by 22% compared to the previous season. Key players like Rod Dent and Qae'shon Sapp provided crucial protection, creating vital spaces for running backs and quarterbacks.",
+                    citation: "pp. 47-49",
+                },
+            ];
 
-    const staticWebLinks = [
-        {
-            name: "FSU Athletics Official Site",
-            content:
-                "Florida State University's football program has consistently ranked among the top athletic programs in the NCAA, with a rich history of producing NFL-caliber talent. The 2025 season reinforced this legacy through exceptional team performance and individual player achievements.",
-            citation: "Game Recap Section",
-        },
-        {
-            name: "ACC Football Insights",
-            content:
-                "The Atlantic Coast Conference (ACC) recognized FSU's outstanding season, highlighting the team's strategic adaptations and resilient performance across multiple challenging matchups. Key statistical innovations in play-calling and defensive strategies set the Seminoles apart.",
-            citation: "2025 Season Analysis",
-        },
-    ];
+            const staticWebLinks = [
+                {
+                    name: "FSU Athletics Official Site",
+                    content:
+                        "Florida State University's football program has consistently ranked among the top athletic programs in the NCAA, with a rich history of producing NFL-caliber talent. The 2025 season reinforced this legacy through exceptional team performance and individual player achievements.",
+                    citation: "Game Recap Section",
+                },
+                {
+                    name: "ACC Football Insights",
+                    content:
+                        "The Atlantic Coast Conference (ACC) recognized FSU's outstanding season, highlighting the team's strategic adaptations and resilient performance across multiple challenging matchups. Key statistical innovations in play-calling and defensive strategies set the Seminoles apart.",
+                    citation: "2025 Season Analysis",
+                },
+            ];
 
-    // Initialize the collapsible for related content
-    var relatedContentCollapsible = document.querySelector(
-        ".related-content-sidebar .collapsible",
-    );
-    if (relatedContentCollapsible && typeof M !== 'undefined') {
-        M.Collapsible.init(relatedContentCollapsible, {
-            accordion: false, // allows multiple sections to be open
-        });
-    }
+            // Add this to the existing DOMContentLoaded event listener or create a new one
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize the collapsible for related content
+                var relatedContentCollapsible = document.querySelector(
+                    ".related-content-sidebar .collapsible",
+                );
+                if (relatedContentCollapsible) {
+                    M.Collapsible.init(relatedContentCollapsible, {
+                        accordion: false, // allows multiple sections to be open
+                    });
+                }
+            });
 
-    // Call populateRelatedContent to load the related content
-    populateRelatedContent();
+            function populateRelatedContent() {
+                // Existing Selected Stories Population
+                const selectedStoriesContainer =
+                    document.getElementById("selectedStories");
+                const relatedStoriesContent = document.getElementById(
+                    "relatedStoriesContent",
+                );
 
-    function populateRelatedContent() {
-        // Existing Selected Stories Population
-        const selectedStoriesContainer = document.getElementById("selectedStories");
-        const relatedStoriesContent = document.getElementById("relatedStoriesContent");
+                // Clear previous content
+                relatedStoriesContent.innerHTML = "";
 
-        // Clear previous content
-        if (relatedStoriesContent) {
-            relatedStoriesContent.innerHTML = "";
+                if (selectedStoriesContainer) {
+                    const storyItems =
+                        selectedStoriesContainer.querySelectorAll(
+                            ".story-item",
+                        );
 
-            if (selectedStoriesContainer) {
-                const storyItems = selectedStoriesContainer.querySelectorAll(".story-item");
+                    if (storyItems.length > 0) {
+                        storyItems.forEach((item) => {
+                            const storyText =
+                                item.querySelector("div > p").textContent;
 
-                if (storyItems.length > 0) {
-                    storyItems.forEach((item) => {
-                        const storyText = item.querySelector("div > p").textContent;
+                            const relatedItem = document.createElement("div");
+                            relatedItem.className = "related-content-item";
+                            relatedItem.innerHTML = `
+                                <span>${storyText}</span>
+                                <div class="item-actions">
+                                    <button onclick="copyToClipboard('${storyText.replace(/'/g, "\\'")}')" title="Copy">
+                                        <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                                    </button>
+                                    <button onclick="insertContentIntoEditor('${storyText.replace(/'/g, "\\'")}')" title="Insert">
+                                        <i class="material-icons" style="font-size: 18px;">input</i>
+                                    </button>
+                                </div>
+                            `;
 
+                            relatedStoriesContent.appendChild(relatedItem);
+                        });
+                    } else {
+                        relatedStoriesContent.innerHTML =
+                            '<p class="no-content-message">No stories selected</p>';
+                    }
+                }
+
+                // Populate Static Documents
+                const relatedDocumentsContent = document.getElementById(
+                    "relatedDocumentsContent",
+                );
+                relatedDocumentsContent.innerHTML = "";
+
+                if (staticDocuments.length > 0) {
+                    staticDocuments.forEach((doc) => {
                         const relatedItem = document.createElement("div");
                         relatedItem.className = "related-content-item";
                         relatedItem.innerHTML = `
-                            <span>${storyText}</span>
+                            <div>
+                                <strong>${doc.name}</strong>
+                                <p style="margin: 5px 0; font-size: 0.9em;">${doc.content}</p>
+                                <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${doc.citation}</div>
+                            </div>
                             <div class="item-actions">
-                                <button onclick="copyToClipboard('${storyText.replace(/'/g, "\\'")}')" title="Copy">
+                                <button onclick="copyToClipboard('${doc.content.replace(/'/g, "\\'")}')" title="Copy">
                                     <i class="material-icons" style="font-size: 18px;">content_copy</i>
                                 </button>
-                                <button onclick="insertContentIntoEditor('${storyText.replace(/'/g, "\\'")}')" title="Insert">
+                                <button onclick="insertContentIntoEditor('${doc.content.replace(/'/g, "\\'")}')" title="Insert">
                                     <i class="material-icons" style="font-size: 18px;">input</i>
                                 </button>
                             </div>
                         `;
 
-                        relatedStoriesContent.appendChild(relatedItem);
+                        relatedDocumentsContent.appendChild(relatedItem);
                     });
                 } else {
-                    relatedStoriesContent.innerHTML = '<p class="no-content-message">No stories selected</p>';
+                    relatedDocumentsContent.innerHTML =
+                        '<p class="no-content-message">No documents available</p>';
                 }
-            } else {
-                relatedStoriesContent.innerHTML = '<p class="no-content-message">No stories selected</p>';
+
+                // Populate Static Web Links
+                const relatedLinksContent = document.getElementById(
+                    "relatedLinksContent",
+                );
+                relatedLinksContent.innerHTML = "";
+
+                if (staticWebLinks.length > 0) {
+                    staticWebLinks.forEach((link) => {
+                        const relatedItem = document.createElement("div");
+                        relatedItem.className = "related-content-item";
+                        relatedItem.innerHTML = `
+                            <div>
+                                <strong>${link.name}</strong>
+                                <p style="margin: 5px 0; font-size: 0.9em;">${link.content}</p>
+                                <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${link.citation}</div>
+                            </div>
+                            <div class="item-actions">
+                                <button onclick="copyToClipboard('${link.content.replace(/'/g, "\\'")}')" title="Copy">
+                                    <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                                </button>
+                                <button onclick="insertContentIntoEditor('${link.content.replace(/'/g, "\\'")}')" title="Insert">
+                                    <i class="material-icons" style="font-size: 18px;">input</i>
+                                </button>
+                            </div>
+                        `;
+
+                        relatedLinksContent.appendChild(relatedItem);
+                    });
+                } else {
+                    relatedLinksContent.innerHTML =
+                        '<p class="no-content-message">No links available</p>';
+                }
             }
-        }
-
-        // Populate Static Documents
-        const relatedDocumentsContent = document.getElementById("relatedDocumentsContent");
-        if (relatedDocumentsContent) {
-            relatedDocumentsContent.innerHTML = "";
-
-            if (staticDocuments.length > 0) {
-                staticDocuments.forEach((doc) => {
-                    const relatedItem = document.createElement("div");
-                    relatedItem.className = "related-content-item";
-                    relatedItem.innerHTML = `
-                        <div>
-                            <strong>${doc.name}</strong>
-                            <p style="margin: 5px 0; font-size: 0.9em;">${doc.content}</p>
-                            <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${doc.citation}</div>
-                        </div>
-                        <div class="item-actions">
-                            <button onclick="copyToClipboard('${doc.content.replace(/'/g, "\\'")}')" title="Copy">
-                                <i class="material-icons" style="font-size: 18px;">content_copy</i>
-                            </button>
-                            <button onclick="insertContentIntoEditor('${doc.content.replace(/'/g, "\\'")}')" title="Insert">
-                                <i class="material-icons" style="font-size: 18px;">input</i>
-                            </button>
-                        </div>
-                    `;
-
-                    relatedDocumentsContent.appendChild(relatedItem);
-                });
-            } else {
-                relatedDocumentsContent.innerHTML = '<p class="no-content-message">No documents available</p>';
-            }
-        }
-
-        // Populate Static Web Links
-        const relatedLinksContent = document.getElementById("relatedLinksContent");
-        if (relatedLinksContent) {
-            relatedLinksContent.innerHTML = "";
-
-            if (staticWebLinks.length > 0) {
-                staticWebLinks.forEach((link) => {
-                    const relatedItem = document.createElement("div");
-                    relatedItem.className = "related-content-item";
-                    relatedItem.innerHTML = `
-                        <div>
-                            <strong>${link.name}</strong>
-                            <p style="margin: 5px 0; font-size: 0.9em;">${link.content}</p>
-                            <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${link.citation}</div>
-                        </div>
-                        <div class="item-actions">
-                            <button onclick="copyToClipboard('${link.content.replace(/'/g, "\\'")}')" title="Copy">
-                                <i class="material-icons" style="font-size: 18px;">content_copy</i>
-                            </button>
-                            <button onclick="insertContentIntoEditor('${link.content.replace(/'/g, "\\'")}')" title="Insert">
-                                <i class="material-icons" style="font-size: 18px;">input</i>
-                            </button>
-                        </div>
-                    `;
-
-                    relatedLinksContent.appendChild(relatedItem);
-                });
-            } else {
-                relatedLinksContent.innerHTML = '<p class="no-content-message">No links available</p>';
-            }
-        }
-    }
-});
-
-// Global functions for copy and insert functionality
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text)
-        .then(() => {
-            alert('Content copied to clipboard!');
-        })
-        .catch(err => {
-            console.error('Failed to copy: ', err);
         });
-}
-
-function insertContentIntoEditor(text) {
-    // Get the currently active editor
-    let activeEditor = null;
-    
-    // Check which dialog is currently visible
-    if (document.getElementById('press-release-dialog') && 
-        document.getElementById('press-release-dialog').style.display === 'block') {
-        activeEditor = document.querySelector('#press-release-dialog .text-editor');
-    } else if (document.getElementById('social-media-dialog') && 
-               document.getElementById('social-media-dialog').style.display === 'block') {
-        activeEditor = document.querySelector('#social-media-dialog .text-editor');
-    }
-    
-    // Insert the text if an editor is active
-    if (activeEditor) {
-        const startPos = activeEditor.selectionStart;
-        const endPos = activeEditor.selectionEnd;
-        
-        // Insert the text at cursor position
-        activeEditor.value = 
-            activeEditor.value.substring(0, startPos) + 
-            text + 
-            activeEditor.value.substring(endPos);
-            
-        // Update cursor position after insertion
-        activeEditor.selectionStart = activeEditor.selectionEnd = startPos + text.length;
-        activeEditor.focus();
-        
-        alert('Content inserted into editor!');
-    } else {
-        alert('Please open an editor first!');
-    }
-}
     </script>
 </body>
 </html>
