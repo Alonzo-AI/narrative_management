@@ -7,434 +7,608 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
         :root {
-    --fsu-garnet: #782f40;
-    --fsu-gold: #ceb888;
-    --fsu-black: #231f20;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-@font-face {
-    font-family: 'GothicCustom';
-    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-}
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-body {
-    background-color: var(--fsu-garnet);
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    height: 100vh;
-    gap: 24px;
-    padding: 24px;
-}
+        body {
+            background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
 
-.sidebar {
-    background: var(--fsu-gold);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    height: fit-content;
-    position: sticky;
-    top: 24px;
-}
+        .content-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+        }
 
-.sidebar h2 {
-    color: var(--fsu-garnet);
-    font-family: 'GothicCustom', sans-serif;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
 
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--fsu-garnet);
-}
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+            font-family: 'GothicCustom', sans-serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.sidebar-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-}
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--fsu-garnet);
+        }
 
-.sidebar-item.active {
-    background-color: var(--fsu-garnet);
-    color: var(--fsu-gold);
-}
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
 
-.sidebar-item.active i {
-    color: var(--fsu-gold);
-}
+        .sidebar-item.active {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
 
-.sidebar-item i {
-    margin-right: 12px;
-    color: var(--fsu-garnet);
-    font-size: 20px;
-}
+        .sidebar-item.active i {
+            color: var(--fsu-gold);
+        }
 
-/* Main content area */
-.main-content {
-    background: white;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-    height: min-content;
-    width: 1200px;
-    overflow-y: auto;
-}
+        .sidebar-item i {
+            margin-right: 12px;
+            color: var(--fsu-garnet);
+            font-size: 20px;
+        }
 
-.content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #eee;
-}
+        /* Main content area */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            height: min-content;
+            width: 80%;
+            overflow-y: auto;
+        }
 
-.content-header h1 {
-    color: var(--fsu-black);
-    font-size: 24px;
-}
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
 
-.create-btn {
-    background-color: var(--fsu-garnet);
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
-}
+        .content-header h1 {
+            color: var(--fsu-black);
+            font-size: 24px;
+        }
 
-.create-btn:hover {
-    background-color: #631d2e;
-}
+        .create-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
 
-/* Content list */
-.content-list {
-    list-style: none;
-}
+        .create-btn:hover {
+            background-color: #631d2e;
+        }
 
-.content-item {
-    padding: 16px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        /* Content list */
+        .content-list {
+            list-style: none;
+        }
 
-.content-item:last-child {
-    border-bottom: none;
-}
+        .content-item {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.content-item:hover {
-    background-color: #f9f9f9;
-}
+        .content-item:last-child {
+            border-bottom: none;
+        }
 
-.content-info {
-    flex: 1;
-}
+        .content-item:hover {
+            background-color: #f9f9f9;
+        }
 
-.content-title {
-    font-weight: 500;
-    color: var(--fsu-black);
-    margin-bottom: 4px;
-}
+        .content-info {
+            flex: 1;
+        }
 
-.content-meta {
-    display: flex;
-    gap: 16px;
-    color: #666;
-    font-size: 14px;
-}
+        .content-title {
+            font-weight: 500;
+            color: var(--fsu-black);
+            margin-bottom: 4px;
+        }
 
-.content-type, .content-status, .content-date {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
+        .content-meta {
+            display: flex;
+            gap: 16px;
+            color: #666;
+            font-size: 14px;
+        }
 
-.status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-}
+        .content-type, .content-status, .content-date {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-.status-draft {
-    background-color: #e3f2fd;
-    color: #1976d2;
-}
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
 
-.status-published {
-    background-color: #e8f5e9;
-    color: #388e3c;
-}
+        .status-draft {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
 
-.status-review {
-    background-color: #fff8e1;
-    color: #ffa000;
-}
+        .status-published {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
 
-.content-actions {
-    display: flex;
-    gap: 8px;
-}
+        .status-review {
+            background-color: #fff8e1;
+            color: #ffa000;
+        }
 
-.action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #666;
-    transition: color 0.2s;
-}
+        .content-actions {
+            display: flex;
+            gap: 8px;
+        }
 
-.action-btn:hover {
-    color: var(--fsu-garnet);
-}
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
 
-/* Dashboard styles */
-.dashboard-container {
-    display: none;
-    background-color: white;
-    border-radius: 8px;
-    margin-top: 20px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-}
+        .action-btn:hover {
+            color: var(--fsu-garnet);
+        }
 
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #eee;
-}
+        /* Dashboard styles */
+        .dashboard-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            margin-top: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            overflow: visible;
+        }
 
-.dashboard-title {
-    font-size: 20px;
-    color: var(--fsu-black);
-}
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
 
-.close-dashboard {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #666;
-    cursor: pointer;
-}
+        .dashboard-title {
+            font-size: 20px;
+            color: var(--fsu-black);
+        }
 
-/* Content type selection */
-.content-types {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 20px;
-}
+        .close-dashboard {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
 
-.content-type-card {
-    background-color: #f8f8f8;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border: 2px solid transparent;
-    flex: 1;
-}
+        /* Dashboard Layout */
+        .dashboard-layout {
+            display: block;
+            width: 100%;
+        }
 
-.content-type-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #f2f2f2;
-}
+        .dashboard-main {
+            width: 100%;
+        }
 
-.content-type-card.selected {
-    border-color: var(--fsu-garnet);
-    background-color: rgba(120, 47, 64, 0.05);
-}
+        /* Content types row */
+        .content-types {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
 
-.content-type-icon {
-    background-color: var(--fsu-garnet);
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 12px;
-}
+        .content-type-card {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            flex: 1;
+        }
 
-.content-type-icon i {
-    font-size: 28px;
-}
+        .content-type-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #f2f2f2;
+        }
 
-.content-type-title {
-    font-weight: 600;
-    color: var(--fsu-black);
-    margin-bottom: 4px;
-}
+        .content-type-card.selected {
+            border-color: var(--fsu-garnet);
+            background-color: rgba(120, 47, 64, 0.05);
+        }
 
-.content-type-desc {
-    font-size: 13px;
-    color: #666;
-}
+        .content-type-icon {
+            background-color: var(--fsu-garnet);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 12px;
+        }
 
-/* Dialog styles - apply to both press release and social media */
-.content-editor-dialog {
-    display: none; /* Initially hidden */
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: var(--shadow);
-    width: 100%; /* Ensure full width */
-}
+        .content-type-icon i {
+            font-size: 28px;
+        }
 
-.dialog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
+        .content-type-title {
+            font-weight: 600;
+            color: var(--fsu-black);
+            margin-bottom: 4px;
+        }
 
-.dialog-title {
-    font-size: 18px;
-    color: var(--fsu-black);
-    font-weight: 500;
-}
+        .content-type-desc {
+            font-size: 13px;
+            color: #666;
+        }
 
-/* Dialog action buttons */
-.dialog-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 16px;
-}
+        /* Dialog styles */
+        .content-editor-dialog {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+        }
 
-/* Format message styling */
-.format-message {
-    background-color: #f0f0f0;
-    border-left: 4px solid var(--fsu-garnet);
-    padding: 12px 16px;
-    margin: 16px 0;
-    color: var(--fsu-black);
-    font-size: 14px;
-    border-radius: 4px;
-    text-align: center;
-}
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
 
-/* Consistent text area styling */
-.text-editor {
-    width: 100%;
-    min-height: 200px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 12px;
-    font-size: 14px;
-    line-height: 1.5;
-    resize: vertical;
-    margin-bottom: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
+        .dialog-title {
+            font-size: 18px;
+            color: var(--fsu-black);
+            font-weight: 500;
+        }
 
-/* Consistent button styling */
-.btn {
-    padding: 10px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    transition: background-color 0.2s, transform 0.1s;
-}
+        /* Dialog action buttons */
+        .dialog-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
 
-.btn:hover {
-    transform: translateY(-1px);
-}
+        /* For the Add More section with just 2 buttons */
+        #format-message .dialog-actions {
+            grid-template-columns: repeat(2, 1fr);
+        }
 
-.btn:active {
-    transform: translateY(1px);
-}
+        /* Format message styling */
+        .format-message {
+            background-color: #f0f0f0;
+            border-left: 4px solid var(--fsu-garnet);
+            padding: 12px 16px;
+            margin: 16px 0;
+            color: var(--fsu-black);
+            font-size: 14px;
+            border-radius: 4px;
+            text-align: center;
+        }
 
-.btn i {
-    font-size: 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+        /* Text area styling */
+        .text-editor {
+            width: 100%;
+            min-height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            margin-bottom: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-/* Primary button (Save Draft) */
-.btn-primary {
-    background-color: var(--fsu-garnet);
-    color: white;
-}
+        /* Button styling */
+        .btn {
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            transition: background-color 0.2s, transform 0.1s;
+            min-width: 150px;
+            height: 44px;
+        }
 
-.btn-primary:hover {
-    background-color: #682a38;
-}
+        .btn:hover {
+            transform: translateY(-1px);
+        }
 
-.btn-primary i {
-    color: white;
-}
+        .btn:active {
+            transform: translateY(1px);
+        }
 
-/* Secondary button (Rewrite with AI) */
-.btn-secondary {
-    background-color: var(--fsu-garnet);
-    color: white;
-}
+        .btn i {
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.btn-secondary:hover {
-    background-color: #682a38;
-}
+        /* Primary button (Save Draft) */
+        .btn-primary {
+            background-color: var(--fsu-garnet);
+            color: white;
+        }
 
-.btn-secondary i {
-    color: white;
-}
+        .btn-primary:hover {
+            background-color: #682a38;
+        }
 
-/* Tertiary button (Upload) */
-.btn-tertiary {
-    background-color: var(--fsu-garnet);
-    color: white;
-}
+        .btn-primary i {
+            color: white;
+        }
 
-.btn-tertiary:hover {
-    background-color: #682a38;
-}
+        /* Secondary button (Upload) */
+        .btn-secondary {
+            background-color: var(--fsu-garnet);
+            color: white;
+        }
 
-.btn-tertiary i {
-    color: white;
-}
+        .btn-secondary:hover {
+            background-color: #682a38;
+        }
 
+        .btn-secondary i {
+            color: white;
+        }
+
+        /* Tertiary button (Rewrite with AI) */
+        .btn-tertiary {
+            background-color: var(--fsu-garnet);
+            color: white;
+        }
+
+        .btn-tertiary:hover {
+            background-color: #682a38;
+        }
+
+        .btn-tertiary i {
+            color: white;
+        }
+
+        /* Related Content Sidebar Styles */
+        .related-content-sidebar {
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        padding: 20px;
+        border-left: 2px solid var(--fsu-gold);
+        height: min-content;
+        position: sticky;
+        top: 24px;
+    }
+
+    .related-content-title {
+        color: var(--fsu-garnet);
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--fsu-gold);
+        padding-bottom: 10px;
+    }   
+
+            .related-sections {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .related-section h6 {
+                color: var(--fsu-garnet);
+                margin-bottom: 10px;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
+
+            .related-items {
+                max-height: 200px;
+                overflow-y: auto;
+                background-color: white;
+                border-radius: 4px;
+                padding: 10px;
+            }
+
+            .related-items .no-content-message {
+                color: #888;
+                text-align: center;
+                font-style: italic;
+            }
+
+            .related-content-item {
+                background-color: #f0f0f0;
+                border-radius: 4px;
+                padding: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .related-content-item .item-actions {
+                display: flex;
+                gap: 5px;
+            }
+
+            .related-content-item .item-actions button {
+                background: none;
+                border: none;
+                color: var(--fsu-garnet);
+                cursor: pointer;
+                padding: 0;
+            }
+
+            .related-content-item .item-actions button:hover {
+                opacity: 0.7;
+            }
+
+            /* Related Content Accordion Styles */
+            .related-content-sidebar .collapsible {
+                border: none;
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .related-content-sidebar .collapsible-header {
+                background-color: var(--fsu-gold);
+                color: var(--fsu-garnet);
+                align-items: center;
+                border: none;
+                padding: 10px 15px;
+                font-weight: 600;
+            }
+
+            .related-content-sidebar .collapsible-header i {
+                margin-right: 10px;
+                color: var(--fsu-garnet);
+            }
+
+            .related-content-sidebar .collapsible-body {
+                background-color: white;
+                border: none;
+                padding: 10px;
+            }
+
+            .related-content-sidebar .collapsible li {
+                margin-bottom: 10px;
+                border: 1px solid var(--fsu-gold);
+                border-radius: 4px;
+                overflow: hidden;
+            }
+
+            .related-content-sidebar
+                .collapsible
+                li.active
+                .collapsible-header {
+                background-color: var(--fsu-garnet);
+                color: white;
+            }
+
+            .related-content-sidebar
+                .collapsible
+                li.active
+                .collapsible-header
+                i {
+                color: white;
+            }
+
+        /* Responsive adjustments */
+    @media (max-width: 1200px) {
+        .content-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .related-content-sidebar {
+            position: relative;
+            top: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            grid-template-columns: 1fr;
+            padding: 12px;
+        }
+        
+        .sidebar {
+            display: none;
+        }
+    }
     </style>
 </head>
 <body>
     <nav class="sidebar">
         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+        <div class="sidebar-item">
+            <i class="material-icons">home</i>
+            <a href="project_new.html"> Home</a>
+        </div>
         <div class="sidebar-item">
             <i class="material-icons">search</i>
             <span>Research</span>
@@ -465,117 +639,186 @@ body {
             </button>
         </div>
 
-    </div>
-
-    <!-- Dashboard container that will appear in-page -->
-    <div id="dashboard-container" class="dashboard-container">
-        <div class="dashboard-header">
-            <h2 class="dashboard-title">Select Content Type</h2>
-            <button class="close-dashboard" id="closeDashboardBtn">&times;</button>
-        </div>
-        
-        <div class="dashboard-body">
-            <p>Select content type to create:</p>
-            
-            <div class="content-types">
-                <div class="content-type-card" data-type="press-release">
-                    <div class="content-type-icon">
-                        <i class="material-icons">description</i>
-                    </div>
-                    <h3 class="content-type-title">Press Release</h3>
-                    
-                </div>
-                
-                <div class="content-type-card" data-type="social-media">
-                    <div class="content-type-icon">
-                        <i class="material-icons">share</i>
-                    </div>
-                    <h3 class="content-type-title">Social Media Post</h3>
-                    
-                </div>
-                
-                <div class="content-type-card" data-type="newsletter">
-                    <div class="content-type-icon">
-                        <i class="material-icons">add</i>
-                    </div>
-                    <h3 class="content-type-title">Add more</h3>
-                    
-                </div>
+        <!-- Dashboard container -->
+        <div id="dashboard-container" class="dashboard-container">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Select Content Type</h2>
+                <button class="close-dashboard" id="closeDashboardBtn">&times;</button>
             </div>
             
-            <!-- Press Release Dialog -->
-<div id="press-release-dialog" class="content-editor-dialog">
-    <div class="dialog-header">
-        <h3 class="dialog-title">Press Release Editor</h3>
-    </div>
-    
-    <textarea class="text-editor" placeholder="Enter your press release content here..."></textarea>
-    
-    <div class="dialog-actions">
-        
-        <button class="btn btn-secondary" id="uploadPressReleaseBtn">
-            <i class="material-icons">edit</i>
-            Rewrite with AI
-        </button>
-        <button class="btn btn-primary" id="saveVersionBtn">
-            <i class="material-icons">save</i>
-            Save Draft
-        </button>
-        <button class="btn btn-tertiary" id="rewriteBtn">
-            <i class="material-icons">file_upload</i>
-            Upload
-        </button>
-    </div>
-</div>
+            <div class="dashboard-layout">
+                <!-- Main dashboard content -->
+                <div class="dashboard-main">
+                    <p>Select content type to create:</p>
+                    
+                    <div class="content-types">
+                        <div class="content-type-card" data-type="press-release">
+                            <div class="content-type-icon">
+                                <i class="material-icons">description</i>
+                            </div>
+                            <h3 class="content-type-title">Press Release</h3>
+                        </div>
+                        
+                        <div class="content-type-card" data-type="social-media">
+                            <div class="content-type-icon">
+                                <i class="material-icons">share</i>
+                            </div>
+                            <h3 class="content-type-title">Social Media Post</h3>
+                        </div>
+                        
+                        <div class="content-type-card" data-type="newsletter">
+                            <div class="content-type-icon">
+                                <i class="material-icons">add</i>
+                            </div>
+                            <h3 class="content-type-title">Add more</h3>
+                        </div>
+                    </div>
+                
+                    <!-- Press Release Dialog -->
+                    <div id="press-release-dialog" class="content-editor-dialog">
+                        <div class="dialog-header">
+                            <h3 class="dialog-title">Press Release Editor</h3>
+                        </div>
+                        
+                        <textarea class="text-editor" placeholder="Enter your press release content here..."></textarea>
+                        
+                        <div class="dialog-actions">
+                            <button class="btn btn-secondary" id="rewritePressReleaseBtn">
+                                <i class="material-icons">edit</i>
+                                Rewrite with AI
+                            </button>
+                            <button class="btn btn-primary" id="saveVersionBtn">
+                                <i class="material-icons">save</i>
+                                Save Draft
+                            </button>
+                            <button class="btn btn-tertiary" id="uploadPressReleaseBtn">
+                                <i class="material-icons">file_upload</i>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
 
-<!-- Social Media Dialog -->
-<div id="social-media-dialog" class="content-editor-dialog">
-    <div class="dialog-header">
-        <h3 class="dialog-title">Social Media Post Editor</h3>
-    </div>
-    
-    <textarea class="text-editor" placeholder="Enter your social media content here..."></textarea>
-    
-    <div class="dialog-actions">
-       
-        <button class="btn btn-secondary" id="uploadPressReleaseBtn">
-            <i class="material-icons">edit</i>
-            Rewrite with AI
-        </button>
-        <button class="btn btn-primary" id="socialSaveBtn">
-            <i class="material-icons">save</i>
-            Save Draft
-        </button>
-        <button class="btn btn-tertiary" id="rewriteBtn">
-            <i class="material-icons">file_upload</i>
-            Upload
-        </button>
-    </div>
-</div>
+                    <!-- Social Media Dialog -->
+                    <div id="social-media-dialog" class="content-editor-dialog">
+                        <div class="dialog-header">
+                            <h3 class="dialog-title">Social Media Post Editor</h3>
+                        </div>
+                        
+                        <textarea class="text-editor" placeholder="Enter your social media content here..."></textarea>
+                        
+                        <div class="dialog-actions">
+                            <button class="btn btn-secondary" id="rewriteSocialBtn">
+                                <i class="material-icons">edit</i>
+                                Rewrite with AI
+                            </button>
+                            <button class="btn btn-primary" id="socialSaveBtn">
+                                <i class="material-icons">save</i>
+                                Save Draft
+                            </button>
+                            <button class="btn btn-tertiary" id="uploadSocialBtn">
+                                <i class="material-icons">file_upload</i>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
 
-<!-- Format message that appears when Add more is clicked -->
-<div id="format-message" class="format-message" style="display: none;">
-    Select a content format from the navigation to get started
-    <div class="dialog-actions" style="margin-top: 15px; justify-content: center;">
-        
-        <button class="btn btn-secondary" id="uploadPressReleaseBtn">
-            <i class="material-icons">edit</i>
-            Rewrite with AI
-        </button>
-        <button class="btn btn-primary" id="saveMoreBtn">
-            <i class="material-icons">save</i>
-            Save Draft
-        </button>
-        <button class="btn btn-tertiary" id="rewriteBtn">
-            <i class="material-icons">file_upload</i>
-            Upload
-        </button>
-    </div>
-</div>
+                    <!-- Format message that appears when Add more is clicked -->
+                    <div id="format-message" class="format-message" style="display: none;">
+                        Select a content format from the navigation to get started
+                        <div class="dialog-actions" style="margin-top: 15px; justify-content: center;">
+                            <button class="btn btn-secondary" id="uploadMoreBtn">
+                                <i class="material-icons">edit</i>
+                                Rewrite with AI
+                            </button>
+                            <button class="btn btn-primary" id="saveMoreBtn">
+                                <i class="material-icons">save</i>
+                                Save Draft
+                            </button>
+                            <button class="btn btn-tertiary" id="uploadSocialBtn">
+                                <i class="material-icons">file_upload</i>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>  
 
-              <!-- Form actions removed as requested -->
+            <!-- Related Content Sidebar -->
+            <div
+            class="related-content-sidebar"
+            style="
+               
+                background-color: #f5f5f5;
+                border-radius: 8px;
+                padding: 20px;
+            "
+        >
+            <h6
+                style="
+                    color: var(--fsu-garnet);
+                    margin-bottom: 20px;
+                    border-bottom: 2px solid var(--fsu-gold);
+                    padding-bottom: 10px;
+                "
+            >
+                Related Content
+            </h6>
+
+            <ul class="collapsible expandable">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">webstories</i
+                        >Selected Stories
+                    </div>
+                    <div class="collapsible-body">
+                        <div
+                            id="relatedStoriesContent"
+                            class="related-items"
+                        >
+                            <p class="no-content-message">
+                                No stories selected
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons"
+                            >description</i
+                        >Documents
+                    </div>
+                    <div class="collapsible-body">
+                        <div
+                            id="relatedDocumentsContent"
+                            class="related-items"
+                        >
+                            <p class="no-content-message">
+                                No documents available
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">link</i
+                        >Web Links
+                    </div>
+                    <div class="collapsible-body">
+                        <div
+                            id="relatedLinksContent"
+                            class="related-items"
+                        >
+                            <p class="no-content-message">
+                                No links available
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
+        </div>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -587,7 +830,6 @@ body {
     const pressReleaseDialog = document.getElementById('press-release-dialog');
     const socialMediaDialog = document.getElementById('social-media-dialog');
     const formatMessage = document.getElementById('format-message');
-    const dialogOptions = document.querySelectorAll('.dialog-option');
     
     let selectedContentType = null;
     
@@ -659,25 +901,25 @@ body {
         });
     });
     
-    // Handle dialog button actions
-    const rewriteBtn = document.getElementById('rewriteBtn');
+    // Handle dialog button actions for Press Release
+    const rewritePressReleaseBtn = document.getElementById('rewritePressReleaseBtn');
     const saveVersionBtn = document.getElementById('saveVersionBtn');
     const uploadPressReleaseBtn = document.getElementById('uploadPressReleaseBtn');
-    const pressReleaseEditor = document.querySelector('#press-release-dialog .press-release-editor');
+    const pressReleaseEditor = document.querySelector('#press-release-dialog .text-editor');
     
     // Social media buttons
-    const socialRewriteBtn = document.getElementById('socialRewriteBtn');
+    const rewriteSocialBtn = document.getElementById('rewriteSocialBtn');
     const socialSaveBtn = document.getElementById('socialSaveBtn');
     const uploadSocialBtn = document.getElementById('uploadSocialBtn');
-    const socialMediaEditor = document.querySelector('#social-media-dialog .press-release-editor');
+    const socialMediaEditor = document.querySelector('#social-media-dialog .text-editor');
     
     // Add more buttons
     const uploadMoreBtn = document.getElementById('uploadMoreBtn');
     const saveMoreBtn = document.getElementById('saveMoreBtn');
     
     // Press Release button handlers
-    if (rewriteBtn) {
-        rewriteBtn.addEventListener('click', function() {
+    if (rewritePressReleaseBtn) {
+        rewritePressReleaseBtn.addEventListener('click', function() {
             const content = pressReleaseEditor ? pressReleaseEditor.value : '';
             console.log('Rewriting press release content with AI:', content);
             
@@ -708,8 +950,8 @@ body {
     }
     
     // Social Media button handlers
-    if (socialRewriteBtn) {
-        socialRewriteBtn.addEventListener('click', function() {
+    if (rewriteSocialBtn) {
+        rewriteSocialBtn.addEventListener('click', function() {
             const content = socialMediaEditor ? socialMediaEditor.value : '';
             console.log('Rewriting social media content with AI:', content);
             
@@ -765,9 +1007,202 @@ body {
     if (formatMessage) {
         formatMessage.style.display = 'none';
     }
+
+    // Function to populate related content
+    // Static related content for documents and links
+    const staticDocuments = [
+        {
+            name: "FSU Football Season Overview",
+            content:
+                "Jordan Travis emerged as a pivotal quarterback, showcasing exceptional leadership and strategic playmaking throughout the 2025 season. His ability to read defensive formations and make split-second decisions significantly contributed to the team's offensive success.",
+            citation: "pp. 23-25",
+        },
+        {
+            name: "Team Performance Analysis",
+            content:
+                "The offensive line demonstrated remarkable improvement, reducing sack rates by 22% compared to the previous season. Key players like Rod Dent and Qae'shon Sapp provided crucial protection, creating vital spaces for running backs and quarterbacks.",
+            citation: "pp. 47-49",
+        },
+    ];
+
+    const staticWebLinks = [
+        {
+            name: "FSU Athletics Official Site",
+            content:
+                "Florida State University's football program has consistently ranked among the top athletic programs in the NCAA, with a rich history of producing NFL-caliber talent. The 2025 season reinforced this legacy through exceptional team performance and individual player achievements.",
+            citation: "Game Recap Section",
+        },
+        {
+            name: "ACC Football Insights",
+            content:
+                "The Atlantic Coast Conference (ACC) recognized FSU's outstanding season, highlighting the team's strategic adaptations and resilient performance across multiple challenging matchups. Key statistical innovations in play-calling and defensive strategies set the Seminoles apart.",
+            citation: "2025 Season Analysis",
+        },
+    ];
+
+    // Initialize the collapsible for related content
+    var relatedContentCollapsible = document.querySelector(
+        ".related-content-sidebar .collapsible",
+    );
+    if (relatedContentCollapsible && typeof M !== 'undefined') {
+        M.Collapsible.init(relatedContentCollapsible, {
+            accordion: false, // allows multiple sections to be open
+        });
+    }
+
+    // Call populateRelatedContent to load the related content
+    populateRelatedContent();
+
+    function populateRelatedContent() {
+        // Existing Selected Stories Population
+        const selectedStoriesContainer = document.getElementById("selectedStories");
+        const relatedStoriesContent = document.getElementById("relatedStoriesContent");
+
+        // Clear previous content
+        if (relatedStoriesContent) {
+            relatedStoriesContent.innerHTML = "";
+
+            if (selectedStoriesContainer) {
+                const storyItems = selectedStoriesContainer.querySelectorAll(".story-item");
+
+                if (storyItems.length > 0) {
+                    storyItems.forEach((item) => {
+                        const storyText = item.querySelector("div > p").textContent;
+
+                        const relatedItem = document.createElement("div");
+                        relatedItem.className = "related-content-item";
+                        relatedItem.innerHTML = `
+                            <span>${storyText}</span>
+                            <div class="item-actions">
+                                <button onclick="copyToClipboard('${storyText.replace(/'/g, "\\'")}')" title="Copy">
+                                    <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                                </button>
+                                <button onclick="insertContentIntoEditor('${storyText.replace(/'/g, "\\'")}')" title="Insert">
+                                    <i class="material-icons" style="font-size: 18px;">input</i>
+                                </button>
+                            </div>
+                        `;
+
+                        relatedStoriesContent.appendChild(relatedItem);
+                    });
+                } else {
+                    relatedStoriesContent.innerHTML = '<p class="no-content-message">No stories selected</p>';
+                }
+            } else {
+                relatedStoriesContent.innerHTML = '<p class="no-content-message">No stories selected</p>';
+            }
+        }
+
+        // Populate Static Documents
+        const relatedDocumentsContent = document.getElementById("relatedDocumentsContent");
+        if (relatedDocumentsContent) {
+            relatedDocumentsContent.innerHTML = "";
+
+            if (staticDocuments.length > 0) {
+                staticDocuments.forEach((doc) => {
+                    const relatedItem = document.createElement("div");
+                    relatedItem.className = "related-content-item";
+                    relatedItem.innerHTML = `
+                        <div>
+                            <strong>${doc.name}</strong>
+                            <p style="margin: 5px 0; font-size: 0.9em;">${doc.content}</p>
+                            <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${doc.citation}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="copyToClipboard('${doc.content.replace(/'/g, "\\'")}')" title="Copy">
+                                <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                            </button>
+                            <button onclick="insertContentIntoEditor('${doc.content.replace(/'/g, "\\'")}')" title="Insert">
+                                <i class="material-icons" style="font-size: 18px;">input</i>
+                            </button>
+                        </div>
+                    `;
+
+                    relatedDocumentsContent.appendChild(relatedItem);
+                });
+            } else {
+                relatedDocumentsContent.innerHTML = '<p class="no-content-message">No documents available</p>';
+            }
+        }
+
+        // Populate Static Web Links
+        const relatedLinksContent = document.getElementById("relatedLinksContent");
+        if (relatedLinksContent) {
+            relatedLinksContent.innerHTML = "";
+
+            if (staticWebLinks.length > 0) {
+                staticWebLinks.forEach((link) => {
+                    const relatedItem = document.createElement("div");
+                    relatedItem.className = "related-content-item";
+                    relatedItem.innerHTML = `
+                        <div>
+                            <strong>${link.name}</strong>
+                            <p style="margin: 5px 0; font-size: 0.9em;">${link.content}</p>
+                            <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${link.citation}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="copyToClipboard('${link.content.replace(/'/g, "\\'")}')" title="Copy">
+                                <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                            </button>
+                            <button onclick="insertContentIntoEditor('${link.content.replace(/'/g, "\\'")}')" title="Insert">
+                                <i class="material-icons" style="font-size: 18px;">input</i>
+                            </button>
+                        </div>
+                    `;
+
+                    relatedLinksContent.appendChild(relatedItem);
+                });
+            } else {
+                relatedLinksContent.innerHTML = '<p class="no-content-message">No links available</p>';
+            }
+        }
+    }
 });
 
-   
+// Global functions for copy and insert functionality
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            alert('Content copied to clipboard!');
+        })
+        .catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+}
+
+function insertContentIntoEditor(text) {
+    // Get the currently active editor
+    let activeEditor = null;
+    
+    // Check which dialog is currently visible
+    if (document.getElementById('press-release-dialog') && 
+        document.getElementById('press-release-dialog').style.display === 'block') {
+        activeEditor = document.querySelector('#press-release-dialog .text-editor');
+    } else if (document.getElementById('social-media-dialog') && 
+               document.getElementById('social-media-dialog').style.display === 'block') {
+        activeEditor = document.querySelector('#social-media-dialog .text-editor');
+    }
+    
+    // Insert the text if an editor is active
+    if (activeEditor) {
+        const startPos = activeEditor.selectionStart;
+        const endPos = activeEditor.selectionEnd;
+        
+        // Insert the text at cursor position
+        activeEditor.value = 
+            activeEditor.value.substring(0, startPos) + 
+            text + 
+            activeEditor.value.substring(endPos);
+            
+        // Update cursor position after insertion
+        activeEditor.selectionStart = activeEditor.selectionEnd = startPos + text.length;
+        activeEditor.focus();
+        
+        alert('Content inserted into editor!');
+    } else {
+        alert('Please open an editor first!');
+    }
+}
     </script>
 </body>
 </html>
