@@ -613,6 +613,68 @@
             display: none;
         }
     }
+
+    /* Styles for saved content items in the sidebar */
+    .saved-content-item {
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-left: 3px solid var(--fsu-garnet);
+    }
+    
+    .saved-content-item .content-title {
+        font-weight: bold;
+        color: var(--fsu-garnet);
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+    
+    .saved-content-item .content-preview {
+        font-size: 12px;
+        color: #333;
+        margin-bottom: 5px;
+        max-height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    
+    .saved-content-item .content-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #666;
+    }
+    
+    .saved-content-item .content-type {
+        background: var(--fsu-gold);
+        color: var(--fsu-garnet);
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    
+    .saved-content-item .item-actions {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+    }
+    
+    .saved-content-item .item-actions button {
+        background: none;
+        border: none;
+        color: var(--fsu-garnet);
+        cursor: pointer;
+        padding: 0;
+    }
+    
+    .saved-content-item .item-actions button:hover {
+        opacity: 0.7;
+    }
+
     </style>
 </head>
 <body>
@@ -790,21 +852,17 @@
             <ul class="collapsible expandable">
                 <li>
                     <div class="collapsible-header">
-                        <i class="material-icons"
-                            >web-stories</i
-                        >Selected Stories
+                        <i class="material-icons">web-stories</i
+                            >Selected Stories
                     </div>
                     <div class="collapsible-body">
-                        <div
-                            id="relatedStoriesContent"
-                            class="related-items"
-                        >
-                            <p class="no-content-message">
-                                No stories selected
-                            </p>
+                        <div id="relatedStoriesContent" class="related-items">
+                            <p class="no-content-message" id="no-stories-message">No stories selected</p>
+                            <!-- Dynamic content will be inserted here -->
                         </div>
                     </div>
                 </li>
+                
                 <li>
                     <div class="collapsible-header">
                         <i class="material-icons"
@@ -1259,6 +1317,111 @@ function insertContentIntoEditor(text) {
         alert('Please open an editor first!');
     }
 }
+
+// Function to add content to the Selected Stories section
+function addContentToSidebar(title, content, type) {
+        // Get the container and remove the "no stories" message if it exists
+        const container = document.getElementById('relatedStoriesContent');
+        const noStoriesMessage = document.getElementById('no-stories-message');
+        
+        if (noStoriesMessage) {
+            noStoriesMessage.style.display = 'none';
+        }
+        
+        // Create a truncated preview of the content (first 100 characters)
+        const contentPreview = content.length > 100 ? 
+            content.substring(0, 100) + '...' : 
+            content;
+        
+        // Create a timestamp for when the content was added
+        const timestamp = new Date().toLocaleString();
+        
+        // Create the content item element
+        const contentItem = document.createElement('div');
+        contentItem.className = 'saved-content-item';
+        contentItem.innerHTML = `
+            <div class="content-title">${title}</div>
+            <div class="content-preview">${contentPreview}</div>
+            <div class="content-meta">
+                <span class="content-type">${type}</span>
+                <span class="content-date">Added: ${timestamp}</span>
+            </div>
+            <div class="item-actions">
+                <button onclick="copyToClipboard('${content.replace(/'/g, "\\'")}')" title="Copy">
+                    <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                </button>
+                <button onclick="insertContentIntoEditor('${content.replace(/'/g, "\\'")}')" title="Insert">
+                    <i class="material-icons" style="font-size: 18px;">input</i>
+                </button>
+                <button onclick="removeContentItem(this)" title="Remove">
+                    <i class="material-icons" style="font-size: 18px;">delete</i>
+                </button>
+            </div>
+        `;
+        
+        // Add the item to the container
+        container.appendChild(contentItem);
+    }
+    
+    // Function to remove a content item
+    function removeContentItem(button) {
+        const contentItem = button.closest('.saved-content-item');
+        contentItem.remove();
+        
+        // Check if there are any items left, if not show the "no stories" message
+        const container = document.getElementById('relatedStoriesContent');
+        if (container.querySelectorAll('.saved-content-item').length === 0) {
+            const noStoriesMessage = document.getElementById('no-stories-message');
+            if (noStoriesMessage) {
+                noStoriesMessage.style.display = 'block';
+            } else {
+                container.innerHTML = '<p class="no-content-message" id="no-stories-message">No stories selected</p>';
+            }
+        }
+    }
+    
+    // Modify the existing save buttons to add content to the sidebar
+    document.addEventListener('DOMContentLoaded', function() {
+        // Press Release save button
+        const saveVersionBtn = document.getElementById('saveVersionBtn');
+        if (saveVersionBtn) {
+            saveVersionBtn.addEventListener('click', function() {
+                const editor = document.querySelector('#press-release-dialog .text-editor');
+                if (editor && editor.value.trim() !== '') {
+                    const title = "Press Release Draft";
+                    addContentToSidebar(title, editor.value, "Press Release");
+                }
+            });
+        }
+        
+        // Social Media save button
+        const socialSaveBtn = document.getElementById('socialSaveBtn');
+        if (socialSaveBtn) {
+            socialSaveBtn.addEventListener('click', function() {
+                const editor = document.querySelector('#social-media-dialog .text-editor');
+                if (editor && editor.value.trim() !== '') {
+                    const title = "Social Media Post Draft";
+                    addContentToSidebar(title, editor.value, "Social Media");
+                }
+            });
+        }
+        
+        // Ensure the "Additional Content" save button also works
+        const saveMoreBtn = document.getElementById('saveMoreBtn');
+        if (saveMoreBtn) {
+            saveMoreBtn.addEventListener('click', function() {
+                // Since "Add more" doesn't have a specific editor, this is more like a placeholder
+                // In a real scenario, you might want to add a text input for this option
+                const title = "Additional Content Draft";
+                const content = "Additional content placeholder. This would be replaced with actual content in a full implementation.";
+                addContentToSidebar(title, content, "Additional");
+            });
+        }
+        
+        // Initialize collapsible again to make sure everything works
+        setupCustomCollapsible();
+    });
+    
     </script>
 </body>
 </html>
