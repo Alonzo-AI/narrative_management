@@ -108,64 +108,117 @@
     color: var(--fsu-garnet);
 }
 
-/* Phase Status Styles */
-.info-item:nth-child(2) .info-value {
-    font-weight: 600;
-    transition: opacity 0.3s ease, color 0.3s ease;
+/* Phase Status Styling */
+.status-item {
+    transition: background-color 0.3s ease;
+    border-radius: 6px;
+    position: relative;
 }
 
-/* Status Colors */
-.status-in-progress .info-value {
-    color: #2196F3; /* Blue */
-}
-
-.status-under-review .info-value {
-    color: #FF9800; /* Orange */
-}
-
-.status-completed .info-value {
-    color: #4CAF50; /* Green */
-}
-
-/* Status Icon Animations */
-.info-item:nth-child(2) i.material-icons {
-    transition: transform 0.3s ease;
-}
-
-/* Status Badge (Optional) */
-.status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-left: 8px;
-}
-
-.status-badge.in-progress {
+.status-item[data-status="in-progress"] {
     background-color: rgba(33, 150, 243, 0.1);
-    color: #2196F3;
 }
 
-.status-badge.under-review {
+.status-item[data-status="under-review"] {
     background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
 }
 
-.status-badge.completed {
+.status-item[data-status="completed"] {
     background-color: rgba(76, 175, 80, 0.1);
+}
+
+/* Status icon animations */
+.status-icon {
+    transition: transform 0.5s ease;
+}
+
+.status-item[data-status="in-progress"] .status-icon {
+    color: #2196F3;
+    animation: rotate 2s infinite linear;
+}
+
+.status-item[data-status="under-review"] .status-icon {
+    color: #FF9800;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.status-item[data-status="completed"] .status-icon {
     color: #4CAF50;
 }
 
-/* Pulse animation for "Under Review" status (optional) */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
+/* Status text styling */
+.status-item[data-status="in-progress"] .info-value {
+    color: #2196F3;
 }
 
-.status-under-review .info-value {
-    animation: pulse 2s infinite ease-in-out;
+.status-item[data-status="under-review"] .info-value {
+    color: #FF9800;
+}
+
+.status-item[data-status="completed"] .info-value {
+    color: #4CAF50;
+}
+
+/* Status badge */
+.status-badge {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    margin-left: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.status-item[data-status="in-progress"] .status-badge {
+    background-color: #2196F3;
+}
+
+.status-item[data-status="under-review"] .status-badge {
+    background-color: #FF9800;
+}
+
+.status-item[data-status="completed"] .status-badge {
+    background-color: #4CAF50;
+}
+
+/* Animation keyframes */
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Status colors for different phases */
+.info-item[data-status="in-progress"] .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.info-item[data-status="under-review"] .info-value {
+    color: #FF9800; /* Orange */
+}
+
+.info-item[data-status="completed"] .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Optional subtle background tint */
+.info-item[data-status="in-progress"] {
+    background-color: rgba(33, 150, 243, 0.05);
+}
+
+.info-item[data-status="under-review"] {
+    background-color: rgba(255, 152, 0, 0.05);
+}
+
+.info-item[data-status="completed"] {
+    background-color: rgba(76, 175, 80, 0.05);
 }
 
         .sidebar {
@@ -1251,8 +1304,9 @@
                             <span class="info-value">Sarah Johnson</span>
                         </div>
                     </div>
-                    <div class="info-item">
-                     <div class="info-content">
+                    <div class="info-item" data-status="in-progress">
+                        <i class="material-icons">assignment</i>
+                        <div class="info-content">
                             <span class="info-label">Phase Status</span>
                             <span class="info-value">In Progress</span>
                         </div>
@@ -2515,6 +2569,42 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Get the status elements
+    const statusItem = document.querySelector('.info-item[data-status]');
+    const statusValue = statusItem ? statusItem.querySelector('.info-value') : null;
+    const submitReviewBtn = document.getElementById('submitReviewBtn');
+    
+    if (!statusItem || !statusValue || !submitReviewBtn) return;
+    
+    // Connect the review button to status updates
+    let clickCount = 0;
+    submitReviewBtn.addEventListener('click', function() {
+        clickCount++;
+        
+        if (clickCount === 1) {
+            // First click - change to "Under Review"
+            statusItem.setAttribute('data-status', 'under-review');
+            statusValue.textContent = 'Under Review';
+            this.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+            this.classList.add('accepted');
+            
+            // Show success message
+            alert('Content submitted for review successfully!');
+        } else if (clickCount === 2) {
+            // Second click - change to "Completed"
+            statusItem.setAttribute('data-status', 'completed');
+            statusValue.textContent = 'Completed';
+            this.innerHTML = '<i class="material-icons">done_all</i> Review Accepted';
+            this.disabled = true;
+            
+            // Show acceptance message
+            alert('Review has been accepted!');
+        }
+    });
+});
 
     </script>
 </body>
