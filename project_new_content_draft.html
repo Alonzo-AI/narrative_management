@@ -260,22 +260,7 @@
             background-color: #631d2e;
         }
 
-        .submit-review-btn {
-            position: relative;
-        }
-
-        .submit-review-btn::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 12px;
-            height: 12px;
-            background-color: var(--fsu-gold);
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-
+        
         /* Content list */
         .content-list {
             list-style: none;
@@ -303,7 +288,7 @@
 
         .content-title {
             font-weight: 500;
-            color: var(--fsu-black);
+            color: var(--fsu-garnet);
             margin-bottom: 4px;
         }
 
@@ -358,6 +343,87 @@
         .action-btn:hover {
             color: var(--fsu-garnet);
         }
+
+        /* Review button styling */
+    .review-btn {
+        background-color: var(--fsu-garnet); 
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s, transform 0.1s;
+        margin-right: 12px;
+    }
+
+    .review-btn:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: var(--fsu-garnet);; 
+        transform: translateY(-1px);
+    }
+
+    .review-btn:active {
+        transform: translateY(1px);
+    }
+
+    .review-btn.accepted {
+        background-color: var(--fsu-gold); 
+    }
+
+    .review-btn.accepted:hover {
+        background-color: var(--fsu-gold); 
+    }
+
+    /* Header buttons container for better alignment */
+    .header-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .content-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .header-buttons {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .review-btn, .create-btn {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+        
+        .review-btn {
+            margin-right: 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-buttons {
+            flex-direction: column;
+            width: 100%;
+            gap: 8px;
+        }
+        
+        .review-btn, .create-btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .review-btn {
+            margin-right: 0;
+            margin-bottom: 8px;
+        }
+    }
 
         /* Dashboard styles */
         .dashboard-container {
@@ -452,7 +518,7 @@
 
         .content-type-title {
             font-weight: 600;
-            color: var(--fsu-black);
+            color: var(--fsu-garnet);
             margin-bottom: 4px;
         }
 
@@ -484,7 +550,7 @@
 
         .dialog-title {
             font-size: 18px;
-            color: var(--fsu-black);
+            color: var(--fsu-garnet);
             font-weight: 500;
         }
 
@@ -1206,14 +1272,13 @@
         <div class="content-header">
             <h1>Content Drafts</h1>
             <div class="header-buttons"></div>
+            <button class="review-btn" id="submitReviewBtn">
+                <i class="material-icons">rate_review</i> Submit Review
+            </button>
             <button class="create-btn" id="createContentBtn">
                 <i class="material-icons">add</i> Create New Content
             </button>
-            
-                <button class="btn btn-secondary submit-review-btn" onclick="submitReview()">
-                    <i class="material-icons">rate_review</i>
-                    Submit Review
-                </button>
+     
             </div> 
         </div>
 
@@ -1479,131 +1544,7 @@
     const formatMessage = document.getElementById('format-message');
     
     let selectedContentType = null;
-    
-    // Enhanced Submit Review functionality with Phase Status updates
-    function submitReview() {
-            // You can customize this function based on your requirements
-            console.log("Submit Review button clicked");
-            
-            // Show confirmation dialog
-            const confirmSubmit = confirm("Are you sure you want to submit your review? This action can't be undone.");
-            
-            if (confirmSubmit) {
-                // Show loading state
-                const submitBtn = document.querySelector('.submit-review-btn');
-                submitBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Submitting...';
-                submitBtn.disabled = true;
-                
-                // Simulate API call with timeout
-                setTimeout(() => {
-                    // Show success message
-                    alert("Your review has been successfully submitted!");
-                    
-                    // Update Phase Status to "Under Review"
-                    updatePhaseStatus("Under Review", "reviews");
-                    
-                    // Change the button to "Accept Review" instead of resetting to original state
-                    submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
-                    submitBtn.disabled = false;
-                    
-                    // You might want to change the class name or add a new class to style it differently
-                    submitBtn.classList.remove('submit-review-btn');
-                    submitBtn.classList.add('accept-review-btn');
-                    
-                    // Optionally change the onclick function
-                    submitBtn.onclick = function() {
-                        acceptReview();
-                    };
-                    
-                }, 1500);
-            }
-        }
-
-        // New function for Accept Review functionality
-        function acceptReview() {
-            console.log("Accept Review button clicked");
-            
-            // Show confirmation dialog
-            const confirmAccept = confirm("Are you sure you want to accept this review?");
-            
-            if (confirmAccept) {
-                // Show loading state
-                const acceptBtn = document.querySelector('.accept-review-btn');
-                acceptBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Processing...';
-                acceptBtn.disabled = true;
-                
-                // Simulate API call with timeout
-                setTimeout(() => {
-                    // Show success message
-                    alert("Review has been accepted successfully!");
-                    
-                    // Update Phase Status to "Completed"
-                    updatePhaseStatus("Completed", "task_alt");
-                    
-                    // Update button state
-                    acceptBtn.innerHTML = '<i class="material-icons">done_all</i> Accepted';
-                    acceptBtn.disabled = true;
-                }, 1500);
-            }
-        }
-
-        // Function to update the Phase Status
-        function updatePhaseStatus(status, iconName) {
-            const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
-            const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
-            
-            if (statusElement) {
-                // Apply fade-out effect
-                statusElement.style.transition = 'opacity 0.3s ease';
-                statusElement.style.opacity = '0';
-                
-                // Update status text and fade back in
-                setTimeout(() => {
-                    statusElement.textContent = status;
-                    
-                    // Add color based on status
-                    if (status === "In Progress") {
-                        statusElement.style.color = '#2196F3'; // Blue
-                    } else if (status === "Under Review") {
-                        statusElement.style.color = '#FF9800'; // Orange
-                    } else if (status === "Completed") {
-                        statusElement.style.color = '#4CAF50'; // Green
-                    }
-                    
-                    statusElement.style.opacity = '1';
-                }, 300);
-            }
-            
-            if (iconElement && iconName) {
-                // Update icon with animation
-                iconElement.style.transform = 'scale(0)';
-                setTimeout(() => {
-                    iconElement.textContent = iconName;
-                    iconElement.style.transform = 'scale(1)';
-                }, 300);
-            }
-        }
-
-        // Initialize styles for phase status animations
-        function initPhaseStatusStyles() {
-            const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
-            const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
-            
-            if (statusElement) {
-                statusElement.style.transition = 'opacity 0.3s ease, color 0.3s ease';
-            }
-            
-            if (iconElement) {
-                iconElement.style.transition = 'transform 0.3s ease';
-            }
-            
-            // Set initial status color
-            updatePhaseStatus("In Progress", "pending_actions");
-        }
-
-        // Call initialization when document is ready
-        document.addEventListener('DOMContentLoaded', initPhaseStatusStyles);
-
+  
 // Show dashboard when create button is clicked
     createBtn.addEventListener('click', function() {
         dashboardContainer.style.display = 'block';
@@ -2542,6 +2483,38 @@ if (document.readyState === "complete" || document.readyState === "interactive")
     
    
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+        const submitReviewBtn = document.getElementById('submitReviewBtn');
+        let isSubmitted = false;
+        
+        if (submitReviewBtn) {
+            submitReviewBtn.addEventListener('click', function() {
+                if (!isSubmitted) {
+                    // First click - Submit for review
+                    isSubmitted = true;
+                    this.classList.add('accepted');
+                    this.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+                    
+                    // Show success message
+                    alert('Content submitted for review successfully!');
+                } else {
+                    // Second click - Accept the review
+                    this.disabled = true;
+                    this.innerHTML = '<i class="material-icons">done_all</i> Review Accepted';
+                    
+                    // Show acceptance message
+                    alert('Review has been accepted!');
+                    
+                    // Optional: You can add code here to update the project status
+                    const statusValue = document.querySelector('.info-item .info-value');
+                    if (statusValue && statusValue.textContent.trim() === 'In Progress') {
+                        statusValue.textContent = 'Under Review';
+                    }
+                }
+            });
+        }
+    });
 
     </script>
 </body>
