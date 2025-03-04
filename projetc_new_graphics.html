@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlyte Content Publishing Platform - FSU Graphics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            min-height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+            font-family: 'GothicCustom', sans-serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--fsu-garnet);
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
+
+        .sidebar-item.active i {
+            color: var(--fsu-gold);
+        }
+
+        .sidebar-item i {
+            margin-right: 12px;
+            color: var(--fsu-garnet);
+            font-size: 20px;
+        }
+
+        .sidebar-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header, .overview, .section-container {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            color: var(--fsu-gold);
+            font-family: 'GothicCustom', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 24px;
+            color: var(--fsu-garnet);
+        }
+
+        .header-meta div {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-meta i {
+            margin-right: 8px;
+            color: var(--fsu-garnet);
+        }
+    
+        /* Graphics specific styles */
+        .graphics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .graphics-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .graphics-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .graphics-image {
+            height: 200px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid var(--fsu-gold);
+        }
+
+        .graphics-image i {
+            font-size: 48px;
+            color: var(--fsu-garnet);
+        }
+
+        .graphics-content {
+            padding: 16px;
+        }
+
+        .graphics-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--fsu-garnet);
+        }
+
+        .graphics-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .graphics-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .graphics-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-complete {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-draft {
+            background-color: rgba(108, 117, 125, 0.2);
+            color: #6c757d;
+        }
+
+        .graphics-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .action-button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            border: none;
+        }
+
+        .action-button i {
+            margin-right: 6px;
+            font-size: 16px;
+        }
+
+        .primary-button {
+            background-color: var(--fsu-garnet);
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: #692a38;
+        }
+
+        .secondary-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .secondary-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .upload-section {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 24px;
+            border: 2px dashed #ccc;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: var(--fsu-gold);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: var(--fsu-garnet);
+            margin-bottom: 16px;
+        }
+
+        .upload-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--fsu-garnet);
+        }
+
+        .upload-description {
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .upload-button {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .upload-button:hover {
+            background-color: #692a38;
+        }
+
+        .upload-button i {
+            margin-right: 8px;
+        }
+
+        .section-title {
+            color: var(--fsu-garnet);
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 12px;
+            font-size: 24px;
+        }
+
+        .filter-bar {
+            display: flex;
+            margin-top: 16px;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-item {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .filter-item:hover, .filter-item.active {
+            background: var(--fsu-gold);
+            color: var(--fsu-garnet);
+        }
+
+        @media (max-width: 1200px) {
+            body {
+                grid-template-columns: 200px 1fr 250px;
+                padding: 16px;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+            .sidebar, .notifications {
+                display: none;
+            }
+            .graphics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+        <div class="sidebar-item">
+            <i class="material-icons">home</i>
+            <a href="project_new.html"> Home </a>
+        </div><div class="sidebar-item">
+            <i class="material-icons">search</i>
+            <span>Research</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">description</i>
+            <span>Content Draft</span>
+        </div>
+        <div class="sidebar-item active">
+            <i class="material-icons">brush</i>
+            <span>Graphics</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">share</i>
+            <span>Marketing</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">equalizer</i>
+            <span>Analytics</span>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>FSU Football Season Recap</h1>
+            <div class="header-meta">
+                <div>
+                    <i class="material-icons">person</i>
+                    <span>Sarah Johnson</span>
+                </div>
+                <div>
+                    <i class="material-icons">calendar_today</i>
+                    <span>Due: March 15, 2025</span>
+                </div>
+            </div>
+        </header>
+        
+        
+
+    <script>
+        
+    </script>
+</body>
+</html>
