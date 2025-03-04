@@ -1277,7 +1277,7 @@
         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
         <div class="sidebar-item">
             <i class="material-icons">home</i>
-            <a href="project_new.html"> Home</a>
+            <a href="project_new.html"> Home </a>
         </div>
         <div class="sidebar-item">
             <i class="material-icons">search</i>
@@ -1377,13 +1377,7 @@
                             </div>
                             <h3 class="content-type-title">Social Media Post</h3>
                         </div>
-                        
-                        <div class="content-type-card" data-type="newsletter">
-                            <div class="content-type-icon">
-                                <i class="material-icons">add</i>
-                            </div>
-                            <h3 class="content-type-title">Add more</h3>
-                        </div>
+                       
                     </div>
                 
                     <!-- Press Release Dialog -->
@@ -1434,24 +1428,7 @@
                         </div>
                     </div>
 
-                    <!-- Format message that appears when Add more is clicked -->
-                    <div id="format-message" class="format-message" style="display: none;">
-                        Select a content format from the navigation to get started
-                        <div class="dialog-actions" style="margin-top: 15px; justify-content: center;">
-                            <button class="btn btn-secondary" id="uploadMoreBtn">
-                                <i class="material-icons">edit</i>
-                                Rewrite with AI
-                            </button>
-                            <button class="btn btn-primary" id="saveMoreBtn">
-                                <i class="material-icons">save</i>
-                                Save Draft
-                            </button>
-                            <button class="btn btn-tertiary" id="uploadSocialBtn">
-                                <i class="material-icons">file_upload</i>
-                                Upload
-                            </button>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             </div>
@@ -1694,9 +1671,6 @@
     const uploadSocialBtn = document.getElementById('uploadSocialBtn');
     const socialMediaEditor = document.querySelector('#social-media-dialog .text-editor');
     
-    // Add more buttons
-    const uploadMoreBtn = document.getElementById('uploadMoreBtn');
-    const saveMoreBtn = document.getElementById('saveMoreBtn');
     
     // Press Release button handlers
     if (rewritePressReleaseBtn) {
@@ -1762,22 +1736,7 @@
         });
     }
     
-    // Add more button handlers
-    if (uploadMoreBtn) {
-        uploadMoreBtn.addEventListener('click', function() {
-            console.log('Upload more content clicked');
-            alert('Additional content upload functionality would be implemented here.');
-        });
-    }
-    
-    if (saveMoreBtn) {
-        saveMoreBtn.addEventListener('click', function() {
-            console.log('Save additional content clicked');
-            alert('Additional content saved as draft.');
-            dashboardContainer.style.display = 'none';
-        });
-    }
-    
+   
     // Initialize: ensure all dialogs are hidden at start
     if (pressReleaseDialog) {
         pressReleaseDialog.style.display = 'none';
