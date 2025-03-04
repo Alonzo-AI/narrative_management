@@ -162,13 +162,10 @@
     color: var(--fsu-garnet);
 }
 
-/* Phase Status Styles */
-.info-item:nth-child(2) .info-value {
-    font-weight: 600;
-    transition: opacity 0.3s ease, color 0.3s ease;
+.info-item .info-value {
+    transition: color 0.3s ease;
 }
 
-/* Status Colors */
 .status-in-progress .info-value {
     color: #2196F3; /* Blue */
 }
@@ -379,6 +376,36 @@
     background-color: #8a3a4d;
     transform: translateY(-2px);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    
+    .btn-submit {
+        order: -1; /* This puts the submit button above the add new button on mobile */
+    }
+}
+
+.btn-submit {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-submit.review-state {
+    background-color: var(--fsu-gold); 
+}
+
+.btn-submit.accepted-state {
+    background-color: var(--fsu-gold); 
+    pointer-events: none; /* Prevents further clicks */
 }
 
  /* Graphics Grid Container */
@@ -1410,6 +1437,49 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("Save selection button not found!");
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the status elements and submit button
+    const statusItem = document.querySelector('.info-item:nth-child(2)');
+    const statusValue = statusItem ? statusItem.querySelector('.info-value') : null;
+    const submitReviewBtn = document.querySelector('.btn-submit');
+    
+    if (!statusValue || !submitReviewBtn) return;
+    
+    // Track button state
+    let clickCount = 0;
+    
+    // Connect the review button to status updates
+    submitReviewBtn.addEventListener('click', function() {
+        clickCount++;
+        
+        if (clickCount === 1) {
+            // First click - change to "Under Review"
+            statusItem.classList.remove('status-in-progress');
+            statusItem.classList.add('status-under-review');
+            statusValue.textContent = 'Under Review';
+            
+            this.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+            this.classList.add('review-state');
+            
+            // Show success message
+            alert('Content submitted for review successfully!');
+        } else if (clickCount === 2) {
+            // Second click - change to "Completed"
+            statusItem.classList.remove('status-under-review');
+            statusItem.classList.add('status-completed');
+            statusValue.textContent = 'Completed';
+            
+            this.innerHTML = '<i class="material-icons">done_all</i> Review Accepted';
+            this.classList.remove('review-state');
+            this.classList.add('accepted-state');
+            this.disabled = true;
+            
+            // Show acceptance message
+            alert('Review has been accepted!');
+        }
+    });
 });
         
     </script>
