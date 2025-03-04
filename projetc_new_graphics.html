@@ -332,6 +332,55 @@
     .custom-select select:hover {
         border-color: var(--fsu-gold);
     }
+
+    .action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.btn i {
+    font-size: 18px;
+}
+
+.btn-add {
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #8a3a4d;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit {
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #8a3a4d;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
     
         
     </style>
@@ -414,12 +463,18 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- This div will display different content based on selection -->
-            <div id="content-display" class="content-display">
-                <div class="placeholder-message">Please select a content type from the dropdown</div>
+            <div class="action-buttons">
+                <button class="btn btn-add">
+                    <i class="material-icons">add</i>
+                    Add New
+                </button>
+                <button class="btn btn-submit">
+                    <i class="material-icons">rate_review</i>
+                    Submit Review
+                </button>
             </div>
         </div>
+        
         
         
 
