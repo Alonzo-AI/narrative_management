@@ -40,6 +40,134 @@
             gap: 24px;
         }
 
+        /* FSU Header Styles */
+.fsu-header {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fsu-logo {
+    width: 60px;
+    height: auto;
+}
+
+.site-title {
+    color: var(--fsu-garnet);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.project-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.info-item i {
+    color: var(--fsu-garnet);
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
+/* Phase Status Styles */
+.info-item:nth-child(2) .info-value {
+    font-weight: 600;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Status Colors */
+.status-in-progress .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.status-under-review .info-value {
+    color: #FF9800; /* Orange */
+}
+
+.status-completed .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Status Icon Animations */
+.info-item:nth-child(2) i.material-icons {
+    transition: transform 0.3s ease;
+}
+
+/* Status Badge (Optional) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-badge.in-progress {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.status-badge.under-review {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.status-badge.completed {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+/* Pulse animation for "Under Review" status (optional) */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.status-under-review .info-value {
+    animation: pulse 2s infinite ease-in-out;
+}
+
         .sidebar {
             background: var(--fsu-gold);
             border-radius: 8px;
@@ -110,7 +238,7 @@
         }
 
         .content-header h1 {
-            color: var(--fsu-black);
+            color: var(--fsu-garnet);
             font-size: 24px;
         }
 
@@ -130,6 +258,22 @@
 
         .create-btn:hover {
             background-color: #631d2e;
+        }
+
+        .submit-review-btn {
+            position: relative;
+        }
+
+        .submit-review-btn::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--fsu-gold);
+            border-radius: 50%;
+            border: 2px solid white;
         }
 
         /* Content list */
@@ -237,7 +381,7 @@
 
         .dashboard-title {
             font-size: 20px;
-            color: var(--fsu-black);
+            color: var(--fsu-garnet);
         }
 
         .close-dashboard {
@@ -476,7 +620,7 @@
 }
 
 .saved-content-section .content-header h1 {
-    color: var(--fsu-black);
+    color: var(--fsu-garnet);
     font-size: 24px;
 }
 
@@ -606,6 +750,232 @@
         display: none;
     }
 }
+
+/* Enhanced Comments Section Styles */
+.comments-section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.section-title {
+    color: var(--fsu-garnet);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--fsu-gold);
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-counter {
+    background: var(--fsu-garnet);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .comment-form {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.comment-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, height 0.2s ease;
+    overflow: hidden;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+#postCommentBtn {
+    padding: 12px 20px;
+    height: fit-content;
+}
+
+@media (max-width: 767px) {
+    #postCommentBtn {
+        align-self: flex-end;
+    }
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0; /* Ensures proper text wrapping */
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: var(--fsu-garnet);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.comment-action-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Comment edit interface */
+.comment-edit-interface {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-edit-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.comment-edit-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+.comment-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* No comments message */
+.no-comments-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Loading indicator */
+.comment-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.comment-loading .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(120, 47, 64, 0.2);
+    border-top-color: var(--fsu-garnet);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation for new comments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-item.new {
+    animation: fadeIn 0.3s ease forwards;
+}
+
 
         /* Custom collapsible styling for related content sidebar */
 .related-content-sidebar .collapsible {
@@ -798,11 +1168,53 @@
     </nav>
 
     <main class="main-content">
+        <!-- Main Content Area -->
+    <div class="content-area">
+        <!-- FSU Header with Coordinator and Deadline -->
+        <header class="fsu-header">
+            <div class="header-container">
+                <div class="logo-container">
+                    
+                    <h1 class="site-title">FSU Football Season 2025</h1>
+                </div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <i class="material-icons">person</i>
+                        <div class="info-content">
+                            <span class="info-label">Content Coordinator</span>
+                            <span class="info-value">Sarah Johnson</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                     <div class="info-content">
+                            <span class="info-label">Phase Status</span>
+                            <span class="info-value">In Progress</span>
+                        </div>
+                    </div>    
+                    
+                        <div class="info-item">
+                        <i class="material-icons">event</i>
+                        <div class="info-content">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">March 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <div class="content-header">
             <h1>Content Drafts</h1>
+            <div class="header-buttons"></div>
             <button class="create-btn" id="createContentBtn">
                 <i class="material-icons">add</i> Create New Content
             </button>
+            
+                <button class="btn btn-secondary submit-review-btn" onclick="submitReview()">
+                    <i class="material-icons">rate_review</i>
+                    Submit Review
+                </button>
+            </div> 
         </div>
 
         <!-- Dashboard container -->
@@ -934,10 +1346,37 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <!-- Comments Section -->
+        
+            <div class="comments-section">
+                <h2 class="section-title">
+                    Comments   
+                </h2>
+                
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                    <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+                </div>
+                
+                <div class="comments-list" id="commentsList">
+                    <!-- Example comments -->
+                    <div class="comment-item">
+                      
+                    </div>
+                    
+                    <div class="comment-item">
+                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
         </main> 
 
-            
-            <!-- Related Content Sidebar -->
+        <!-- Related Content Sidebar -->
             <div
             class="related-content-sidebar"
             style="
@@ -1041,7 +1480,131 @@
     
     let selectedContentType = null;
     
-    // Show dashboard when create button is clicked
+    // Enhanced Submit Review functionality with Phase Status updates
+    function submitReview() {
+            // You can customize this function based on your requirements
+            console.log("Submit Review button clicked");
+            
+            // Show confirmation dialog
+            const confirmSubmit = confirm("Are you sure you want to submit your review? This action can't be undone.");
+            
+            if (confirmSubmit) {
+                // Show loading state
+                const submitBtn = document.querySelector('.submit-review-btn');
+                submitBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Submitting...';
+                submitBtn.disabled = true;
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    // Show success message
+                    alert("Your review has been successfully submitted!");
+                    
+                    // Update Phase Status to "Under Review"
+                    updatePhaseStatus("Under Review", "reviews");
+                    
+                    // Change the button to "Accept Review" instead of resetting to original state
+                    submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+                    submitBtn.disabled = false;
+                    
+                    // You might want to change the class name or add a new class to style it differently
+                    submitBtn.classList.remove('submit-review-btn');
+                    submitBtn.classList.add('accept-review-btn');
+                    
+                    // Optionally change the onclick function
+                    submitBtn.onclick = function() {
+                        acceptReview();
+                    };
+                    
+                }, 1500);
+            }
+        }
+
+        // New function for Accept Review functionality
+        function acceptReview() {
+            console.log("Accept Review button clicked");
+            
+            // Show confirmation dialog
+            const confirmAccept = confirm("Are you sure you want to accept this review?");
+            
+            if (confirmAccept) {
+                // Show loading state
+                const acceptBtn = document.querySelector('.accept-review-btn');
+                acceptBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Processing...';
+                acceptBtn.disabled = true;
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    // Show success message
+                    alert("Review has been accepted successfully!");
+                    
+                    // Update Phase Status to "Completed"
+                    updatePhaseStatus("Completed", "task_alt");
+                    
+                    // Update button state
+                    acceptBtn.innerHTML = '<i class="material-icons">done_all</i> Accepted';
+                    acceptBtn.disabled = true;
+                }, 1500);
+            }
+        }
+
+        // Function to update the Phase Status
+        function updatePhaseStatus(status, iconName) {
+            const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
+            const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
+            
+            if (statusElement) {
+                // Apply fade-out effect
+                statusElement.style.transition = 'opacity 0.3s ease';
+                statusElement.style.opacity = '0';
+                
+                // Update status text and fade back in
+                setTimeout(() => {
+                    statusElement.textContent = status;
+                    
+                    // Add color based on status
+                    if (status === "In Progress") {
+                        statusElement.style.color = '#2196F3'; // Blue
+                    } else if (status === "Under Review") {
+                        statusElement.style.color = '#FF9800'; // Orange
+                    } else if (status === "Completed") {
+                        statusElement.style.color = '#4CAF50'; // Green
+                    }
+                    
+                    statusElement.style.opacity = '1';
+                }, 300);
+            }
+            
+            if (iconElement && iconName) {
+                // Update icon with animation
+                iconElement.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    iconElement.textContent = iconName;
+                    iconElement.style.transform = 'scale(1)';
+                }, 300);
+            }
+        }
+
+        // Initialize styles for phase status animations
+        function initPhaseStatusStyles() {
+            const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
+            const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
+            
+            if (statusElement) {
+                statusElement.style.transition = 'opacity 0.3s ease, color 0.3s ease';
+            }
+            
+            if (iconElement) {
+                iconElement.style.transition = 'transform 0.3s ease';
+            }
+            
+            // Set initial status color
+            updatePhaseStatus("In Progress", "pending_actions");
+        }
+
+        // Call initialization when document is ready
+        document.addEventListener('DOMContentLoaded', initPhaseStatusStyles);
+
+// Show dashboard when create button is clicked
     createBtn.addEventListener('click', function() {
         dashboardContainer.style.display = 'block';
         // Make sure dialogs are hidden when dashboard opens
@@ -1692,30 +2255,292 @@ document.addEventListener('DOMContentLoaded', function() {
             renderContentTable();
         });
     }
+
+    // Comments Functionality - Updated Version
+function initializeComments() {
+    console.log("Initializing comments functionality");
     
-    // Add some sample content for demonstration
-    if (savedContentItems.length === 0) {
-        addContentToTable(
-            'FSU Basketball Season Highlights', 
-            'press-release',
-            'Florida State University\'s basketball team demonstrated remarkable prowess throughout the 2024-25 season, securing victories against several top-ranked opponents. Head Coach Leonard Hamilton\'s strategic guidance was evident as the team showcased exceptional defense and offensive coordination.',
-            '3/1/2025 10:30 AM'
-        );
-        
-        addContentToTable(
-            'Game Day Announcement', 
-            'social-media',
-            'It\'s GAMEDAY! 🏀 Your Seminoles take on Miami tonight at 7 PM. Wear your garnet and gold and come support our team! #GoNoles #BeatMiami',
-            '3/2/2025 8:15 AM'
-        );
-        
-        addContentToTable(
-            'Player of the Month: Darin Green Jr.', 
-            'press-release',
-            'Darin Green Jr. has been named ACC Player of the Month after averaging 22.3 points per game in February. His shooting accuracy from beyond the arc has been instrumental in the Seminoles\' recent winning streak.',
-            '3/3/2025 9:45 AM'
-        );
+    // Get DOM elements
+    const commentInput = document.getElementById('commentInput');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const commentsList = document.getElementById('commentsList');
+    
+    // Debug log to check if elements are found
+    console.log("Comment elements:", {
+        input: commentInput,
+        button: postCommentBtn,
+        list: commentsList
+    });
+    
+    // Ensure elements exist before adding event listeners
+    if (!commentInput || !postCommentBtn || !commentsList) {
+        console.error("Could not find required comment elements");
+        return;
     }
+    
+    // Remove any existing event listeners by cloning
+    const newPostBtn = postCommentBtn.cloneNode(true);
+    postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
+    
+    // Add event listener to post button
+    newPostBtn.addEventListener('click', function(e) {
+        console.log("Post comment button clicked");
+        e.preventDefault();
+        
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            addNewComment(commentText, commentsList);
+            commentInput.value = '';
+            
+            // Scroll to the new comment
+            setTimeout(() => {
+                const firstComment = commentsList.firstChild;
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        } else {
+            alert('Please enter a comment');
+        }
+    });
+    
+    // Add keypress event to also submit on Enter
+    commentInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            newPostBtn.click();
+        }
+    });
+    
+    // Auto-resize the textarea as user types
+    commentInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+    
+    // Add event listeners to existing comment buttons
+    setupCommentButtons();
+    
+    console.log("Comments functionality initialized");
+}
+
+function addNewComment(text, commentsList) {
+    // Ensure commentsList is provided or find it
+    if (!commentsList) {
+        commentsList = document.getElementById('commentsList');
+        if (!commentsList) {
+            console.error("Comments list element not found");
+            return;
+        }
+    }
+    
+    console.log("Adding new comment:", text);
+    
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+    
+    // Create a new comment element
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item';
+    
+    // Create comment HTML without avatar image
+    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <!-- No avatar image -->
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    `;
+    
+    // Add to the beginning of the list with a fade-in effect
+    newComment.style.opacity = '0';
+    newComment.style.transition = 'opacity 0.3s ease';
+    
+    if (commentsList.firstChild) {
+        commentsList.insertBefore(newComment, commentsList.firstChild);
+    } else {
+        commentsList.appendChild(newComment);
+    }
+    
+    // Trigger the fade-in animation
+    setTimeout(() => {
+        newComment.style.opacity = '1';
+    }, 10);
+    
+    console.log("Comment added to list");
+    
+    // Add event listeners to the new comment's buttons
+    setupCommentButtonsForElement(newComment);
+    
+    // Update the comments counter if it exists
+    updateCommentsCounter();
+}
+
+function updateCommentsCounter() {
+    const counter = document.querySelector('.comments-counter');
+    if (counter) {
+        const count = document.querySelectorAll('.comment-item').length;
+        counter.textContent = count;
+    }
+}
+
+function setupCommentButtons() {
+    console.log("Setting up comment buttons for all comments");
+    
+    // Get all comment items
+    const commentItems = document.querySelectorAll('.comment-item');
+    console.log(`Found ${commentItems.length} comments`);
+    
+    commentItems.forEach((item, index) => {
+        console.log(`Setting up buttons for comment ${index}`);
+        setupCommentButtonsForElement(item);
+    });
+}
+
+function setupCommentButtonsForElement(element) {
+    if (!element) {
+        console.error("No element provided to setupCommentButtonsForElement");
+        return;
+    }
+    
+    // Reply button - using more specific selector with the added class
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+                     element.querySelector('.comment-action-btn:first-child');
+                     
+    if (replyBtn) {
+        // Remove existing event listeners by cloning
+        const newReplyBtn = replyBtn.cloneNode(true);
+        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+        
+        newReplyBtn.addEventListener('click', function() {
+            const commentAuthor = element.querySelector('.comment-author').textContent;
+            const commentInput = document.getElementById('commentInput');
+            if (commentInput) {
+                commentInput.value = `@${commentAuthor} `;
+                commentInput.focus();
+                
+                // Auto-resize the textarea after setting value
+                commentInput.style.height = 'auto';
+                commentInput.style.height = (commentInput.scrollHeight) + 'px';
+                
+                // Scroll to the comment form
+                commentInput.scrollIntoView({ behavior: 'smooth' });
+                
+                console.log(`Set reply to ${commentAuthor}`);
+            } else {
+                console.error("Comment input not found");
+            }
+        });
+    } else {
+        console.warn("Reply button not found in comment", element);
+    }
+    
+    // Edit button - using more specific selector with the added class
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+                    element.querySelector('.comment-action-btn:nth-child(2)');
+                    
+    if (editBtn) {
+        // Remove existing event listeners by cloning
+        const newEditBtn = editBtn.cloneNode(true);
+        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+        
+        newEditBtn.addEventListener('click', function() {
+            const commentText = element.querySelector('.comment-text');
+            if (!commentText) {
+                console.error("Comment text element not found");
+                return;
+            }
+            
+            const originalText = commentText.textContent;
+            console.log("Editing comment:", originalText);
+            
+            // Check if we're already editing this comment
+            if (element.querySelector('.comment-edit-interface')) {
+                console.warn("Edit interface already open");
+                return;
+            }
+            
+            // Create edit interface
+            const editInterface = document.createElement('div');
+            editInterface.className = 'comment-edit-interface';
+            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+            
+            // Replace comment text with edit interface
+            commentText.style.display = 'none';
+            commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
+            
+            // Focus the textarea and auto-resize
+            const textarea = editInterface.querySelector('.comment-edit-input');
+            textarea.focus();
+            
+            // Set initial height based on content
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            
+            // Add auto-resize on input
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            // Add event listeners for save and cancel buttons
+            const saveBtn = editInterface.querySelector('.save-edit-btn');
+            saveBtn.addEventListener('click', function() {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    commentText.textContent = newText;
+                    console.log("Comment updated:", newText);
+                }
+                // Clean up
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+            
+            const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Just clean up without saving
+                commentText.style.display = 'block';
+                editInterface.remove();
+                console.log("Edit cancelled");
+            });
+        });
+    } else {
+        console.warn("Edit button not found in comment", element);
+    }
+}
+
+// Make sure comments are initialized after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing comments");
+    initializeComments();
+});
+
+// In case DOMContentLoaded already fired, also try to initialize now
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    console.log("Document already loaded, initializing comments immediately");
+    setTimeout(initializeComments, 100); // Short timeout to ensure execution
+}
+    
+   
 });
 
     </script>
