@@ -832,6 +832,233 @@
         from { opacity: 0; }
         to { opacity: 1; }
     }
+
+    /* Enhanced Comments Section Styles */
+.comments-section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.section-title {
+    color: var(--fsu-garnet);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--fsu-gold);
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-counter {
+    background: var(--fsu-garnet);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .comment-form {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.comment-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, height 0.2s ease;
+    overflow: hidden;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+#postCommentBtn {
+    padding: 12px 20px;
+    height: fit-content;
+    background: var(--fsu-garnet);
+    color: white;
+}
+
+@media (max-width: 767px) {
+    #postCommentBtn {
+        align-self: flex-end;
+    }
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0; /* Ensures proper text wrapping */
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: var(--fsu-garnet);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.comment-action-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Comment edit interface */
+.comment-edit-interface {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-edit-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.comment-edit-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+.comment-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* No comments message */
+.no-comments-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Loading indicator */
+.comment-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.comment-loading .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(120, 47, 64, 0.2);
+    border-top-color: var(--fsu-garnet);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation for new comments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-item.new {
+    animation: fadeIn 0.3s ease forwards;
+}
         
     </style>
 </head>
@@ -1133,6 +1360,33 @@
         </div>
     </div>
 </div>
+
+<!-- Comments Section -->
+<main class="main-content">
+    <div class="comments-section">
+        <h2 class="section-title">
+            Comments   
+        </h2>
+        
+        <div class="comment-form">
+            <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+            <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+        </div>
+        
+        <div class="comments-list" id="commentsList">
+            <!-- Example comments -->
+            <div class="comment-item">
+              
+            </div>
+            
+            <div class="comment-item">
+             
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
     <script>
 
@@ -1481,6 +1735,291 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Comments Functionality - Updated Version
+function initializeComments() {
+    console.log("Initializing comments functionality");
+    
+    // Get DOM elements
+    const commentInput = document.getElementById('commentInput');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const commentsList = document.getElementById('commentsList');
+    
+    // Debug log to check if elements are found
+    console.log("Comment elements:", {
+        input: commentInput,
+        button: postCommentBtn,
+        list: commentsList
+    });
+    
+    // Ensure elements exist before adding event listeners
+    if (!commentInput || !postCommentBtn || !commentsList) {
+        console.error("Could not find required comment elements");
+        return;
+    }
+    
+    // Remove any existing event listeners by cloning
+    const newPostBtn = postCommentBtn.cloneNode(true);
+    postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
+    
+    // Add event listener to post button
+    newPostBtn.addEventListener('click', function(e) {
+        console.log("Post comment button clicked");
+        e.preventDefault();
+        
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            addNewComment(commentText, commentsList);
+            commentInput.value = '';
+            
+            // Scroll to the new comment
+            setTimeout(() => {
+                const firstComment = commentsList.firstChild;
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        } else {
+            alert('Please enter a comment');
+        }
+    });
+    
+    // Add keypress event to also submit on Enter
+    commentInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            newPostBtn.click();
+        }
+    });
+    
+    // Auto-resize the textarea as user types
+    commentInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+    
+    // Add event listeners to existing comment buttons
+    setupCommentButtons();
+    
+    console.log("Comments functionality initialized");
+}
+
+function addNewComment(text, commentsList) {
+    // Ensure commentsList is provided or find it
+    if (!commentsList) {
+        commentsList = document.getElementById('commentsList');
+        if (!commentsList) {
+            console.error("Comments list element not found");
+            return;
+        }
+    }
+    
+    console.log("Adding new comment:", text);
+    
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+    
+    // Create a new comment element
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item';
+    
+    // Create comment HTML without avatar image
+    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <!-- No avatar image -->
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    `;
+    
+    // Add to the beginning of the list with a fade-in effect
+    newComment.style.opacity = '0';
+    newComment.style.transition = 'opacity 0.3s ease';
+    
+    if (commentsList.firstChild) {
+        commentsList.insertBefore(newComment, commentsList.firstChild);
+    } else {
+        commentsList.appendChild(newComment);
+    }
+    
+    // Trigger the fade-in animation
+    setTimeout(() => {
+        newComment.style.opacity = '1';
+    }, 10);
+    
+    console.log("Comment added to list");
+    
+    // Add event listeners to the new comment's buttons
+    setupCommentButtonsForElement(newComment);
+    
+    // Update the comments counter if it exists
+    updateCommentsCounter();
+}
+
+function updateCommentsCounter() {
+    const counter = document.querySelector('.comments-counter');
+    if (counter) {
+        const count = document.querySelectorAll('.comment-item').length;
+        counter.textContent = count;
+    }
+}
+
+function setupCommentButtons() {
+    console.log("Setting up comment buttons for all comments");
+    
+    // Get all comment items
+    const commentItems = document.querySelectorAll('.comment-item');
+    console.log(`Found ${commentItems.length} comments`);
+    
+    commentItems.forEach((item, index) => {
+        console.log(`Setting up buttons for comment ${index}`);
+        setupCommentButtonsForElement(item);
+    });
+}
+
+function setupCommentButtonsForElement(element) {
+    if (!element) {
+        console.error("No element provided to setupCommentButtonsForElement");
+        return;
+    }
+    
+    // Reply button - using more specific selector with the added class
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+                     element.querySelector('.comment-action-btn:first-child');
+                     
+    if (replyBtn) {
+        // Remove existing event listeners by cloning
+        const newReplyBtn = replyBtn.cloneNode(true);
+        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+        
+        newReplyBtn.addEventListener('click', function() {
+            const commentAuthor = element.querySelector('.comment-author').textContent;
+            const commentInput = document.getElementById('commentInput');
+            if (commentInput) {
+                commentInput.value = `@${commentAuthor} `;
+                commentInput.focus();
+                
+                // Auto-resize the textarea after setting value
+                commentInput.style.height = 'auto';
+                commentInput.style.height = (commentInput.scrollHeight) + 'px';
+                
+                // Scroll to the comment form
+                commentInput.scrollIntoView({ behavior: 'smooth' });
+                
+                console.log(`Set reply to ${commentAuthor}`);
+            } else {
+                console.error("Comment input not found");
+            }
+        });
+    } else {
+        console.warn("Reply button not found in comment", element);
+    }
+    
+    // Edit button - using more specific selector with the added class
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+                    element.querySelector('.comment-action-btn:nth-child(2)');
+                    
+    if (editBtn) {
+        // Remove existing event listeners by cloning
+        const newEditBtn = editBtn.cloneNode(true);
+        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+        
+        newEditBtn.addEventListener('click', function() {
+            const commentText = element.querySelector('.comment-text');
+            if (!commentText) {
+                console.error("Comment text element not found");
+                return;
+            }
+            
+            const originalText = commentText.textContent;
+            console.log("Editing comment:", originalText);
+            
+            // Check if we're already editing this comment
+            if (element.querySelector('.comment-edit-interface')) {
+                console.warn("Edit interface already open");
+                return;
+            }
+            
+            // Create edit interface
+            const editInterface = document.createElement('div');
+            editInterface.className = 'comment-edit-interface';
+            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+            
+            // Replace comment text with edit interface
+            commentText.style.display = 'none';
+            commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
+            
+            // Focus the textarea and auto-resize
+            const textarea = editInterface.querySelector('.comment-edit-input');
+            textarea.focus();
+            
+            // Set initial height based on content
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            
+            // Add auto-resize on input
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            // Add event listeners for save and cancel buttons
+            const saveBtn = editInterface.querySelector('.save-edit-btn');
+            saveBtn.addEventListener('click', function() {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    commentText.textContent = newText;
+                    console.log("Comment updated:", newText);
+                }
+                // Clean up
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+            
+            const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Just clean up without saving
+                commentText.style.display = 'block';
+                editInterface.remove();
+                console.log("Edit cancelled");
+            });
+        });
+    } else {
+        console.warn("Edit button not found in comment", element);
+    }
+}
+
+// Make sure comments are initialized after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing comments");
+    initializeComments();
+});
+
+// In case DOMContentLoaded already fired, also try to initialize now
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    console.log("Document already loaded, initializing comments immediately");
+    setTimeout(initializeComments, 100); // Short timeout to ensure execution
+}
+
         
     </script>
 </body>
