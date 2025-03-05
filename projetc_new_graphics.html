@@ -1307,17 +1307,8 @@
     <div class="graphics-grid" id="graphics-grid">
         <!-- These are sample items - your JavaScript will dynamically add/remove these -->
         <div class="grid-item">
-            <div class="grid-item-preview">
-                <img src="/api/placeholder/200/150" alt="FSU Graphic">
-                <div class="grid-item-overlay">
-                    <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
-                    <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
-                </div>
-            </div>
-            <div class="grid-item-info">
-                <h4>Season Opener</h4>
-                <span class="grid-item-type">Press Release</span>
-            </div>
+            
+            
         </div>
         <div class="grid-item">
             <div class="grid-item-preview">
@@ -1451,7 +1442,7 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             id: 'team-2',
             name: 'Quarterback',
-            imageSrc: 'https://media.gettyimages.com/id/1251862918/photo/apr-15-florida-state-garnet-gold-spring-showcase.jpg?s=2048x2048&w=gi&k=20&c=5UAXIL-e0PDd_dMBuWtfn8Js3v1kIqcJIx5ocnO2Kas='
+            imageSrc: 'https://sportshub.cbsistatic.com/i/r/2023/08/21/d2ec0e69-99d0-442f-aed7-1ae637c4573c/thumbnail/1200x675/d2b8f8572a8918c9a6b1fbed6e8d6268/jordan-travis-fsu-qb-downfield-2022-g.png'
         },
         {
             id: 'team-3',
@@ -1778,26 +1769,99 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to delete a graphic item
-    function deleteGraphicItem(itemId) {
-        // Handle potential compound IDs (for multi-image items)
-        let baseId = itemId;
-        if (typeof itemId === 'string' && itemId.includes('-')) {
-            baseId = parseInt(itemId.split('-')[0]);
-        } else {
-            baseId = parseInt(itemId);
-        }
-        
-        if (confirm('Are you sure you want to delete this graphic?')) {
-            // Remove from the current display array
-            graphicsItems = graphicsItems.filter(item => item.id !== baseId);
+function deleteGraphicItem(itemId) {
+    console.log("Deleting item with ID:", itemId); // Debug log
+    
+    // Parse the ID to handle both regular and compound IDs
+    let baseId, mediaIndex;
+    
+    if (typeof itemId === 'string' && itemId.includes('-')) {
+        const parts = itemId.split('-');
+        baseId = parseInt(parts[0]);
+        mediaIndex = parseInt(parts[1]);
+        console.log("Compound ID detected:", baseId, mediaIndex); // Debug log
+    } else {
+        baseId = parseInt(itemId);
+        mediaIndex = null;
+    }
+    
+    // Get the item from the current display array first
+    const displayItemIndex = graphicsItems.findIndex(item => item.id === baseId);
+    
+    if (displayItemIndex === -1) {
+        console.error("Item not found in display array:", baseId);
+        return;
+    }
+    
+    const displayItem = graphicsItems[displayItemIndex];
+    console.log("Found display item:", displayItem); // Debug log
+    
+    // Handle deletion based on whether it's a specific media item or entire graphic
+    if (mediaIndex !== null && displayItem.mediaItems && displayItem.mediaItems.length > 1) {
+        // Deleting a specific media item
+        if (confirm(`Are you sure you want to delete this media item?`)) {
+            console.log("Deleting specific media at index:", mediaIndex); // Debug log
             
-            // Also remove from the source arrays
+            // Remove the specific media item from the display item
+            displayItem.mediaItems.splice(mediaIndex, 1);
+            
+            // If this was the preview image, update it
+            if (mediaIndex === 0 && displayItem.mediaItems.length > 0) {
+                displayItem.imageSrc = displayItem.mediaItems[0].img;
+            }
+            
+            // If this was the last media item, remove the entire graphic
+            if (displayItem.mediaItems.length === 0) {
+                // Remove from the display array
+                graphicsItems.splice(displayItemIndex, 1);
+                
+                // Remove from source arrays too
+                pressReleaseGraphics = pressReleaseGraphics.filter(item => item.id !== baseId);
+                socialMediaGraphics = socialMediaGraphics.filter(item => item.id !== baseId);
+            }
+            
+            // Now we need to ensure the source arrays are in sync
+            const prIndex = pressReleaseGraphics.findIndex(item => item.id === baseId);
+            if (prIndex !== -1) {
+                if (displayItem.mediaItems.length === 0) {
+                    // Remove the entire item
+                    pressReleaseGraphics.splice(prIndex, 1);
+                } else {
+                    // Update the media items array
+                    pressReleaseGraphics[prIndex].mediaItems = [...displayItem.mediaItems];
+                    if (mediaIndex === 0) {
+                        pressReleaseGraphics[prIndex].imageSrc = displayItem.imageSrc;
+                    }
+                }
+            }
+            
+            const smIndex = socialMediaGraphics.findIndex(item => item.id === baseId);
+            if (smIndex !== -1) {
+                if (displayItem.mediaItems.length === 0) {
+                    // Remove the entire item
+                    socialMediaGraphics.splice(smIndex, 1);
+                } else {
+                    // Update the media items array
+                    socialMediaGraphics[smIndex].mediaItems = [...displayItem.mediaItems];
+                    if (mediaIndex === 0) {
+                        socialMediaGraphics[smIndex].imageSrc = displayItem.imageSrc;
+                    }
+                }
+            }
+        }
+    } else {
+        // Deleting an entire graphic
+        if (confirm(`Are you sure you want to delete this graphic?`)) {
+            // Remove from all arrays
+            graphicsItems.splice(displayItemIndex, 1);
             pressReleaseGraphics = pressReleaseGraphics.filter(item => item.id !== baseId);
             socialMediaGraphics = socialMediaGraphics.filter(item => item.id !== baseId);
-            
-            renderGraphicsGrid();
         }
     }
+    
+    // Re-render the grid
+    renderGraphicsGrid();
+}
     
     // Add event listener to content type select to filter graphics
     if (contentTypeSelect) {
