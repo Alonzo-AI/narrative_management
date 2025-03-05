@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlyte Content Publishing Platform - FSU Graphics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            min-height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+            font-family: 'GothicCustom', sans-serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--fsu-garnet);
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
+
+        .sidebar-item.active i {
+            color: var(--fsu-gold);
+        }
+
+        .sidebar-item i {
+            margin-right: 12px;
+            color: var(--fsu-garnet);
+            font-size: 20px;
+        }
+
+        .sidebar-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* FSU Header Styles */
+.fsu-header {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fsu-logo {
+    width: 60px;
+    height: auto;
+}
+
+.site-title {
+    color: var(--fsu-garnet);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.project-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.info-item i {
+    color: var(--fsu-garnet);
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
+.info-item .info-value {
+    transition: color 0.3s ease;
+}
+
+.status-in-progress .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.status-under-review .info-value {
+    color: #FF9800; /* Orange */
+}
+
+.status-completed .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Status Icon Animations */
+.info-item:nth-child(2) i.material-icons {
+    transition: transform 0.3s ease;
+}
+
+/* Status Badge (Optional) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-badge.in-progress {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.status-badge.under-review {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.status-badge.completed {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+/* Pulse animation for "Under Review" status (optional) */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.status-under-review .info-value {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.sponsor-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sponsor-selection {
+        flex: 1;
+    }
+
+    .sponsor-selection h3 {
+        color: var(--fsu-garnet);
+        margin-bottom: 12px;
+        font-family: 'GothicCustom', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .sponsor-dropdown-wrapper {
+        position: relative;
+    }
+
+    .sponsor-dropdown {
+        width: 100%;
+        max-width: 350px;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        background-color: white;
+        font-size: 1rem;
+        color: var(--fsu-black);
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23782f40' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 15px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sponsor-dropdown:focus {
+        outline: none;
+        border-color: var(--fsu-garnet);
+        box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+    }
+
+    .sponsor-dropdown option {
+        padding: 10px;
+    }
+
+    .custom-sponsor-input {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        max-width: 350px;
+    }
+
+    .custom-sponsor-input input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-sponsor-input input:focus {
+        outline: none;
+        border-color: var(--fsu-garnet);
+        box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+    }
+
+    .add-custom-btn {
+        padding: 12px 15px;
+        background-color: var(--fsu-garnet);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-custom-btn:hover {
+        background-color: #662535;
+    }
+
+    .sponsor-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .assign-sponsor-btn {
+        padding: 12px 24px;
+        background-color: var(--fsu-garnet);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .assign-sponsor-btn:hover {
+        background-color: #662535;
+        transform: translateY(-2px);
+    }
+
+    .assign-sponsor-btn:active {
+        transform: translateY(0);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .sponsor-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .sponsor-selection {
+            margin-bottom: 20px;
+        }
+
+        .sponsor-dropdown {
+            max-width: 100%;
+        }
+
+        .sponsor-actions {
+            justify-content: flex-start;
+        }
+    }
+
+   </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+        <div class="sidebar-item">
+            <i class="material-icons">home</i>
+            <a href="project_new.html"> Home </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">search</i>
+            <a href="project_new_research_page.html"> Research </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">description</i>
+            <a href="project_new_content_draft.html"> Content Draft </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">brush</i>
+            <a href="projetc_new_graphics.html"> Graphics </a>
+        </div>
+        <div class="sidebar-item active">
+            <i class="material-icons">share</i>
+            <span>Marketing</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">equalizer</i>
+            <span>Analytics</span>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+        <!-- FSU Header with Coordinator and Deadline -->
+        <header class="fsu-header">
+            <div class="header-container">
+                <div class="logo-container">
+                    
+                    <h1 class="site-title">FSU Football Season 2025</h1>
+                </div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <i class="material-icons">person</i>
+                        <div class="info-content">
+                            <span class="info-label">Graphics Coordinator</span>
+                            <span class="info-value">Sarah Johnson</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                     <div class="info-content">
+                            <span class="info-label">Phase Status</span>
+                            <span class="info-value">In Progress</span>
+                        </div>
+                    </div>    
+                    
+                        <div class="info-item">
+                        <i class="material-icons">event</i>
+                        <div class="info-content">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">March 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+         
+        <div class="sponsor-container">
+            <div class="sponsor-selection">
+                <h3>Assign Sponsor</h3>
+                <div class="sponsor-dropdown-wrapper">
+                    <select id="sponsor-dropdown" class="sponsor-dropdown">
+                        <option value="" disabled selected>Select a sponsor</option>
+                        <option value="nike">Nike</option>
+                        <option value="adidas">Adidas</option>
+                        <option value="under-armour">Under Armour</option>
+                        <option value="gatorade">Gatorade</option>
+                        <option value="coca-cola">Coca-Cola</option>
+                        <option value="pepsi">Pepsi</option>
+                        <option value="verizon">Verizon</option>
+                        <option value="att">AT&T</option>
+                        <option value="custom">Add Custom Sponsor...</option>
+                    </select>
+                    <div id="custom-sponsor-input" class="custom-sponsor-input hidden">
+                        <input type="text" id="custom-sponsor-name" placeholder="Enter sponsor name">
+                        <button id="add-custom-sponsor" class="add-custom-btn">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="sponsor-actions">
+                <button id="assign-sponsor-btn" class="assign-sponsor-btn">Assign Sponsor</button>
+            </div>
+        </div>
+
+        <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+        const sponsorDropdown = document.getElementById('sponsor-dropdown');
+        const customSponsorInput = document.getElementById('custom-sponsor-input');
+        const customSponsorName = document.getElementById('custom-sponsor-name');
+        const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
+        const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
+
+        // Show/hide custom sponsor input based on dropdown selection
+        sponsorDropdown.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customSponsorInput.classList.remove('hidden');
+                customSponsorName.focus();
+            } else {
+                customSponsorInput.classList.add('hidden');
+            }
+        });
+
+        // Add custom sponsor to dropdown
+        addCustomSponsorBtn.addEventListener('click', function() {
+            const sponsorName = customSponsorName.value.trim();
+            
+            if (sponsorName) {
+                // Create new option
+                const newOption = document.createElement('option');
+                newOption.value = sponsorName.toLowerCase().replace(/\s+/g, '-');
+                newOption.textContent = sponsorName;
+                
+                // Insert before the "Add Custom Sponsor..." option
+                const customOption = sponsorDropdown.querySelector('option[value="custom"]');
+                sponsorDropdown.insertBefore(newOption, customOption);
+                
+                // Select the new option
+                sponsorDropdown.value = newOption.value;
+                
+                // Hide custom input
+                customSponsorInput.classList.add('hidden');
+                customSponsorName.value = '';
+                
+                // Show confirmation message
+                showNotification(`Added ${sponsorName} to sponsors list`);
+            } else {
+                showNotification('Please enter a sponsor name', 'error');
+            }
+        });
+
+        // Assign sponsor button functionality
+        assignSponsorBtn.addEventListener('click', function() {
+            const selectedSponsor = sponsorDropdown.options[sponsorDropdown.selectedIndex];
+            
+            if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
+                showNotification(`Assigned ${selectedSponsor.textContent} as sponsor`, 'success');
+                
+                // Here you would typically send data to your backend
+                console.log(`Sponsor assigned: ${selectedSponsor.textContent}`);
+                
+                // Optional: Update UI to reflect the assignment
+                updateSponsorDisplay(selectedSponsor.textContent);
+            } else {
+                showNotification('Please select a sponsor', 'error');
+            }
+        });
+
+        // Helper function to show notifications
+        function showNotification(message, type = 'info') {
+            // Check if notification container exists, create if not
+            let notificationContainer = document.querySelector('.notification-container');
+            
+            if (!notificationContainer) {
+                notificationContainer = document.createElement('div');
+                notificationContainer.className = 'notification-container';
+                document.body.appendChild(notificationContainer);
+                
+                // Add styles for notification container
+                const style = document.createElement('style');
+                style.textContent = `
+                    .notification-container {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        z-index: 1000;
+                    }
+                    
+                    .notification {
+                        margin-bottom: 10px;
+                        padding: 15px 20px;
+                        border-radius: 6px;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                        color: white;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        min-width: 300px;
+                        animation: slideIn 0.3s ease forwards;
+                    }
+                    
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                    
+                    .notification.info { background-color: #2196F3; }
+                    .notification.success { background-color: #4CAF50; }
+                    .notification.error { background-color: #F44336; }
+                    
+                    .notification-close {
+                        cursor: pointer;
+                        margin-left: 15px;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                ${message}
+                <span class="notification-close">&times;</span>
+            `;
+            
+            // Add to container
+            notificationContainer.appendChild(notification);
+            
+            // Handle close button
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', function() {
+                removeNotification(notification);
+            });
+            
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                removeNotification(notification);
+            }, 4000);
+        }
+        
+        function removeNotification(notification) {
+            notification.style.animation = 'slideOut 0.3s ease forwards';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+        
+        // Helper function to update UI with assigned sponsor (optional)
+        function updateSponsorDisplay(sponsorName) {
+            // Check if sponsor display exists, create if not
+            let sponsorDisplay = document.querySelector('.assigned-sponsor-display');
+            
+            if (!sponsorDisplay) {
+                sponsorDisplay = document.createElement('div');
+                sponsorDisplay.className = 'assigned-sponsor-display';
+                
+                // Add styles for sponsor display
+                const style = document.createElement('style');
+                style.textContent = `
+                    .assigned-sponsor-display {
+                        margin-top: 20px;
+                        padding: 15px;
+                        background-color: rgba(120, 47, 64, 0.1);
+                        border-left: 4px solid var(--fsu-garnet);
+                        border-radius: 4px;
+                        color: var(--fsu-garnet);
+                        font-weight: 500;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Insert after sponsor container
+                const sponsorContainer = document.querySelector('.sponsor-container');
+                sponsorContainer.insertAdjacentElement('afterend', sponsorDisplay);
+            }
+            
+            sponsorDisplay.innerHTML = `
+                <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">check_circle</i>
+                Current sponsor: <strong>${sponsorName}</strong>
+            `;
+        }
+    });
+            
+
+</script>
+</body>
+</html>
