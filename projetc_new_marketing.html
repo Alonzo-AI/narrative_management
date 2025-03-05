@@ -337,8 +337,8 @@
     }
     
     .submit-review-btn {
-        background-color: var(--fsu-gold);
-        color: var(--fsu-garnet);
+        background-color: var(--fsu-garnet);
+        
     }
 
     .assign-sponsor-btn:hover, .submit-review-btn:hover {
@@ -350,7 +350,7 @@
     }
     
     .submit-review-btn:hover {
-        background-color: #b9a677;
+        background-color: #662535;
     }
 
     .assign-sponsor-btn:active, .submit-review-btn:active {
@@ -380,6 +380,477 @@
             justify-content: flex-start;
         }
     }
+
+    /* Grid Container Styles */
+    .content-grid-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-top: 24px;
+        margin-bottom: 24px;
+        overflow: hidden;
+    }
+
+    .grid-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .grid-header h3 {
+        color: var(--fsu-garnet);
+        margin: 0;
+        font-family: 'GothicCustom', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .grid-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .grid-filter {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .filter-dropdown {
+        padding: 8px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        background-color: white;
+        font-size: 0.9rem;
+        color: var(--fsu-black);
+        cursor: pointer;
+    }
+
+    .refresh-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 12px;
+        background-color: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .refresh-btn:hover {
+        background-color: #e9e9e9;
+    }
+
+    .refresh-btn i {
+        font-size: 18px;
+    }
+
+    /* Grid View Styles */
+    .grid-view {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .grid-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .grid-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .item-preview {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .item-content {
+        padding: 15px;
+    }
+
+    .text-content {
+        background-color: #f9f9f9;
+        min-height: 120px;
+    }
+
+    .text-content h4 {
+        color: var(--fsu-garnet);
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .text-content p {
+        margin: 0;
+        color: #555;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .image-content {
+        padding: 0;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+    }
+
+    .preview-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .item-details {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        background-color: #f5f5f5;
+        border-top: 1px solid #e0e0e0;
+        font-size: 0.8rem;
+    }
+
+    .item-type {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+
+    .draft-type {
+        background-color: rgba(33, 150, 243, 0.1);
+        color: #2196F3;
+    }
+
+    .graphics-type {
+        background-color: rgba(156, 39, 176, 0.1);
+        color: #9C27B0;
+    }
+
+    .item-date {
+        color: #777;
+    }
+
+    /* Empty State Styles */
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .empty-icon {
+        font-size: 48px;
+        color: #ccc;
+        margin-bottom: 15px;
+    }
+
+    .empty-state p {
+        color: #777;
+        margin-bottom: 20px;
+    }
+
+    .reset-filter-btn {
+        padding: 8px 16px;
+        background-color: var(--fsu-garnet);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .reset-filter-btn:hover {
+        background-color: #662535;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .grid-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .grid-controls {
+            margin-top: 15px;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .grid-view {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grid-controls {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .grid-filter {
+            width: 100%;
+        }
+
+        .filter-dropdown {
+            flex-grow: 1;
+        }
+
+        .refresh-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+     /* Enhanced Comments Section Styles */
+.comments-section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.section-title {
+    color: var(--fsu-garnet);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--fsu-gold);
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-counter {
+    background: var(--fsu-garnet);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .comment-form {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.comment-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, height 0.2s ease;
+    overflow: hidden;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+#postCommentBtn {
+    padding: 12px 20px;
+    height: fit-content;
+    background: var(--fsu-garnet);
+    color: white;
+}
+
+@media (max-width: 767px) {
+    #postCommentBtn {
+        align-self: flex-end;
+    }
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0; /* Ensures proper text wrapping */
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: var(--fsu-garnet);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.comment-action-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Comment edit interface */
+.comment-edit-interface {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-edit-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.comment-edit-input:focus {
+    outline: none;
+    border-color: var(--fsu-garnet);
+}
+
+.comment-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* No comments message */
+.no-comments-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Loading indicator */
+.comment-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.comment-loading .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(120, 47, 64, 0.2);
+    border-top-color: var(--fsu-garnet);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation for new comments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-item.new {
+    animation: fadeIn 0.3s ease forwards;
+}
 
    </style>
 </head>
@@ -474,6 +945,141 @@
                 <button id="submit-review-btn" class="submit-review-btn">Submit for Review</button>
             </div>
         </div>
+
+        <!-- Grid View Container for Content Drafts and Graphics -->
+<div class="content-grid-container">
+    <div class="grid-header">
+        <h3>Content & Graphics Preview</h3>
+        <div class="grid-controls">
+            <div class="grid-filter">
+                <label for="content-filter">Filter by:</label>
+                <select id="content-filter" class="filter-dropdown">
+                    <option value="all">All Items</option>
+                    <option value="drafts">Content Drafts</option>
+                    <option value="graphics">Graphics</option>
+                </select>
+            </div>
+            <button id="refresh-grid" class="refresh-btn">
+                <i class="material-icons">refresh</i>
+                Refresh
+            </button>
+        </div>
+    </div>
+
+    <div class="grid-view">
+        <!-- Content Draft Items -->
+        <div class="grid-item" data-type="drafts">
+            <div class="item-preview">
+                <div class="item-content text-content">
+                    <h4>Season Opener Press Release</h4>
+                    <p>Florida State University's football team is set to begin its 2025 season with renewed energy and determination...</p>
+                </div>
+            </div>
+            <div class="item-details">
+                <span class="item-type draft-type">Content Draft</span>
+                <span class="item-date">Updated: Feb 28, 2025</span>
+            </div>
+        </div>
+
+        <div class="grid-item" data-type="drafts">
+            <div class="item-preview">
+                <div class="item-content text-content">
+                    <h4>Player Spotlight: Marcus Johnson</h4>
+                    <p>Quarterback Marcus Johnson has been training rigorously during the off-season to prepare for what analysts predict will be his breakout year...</p>
+                </div>
+            </div>
+            <div class="item-details">
+                <span class="item-type draft-type">Content Draft</span>
+                <span class="item-date">Updated: Mar 2, 2025</span>
+            </div>
+        </div>
+
+        <!-- Graphics Items -->
+        <div class="grid-item" data-type="graphics">
+            <div class="item-preview">
+                <div class="item-content image-content">
+                    <img src="/api/placeholder/400/300" alt="Team Banner 2025" class="preview-image">
+                </div>
+            </div>
+            <div class="item-details">
+                <span class="item-type graphics-type">Graphic</span>
+                <span class="item-date">Updated: Mar 1, 2025</span>
+            </div>
+        </div>
+
+        <div class="grid-item" data-type="graphics">
+            <div class="item-preview">
+                <div class="item-content image-content">
+                    <img src="/api/placeholder/400/300" alt="Game Day Poster" class="preview-image">
+                </div>
+            </div>
+            <div class="item-details">
+                <span class="item-type graphics-type">Graphic</span>
+                <span class="item-date">Updated: Feb 25, 2025</span>
+            </div>
+        </div>
+
+        <div class="grid-item" data-type="drafts">
+            <div class="item-preview">
+                <div class="item-content text-content">
+                    <h4>Season Ticket Promotion</h4>
+                    <p>Get ready for an unforgettable season with FSU Football! Early bird season tickets now available with exclusive benefits for loyal fans...</p>
+                </div>
+            </div>
+            <div class="item-details">
+                <span class="item-type draft-type">Content Draft</span>
+                <span class="item-date">Updated: Mar 3, 2025</span>
+            </div>
+        </div>
+
+        <div class="grid-item" data-type="graphics">
+            <div class="item-preview">
+                <div class="item-content image-content">
+                    <img src="/api/placeholder/400/300" alt="Social Media Kit" class="preview-image">
+                </div>
+            </div>
+            <div class="item-details">
+                <span class="item-type graphics-type">Graphic</span>
+                <span class="item-date">Updated: Mar 4, 2025</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State (shown when filter yields no results) -->
+    <div class="empty-state hidden">
+        <i class="material-icons empty-icon">search</i>
+        <p>No items match your current filter</p>
+        <button id="reset-filter" class="reset-filter-btn">Show All Items</button>
+    </div>
+</div>
+
+<!-- Comments Section -->
+<main class="main-content">
+    <div class="comments-section">
+        <h2 class="section-title">
+            Comments   
+        </h2>
+        
+        <div class="comment-form">
+            <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+            <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+        </div>
+        
+        <div class="comments-list" id="commentsList">
+            <!-- Example comments -->
+            <div class="comment-item">
+              
+            </div>
+            
+            <div class="comment-item">
+             
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
 <script>
         
         document.addEventListener('DOMContentLoaded', function() {
@@ -708,6 +1314,512 @@
             }
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const contentFilter = document.getElementById('content-filter');
+        const gridItems = document.querySelectorAll('.grid-item');
+        const emptyState = document.querySelector('.empty-state');
+        const resetFilterBtn = document.getElementById('reset-filter');
+        const refreshGridBtn = document.getElementById('refresh-grid');
+
+        // Filter functionality
+        contentFilter.addEventListener('change', function() {
+            const selectedFilter = this.value;
+            let visibleCount = 0;
+
+            gridItems.forEach(item => {
+                if (selectedFilter === 'all' || item.dataset.type === selectedFilter) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide empty state
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        });
+
+        // Reset filter
+        resetFilterBtn.addEventListener('click', function() {
+            contentFilter.value = 'all';
+            contentFilter.dispatchEvent(new Event('change'));
+        });
+
+        // Refresh button - animation only for demo
+        refreshGridBtn.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            icon.style.animation = 'spin 1s linear';
+            
+            setTimeout(() => {
+                icon.style.animation = '';
+            }, 1000);
+            
+            // Here you would typically fetch fresh data
+            console.log('Refreshing content...');
+        });
+
+        // Add spinning animation for refresh icon
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Modal view for grid items (optional functionality - view only)
+        gridItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const itemType = this.dataset.type;
+                const itemTitle = this.querySelector('h4')?.textContent || 'Content Preview';
+                const itemContent = this.querySelector('.item-content').innerHTML;
+                
+                showPreviewModal(itemTitle, itemContent, itemType);
+            });
+        });
+
+        // Preview modal function
+        function showPreviewModal(title, content, type) {
+            // Check if modal already exists
+            let modal = document.getElementById('preview-modal');
+            
+            if (!modal) {
+                // Create modal container
+                modal = document.createElement('div');
+                modal.id = 'preview-modal';
+                modal.className = 'preview-modal';
+                
+                // Add modal styles
+                const modalStyle = document.createElement('style');
+                modalStyle.textContent = `
+                    .preview-modal {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        z-index: 1000;
+                        justify-content: center;
+                        align-items: center;
+                        animation: fadeIn 0.3s ease;
+                    }
+                    
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                    
+                    .modal-content {
+                        background-color: white;
+                        width: 90%;
+                        max-width: 700px;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                    }
+                    
+                    .modal-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 15px 20px;
+                        background-color: var(--fsu-garnet);
+                        color: white;
+                    }
+                    
+                    .modal-title {
+                        margin: 0;
+                        font-size: 1.2rem;
+                    }
+                    
+                    .modal-close {
+                        background: none;
+                        border: none;
+                        color: white;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                    }
+                    
+                    .modal-body {
+                        padding: 20px;
+                        max-height: 70vh;
+                        overflow-y: auto;
+                    }
+                    
+                    .modal-footer {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 15px 20px;
+                        background-color: #f5f5f5;
+                        border-top: 1px solid #e0e0e0;
+                    }
+                    
+                    .modal-type-badge {
+                        padding: 5px 10px;
+                        border-radius: 15px;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                    }
+                    
+                    .modal-note {
+                        color: #777;
+                        font-size: 0.9rem;
+                        font-style: italic;
+                    }
+                    
+                    /* For image content */
+                    .modal-body img {
+                        max-width: 100%;
+                        height: auto;
+                        display: block;
+                        margin: 0 auto;
+                    }
+                `;
+                document.head.appendChild(modalStyle);
+                
+                // Add modal HTML
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title"></h3>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <span class="modal-type-badge"></span>
+                            <span class="modal-note">View only - editing disabled</span>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Set up close functionality
+                const closeBtn = modal.querySelector('.modal-close');
+                closeBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+                
+                // Close on click outside
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Update modal content
+            modal.querySelector('.modal-title').textContent = title;
+            modal.querySelector('.modal-body').innerHTML = content;
+            
+            // Set type badge
+            const typeBadge = modal.querySelector('.modal-type-badge');
+            if (type === 'drafts') {
+                typeBadge.textContent = 'Content Draft';
+                typeBadge.style.backgroundColor = 'rgba(33, 150, 243, 0.1)';
+                typeBadge.style.color = '#2196F3';
+            } else {
+                typeBadge.textContent = 'Graphic';
+                typeBadge.style.backgroundColor = 'rgba(156, 39, 176, 0.1)';
+                typeBadge.style.color = '#9C27B0';
+            }
+            
+            // Show modal
+            modal.style.display = 'flex';
+        }
+    });
+
+    // Comments Functionality - Updated Version
+function initializeComments() {
+    console.log("Initializing comments functionality");
+    
+    // Get DOM elements
+    const commentInput = document.getElementById('commentInput');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const commentsList = document.getElementById('commentsList');
+    
+    // Debug log to check if elements are found
+    console.log("Comment elements:", {
+        input: commentInput,
+        button: postCommentBtn,
+        list: commentsList
+    });
+    
+    // Ensure elements exist before adding event listeners
+    if (!commentInput || !postCommentBtn || !commentsList) {
+        console.error("Could not find required comment elements");
+        return;
+    }
+    
+    // Remove any existing event listeners by cloning
+    const newPostBtn = postCommentBtn.cloneNode(true);
+    postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
+    
+    // Add event listener to post button
+    newPostBtn.addEventListener('click', function(e) {
+        console.log("Post comment button clicked");
+        e.preventDefault();
+        
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            addNewComment(commentText, commentsList);
+            commentInput.value = '';
+            
+            // Scroll to the new comment
+            setTimeout(() => {
+                const firstComment = commentsList.firstChild;
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        } else {
+            alert('Please enter a comment');
+        }
+    });
+    
+    // Add keypress event to also submit on Enter
+    commentInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            newPostBtn.click();
+        }
+    });
+    
+    // Auto-resize the textarea as user types
+    commentInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+    
+    // Add event listeners to existing comment buttons
+    setupCommentButtons();
+    
+    console.log("Comments functionality initialized");
+}
+
+function addNewComment(text, commentsList) {
+    // Ensure commentsList is provided or find it
+    if (!commentsList) {
+        commentsList = document.getElementById('commentsList');
+        if (!commentsList) {
+            console.error("Comments list element not found");
+            return;
+        }
+    }
+    
+    console.log("Adding new comment:", text);
+    
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+    
+    // Create a new comment element
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item';
+    
+    // Create comment HTML without avatar image
+    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <!-- No avatar image -->
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    `;
+    
+    // Add to the beginning of the list with a fade-in effect
+    newComment.style.opacity = '0';
+    newComment.style.transition = 'opacity 0.3s ease';
+    
+    if (commentsList.firstChild) {
+        commentsList.insertBefore(newComment, commentsList.firstChild);
+    } else {
+        commentsList.appendChild(newComment);
+    }
+    
+    // Trigger the fade-in animation
+    setTimeout(() => {
+        newComment.style.opacity = '1';
+    }, 10);
+    
+    console.log("Comment added to list");
+    
+    // Add event listeners to the new comment's buttons
+    setupCommentButtonsForElement(newComment);
+    
+    // Update the comments counter if it exists
+    updateCommentsCounter();
+}
+
+function updateCommentsCounter() {
+    const counter = document.querySelector('.comments-counter');
+    if (counter) {
+        const count = document.querySelectorAll('.comment-item').length;
+        counter.textContent = count;
+    }
+}
+
+function setupCommentButtons() {
+    console.log("Setting up comment buttons for all comments");
+    
+    // Get all comment items
+    const commentItems = document.querySelectorAll('.comment-item');
+    console.log(`Found ${commentItems.length} comments`);
+    
+    commentItems.forEach((item, index) => {
+        console.log(`Setting up buttons for comment ${index}`);
+        setupCommentButtonsForElement(item);
+    });
+}
+
+function setupCommentButtonsForElement(element) {
+    if (!element) {
+        console.error("No element provided to setupCommentButtonsForElement");
+        return;
+    }
+    
+    // Reply button - using more specific selector with the added class
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+                     element.querySelector('.comment-action-btn:first-child');
+                     
+    if (replyBtn) {
+        // Remove existing event listeners by cloning
+        const newReplyBtn = replyBtn.cloneNode(true);
+        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+        
+        newReplyBtn.addEventListener('click', function() {
+            const commentAuthor = element.querySelector('.comment-author').textContent;
+            const commentInput = document.getElementById('commentInput');
+            if (commentInput) {
+                commentInput.value = `@${commentAuthor} `;
+                commentInput.focus();
+                
+                // Auto-resize the textarea after setting value
+                commentInput.style.height = 'auto';
+                commentInput.style.height = (commentInput.scrollHeight) + 'px';
+                
+                // Scroll to the comment form
+                commentInput.scrollIntoView({ behavior: 'smooth' });
+                
+                console.log(`Set reply to ${commentAuthor}`);
+            } else {
+                console.error("Comment input not found");
+            }
+        });
+    } else {
+        console.warn("Reply button not found in comment", element);
+    }
+    
+    // Edit button - using more specific selector with the added class
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+                    element.querySelector('.comment-action-btn:nth-child(2)');
+                    
+    if (editBtn) {
+        // Remove existing event listeners by cloning
+        const newEditBtn = editBtn.cloneNode(true);
+        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+        
+        newEditBtn.addEventListener('click', function() {
+            const commentText = element.querySelector('.comment-text');
+            if (!commentText) {
+                console.error("Comment text element not found");
+                return;
+            }
+            
+            const originalText = commentText.textContent;
+            console.log("Editing comment:", originalText);
+            
+            // Check if we're already editing this comment
+            if (element.querySelector('.comment-edit-interface')) {
+                console.warn("Edit interface already open");
+                return;
+            }
+            
+            // Create edit interface
+            const editInterface = document.createElement('div');
+            editInterface.className = 'comment-edit-interface';
+            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+            
+            // Replace comment text with edit interface
+            commentText.style.display = 'none';
+            commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
+            
+            // Focus the textarea and auto-resize
+            const textarea = editInterface.querySelector('.comment-edit-input');
+            textarea.focus();
+            
+            // Set initial height based on content
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            
+            // Add auto-resize on input
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            // Add event listeners for save and cancel buttons
+            const saveBtn = editInterface.querySelector('.save-edit-btn');
+            saveBtn.addEventListener('click', function() {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    commentText.textContent = newText;
+                    console.log("Comment updated:", newText);
+                }
+                // Clean up
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+            
+            const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Just clean up without saving
+                commentText.style.display = 'block';
+                editInterface.remove();
+                console.log("Edit cancelled");
+            });
+        });
+    } else {
+        console.warn("Edit button not found in comment", element);
+    }
+}
+
+// Make sure comments are initialized after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing comments");
+    initializeComments();
+});
+
+// In case DOMContentLoaded already fired, also try to initialize now
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    console.log("Document already loaded, initializing comments immediately");
+    setTimeout(initializeComments, 100); // Short timeout to ensure execution
+}
             
 
 </script>
