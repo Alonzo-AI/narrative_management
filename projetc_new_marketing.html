@@ -381,6 +381,55 @@
         }
     }
 
+    .assigned-sponsor-display {
+        background-color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;    
+        align-items: center;
+        border-left: 4px solid var(--fsu-gold);
+        transition: all 0.3s ease;
+    }
+    
+    .assigned-sponsor-display.hidden {
+        display: flex;
+    }
+ 
+    .sponsor-icon {
+        background-color: rgba(120, 47, 64, 0.1);
+        padding: 10px;
+        border-radius: 50%;
+        color: var(--fsu-garnet);
+    }
+    
+    .sponsor-info {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sponsor-label {
+        font-size: 0.8rem;
+        color: #666;
+    }
+    
+    .sponsor-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--fsu-garnet);
+    }
+    
+    /* Animation for when sponsor is assigned */
+    @keyframes sponsorAssigned {
+        0% { transform: translateY(-10px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    .sponsor-assigned-animation {
+        animation: sponsorAssigned 0.4s ease forwards;
+    }
+
     /* Grid Container Styles */
     .content-grid-container {
         background-color: white;
@@ -584,6 +633,97 @@
 
     .hidden {
         display: none;
+    }
+
+    /* Preview modal styles */
+    .preview-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .modal-content {
+        background-color: white;
+        width: 90%;
+        max-width: 700px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: var(--fsu-garnet);
+        color: white;
+    }
+    
+    .modal-title {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+    
+    .modal-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .modal-body {
+        padding: 20px;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+    
+    .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+        background-color: #f5f5f5;
+        border-top: 1px solid #e0e0e0;
+    }
+    
+    .modal-type-badge {
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .modal-note {
+        color: #777;
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+    
+    /* For image content */
+    .modal-body img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
     }
 
     /* Responsive adjustments */
@@ -896,7 +1036,7 @@
                     <div class="info-item">
                         <i class="material-icons">person</i>
                         <div class="info-content">
-                            <span class="info-label">Graphics Coordinator</span>
+                            <span class="info-label">Marketing Coordinator</span>
                             <span class="info-value">Sarah Johnson</span>
                         </div>
                     </div>
@@ -942,23 +1082,21 @@
             </div>
             <div class="sponsor-actions">
                 <button id="assign-sponsor-btn" class="assign-sponsor-btn">Assign Sponsor</button>
-                <button id="submit-review-btn" class="submit-review-btn">Submit for Review</button>
+                <button id="submit-review-btn" class="submit-review-btn">Submit Review</button>
             </div>
+        </div>
+
+        <div id="assigned-sponsor-display" class="assigned-sponsor-display hidden">
+            
+            
         </div>
 
         <!-- Grid View Container for Content Drafts and Graphics -->
 <div class="content-grid-container">
     <div class="grid-header">
-        <h3>Content & Graphics Preview</h3>
+        <h3>Stories Preview</h3>
         <div class="grid-controls">
-            <div class="grid-filter">
-                <label for="content-filter">Filter by:</label>
-                <select id="content-filter" class="filter-dropdown">
-                    <option value="all">All Items</option>
-                    <option value="drafts">Content Drafts</option>
-                    <option value="graphics">Graphics</option>
-                </select>
-            </div>
+            
             <button id="refresh-grid" class="refresh-btn">
                 <i class="material-icons">refresh</i>
                 Refresh
@@ -1087,7 +1225,9 @@
         const customSponsorInput = document.getElementById('custom-sponsor-input');
         const customSponsorName = document.getElementById('custom-sponsor-name');
         const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
-        const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
+        const assignSponsorBtn = document.getElementById('assign-sponsor-btn');        
+        const assignedSponsorDisplay = document.getElementById('assigned-sponsor-display');
+        const assignedSponsorName = document.getElementById('assigned-sponsor-name');
 
         // Show/hide custom sponsor input based on dropdown selection
         sponsorDropdown.addEventListener('change', function() {
@@ -1143,6 +1283,35 @@
                 showNotification('Please select a sponsor', 'error');
             }
         });
+
+        // Handle sponsor assignment
+        assignSponsorBtn.addEventListener('click', function() {
+            const selectedOption = sponsorDropdown.options[sponsorDropdown.selectedIndex];
+            
+            if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
+                // Get the selected sponsor name
+                const sponsorName = selectedOption.textContent;
+                
+                // Update the assigned sponsor display
+                assignedSponsorName.textContent = sponsorName;
+                
+                // Show the assigned sponsor display with animation
+                assignedSponsorDisplay.classList.remove('hidden');
+                assignedSponsorDisplay.classList.add('sponsor-assigned-animation');
+                
+                // Remove animation class after it completes
+                setTimeout(() => {
+                    assignedSponsorDisplay.classList.remove('sponsor-assigned-animation');
+                }, 400);
+                
+                // You could also add notification
+                showNotification(`Assigned ${sponsorName} as sponsor`, 'success');
+            } else {
+                // If no sponsor is selected
+                showNotification('Please select a sponsor', 'error');
+            }
+        });
+        
         
         // Submit for review button functionality
         const submitReviewBtn = document.getElementById('submit-review-btn');
@@ -1363,21 +1532,13 @@
             console.log('Refreshing content...');
         });
 
-        // Add spinning animation for refresh icon
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Modal view for grid items (optional functionality - view only)
+        // Modal view for grid items (view only)
         gridItems.forEach(item => {
             item.addEventListener('click', function() {
                 const itemType = this.dataset.type;
-                const itemTitle = this.querySelector('h4')?.textContent || 'Content Preview';
+                const itemTitle = this.querySelector('h4')?.textContent || 
+                                 this.querySelector('img')?.alt || 
+                                 'Content Preview';
                 const itemContent = this.querySelector('.item-content').innerHTML;
                 
                 showPreviewModal(itemTitle, itemContent, itemType);
@@ -1394,96 +1555,6 @@
                 modal = document.createElement('div');
                 modal.id = 'preview-modal';
                 modal.className = 'preview-modal';
-                
-                // Add modal styles
-                const modalStyle = document.createElement('style');
-                modalStyle.textContent = `
-                    .preview-modal {
-                        display: none;
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background-color: rgba(0, 0, 0, 0.5);
-                        z-index: 1000;
-                        justify-content: center;
-                        align-items: center;
-                        animation: fadeIn 0.3s ease;
-                    }
-                    
-                    @keyframes fadeIn {
-                        from { opacity: 0; }
-                        to { opacity: 1; }
-                    }
-                    
-                    .modal-content {
-                        background-color: white;
-                        width: 90%;
-                        max-width: 700px;
-                        border-radius: 8px;
-                        overflow: hidden;
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                    }
-                    
-                    .modal-header {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 15px 20px;
-                        background-color: var(--fsu-garnet);
-                        color: white;
-                    }
-                    
-                    .modal-title {
-                        margin: 0;
-                        font-size: 1.2rem;
-                    }
-                    
-                    .modal-close {
-                        background: none;
-                        border: none;
-                        color: white;
-                        font-size: 1.5rem;
-                        cursor: pointer;
-                    }
-                    
-                    .modal-body {
-                        padding: 20px;
-                        max-height: 70vh;
-                        overflow-y: auto;
-                    }
-                    
-                    .modal-footer {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 15px 20px;
-                        background-color: #f5f5f5;
-                        border-top: 1px solid #e0e0e0;
-                    }
-                    
-                    .modal-type-badge {
-                        padding: 5px 10px;
-                        border-radius: 15px;
-                        font-size: 0.8rem;
-                        font-weight: 600;
-                    }
-                    
-                    .modal-note {
-                        color: #777;
-                        font-size: 0.9rem;
-                        font-style: italic;
-                    }
-                    
-                    /* For image content */
-                    .modal-body img {
-                        max-width: 100%;
-                        height: auto;
-                        display: block;
-                        margin: 0 auto;
-                    }
-                `;
-                document.head.appendChild(modalStyle);
                 
                 // Add modal HTML
                 modal.innerHTML = `
