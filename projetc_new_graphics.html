@@ -167,18 +167,16 @@
 }
 
 .status-in-progress .info-value {
-  color: #2196F3; /* Blue */
+    color: #2196F3; /* Blue */
 }
 
 .status-under-review .info-value {
-  color: #FF9800; /* Orange */
+    color: #FF9800; /* Orange */
 }
 
 .status-completed .info-value {
-  color: #4CAF50; /* Green */
+    color: #4CAF50; /* Green */
 }
-
-
 
 /* Status Icon Animations */
 .info-item:nth-child(2) i.material-icons {
@@ -1549,30 +1547,73 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     // Function to render graphics grid
-    function renderGraphicsGrid() {
-        // Clear the grid
-        graphicsGrid.innerHTML = '';
-        
-        if (graphicsItems.length === 0) {
-            // Show empty state if no items
-            graphicsGrid.innerHTML = `
-                <div class="empty-grid">
-                    <i class="material-icons">image</i>
-                    <p>No graphics added yet. Click "Add New" to create your first graphic.</p>
-                </div>
+function renderGraphicsGrid() {
+    // Clear the grid
+    graphicsGrid.innerHTML = '';
+    
+    if (graphicsItems.length === 0) {
+        // Show empty state if no items
+        graphicsGrid.innerHTML = `
+            <div class="empty-grid">
+                <i class="material-icons">image</i>
+                <p>No graphics added yet. Click "Add New" to create your first graphic.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Add each item to the grid
+    graphicsItems.forEach(item => {
+        // If this is a multi-image item, create a grid item for each image
+        if (item.mediaItems && item.mediaItems.length > 1) {
+            // Create a container for this set of related media
+            const gridSetContainer = document.createElement('div');
+            gridSetContainer.className = 'grid-set-container';
+            
+            // Add a label/header for this media set
+            const gridSetHeader = document.createElement('div');
+            gridSetHeader.className = 'grid-set-header';
+            gridSetHeader.innerHTML = `
+                <h3>${item.title}</h3>
+                <span class="grid-item-type">${item.type}</span>
             `;
-            return;
-        }
-        
-        // Add each item to the grid
-        graphicsItems.forEach(item => {
+            graphicsGrid.appendChild(gridSetHeader);
+            
+            // Create a grid item for each media item
+            item.mediaItems.forEach((mediaItem, index) => {
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-item';
+                gridItem.dataset.id = `${item.id}-${index}`;
+                gridItem.dataset.parentId = item.id;
+                
+                gridItem.innerHTML = `
+                    <div class="grid-item-preview">
+                        <img src="${mediaItem.img}" alt="${mediaItem.name}">
+                        <div class="grid-item-overlay">
+                            <button class="grid-action-btn edit-btn" data-id="${item.id}"><i class="material-icons">edit</i></button>
+                            <button class="grid-action-btn delete-btn" data-id="${item.id}"><i class="material-icons">delete</i></button>
+                        </div>
+                    </div>
+                    <div class="grid-item-info">
+                        <h4>${mediaItem.name}</h4>
+                        <span class="media-count">${index + 1} of ${item.mediaItems.length}</span>
+                    </div>
+                `;
+                
+                graphicsGrid.appendChild(gridItem);
+            });
+        } else {
+            // Single image item (or default behavior)
             const gridItem = document.createElement('div');
             gridItem.className = 'grid-item';
             gridItem.dataset.id = item.id;
             
+            const imageSrc = item.mediaItems && item.mediaItems.length > 0 ? 
+                item.mediaItems[0].img : item.imageSrc;
+            
             gridItem.innerHTML = `
                 <div class="grid-item-preview">
-                    <img src="${item.imageSrc}" alt="${item.title}">
+                    <img src="${imageSrc}" alt="${item.title}">
                     <div class="grid-item-overlay">
                         <button class="grid-action-btn edit-btn" data-id="${item.id}"><i class="material-icons">edit</i></button>
                         <button class="grid-action-btn delete-btn" data-id="${item.id}"><i class="material-icons">delete</i></button>
@@ -1585,11 +1626,12 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             
             graphicsGrid.appendChild(gridItem);
-        });
-        
-        // Add event listeners to the new buttons
-        addButtonListeners();
-    }
+        }
+    });
+    
+    // Add event listeners to the new buttons
+    addButtonListeners();
+}
     
     // Function to filter graphics based on selected content type
     function filterGraphicsByType(contentType) {
@@ -1829,122 +1871,120 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Save selection functionality
-    const saveSelectionBtn = document.getElementById('save-selection');
-    
-    if (saveSelectionBtn) {
-        saveSelectionBtn.addEventListener('click', function() {
-            const checkedBoxes = document.querySelectorAll('input[name="selected-media"]:checked');
+const saveSelectionBtn = document.getElementById('save-selection');
+
+if (saveSelectionBtn) {
+    saveSelectionBtn.addEventListener('click', function() {
+        const checkedBoxes = document.querySelectorAll('input[name="selected-media"]:checked');
+        
+        if (checkedBoxes.length === 0) {
+            alert('Please select at least one media item.');
+            return;
+        }
+        
+        if (!contentTypeSelect) {
+            console.error("Content type select not found!");
+            return;
+        }
+        
+        const contentType = contentTypeSelect.value;
+        
+        // Create new graphic(s) from selected media
+        const selectedIds = Array.from(checkedBoxes).map(box => box.id);
+        
+        // Get a list of selected media items
+        const selectedItems = [];
+        selectedIds.forEach(id => {
+            let mediaElem;
+            let mediaItem;
             
-            if (checkedBoxes.length === 0) {
-                alert('Please select at least one media item.');
-                return;
+            // Check which category this item belongs to
+            if (id.startsWith('team-')) {
+                mediaItem = teamGalleryMedia.find(item => item.id === id);
+            } else if (id.startsWith('stock-')) {
+                mediaItem = stockMedia.find(item => item.id === id);
+            } else if (id.startsWith('research-')) {
+                mediaItem = researchMedia.find(item => item.id === id);
             }
             
-            if (!contentTypeSelect) {
-                console.error("Content type select not found!");
-                return;
-            }
-            
-            const contentType = contentTypeSelect.value;
-            
-            // Create new graphic(s) from selected media
-            const selectedIds = Array.from(checkedBoxes).map(box => box.id);
-            
-            // Get a list of selected media items
-            const selectedItems = [];
-            selectedIds.forEach(id => {
-                let mediaElem;
-                let mediaItem;
-                
-                // Check which category this item belongs to
-                if (id.startsWith('team-')) {
-                    mediaItem = teamGalleryMedia.find(item => item.id === id);
-                } else if (id.startsWith('stock-')) {
-                    mediaItem = stockMedia.find(item => item.id === id);
-                } else if (id.startsWith('research-')) {
-                    mediaItem = researchMedia.find(item => item.id === id);
-                }
-                
-                if (mediaItem) {
-                    selectedItems.push({
-                        img: mediaItem.imageSrc,
-                        name: mediaItem.name
-                    });
-                } else {
-                    // Fallback to DOM method if item not found in arrays
-                    mediaElem = document.querySelector(`label[for="${id}"]`).closest('.media-item');
-                    if (mediaElem) {
-                        const mediaImg = mediaElem.querySelector('img').src;
-                        const mediaName = mediaElem.querySelector('.media-name').textContent;
-                        
-                        selectedItems.push({
-                            img: mediaImg,
-                            name: mediaName
-                        });
-                    }
-                }
-            });
-            
-            if (selectedItems.length === 0) {
-                alert('Error retrieving selected media items. Please try again.');
-                return;
-            }
-            
-            // Generate a title based on the first selected media item and content type
-            const generatedTitle = contentType === 'press-release' ? 
-                `Press Release: ${selectedItems[0].name}` : 
-                `Social Post: ${selectedItems[0].name}`;
-            
-            // Get next ID
-            const nextId = Math.max(
-                ...[...pressReleaseGraphics, ...socialMediaGraphics].map(item => item.id),
-                0
-            ) + 1;
-            
-            // Create a new item with the selected data
-            const newItem = {
-                id: nextId,
-                title: generatedTitle,
-                type: contentType === 'press-release' ? 'Press Release' : 'Social Media',
-                imageSrc: selectedItems[0].img, // Use the first image as the preview
-                mediaItems: selectedItems
-            };
-            
-            // Add to the appropriate array
-            if (contentType === 'press-release') {
-                pressReleaseGraphics.push(newItem);
+            if (mediaItem) {
+                selectedItems.push({
+                    img: mediaItem.imageSrc,
+                    name: mediaItem.name
+                });
             } else {
-                socialMediaGraphics.push(newItem);
-            }
-            
-            // Also add to the current display array if the content type matches
-            const currentContentType = contentTypeSelect.value;
-            if (currentContentType === contentType || !currentContentType) {
-                graphicsItems.push(newItem);
-            }
-            
-            // Re-render the grid
-            renderGraphicsGrid();
-            
-            // Close the popup
-            closePopup();
-            
-            // Show confirmation
-            alert(`New ${newItem.type} added successfully with ${selectedItems.length} media items!`);
-            
-            // Update phase status if this is the first graphic added
-            const phaseStatusContainer = document.querySelector('.info-item:nth-child(2)');
-            const phaseStatusValue = phaseStatusContainer ? phaseStatusContainer.querySelector('.info-value') : null;
-            
-            if (phaseStatusValue && phaseStatusValue.textContent === 'In Progress') {
-                phaseStatusContainer.classList.remove('status-in-progress');
-                phaseStatusContainer.classList.add('status-under-review');
-                phaseStatusValue.textContent = 'Under Review';
+                // Fallback to DOM method if item not found in arrays
+                mediaElem = document.querySelector(`label[for="${id}"]`).closest('.media-item');
+                if (mediaElem) {
+                    const mediaImg = mediaElem.querySelector('img').src;
+                    const mediaName = mediaElem.querySelector('.media-name').textContent;
+                    
+                    selectedItems.push({
+                        img: mediaImg,
+                        name: mediaName
+                    });
+                }
             }
         });
-    } else {
-        console.error("Save selection button not found!");
-    }
+        
+        if (selectedItems.length === 0) {
+            alert('Error retrieving selected media items. Please try again.');
+            return;
+        }
+        
+        // Generate a title based on the first selected media item and content type
+        const generatedTitle = contentType === 'press-release' ? 
+            `Press Release: ${selectedItems[0].name}` : 
+            `Social Post: ${selectedItems[0].name}`;
+        
+        // Get next ID
+        const nextId = Math.max(
+            ...[...pressReleaseGraphics, ...socialMediaGraphics].map(item => item.id),
+            0
+        ) + 1;
+        
+        // Create a new item with the selected data
+        const newItem = {
+            id: nextId,
+            title: generatedTitle,
+            type: contentType === 'press-release' ? 'Press Release' : 'Social Media',
+            imageSrc: selectedItems[0].img, // Use the first image as the preview
+            mediaItems: selectedItems
+        };
+        
+        // Add to the appropriate array
+        if (contentType === 'press-release') {
+            pressReleaseGraphics.push(newItem);
+        } else {
+            socialMediaGraphics.push(newItem);
+        }
+        
+        // Add to current display array regardless of filter
+        // This ensures the new item is always visible after being added
+        graphicsItems.push(newItem);
+        
+        // Re-render the grid
+        renderGraphicsGrid();
+        
+        // Close the popup
+        closePopup();
+        
+        // Show confirmation
+        alert(`New ${newItem.type} added successfully with ${selectedItems.length} media items!`);
+        
+        // Update phase status if this is the first graphic added
+        const phaseStatusContainer = document.querySelector('.info-item:nth-child(2)');
+        const phaseStatusValue = phaseStatusContainer ? phaseStatusContainer.querySelector('.info-value') : null;
+        
+        if (phaseStatusValue && phaseStatusValue.textContent === 'In Progress') {
+            phaseStatusContainer.classList.remove('status-in-progress');
+            phaseStatusContainer.classList.add('status-under-review');
+            phaseStatusValue.textContent = 'Under Review';
+        }
+    });
+} else {
+    console.error("Save selection button not found!");
+}
     
     // Submit review button functionality
     const submitReviewBtn = document.querySelector('.btn-submit');
