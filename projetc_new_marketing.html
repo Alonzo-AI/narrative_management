@@ -315,11 +315,11 @@
     .sponsor-actions {
         display: flex;
         justify-content: flex-end;
+        gap: 12px;
     }
 
-    .assign-sponsor-btn {
+    .assign-sponsor-btn, .submit-review-btn {
         padding: 12px 24px;
-        background-color: var(--fsu-garnet);
         color: white;
         border: none;
         border-radius: 6px;
@@ -331,13 +331,29 @@
         align-items: center;
         justify-content: center;
     }
-
-    .assign-sponsor-btn:hover {
-        background-color: #662535;
-        transform: translateY(-2px);
+    
+    .assign-sponsor-btn {
+        background-color: var(--fsu-garnet);
+    }
+    
+    .submit-review-btn {
+        background-color: var(--fsu-gold);
+        color: var(--fsu-garnet);
     }
 
-    .assign-sponsor-btn:active {
+    .assign-sponsor-btn:hover, .submit-review-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .assign-sponsor-btn:hover {
+        background-color: #662535;
+    }
+    
+    .submit-review-btn:hover {
+        background-color: #b9a677;
+    }
+
+    .assign-sponsor-btn:active, .submit-review-btn:active {
         transform: translateY(0);
     }
 
@@ -455,10 +471,10 @@
             </div>
             <div class="sponsor-actions">
                 <button id="assign-sponsor-btn" class="assign-sponsor-btn">Assign Sponsor</button>
+                <button id="submit-review-btn" class="submit-review-btn">Submit for Review</button>
             </div>
         </div>
-
-        <script>
+<script>
         
         document.addEventListener('DOMContentLoaded', function() {
         const sponsorDropdown = document.getElementById('sponsor-dropdown');
@@ -519,6 +535,28 @@
                 updateSponsorDisplay(selectedSponsor.textContent);
             } else {
                 showNotification('Please select a sponsor', 'error');
+            }
+        });
+        
+        // Submit for review button functionality
+        const submitReviewBtn = document.getElementById('submit-review-btn');
+        submitReviewBtn.addEventListener('click', function() {
+            // Check if a sponsor has been assigned
+            const sponsorDisplay = document.querySelector('.assigned-sponsor-display');
+            
+            if (sponsorDisplay) {
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to submit this for review? This will notify the review team.')) {
+                    showNotification('Marketing materials submitted for review', 'success');
+                    
+                    // Here you would typically send data to your backend
+                    console.log('Marketing materials submitted for review');
+                    
+                    // Optional: Update the status in the header
+                    updateProjectStatus('Under Review');
+                }
+            } else {
+                showNotification('Please assign a sponsor before submitting for review', 'error');
             }
         });
 
@@ -643,6 +681,31 @@
                 <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">check_circle</i>
                 Current sponsor: <strong>${sponsorName}</strong>
             `;
+        }
+        
+        // Helper function to update project status in the header
+        function updateProjectStatus(status) {
+            const statusValue = document.querySelector('.info-item:nth-child(2) .info-value');
+            if (statusValue) {
+                // Remove any existing status classes
+                statusValue.parentElement.parentElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+                
+                // Update text
+                statusValue.textContent = status;
+                
+                // Add appropriate class
+                switch(status) {
+                    case 'In Progress':
+                        statusValue.parentElement.parentElement.classList.add('status-in-progress');
+                        break;
+                    case 'Under Review':
+                        statusValue.parentElement.parentElement.classList.add('status-under-review');
+                        break;
+                    case 'Completed':
+                        statusValue.parentElement.parentElement.classList.add('status-completed');
+                        break;
+                }
+            }
         }
     });
             
