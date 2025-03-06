@@ -219,6 +219,110 @@
     animation: pulse 2s infinite ease-in-out;
 }
 
+/* Dashboard styles */
+.dashboard {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dashboard-title {
+            color: var(--fsu-garnet);
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dashboard-title i {
+            color: var(--fsu-garnet);
+        }
+
+        .publish-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .select-container {
+            position: relative;
+            min-width: 250px;
+        }
+
+        .select-container label {
+            display: block;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            font-size: 1rem;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            color: var(--fsu-black);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--fsu-gold);
+            box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.3);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            color: #777;
+            pointer-events: none;
+        }
+
+        .submit-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            background-color: #651b2a;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
 </style>
 </head>
 <body>
@@ -267,7 +371,7 @@
                     <div class="info-item">
                         <i class="material-icons">person</i>
                         <div class="info-content">
-                            <span class="info-label">Graphics Coordinator</span>
+                            <span class="info-label">Publishing Coordinator</span>
                             <span class="info-value">Sarah Johnson</span>
                         </div>
                     </div>
@@ -289,7 +393,62 @@
             </div>
         </header>
 
+        <!-- Publishing Dashboard -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+           
+        </div>
+
+        <!-- Publishing Options -->
+        <div class="publish-options">
+            <div class="select-container">
+                <label for="publish-type">Select Publish Type:</label>
+                <select id="publish-type" class="custom-select">
+                    <option value="" disabled selected>Choose publish destination...</option>                  
+                    <option value="social">Social Media</option>
+                    <option value="press">Press Release</option>
+                   
+                </select>
+                <i class="material-icons select-arrow">arrow_drop_down</i>
+            </div>
+            
+            <button id="submit-review-btn" class="submit-btn">
+                <i class="material-icons">send</i>
+                Submit Review
+            </button>
+        </div>
+    </div>
+
         <script>
+
+            // DOM Elements
+        const publishTypeSelect = document.getElementById('publish-type');
+        const submitReviewBtn = document.getElementById('submit-review-btn');
+
+        // Submit button click handler
+        submitReviewBtn.addEventListener('click', () => {
+            const selectedPublishType = publishTypeSelect.value;
+            
+            if (!selectedPublishType) {
+                alert('Please select a publish type first');
+                return;
+            }
+            
+            // Simulating submission - replace with actual submission logic
+            alert(`Content submitted for ${selectedPublishType} review!`);
+        });
+
+        // Custom select styling
+        publishTypeSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex].text;
+            console.log(`Selected publish type: ${selectedOption}`);
+            
+            // Visual feedback on selection change
+            this.style.borderColor = '#ceb888';
+            setTimeout(() => {
+                this.style.borderColor = '#e0e0e0';
+            }, 300);
+        });
 
             
                     
