@@ -387,15 +387,13 @@
         border-radius: 8px;
         margin-top: 15px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        display: flex;    
+        display: none;    
         align-items: center;
         border-left: 4px solid var(--fsu-gold);
         transition: all 0.3s ease;
     }
     
-    .assigned-sponsor-display.hidden {
-        display: flex;
-    }
+   
  
     .sponsor-icon {
         background-color: rgba(120, 47, 64, 0.1);
@@ -1031,7 +1029,7 @@
 
         <div class="content-grid-container">
             <div class="grid-header">
-                <h3>Srories Preview</h3>
+                <h3>Stories Preview</h3>
                 <div class="grid-controls">
                     <button id="refresh-grid" class="refresh-btn">
                         <i class="material-icons">refresh</i>
@@ -1180,270 +1178,289 @@
 </main>
 
 <script>
-        
-        document.addEventListener('DOMContentLoaded', function() {
-        const sponsorDropdown = document.getElementById('sponsor-dropdown');
-        const customSponsorInput = document.getElementById('custom-sponsor-input');
-        const customSponsorName = document.getElementById('custom-sponsor-name');
-        const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
-        const assignSponsorBtn = document.getElementById('assign-sponsor-btn');        
-        const assignedSponsorDisplay = document.getElementById('assigned-sponsor-display');
-        const assignedSponsorName = document.getElementById('assigned-sponsor-name');
-
-        // Show/hide custom sponsor input based on dropdown selection
-        sponsorDropdown.addEventListener('change', function() {
-            if (this.value === 'custom') {
-                customSponsorInput.classList.remove('hidden');
-                customSponsorName.focus();
-            } else {
-                customSponsorInput.classList.add('hidden');
-            }
-        });
-
-        // Add custom sponsor to dropdown
-        addCustomSponsorBtn.addEventListener('click', function() {
-            const sponsorName = customSponsorName.value.trim();
             
-            if (sponsorName) {
-                // Create new option
-                const newOption = document.createElement('option');
-                newOption.value = sponsorName.toLowerCase().replace(/\s+/g, '-');
-                newOption.textContent = sponsorName;
-                
-                // Insert before the "Add Custom Sponsor..." option
-                const customOption = sponsorDropdown.querySelector('option[value="custom"]');
-                sponsorDropdown.insertBefore(newOption, customOption);
-                
-                // Select the new option
-                sponsorDropdown.value = newOption.value;
-                
-                // Hide custom input
-                customSponsorInput.classList.add('hidden');
-                customSponsorName.value = '';
-                
-                // Show confirmation message
-                showNotification(`Added ${sponsorName} to sponsors list`);
-            } else {
-                showNotification('Please enter a sponsor name', 'error');
-            }
-        });
-
-        // Assign sponsor button functionality
-        assignSponsorBtn.addEventListener('click', function() {
-            const selectedSponsor = sponsorDropdown.options[sponsorDropdown.selectedIndex];
-            
-            if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
-                showNotification(`Assigned ${selectedSponsor.textContent} as sponsor`, 'success');
-                
-                // Here you would typically send data to your backend
-                console.log(`Sponsor assigned: ${selectedSponsor.textContent}`);
-                
-                // Optional: Update UI to reflect the assignment
-                updateSponsorDisplay(selectedSponsor.textContent);
-            } else {
-                showNotification('Please select a sponsor', 'error');
-            }
-        });
-
-        // Handle sponsor assignment
-        assignSponsorBtn.addEventListener('click', function() {
-            const selectedOption = sponsorDropdown.options[sponsorDropdown.selectedIndex];
-            
-            if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
-                // Get the selected sponsor name
-                const sponsorName = selectedOption.textContent;
-                
-                // Update the assigned sponsor display
-                assignedSponsorName.textContent = sponsorName;
-                
-                // Show the assigned sponsor display with animation
-                assignedSponsorDisplay.classList.remove('hidden');
-                assignedSponsorDisplay.classList.add('sponsor-assigned-animation');
-                
-                // Remove animation class after it completes
-                setTimeout(() => {
-                    assignedSponsorDisplay.classList.remove('sponsor-assigned-animation');
-                }, 400);
-                
-                // You could also add notification
-                showNotification(`Assigned ${sponsorName} as sponsor`, 'success');
-            } else {
-                // If no sponsor is selected
-                showNotification('Please select a sponsor', 'error');
-            }
-        });
-        
-        
-        // Submit for review button functionality
-        const submitReviewBtn = document.getElementById('submit-review-btn');
-        submitReviewBtn.addEventListener('click', function() {
-            // Check if a sponsor has been assigned
-            const sponsorDisplay = document.querySelector('.assigned-sponsor-display');
-            
-            if (sponsorDisplay) {
-                // Show confirmation dialog
-                if (confirm('Are you sure you want to submit this for review? This will notify the review team.')) {
-                    showNotification('Marketing materials submitted for review', 'success');
-                    
-                    // Here you would typically send data to your backend
-                    console.log('Marketing materials submitted for review');
-                    
-                    // Optional: Update the status in the header
-                    updateProjectStatus('Under Review');
-                }
-            } else {
-                showNotification('Please assign a sponsor before submitting for review', 'error');
-            }
-        });
-
-        // Helper function to show notifications
-        function showNotification(message, type = 'info') {
-            // Check if notification container exists, create if not
-            let notificationContainer = document.querySelector('.notification-container');
-            
-            if (!notificationContainer) {
-                notificationContainer = document.createElement('div');
-                notificationContainer.className = 'notification-container';
-                document.body.appendChild(notificationContainer);
-                
-                // Add styles for notification container
-                const style = document.createElement('style');
-                style.textContent = `
-                    .notification-container {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        z-index: 1000;
-                    }
-                    
-                    .notification {
-                        margin-bottom: 10px;
-                        padding: 15px 20px;
-                        border-radius: 6px;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                        color: white;
-                        font-weight: 500;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        min-width: 300px;
-                        animation: slideIn 0.3s ease forwards;
-                    }
-                    
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                    
-                    .notification.info { background-color: #2196F3; }
-                    .notification.success { background-color: #4CAF50; }
-                    .notification.error { background-color: #F44336; }
-                    
-                    .notification-close {
-                        cursor: pointer;
-                        margin-left: 15px;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                ${message}
-                <span class="notification-close">&times;</span>
-            `;
-            
-            // Add to container
-            notificationContainer.appendChild(notification);
-            
-            // Handle close button
-            const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.addEventListener('click', function() {
-                removeNotification(notification);
-            });
-            
-            // Auto remove after 4 seconds
-            setTimeout(() => {
-                removeNotification(notification);
-            }, 4000);
-        }
-        
-        function removeNotification(notification) {
-            notification.style.animation = 'slideOut 0.3s ease forwards';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        }
-        
-        // Helper function to update UI with assigned sponsor (optional)
-        function updateSponsorDisplay(sponsorName) {
-            // Check if sponsor display exists, create if not
-            let sponsorDisplay = document.querySelector('.assigned-sponsor-display');
-            
-            if (!sponsorDisplay) {
-                sponsorDisplay = document.createElement('div');
-                sponsorDisplay.className = 'assigned-sponsor-display';
-                
-                // Add styles for sponsor display
-                const style = document.createElement('style');
-                style.textContent = `
-                    .assigned-sponsor-display {
-                        margin-top: 20px;
-                        padding: 15px;
-                        background-color: rgba(120, 47, 64, 0.1);
-                        border-left: 4px solid var(--fsu-garnet);
-                        border-radius: 4px;
-                        color: var(--fsu-garnet);
-                        font-weight: 500;
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                // Insert after sponsor container
-                const sponsorContainer = document.querySelector('.sponsor-container');
-                sponsorContainer.insertAdjacentElement('afterend', sponsorDisplay);
-            }
-            
-            sponsorDisplay.innerHTML = `
-                <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">check_circle</i>
-                Current sponsor: <strong>${sponsorName}</strong>
-            `;
-        }
-        
-        // Helper function to update project status in the header
-        function updateProjectStatus(status) {
-            const statusValue = document.querySelector('.info-item:nth-child(2) .info-value');
-            if (statusValue) {
-                // Remove any existing status classes
-                statusValue.parentElement.parentElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
-                
-                // Update text
-                statusValue.textContent = status;
-                
-                // Add appropriate class
-                switch(status) {
-                    case 'In Progress':
-                        statusValue.parentElement.parentElement.classList.add('status-in-progress');
-                        break;
-                    case 'Under Review':
-                        statusValue.parentElement.parentElement.classList.add('status-under-review');
-                        break;
-                    case 'Completed':
-                        statusValue.parentElement.parentElement.classList.add('status-completed');
-                        break;
-                }
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+    const sponsorDropdown = document.getElementById('sponsor-dropdown');
+    const customSponsorInput = document.getElementById('custom-sponsor-input');
+    const customSponsorName = document.getElementById('custom-sponsor-name');
+    const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
+    const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
+    const submitReviewBtn = document.getElementById('submit-review-btn');
+    const sponsorContainer = document.querySelector('.sponsor-container');
+    const sponsorSelection = document.querySelector('.sponsor-selection');
+    
+    // Show/hide custom sponsor input based on dropdown selection
+    sponsorDropdown.addEventListener('change', function() {
+        if (this.value === 'custom') {
+            customSponsorInput.classList.remove('hidden');
+            customSponsorName.focus();
+        } else {
+            customSponsorInput.classList.add('hidden');
         }
     });
+
+    // Add custom sponsor to dropdown
+    addCustomSponsorBtn.addEventListener('click', function() {
+        const sponsorName = customSponsorName.value.trim();
+        
+        if (sponsorName) {
+            // Create new option
+            const newOption = document.createElement('option');
+            newOption.value = sponsorName.toLowerCase().replace(/\s+/g, '-');
+            newOption.textContent = sponsorName;
+            
+            // Insert before the "Add Custom Sponsor..." option
+            const customOption = sponsorDropdown.querySelector('option[value="custom"]');
+            sponsorDropdown.insertBefore(newOption, customOption);
+            
+            // Select the new option
+            sponsorDropdown.value = newOption.value;
+            
+            // Hide custom input
+            customSponsorInput.classList.add('hidden');
+            customSponsorName.value = '';
+            
+            // Show confirmation message
+            showNotification(`Added ${sponsorName} to sponsors list`);
+        } else {
+            showNotification('Please enter a sponsor name', 'error');
+        }
+    });
+
+    // Assign sponsor button functionality
+    assignSponsorBtn.addEventListener('click', function() {
+        const selectedOption = sponsorDropdown.options[sponsorDropdown.selectedIndex];
+        
+        if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
+            // Get the selected sponsor name
+            const sponsorName = selectedOption.textContent;
+            
+            // Replace dropdown with sponsor name display
+            replaceDropdownWithSponsorName(sponsorName);
+            
+            // Hide the assign sponsor button
+            assignSponsorBtn.style.display = 'none';
+            
+            // Show notification
+            showNotification(`Assigned ${sponsorName} as sponsor`, 'success');
+            
+            // You would typically send data to your backend here
+            console.log(`Sponsor assigned: ${sponsorName}`);
+        } else {
+            // If no sponsor is selected
+            showNotification('Please select a sponsor', 'error');
+        }
+    });
+    
+    // Submit for review button functionality
+    submitReviewBtn.addEventListener('click', function() {
+        // Check if a sponsor has been assigned (button is hidden)
+        if (assignSponsorBtn.style.display === 'none') {
+            // Show confirmation dialog
+            if (confirm('Are you sure you want to submit this for review? This will notify the review team.')) {
+                showNotification('Marketing materials submitted for review', 'success');
+                
+                // Here you would typically send data to your backend
+                console.log('Marketing materials submitted for review');
+                
+                // Update the status in the header
+                updateProjectStatus('Under Review');
+            }
+        } else {
+            showNotification('Please assign a sponsor before submitting for review', 'error');
+        }
+    });
+
+    // Helper function to replace dropdown with sponsor name
+    function replaceDropdownWithSponsorName(sponsorName) {
+        // Create sponsor display element
+        const sponsorDisplay = document.createElement('div');
+        sponsorDisplay.className = 'assigned-sponsor-display';
+        sponsorDisplay.innerHTML = `
+            <div class="sponsor-icon">
+                <i class="material-icons">business</i>
+            </div>
+            <div class="sponsor-info">
+                <span class="sponsor-label">Assigned Sponsor</span>
+                <span class="sponsor-name">${sponsorName}</span>
+            </div>
+        `;
+        
+        // Add styles for the sponsor display if not already in document
+        if (!document.getElementById('sponsor-display-styles')) {
+            const displayStyles = document.createElement('style');
+            displayStyles.id = 'sponsor-display-styles';
+            displayStyles.textContent = `
+                .sponsor-selection .assigned-sponsor-display {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px 15px;
+                    background-color: #f9f9f9;
+                    border: 2px solid var(--fsu-gold);
+                    border-radius: 6px;
+                    animation: fadeIn 0.3s ease;
+                }
+                
+                .sponsor-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 40px;
+                    height: 40px;
+                    background-color: rgba(120, 47, 64, 0.1);
+                    border-radius: 50%;
+                }
+                
+                .sponsor-icon i {
+                    color: var(--fsu-garnet);
+                }
+                
+                .sponsor-info {
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                .sponsor-label {
+                    font-size: 0.8rem;
+                    color: #666;
+                }
+                
+                .sponsor-name {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    color: var(--fsu-garnet);
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(displayStyles);
+        }
+        
+        // Hide dropdown wrapper and custom input
+        const dropdownWrapper = document.querySelector('.sponsor-dropdown-wrapper');
+        dropdownWrapper.style.display = 'none';
+        
+        // Add the sponsor display to the selection area
+        sponsorSelection.appendChild(sponsorDisplay);
+    }
+
+    // Helper function to show notifications
+    function showNotification(message, type = 'info') {
+        // Check if notification container exists, create if not
+        let notificationContainer = document.querySelector('.notification-container');
+        
+        if (!notificationContainer) {
+            notificationContainer = document.createElement('div');
+            notificationContainer.className = 'notification-container';
+            document.body.appendChild(notificationContainer);
+            
+            // Add styles for notification container
+            const style = document.createElement('style');
+            style.textContent = `
+                .notification-container {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                }
+                
+                .notification {
+                    margin-bottom: 10px;
+                    padding: 15px 20px;
+                    border-radius: 6px;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    color: white;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    min-width: 300px;
+                    animation: slideIn 0.3s ease forwards;
+                }
+                
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+                
+                .notification.info { background-color: #2196F3; }
+                .notification.success { background-color: #4CAF50; }
+                .notification.error { background-color: #F44336; }
+                
+                .notification-close {
+                    cursor: pointer;
+                    margin-left: 15px;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            ${message}
+            <span class="notification-close">&times;</span>
+        `;
+        
+        // Add to container
+        notificationContainer.appendChild(notification);
+        
+        // Handle close button
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', function() {
+            removeNotification(notification);
+        });
+        
+        // Auto remove after 4 seconds
+        setTimeout(() => {
+            removeNotification(notification);
+        }, 4000);
+    }
+    
+    function removeNotification(notification) {
+        notification.style.animation = 'slideOut 0.3s ease forwards';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }
+    
+    // Helper function to update project status in the header
+    function updateProjectStatus(status) {
+        const statusValue = document.querySelector('.info-item:nth-child(2) .info-value');
+        if (statusValue) {
+            // Remove any existing status classes
+            statusValue.parentElement.parentElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+            
+            // Update text
+            statusValue.textContent = status;
+            
+            // Add appropriate class
+            switch(status) {
+                case 'In Progress':
+                    statusValue.parentElement.parentElement.classList.add('status-in-progress');
+                    break;
+                case 'Under Review':
+                    statusValue.parentElement.parentElement.classList.add('status-under-review');
+                    break;
+                case 'Completed':
+                    statusValue.parentElement.parentElement.classList.add('status-completed');
+                    break;
+            }
+        }
+    }
+});
 
     
         
