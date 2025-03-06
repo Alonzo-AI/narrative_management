@@ -421,6 +421,70 @@
             margin: 0 4px;
         }
 
+        /* Status cell styling */
+    .status-cell {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .status-published {
+        color: #4CAF50;
+    }
+
+    .status-pending {
+        color: #FFA000;
+    }
+
+        /* Table row hover effect */
+    .content-table tbody tr:hover {
+        background-color: rgba(206, 184, 136, 0.1);
+    }
+
+    /* Animation for new items */
+    @keyframes highlightRow {
+        0% { background-color: rgba(206, 184, 136, 0.4); }
+        100% { background-color: transparent; }
+    }
+
+    .highlight-row {
+        animation: highlightRow 2s ease-out;
+    }
+
+    /* Responsive adjustments for table */
+    @media (max-width: 768px) {
+        .content-table thead th:nth-child(4),
+        .content-table tbody td:nth-child(4) {
+            display: none;
+        }
+        
+        .content-table th, 
+        .content-table td {
+            padding: 8px 10px;
+        }
+        
+        .search-box {
+            width: 200px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .table-actions {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .search-box {
+            width: 100%;
+        }
+        
+        .content-table thead th:nth-child(3),
+        .content-table tbody td:nth-child(3) {
+            display: none;
+        }
+    }
+
         /* Grid Container Styles */
     .content-grid-container {
         background-color: white;
@@ -489,6 +553,14 @@
     overflow: hidden;
     flex-grow: 1;
 }
+
+/* No content message styling */
+.no-content-message {
+        text-align: center;
+        padding: 30px 0;
+        color: #777;
+        font-style: italic;
+    }
 
 .preview-image {
     width: 100%;
@@ -716,10 +788,6 @@
         background-color: #4CAF50;
     }
 
-    .grid-publish-btn.published i {
-        animation: none;
-    }
-
     .grid-publish-btn i {
         font-size: 16px;
     }
@@ -842,88 +910,35 @@
            
         </div>
 
-    <!-- Content Table -->
-    <div class="table-container">
-        <div class="table-actions">
-            <div class="search-box">
-                <i class="material-icons">search</i>
-                <input type="text" id="search-content" placeholder="Search content...">
+        <div class="table-container">
+            <div class="table-actions">
+                <div class="search-box">
+                    <i class="material-icons">search</i>
+                    <input type="text" id="search-content" placeholder="Search content...">
+                </div>
+                <div class="content-count">
+                    <input type="checkbox" id="select-all"> <label for="select-all">Select All</label> | Selected: <span id="selected-count">0</span> of <span id="total-count">0</span>
+                </div>
             </div>
-            <div class="content-count">
-                <input type="checkbox" id="select-all"> <label for="select-all">Select All</label> | Selected: <span id="selected-count">0</span> of <span id="total-count">8</span>
-            </div>
+            
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <th width="5%"></th>
+                        <th width="45%">Title</th>
+                        <th width="20%">Type</th>
+                        <th width="20%">Date</th>
+                        <th width="10%">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="published-content-table">
+                    <!-- Table will be populated dynamically with published content -->
+                    <tr class="no-content-row">
+                        <td colspan="5" class="no-content-message">No content has been published yet. Use the publish buttons in the grid view below to add content.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th width="5%"></th>
-                    <th width="45%">Title</th>
-                    <th width="20%">Type</th>
-                    <th width="20%">Date</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>2025 FSU Football Season Preview</td>
-                    <td><span class="type-badge type-press">Press Release</span></td>
-                    <td>Feb 28, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>Coach Interview: Expectations for the New Season</td>
-                    <td><span class="type-badge type-social">Social Media</span></td>
-                    <td>Mar 1, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>Team Captain Profiles: Leadership on the Field</td>
-                    <td><span class="type-badge type-press">Press Release</span></td>
-                    <td>Mar 2, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>Stadium Renovations: What Fans Need to Know</td>
-                    <td><span class="type-badge type-press">Press Release</span></td>
-                    <td>Feb 25, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>FSU vs. Rivals: Key Matchups This Season</td>
-                    <td><span class="type-badge type-press">Press Release</span></td>
-                    <td>Mar 3, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>Pre-season Training Photo Gallery</td>
-                    <td><span class="type-badge type-social">Social Media</span></td>
-                    <td>Feb 20, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>Fan Guide: Ticket Information and Game Day Experience</td>
-                    <td><span class="type-badge type-press">Press Release</span></td>
-                    <td>Mar 4, 2025</td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>Social Media Graphics Pack for Season Kickoff</td>
-                    <td><span class="type-badge type-social">Social Media</span></td>
-                    <td>Mar 5, 2025</td>
-                    
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
     <div class="content-grid-container">
         <div class="grid-header">
@@ -1087,93 +1102,215 @@
 
      <script>
 
-             // DOM Elements
-        const publishTypeSelect = document.getElementById('publish-type');
-        const submitReviewBtn = document.getElementById('submit-review-btn');
+document.addEventListener('DOMContentLoaded', function() {
+        // Initialize published content array
+        let publishedContent = [];
+        
+        // DOM elements
+        const publishedTable = document.getElementById('published-content-table');
+        const totalCountElement = document.getElementById('total-count');
         const selectAllCheckbox = document.getElementById('select-all');
-        const contentCheckboxes = document.querySelectorAll('.content-checkbox');
         const selectedCountElement = document.getElementById('selected-count');
         const searchInput = document.getElementById('search-content');
-
+        
+        // Add data attributes to grid items if not already present
+        document.querySelectorAll('.grid-item').forEach((item, index) => {
+            if (!item.dataset.id) {
+                item.dataset.id = `item${index + 1}`;
+            }
+            if (!item.dataset.title) {
+                item.dataset.title = item.querySelector('h4').textContent;
+            }
+            if (!item.dataset.date) {
+                const dateText = item.querySelector('.item-date').textContent;
+                item.dataset.date = dateText.replace('Updated: ', '');
+            }
+        });
+        
+        // Set up grid publish buttons
+        const publishButtons = document.querySelectorAll('.grid-publish-btn');
+        
+        publishButtons.forEach(button => {
+            // Set button's data-id attribute if not already present
+            if (!button.dataset.id) {
+                const parentItem = button.closest('.grid-item');
+                button.dataset.id = parentItem.dataset.id;
+            }
+            
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const itemId = this.dataset.id;
+                const gridItem = document.querySelector(`.grid-item[data-id="${itemId}"]`);
+                
+                const contentTitle = gridItem.dataset.title || gridItem.querySelector('h4').textContent;
+                const contentType = gridItem.dataset.type;
+                const contentDate = gridItem.dataset.date || gridItem.querySelector('.item-date').textContent.replace('Updated: ', '');
+                
+                // Check if already published
+                const existingItemIndex = publishedContent.findIndex(item => item.id === itemId);
+                if (existingItemIndex !== -1) {
+                    alert(`"${contentTitle}" is already in the publishing queue.`);
+                    return;
+                }
+                
+                // Show publishing state
+                this.classList.add('publishing');
+                this.innerHTML = '<i class="material-icons">cloud_upload</i> Publishing...';
+                
+                // Simulate publishing process
+                setTimeout(() => {
+                    // Add to published content
+                    const newItem = {
+                        id: itemId,
+                        title: contentTitle,
+                        type: contentType,
+                        date: contentDate,
+                        status: 'published'
+                    };
+                    
+                    publishedContent.push(newItem);
+                    
+                    // Update table
+                    updatePublishedTable();
+                    
+                    // Show success state
+                    this.classList.remove('publishing');
+                    this.classList.add('published');
+                    this.innerHTML = '<i class="material-icons">check_circle</i> Published';
+                    
+                    // Reset after some time
+                    setTimeout(() => {
+                        this.classList.remove('published');
+                        this.innerHTML = '<i class="material-icons">publish</i> Publish';
+                    }, 5000);
+                }, 1500);
+            });
+        });
+        
+        // Function to update the published content table
+        function updatePublishedTable() {
+            // Clear table first
+            publishedTable.innerHTML = '';
+            
+            // Show message if no content
+            if (publishedContent.length === 0) {
+                publishedTable.innerHTML = `
+                    <tr class="no-content-row">
+                        <td colspan="5" class="no-content-message">No content has been published yet. Use the publish buttons in the grid view below to add content.</td>
+                    </tr>
+                `;
+                totalCountElement.textContent = '0';
+                return;
+            }
+            
+            // Add rows for each published item
+            publishedContent.forEach((item, index) => {
+                const newRow = document.createElement('tr');
+                newRow.dataset.id = item.id;
+                newRow.classList.add('highlight-row');
+                
+                // Format type display
+                let typeDisplay = item.type;
+                let typeBadgeClass = '';
+                
+                if (item.type === 'press-release') {
+                    typeDisplay = 'Press Release';
+                    typeBadgeClass = 'type-press';
+                } else if (item.type === 'social-media') {
+                    typeDisplay = 'Social Media';
+                    typeBadgeClass = 'type-social';
+                }
+                
+                newRow.innerHTML = `
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>${item.title}</td>
+                    <td><span class="type-badge ${typeBadgeClass}">${typeDisplay}</span></td>
+                    <td>${item.date}</td>
+                    <td>
+                        <div class="status-cell status-published">
+                            <i class="material-icons">check_circle</i>
+                            <span>Published</span>
+                        </div>
+                    </td>
+                `;
+                
+                publishedTable.appendChild(newRow);
+            });
+            
+            // Update total count
+            totalCountElement.textContent = publishedContent.length;
+            
+            // Set up checkbox events for new rows
+            setupCheckboxes();
+        }
+        
+        // Function to set up checkboxes in the table
+        function setupCheckboxes() {
+            const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+            
+            contentCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const row = this.closest('tr');
+                    if (this.checked) {
+                        row.classList.add('selected');
+                    } else {
+                        row.classList.remove('selected');
+                    }
+                    
+                    // Update "select all" state
+                    const allCheckboxes = Array.from(contentCheckboxes);
+                    const allChecked = allCheckboxes.every(cb => cb.checked);
+                    selectAllCheckbox.checked = allChecked;
+                    
+                    // Update selected count
+                    updateSelectedCount();
+                });
+            });
+        }
+        
+        // Select/Deselect all content items
+        selectAllCheckbox.addEventListener('change', function() {
+            const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+            
+            contentCheckboxes.forEach(checkbox => {
+                const row = checkbox.closest('tr');
+                checkbox.checked = this.checked;
+                
+                if (this.checked) {
+                    row.classList.add('selected');
+                } else {
+                    row.classList.remove('selected');
+                }
+            });
+            
+            updateSelectedCount();
+        });
+        
         // Update selected count
         function updateSelectedCount() {
             const selectedCount = document.querySelectorAll('.content-checkbox:checked').length;
             selectedCountElement.textContent = selectedCount;
             
             // Enable/disable submit button based on selections
-            if (selectedCount > 0 && publishTypeSelect.value) {
-                submitReviewBtn.disabled = false;
-                submitReviewBtn.style.opacity = "1";
-            } else {
-                submitReviewBtn.disabled = true;
-                submitReviewBtn.style.opacity = "0.6";
+            const submitReviewBtn = document.getElementById('submit-review-btn');
+            const publishTypeSelect = document.getElementById('publish-type');
+            
+            if (submitReviewBtn && publishTypeSelect) {
+                if (selectedCount > 0 && publishTypeSelect.value) {
+                    submitReviewBtn.disabled = false;
+                    submitReviewBtn.style.opacity = "1";
+                } else {
+                    submitReviewBtn.disabled = true;
+                    submitReviewBtn.style.opacity = "0.6";
+                }
             }
         }
-
-        // Select/Deselect all content items
-        selectAllCheckbox.addEventListener('change', function() {
-            contentCheckboxes.forEach(checkbox => {
-                const row = checkbox.closest('tr');
-                if (!row.style.display || row.style.display !== 'none') {
-                    checkbox.checked = this.checked;
-                    if (this.checked) {
-                        row.classList.add('selected');
-                    } else {
-                        row.classList.remove('selected');
-                    }
-                }
-            });
-            updateSelectedCount();
-        });
-
-        // Individual checkbox selection
-        contentCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const row = this.closest('tr');
-                if (this.checked) {
-                    row.classList.add('selected');
-                } else {
-                    row.classList.remove('selected');
-                }
-                
-                // Update "select all" state
-                const allVisible = Array.from(contentCheckboxes)
-                    .filter(cb => !cb.closest('tr').style.display || cb.closest('tr').style.display !== 'none');
-                const allChecked = allVisible.every(cb => cb.checked);
-                selectAllCheckbox.checked = allChecked;
-                
-                updateSelectedCount();
-            });
-        });
-
-        // Submit button click handler
-        submitReviewBtn.addEventListener('click', () => {
-            const selectedPublishType = publishTypeSelect.value;
-            const selectedItems = document.querySelectorAll('.content-checkbox:checked');
-            
-            if (!selectedPublishType) {
-                alert('Please select a publish type first');
-                return;
-            }
-            
-            if (selectedItems.length === 0) {
-                alert('Please select at least one content item to publish');
-                return;
-            }
-            
-            // Get titles of selected items
-            const selectedTitles = Array.from(selectedItems).map(checkbox => {
-                return checkbox.closest('tr').cells[1].textContent;
-            });
-            
-            // Simulating submission - replace with actual submission logic
-            alert(`Submitting ${selectedItems.length} items for ${selectedPublishType} publication.\n\nSelected items:\n${selectedTitles.join('\n')}`);
-        });
-
+        
         // Search functionality
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
-            const rows = document.querySelectorAll('.content-table tbody tr');
+            const rows = document.querySelectorAll('.content-table tbody tr:not(.no-content-row)');
             
             rows.forEach(row => {
                 const title = row.cells[1].textContent.toLowerCase();
@@ -1190,6 +1327,37 @@
             selectAllCheckbox.checked = false;
             updateSelectedCount();
         });
+        
+        // Submit button click handler (updated for new functionality)
+        const submitReviewBtn = document.getElementById('submit-review-btn');
+        if (submitReviewBtn) {
+            submitReviewBtn.addEventListener('click', () => {
+                const selectedPublishType = document.getElementById('publish-type').value;
+                const selectedItems = document.querySelectorAll('.content-checkbox:checked');
+                
+                if (!selectedPublishType) {
+                    alert('Please select a publish type first');
+                    return;
+                }
+                
+                if (selectedItems.length === 0) {
+                    alert('Please select at least one content item to publish');
+                    return;
+                }
+                
+                // Get titles of selected items
+                const selectedTitles = Array.from(selectedItems).map(checkbox => {
+                    return checkbox.closest('tr').cells[1].textContent;
+                });
+                
+                // Simulating submission - replace with actual submission logic
+                alert(`Submitting ${selectedItems.length} items for ${selectedPublishType} publication.\n\nSelected items:\n${selectedTitles.join('\n')}`);
+            });
+        }
+        
+        // Initialize the table
+        updatePublishedTable();
+    });
 
         // Handle publish type selection
         publishTypeSelect.addEventListener('change', function() {
