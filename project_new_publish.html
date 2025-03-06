@@ -226,7 +226,7 @@
             padding: 20px;
             box-shadow: var(--shadow);
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 0 auto 20px auto;
         }
 
         .dashboard-header {
@@ -272,8 +272,7 @@
         }
 
         .custom-select {
-            appearance: none;
-            -webkit-appearance: none;
+            
             width: 100%;
             padding: 12px 45px 12px 15px;
             font-size: 1rem;
@@ -322,6 +321,424 @@
         .submit-btn:active {
             transform: translateY(0);
         }
+
+        /* Content table styles */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .content-table th {
+            background-color: #f5f5f5;
+            color: var(--fsu-garnet);
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .content-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .content-table tr.selected {
+            background-color: rgba(206, 184, 136, 0.2);
+        }
+
+        .content-table input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--fsu-garnet);
+            cursor: pointer;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .type-press {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+
+        .type-social {
+            background-color: rgba(156, 39, 176, 0.1);
+            color: #9C27B0;
+        }
+
+        .table-actions {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            width: 300px;
+        }
+
+        .search-box i {
+            color: #777;
+            margin-right: 8px;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .content-count {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .content-count span {
+            font-weight: 600;
+            color: var(--fsu-garnet);
+            margin: 0 4px;
+        }
+
+        /* Grid Container Styles */
+    .content-grid-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-top: 24px;
+        margin-bottom: 24px;
+        overflow: hidden;
+    }
+
+    .grid-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .grid-header h3 {
+        color: var(--fsu-garnet);
+        margin: 0;
+        font-family: 'GothicCustom', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .grid-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    
+    /* Grid View Styles - for combined content */
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for combined content items */
+.item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-preview {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover .preview-image {
+    transform: scale(1.05);
+}
+
+.text-preview {
+    padding: 15px;
+    background-color: #f9f9f9;
+    min-height: 120px;
+}
+
+.text-preview h4 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.text-preview p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Type-specific styling */
+.item-type {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.press-release-type {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.social-media-type {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+}
+
+/* Enhanced modal styles for combined content */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+}
+
+.modal-text {
+    padding: 20px;
+}
+
+.modal-text h3 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.modal-text p {
+    line-height: 1.6;
+    color: #333;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+}
+
+.modal-type-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.modal-type-badge.press-release {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.modal-type-badge.social-media {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.modal-date {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-view {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+}
+
+/* Publish button container */
+.publish-button-container {
+        padding: 10px 15px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #e0e0e0;
+        text-align: right;
+    }
+
+    /* Publish button styling */
+    .grid-publish-btn {
+        background-color: var(--fsu-garnet);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: auto;
+    }
+
+    .grid-publish-btn:hover {
+        background-color: #651b2a;
+        transform: translateY(-2px);
+    }
+
+    .grid-publish-btn:active {
+        transform: translateY(0);
+    }
+
+    .grid-publish-btn.published {
+        background-color: #4CAF50;
+    }
+
+    .grid-publish-btn.published i {
+        animation: none;
+    }
+
+    .grid-publish-btn i {
+        font-size: 16px;
+    }
+
+    /* Animation for when publishing */
+    @keyframes publishing {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+        100% { transform: translateY(0); }
+    }
+
+    .grid-publish-btn.publishing {
+        background-color: #FFA000;
+        pointer-events: none;
+    }
+
+    .grid-publish-btn.publishing i {
+        animation: publishing 1s infinite;
+    }                       
 
 </style>
 </head>
@@ -409,7 +826,7 @@
                     <option value="press">Press Release</option>
                    
                 </select>
-                <i class="material-icons select-arrow">arrow_drop_down</i>
+                
             </div>
             
             <button id="submit-review-btn" class="submit-btn">
@@ -419,29 +836,393 @@
         </div>
     </div>
 
-        <script>
+     <!-- Content Table Dashboard -->
+     <div class="dashboard">
+        <div class="dashboard-header">
+           
+        </div>
 
-            // DOM Elements
+    <!-- Content Table -->
+    <div class="table-container">
+        <div class="table-actions">
+            <div class="search-box">
+                <i class="material-icons">search</i>
+                <input type="text" id="search-content" placeholder="Search content...">
+            </div>
+            <div class="content-count">
+                <input type="checkbox" id="select-all"> <label for="select-all">Select All</label> | Selected: <span id="selected-count">0</span> of <span id="total-count">8</span>
+            </div>
+        </div>
+        
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th width="5%"></th>
+                    <th width="45%">Title</th>
+                    <th width="20%">Type</th>
+                    <th width="20%">Date</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>2025 FSU Football Season Preview</td>
+                    <td><span class="type-badge type-press">Press Release</span></td>
+                    <td>Feb 28, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>Coach Interview: Expectations for the New Season</td>
+                    <td><span class="type-badge type-social">Social Media</span></td>
+                    <td>Mar 1, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>Team Captain Profiles: Leadership on the Field</td>
+                    <td><span class="type-badge type-press">Press Release</span></td>
+                    <td>Mar 2, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>Stadium Renovations: What Fans Need to Know</td>
+                    <td><span class="type-badge type-press">Press Release</span></td>
+                    <td>Feb 25, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>FSU vs. Rivals: Key Matchups This Season</td>
+                    <td><span class="type-badge type-press">Press Release</span></td>
+                    <td>Mar 3, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>Pre-season Training Photo Gallery</td>
+                    <td><span class="type-badge type-social">Social Media</span></td>
+                    <td>Feb 20, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>Fan Guide: Ticket Information and Game Day Experience</td>
+                    <td><span class="type-badge type-press">Press Release</span></td>
+                    <td>Mar 4, 2025</td>
+                    
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="content-checkbox"></td>
+                    <td>Social Media Graphics Pack for Season Kickoff</td>
+                    <td><span class="type-badge type-social">Social Media</span></td>
+                    <td>Mar 5, 2025</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-grid-container">
+        <div class="grid-header">
+            
+        </div>
+    
+        <div class="grid-view">
+            <!-- Combined content items with both text and images -->
+            <div class="grid-item" data-type="press-release">
+                <div class="item-preview">
+                    <div class="item-content">
+                        <div class="image-preview">
+                            <img src="https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM=" alt="Season Opener Image" class="preview-image">
+                        </div>
+                        <div class="text-preview">
+                            <h4>Season Opener Press Release</h4>
+                            <p>Florida State University's football team is set to begin its 2025 season with renewed energy and determination...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <span class="item-type press-release-type">Press Release</span>
+                    <span class="item-date">Updated: Feb 28, 2025</span>
+                </div>
+                
+                <div class="publish-button-container">
+                    <button class="grid-publish-btn">
+                        <i class="material-icons">publish</i>
+                        Publish
+                    </button>
+                </div>
+            </div>
+    
+            <div class="grid-item" data-type="social-media">
+                <div class="item-preview">
+                    <div class="item-content">
+                        <div class="image-preview">
+                            <img src="https://media.gettyimages.com/id/1243367519/photo/louisville-ky-a-florida-state-seminoles-logo-is-seen-on-a-flag-as-the-team-runs-onto-the.jpg?s=612x612&w=gi&k=20&c=2qUdiXv60GHq_-ccudrWu2kYSVO6-tLRzeZbIjlrU6M=" alt="Team Banner 2025" class="preview-image">
+                        </div>
+                        <div class="text-preview">
+                            <h4>Home Game Announcement</h4>
+                            <p>Join us this Saturday as the Seminoles take on their rivals in the season's most anticipated matchup...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <span class="item-type social-media-type">Social Media Post</span>
+                    <span class="item-date">Updated: Mar 1, 2025</span>
+                </div>
+
+                <div class="publish-button-container">
+                    <button class="grid-publish-btn">
+                        <i class="material-icons">publish</i>
+                        Publish
+                    </button>
+                </div>
+            </div>
+    
+            <div class="grid-item" data-type="press-release">
+                <div class="item-preview">
+                    <div class="item-content">
+                        <div class="image-preview">
+                            <img src="https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768" alt="Marcus Johnson" class="preview-image">
+                        </div>
+                        <div class="text-preview">
+                            <h4>Player Spotlight: Marcus Johnson</h4>
+                            <p>Quarterback Marcus Johnson has been training rigorously during the off-season to prepare for what analysts predict will be his breakout year...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <span class="item-type press-release-type">Press Release</span>
+                    <span class="item-date">Updated: Mar 2, 2025</span>
+                </div>
+
+                <div class="publish-button-container">
+                    <button class="grid-publish-btn">
+                        <i class="material-icons">publish</i>
+                        Publish
+                    </button>
+                </div>
+            </div>
+    
+            <div class="grid-item" data-type="social-media">
+                <div class="item-preview">
+                    <div class="item-content">
+                        <div class="image-preview">
+                            <img src="https://familyweekend.fsu.edu/sites/g/files/upcbnu2046/files/pictures/football-graphic-fw-2024.jpg" alt="Season Tickets" class="preview-image">
+                        </div>
+                        <div class="text-preview">
+                            <h4>Season Ticket Promotion</h4>
+                            <p>Get ready for an unforgettable season with FSU Football! Early bird season tickets now available with exclusive benefits for loyal fans...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <span class="item-type social-media-type">Social Media Post</span>
+                    <span class="item-date">Updated: Mar 3, 2025</span>
+                </div>
+
+                <div class="publish-button-container">
+                    <button class="grid-publish-btn">
+                        <i class="material-icons">publish</i>
+                        Publish
+                    </button>
+                </div>
+            </div>
+    
+            <div class="grid-item" data-type="social-media">
+                <div class="item-preview">
+                    <div class="item-content">
+                        <div class="image-preview">
+                            <img src="https://ik.imagekit.io/0bocj83w8/https://dzfa1uifb0sb6.cloudfront.net/preview_for_templates/template_1338_preview.jpg?tr=w-600,q-35" alt="Social Media Kit" class="preview-image">
+                        </div>
+                        <div class="text-preview">
+                            <h4>Game Day Countdown</h4>
+                            <p>Only 3 days until kickoff! Share your excitement and game day traditions with us using #FSUGameDay...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <span class="item-type social-media-type">Social Media Post</span>
+                    <span class="item-date">Updated: Mar 4, 2025</span>
+                </div>
+
+                <div class="publish-button-container">
+                    <button class="grid-publish-btn">
+                        <i class="material-icons">publish</i>
+                        Publish
+                    </button>
+                </div>
+            </div>
+    
+            <div class="grid-item" data-type="press-release">
+                <div class="item-preview">
+                    <div class="item-content">
+                        <div class="image-preview">
+                            <img src="https://www.tallahassee.com/gcdn/authoring/authoring-images/2024/10/06/PTCN/75540869007-usatsi-24420080.jpg?crop=3851,2167,x0,y215&width=660&height=371&format=pjpg&auto=webp" alt="Coach Interview" class="preview-image">
+                        </div>
+                        <div class="text-preview">
+                            <h4>Coach's Corner: Pre-Season Interview</h4>
+                            <p>Head Coach Mike Thompson discusses training camp progress, team strategy, and expectations for the upcoming 2025 season...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-details">
+                    <span class="item-type press-release-type">Press Release</span>
+                    <span class="item-date">Updated: Feb 25, 2025</span>
+                </div>
+
+                <div class="publish-button-container">
+                    <button class="grid-publish-btn">
+                        <i class="material-icons">publish</i>
+                        Publish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+     <script>
+
+             // DOM Elements
         const publishTypeSelect = document.getElementById('publish-type');
         const submitReviewBtn = document.getElementById('submit-review-btn');
+        const selectAllCheckbox = document.getElementById('select-all');
+        const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+        const selectedCountElement = document.getElementById('selected-count');
+        const searchInput = document.getElementById('search-content');
+
+        // Update selected count
+        function updateSelectedCount() {
+            const selectedCount = document.querySelectorAll('.content-checkbox:checked').length;
+            selectedCountElement.textContent = selectedCount;
+            
+            // Enable/disable submit button based on selections
+            if (selectedCount > 0 && publishTypeSelect.value) {
+                submitReviewBtn.disabled = false;
+                submitReviewBtn.style.opacity = "1";
+            } else {
+                submitReviewBtn.disabled = true;
+                submitReviewBtn.style.opacity = "0.6";
+            }
+        }
+
+        // Select/Deselect all content items
+        selectAllCheckbox.addEventListener('change', function() {
+            contentCheckboxes.forEach(checkbox => {
+                const row = checkbox.closest('tr');
+                if (!row.style.display || row.style.display !== 'none') {
+                    checkbox.checked = this.checked;
+                    if (this.checked) {
+                        row.classList.add('selected');
+                    } else {
+                        row.classList.remove('selected');
+                    }
+                }
+            });
+            updateSelectedCount();
+        });
+
+        // Individual checkbox selection
+        contentCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const row = this.closest('tr');
+                if (this.checked) {
+                    row.classList.add('selected');
+                } else {
+                    row.classList.remove('selected');
+                }
+                
+                // Update "select all" state
+                const allVisible = Array.from(contentCheckboxes)
+                    .filter(cb => !cb.closest('tr').style.display || cb.closest('tr').style.display !== 'none');
+                const allChecked = allVisible.every(cb => cb.checked);
+                selectAllCheckbox.checked = allChecked;
+                
+                updateSelectedCount();
+            });
+        });
 
         // Submit button click handler
         submitReviewBtn.addEventListener('click', () => {
             const selectedPublishType = publishTypeSelect.value;
+            const selectedItems = document.querySelectorAll('.content-checkbox:checked');
             
             if (!selectedPublishType) {
                 alert('Please select a publish type first');
                 return;
             }
             
+            if (selectedItems.length === 0) {
+                alert('Please select at least one content item to publish');
+                return;
+            }
+            
+            // Get titles of selected items
+            const selectedTitles = Array.from(selectedItems).map(checkbox => {
+                return checkbox.closest('tr').cells[1].textContent;
+            });
+            
             // Simulating submission - replace with actual submission logic
-            alert(`Content submitted for ${selectedPublishType} review!`);
+            alert(`Submitting ${selectedItems.length} items for ${selectedPublishType} publication.\n\nSelected items:\n${selectedTitles.join('\n')}`);
         });
 
-        // Custom select styling
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('.content-table tbody tr');
+            
+            rows.forEach(row => {
+                const title = row.cells[1].textContent.toLowerCase();
+                const type = row.cells[2].textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || type.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // Update select all checkbox state
+            selectAllCheckbox.checked = false;
+            updateSelectedCount();
+        });
+
+        // Handle publish type selection
         publishTypeSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex].text;
-            console.log(`Selected publish type: ${selectedOption}`);
+            const selectedType = this.value;
+            const rows = document.querySelectorAll('.content-table tbody tr');
+            
+            // Filter rows based on the selected publish type
+            rows.forEach(row => {
+                const typeCell = row.cells[2];
+                const typeBadge = typeCell.querySelector('.type-badge');
+                const currentType = typeBadge.textContent.toLowerCase();
+                
+                // Make type comparison case-insensitive
+                const normalizedSelectedType = selectedType.toLowerCase();
+                const normalizedCurrentType = currentType.toLowerCase();
+                
+                // Show all rows if no filter is selected, otherwise filter by type
+                if (!selectedType) {
+                    row.style.display = '';
+                } else if (normalizedCurrentType === normalizedSelectedType) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // Update select all checkbox and counts when filter changes
+            selectAllCheckbox.checked = false;
+            updateSelectedCount();
+            
+            // Update the total count to reflect visible rows
+            const visibleRowCount = document.querySelectorAll('.content-table tbody tr:not([style*="display: none"])').length;
+            document.getElementById('total-count').textContent = visibleRowCount;
             
             // Visual feedback on selection change
             this.style.borderColor = '#ceb888';
@@ -450,8 +1231,147 @@
             }, 300);
         });
 
+        // Initialize button state
+        submitReviewBtn.disabled = true;
+        submitReviewBtn.style.opacity = "0.6";
+
+        // Enhanced grid handling and modal display for combined content
+document.addEventListener('DOMContentLoaded', function() {
+    const gridItems = document.querySelectorAll('.grid-item');
+    
+    gridItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const itemType = this.dataset.type;
             
+            // Get content elements
+            const title = this.querySelector('h4').textContent;
+            const text = this.querySelector('p').textContent;
+            const image = this.querySelector('img').src;
+            const imageAlt = this.querySelector('img').alt;
+            const date = this.querySelector('.item-date').textContent;
+            
+            // Show modal with combined content
+            showCombinedContentModal(title, text, image, imageAlt, itemType, date);
+        });
+    });
+
+    
+});
+
+// Function to display combined content in modal
+function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
+    // Check if modal already exists
+    let modal = document.getElementById('preview-modal');
+    
+    if (!modal) {
+        // Create modal container
+        modal = document.createElement('div');
+        modal.id = 'preview-modal';
+        modal.className = 'preview-modal';
+        
+        // Add modal HTML structure for combined content
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"></h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <img class="modal-image" src="" alt="">
+                    <div class="modal-text">
+                        <h3 class="modal-content-title"></h3>
+                        <p class="modal-content-text"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="modal-type-badge"></span>
+                    <span class="modal-date"></span>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Set up close functionality
+        const closeBtn = modal.querySelector('.modal-close');
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close on click outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+    
+    // Determine display title based on content type
+    let displayTitle;
+    if (contentType === 'press-release') {
+        displayTitle = 'Press Release';
+    } else if (contentType === 'social-media') {
+        displayTitle = 'Social Media Post';
+    } else {
+        displayTitle = 'Content';
+    }
+    
+    // Update modal content
+    modal.querySelector('.modal-title').textContent = displayTitle;
+    modal.querySelector('.modal-content-title').textContent = title;
+    modal.querySelector('.modal-content-text').textContent = text;
+    modal.querySelector('.modal-image').src = imageSrc;
+    modal.querySelector('.modal-image').alt = imageAlt;
+    modal.querySelector('.modal-date').textContent = date;
+    
+    // Set type badge
+    const typeBadge = modal.querySelector('.modal-type-badge');
+    typeBadge.textContent = displayTitle;
+    typeBadge.className = 'modal-type-badge ' + contentType;
+    
+    // Show modal
+    modal.style.display = 'flex';
+}
+
+// Add this to your existing JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+        // Select all publish buttons in the grid
+        const publishButtons = document.querySelectorAll('.grid-publish-btn');
+        
+        publishButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Prevent the event from bubbling up to the grid-item
+                e.stopPropagation();
+                
+                // Get the parent grid-item
+                const gridItem = this.closest('.grid-item');
+                const contentTitle = gridItem.querySelector('h4').textContent;
+                const contentType = gridItem.dataset.type;
+                
+                // Show publishing state
+                this.classList.add('publishing');
+                this.innerHTML = '<i class="material-icons">cloud_upload</i> Publishing...';
+                
+                // Simulate publishing process
+                setTimeout(() => {
+                    // Show success state
+                    this.classList.remove('publishing');
+                    this.classList.add('published');
+                    this.innerHTML = '<i class="material-icons">check_circle</i> Published';
                     
-                </script>
-            </body>
-            </html>
+                    // Show confirmation
+                    alert(`Successfully published: ${contentTitle}\nType: ${contentType}`);
+                    
+                    // Reset after some time (optional)
+                    setTimeout(() => {
+                        this.classList.remove('published');
+                        this.innerHTML = '<i class="material-icons">publish</i> Publish';
+                    }, 5000);
+                }, 1500);
+            });
+        });
+    });
+
+    </script>
+</body>
+</html>
