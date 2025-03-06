@@ -461,22 +461,6 @@
         gap: 15px;
     }
 
-    .grid-filter {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .filter-dropdown {
-        padding: 8px 12px;
-        border: 1px solid #e0e0e0;
-        border-radius: 4px;
-        background-color: white;
-        font-size: 0.9rem;
-        color: var(--fsu-black);
-        cursor: pointer;
-    }
-
     .refresh-btn {
         display: flex;
         align-items: center;
@@ -497,273 +481,227 @@
         font-size: 18px;
     }
 
-    /* Grid View Styles */
+    /* Grid View Styles - for combined content */
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: white;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for combined content items */
+.item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-preview {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover .preview-image {
+    transform: scale(1.05);
+}
+
+.text-preview {
+    padding: 15px;
+    background-color: #f9f9f9;
+    min-height: 120px;
+}
+
+.text-preview h4 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.text-preview p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Type-specific styling */
+.item-type {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.press-release-type {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.social-media-type {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+}
+
+/* Enhanced modal styles for combined content */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+}
+
+.modal-text {
+    padding: 20px;
+}
+
+.modal-text h3 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.modal-text p {
+    line-height: 1.6;
+    color: #333;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+}
+
+.modal-type-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.modal-type-badge.press-release {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.modal-type-badge.social-media {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.modal-date {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
     .grid-view {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .grid-item {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        overflow: hidden;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        cursor: pointer;
-        background-color: white;
-    }
-
-    .grid-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .item-preview {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .item-content {
-        padding: 15px;
-    }
-
-    .text-content {
-        background-color: #f9f9f9;
-        min-height: 120px;
-    }
-
-    .text-content h4 {
-        color: var(--fsu-garnet);
-        margin-top: 0;
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-    }
-
-    .text-content p {
-        margin: 0;
-        color: #555;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .image-content {
-        padding: 0;
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #f0f0f0;
-    }
-
-    .preview-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .item-details {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 15px;
-        background-color: #f5f5f5;
-        border-top: 1px solid #e0e0e0;
-        font-size: 0.8rem;
-    }
-
-    .item-type {
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-weight: 600;
-    }
-
-    .draft-type {
-        background-color: rgba(33, 150, 243, 0.1);
-        color: #2196F3;
-    }
-
-    .graphics-type {
-        background-color: rgba(156, 39, 176, 0.1);
-        color: #9C27B0;
-    }
-
-    .item-date {
-        color: #777;
-    }
-
-    /* Empty State Styles */
-    .empty-state {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 50px 20px;
-        text-align: center;
-    }
-
-    .empty-icon {
-        font-size: 48px;
-        color: #ccc;
-        margin-bottom: 15px;
-    }
-
-    .empty-state p {
-        color: #777;
-        margin-bottom: 20px;
-    }
-
-    .reset-filter-btn {
-        padding: 8px 16px;
-        background-color: var(--fsu-garnet);
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    .reset-filter-btn:hover {
-        background-color: #662535;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    /* Preview modal styles */
-    .preview-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+        grid-template-columns: 1fr;
     }
     
     .modal-content {
-        background-color: white;
-        width: 90%;
-        max-width: 700px;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        width: 95%;
     }
-    
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        background-color: var(--fsu-garnet);
-        color: white;
-    }
-    
-    .modal-title {
-        margin: 0;
-        font-size: 1.2rem;
-    }
-    
-    .modal-close {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-    
-    .modal-body {
-        padding: 20px;
-        max-height: 70vh;
-        overflow-y: auto;
-    }
-    
-    .modal-footer {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px 20px;
-        background-color: #f5f5f5;
-        border-top: 1px solid #e0e0e0;
-    }
-    
-    .modal-type-badge {
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    
-    .modal-note {
-        color: #777;
-        font-size: 0.9rem;
-        font-style: italic;
-    }
-    
-    /* For image content */
-    .modal-body img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .grid-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .grid-controls {
-            margin-top: 15px;
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        .grid-view {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-    }
-
-    @media (max-width: 480px) {
-        .grid-controls {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .grid-filter {
-            width: 100%;
-        }
-
-        .filter-dropdown {
-            flex-grow: 1;
-        }
-
-        .refresh-btn {
-            width: 100%;
-            justify-content: center;
-        }
-    }
+}
 
      /* Enhanced Comments Section Styles */
 .comments-section {
@@ -1091,105 +1029,128 @@
             
         </div>
 
-        <!-- Grid View Container for Content Drafts and Graphics -->
-<div class="content-grid-container">
-    <div class="grid-header">
-        <h3>Stories Preview</h3>
-        <div class="grid-controls">
-            
-            <button id="refresh-grid" class="refresh-btn">
-                <i class="material-icons">refresh</i>
-                Refresh
-            </button>
-        </div>
-    </div>
-
-    <div class="grid-view">
-        <!-- Content Draft Items -->
-        <div class="grid-item" data-type="drafts">
-            <div class="item-preview">
-                <div class="item-content text-content">
-                    <h4>Season Opener Press Release</h4>
-                    <p>Florida State University's football team is set to begin its 2025 season with renewed energy and determination...</p>
+        <div class="content-grid-container">
+            <div class="grid-header">
+                <h3>Srories Preview</h3>
+                <div class="grid-controls">
+                    <button id="refresh-grid" class="refresh-btn">
+                        <i class="material-icons">refresh</i>
+                        Refresh
+                    </button>
                 </div>
             </div>
-            <div class="item-details">
-                <span class="item-type draft-type">Content Draft</span>
-                <span class="item-date">Updated: Feb 28, 2025</span>
-            </div>
-        </div>
-
-        <div class="grid-item" data-type="drafts">
-            <div class="item-preview">
-                <div class="item-content text-content">
-                    <h4>Player Spotlight: Marcus Johnson</h4>
-                    <p>Quarterback Marcus Johnson has been training rigorously during the off-season to prepare for what analysts predict will be his breakout year...</p>
+        
+            <div class="grid-view">
+                <!-- Combined content items with both text and images -->
+                <div class="grid-item" data-type="press-release">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM=" alt="Season Opener Image" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Season Opener Press Release</h4>
+                                <p>Florida State University's football team is set to begin its 2025 season with renewed energy and determination...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type press-release-type">Press Release</span>
+                        <span class="item-date">Updated: Feb 28, 2025</span>
+                    </div>
+                </div>
+        
+                <div class="grid-item" data-type="social-media">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://media.gettyimages.com/id/1243367519/photo/louisville-ky-a-florida-state-seminoles-logo-is-seen-on-a-flag-as-the-team-runs-onto-the.jpg?s=612x612&w=gi&k=20&c=2qUdiXv60GHq_-ccudrWu2kYSVO6-tLRzeZbIjlrU6M=" alt="Team Banner 2025" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Home Game Announcement</h4>
+                                <p>Join us this Saturday as the Seminoles take on their rivals in the season's most anticipated matchup...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type social-media-type">Social Media Post</span>
+                        <span class="item-date">Updated: Mar 1, 2025</span>
+                    </div>
+                </div>
+        
+                <div class="grid-item" data-type="press-release">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768" alt="Marcus Johnson" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Player Spotlight: Marcus Johnson</h4>
+                                <p>Quarterback Marcus Johnson has been training rigorously during the off-season to prepare for what analysts predict will be his breakout year...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type press-release-type">Press Release</span>
+                        <span class="item-date">Updated: Mar 2, 2025</span>
+                    </div>
+                </div>
+        
+                <div class="grid-item" data-type="social-media">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://familyweekend.fsu.edu/sites/g/files/upcbnu2046/files/pictures/football-graphic-fw-2024.jpg" alt="Season Tickets" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Season Ticket Promotion</h4>
+                                <p>Get ready for an unforgettable season with FSU Football! Early bird season tickets now available with exclusive benefits for loyal fans...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type social-media-type">Social Media Post</span>
+                        <span class="item-date">Updated: Mar 3, 2025</span>
+                    </div>
+                </div>
+        
+                <div class="grid-item" data-type="social-media">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://ik.imagekit.io/0bocj83w8/https://dzfa1uifb0sb6.cloudfront.net/preview_for_templates/template_1338_preview.jpg?tr=w-600,q-35" alt="Social Media Kit" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Game Day Countdown</h4>
+                                <p>Only 3 days until kickoff! Share your excitement and game day traditions with us using #FSUGameDay...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type social-media-type">Social Media Post</span>
+                        <span class="item-date">Updated: Mar 4, 2025</span>
+                    </div>
+                </div>
+        
+                <div class="grid-item" data-type="press-release">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://www.tallahassee.com/gcdn/authoring/authoring-images/2024/10/06/PTCN/75540869007-usatsi-24420080.jpg?crop=3851,2167,x0,y215&width=660&height=371&format=pjpg&auto=webp" alt="Coach Interview" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Coach's Corner: Pre-Season Interview</h4>
+                                <p>Head Coach Mike Thompson discusses training camp progress, team strategy, and expectations for the upcoming 2025 season...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type press-release-type">Press Release</span>
+                        <span class="item-date">Updated: Feb 25, 2025</span>
+                    </div>
                 </div>
             </div>
-            <div class="item-details">
-                <span class="item-type draft-type">Content Draft</span>
-                <span class="item-date">Updated: Mar 2, 2025</span>
-            </div>
         </div>
-
-        <!-- Graphics Items -->
-        <div class="grid-item" data-type="graphics">
-            <div class="item-preview">
-                <div class="item-content image-content">
-                    <img src="/api/placeholder/400/300" alt="Team Banner 2025" class="preview-image">
-                </div>
-            </div>
-            <div class="item-details">
-                <span class="item-type graphics-type">Graphic</span>
-                <span class="item-date">Updated: Mar 1, 2025</span>
-            </div>
-        </div>
-
-        <div class="grid-item" data-type="graphics">
-            <div class="item-preview">
-                <div class="item-content image-content">
-                    <img src="/api/placeholder/400/300" alt="Game Day Poster" class="preview-image">
-                </div>
-            </div>
-            <div class="item-details">
-                <span class="item-type graphics-type">Graphic</span>
-                <span class="item-date">Updated: Feb 25, 2025</span>
-            </div>
-        </div>
-
-        <div class="grid-item" data-type="drafts">
-            <div class="item-preview">
-                <div class="item-content text-content">
-                    <h4>Season Ticket Promotion</h4>
-                    <p>Get ready for an unforgettable season with FSU Football! Early bird season tickets now available with exclusive benefits for loyal fans...</p>
-                </div>
-            </div>
-            <div class="item-details">
-                <span class="item-type draft-type">Content Draft</span>
-                <span class="item-date">Updated: Mar 3, 2025</span>
-            </div>
-        </div>
-
-        <div class="grid-item" data-type="graphics">
-            <div class="item-preview">
-                <div class="item-content image-content">
-                    <img src="/api/placeholder/400/300" alt="Social Media Kit" class="preview-image">
-                </div>
-            </div>
-            <div class="item-details">
-                <span class="item-type graphics-type">Graphic</span>
-                <span class="item-date">Updated: Mar 4, 2025</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Empty State (shown when filter yields no results) -->
-    <div class="empty-state hidden">
-        <i class="material-icons empty-icon">search</i>
-        <p>No items match your current filter</p>
-        <button id="reset-filter" class="reset-filter-btn">Show All Items</button>
-    </div>
-</div>
 
 <!-- Comments Section -->
 <main class="main-content">
@@ -1484,42 +1445,31 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const contentFilter = document.getElementById('content-filter');
-        const gridItems = document.querySelectorAll('.grid-item');
-        const emptyState = document.querySelector('.empty-state');
-        const resetFilterBtn = document.getElementById('reset-filter');
-        const refreshGridBtn = document.getElementById('refresh-grid');
-
-        // Filter functionality
-        contentFilter.addEventListener('change', function() {
-            const selectedFilter = this.value;
-            let visibleCount = 0;
-
-            gridItems.forEach(item => {
-                if (selectedFilter === 'all' || item.dataset.type === selectedFilter) {
-                    item.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Show/hide empty state
-            if (visibleCount === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-            }
+    
+        
+        // Enhanced grid handling and modal display for combined content
+document.addEventListener('DOMContentLoaded', function() {
+    const gridItems = document.querySelectorAll('.grid-item');
+    
+    gridItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const itemType = this.dataset.type;
+            
+            // Get content elements
+            const title = this.querySelector('h4').textContent;
+            const text = this.querySelector('p').textContent;
+            const image = this.querySelector('img').src;
+            const imageAlt = this.querySelector('img').alt;
+            const date = this.querySelector('.item-date').textContent;
+            
+            // Show modal with combined content
+            showCombinedContentModal(title, text, image, imageAlt, itemType, date);
         });
+    });
 
-        // Reset filter
-        resetFilterBtn.addEventListener('click', function() {
-            contentFilter.value = 'all';
-            contentFilter.dispatchEvent(new Event('change'));
-        });
-
-        // Refresh button - animation only for demo
+    // Refresh button functionality
+    const refreshGridBtn = document.getElementById('refresh-grid');
+    if (refreshGridBtn) {
         refreshGridBtn.addEventListener('click', function() {
             const icon = this.querySelector('i');
             icon.style.animation = 'spin 1s linear';
@@ -1528,85 +1478,85 @@
                 icon.style.animation = '';
             }, 1000);
             
-            // Here you would typically fetch fresh data
             console.log('Refreshing content...');
         });
+    }
+});
 
-        // Modal view for grid items (view only)
-        gridItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const itemType = this.dataset.type;
-                const itemTitle = this.querySelector('h4')?.textContent || 
-                                 this.querySelector('img')?.alt || 
-                                 'Content Preview';
-                const itemContent = this.querySelector('.item-content').innerHTML;
-                
-                showPreviewModal(itemTitle, itemContent, itemType);
-            });
-        });
-
-        // Preview modal function
-        function showPreviewModal(title, content, type) {
-            // Check if modal already exists
-            let modal = document.getElementById('preview-modal');
-            
-            if (!modal) {
-                // Create modal container
-                modal = document.createElement('div');
-                modal.id = 'preview-modal';
-                modal.className = 'preview-modal';
-                
-                // Add modal HTML
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title"></h3>
-                            <button class="modal-close">&times;</button>
-                        </div>
-                        <div class="modal-body"></div>
-                        <div class="modal-footer">
-                            <span class="modal-type-badge"></span>
-                            <span class="modal-note">View only - editing disabled</span>
-                        </div>
+// Function to display combined content in modal
+function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
+    // Check if modal already exists
+    let modal = document.getElementById('preview-modal');
+    
+    if (!modal) {
+        // Create modal container
+        modal = document.createElement('div');
+        modal.id = 'preview-modal';
+        modal.className = 'preview-modal';
+        
+        // Add modal HTML structure for combined content
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"></h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <img class="modal-image" src="" alt="">
+                    <div class="modal-text">
+                        <h3 class="modal-content-title"></h3>
+                        <p class="modal-content-text"></p>
                     </div>
-                `;
-                
-                document.body.appendChild(modal);
-                
-                // Set up close functionality
-                const closeBtn = modal.querySelector('.modal-close');
-                closeBtn.addEventListener('click', function() {
-                    modal.style.display = 'none';
-                });
-                
-                // Close on click outside
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                });
+                </div>
+                <div class="modal-footer">
+                    <span class="modal-type-badge"></span>
+                    <span class="modal-date"></span>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Set up close functionality
+        const closeBtn = modal.querySelector('.modal-close');
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close on click outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
             }
-            
-            // Update modal content
-            modal.querySelector('.modal-title').textContent = title;
-            modal.querySelector('.modal-body').innerHTML = content;
-            
-            // Set type badge
-            const typeBadge = modal.querySelector('.modal-type-badge');
-            if (type === 'drafts') {
-                typeBadge.textContent = 'Content Draft';
-                typeBadge.style.backgroundColor = 'rgba(33, 150, 243, 0.1)';
-                typeBadge.style.color = '#2196F3';
-            } else {
-                typeBadge.textContent = 'Graphic';
-                typeBadge.style.backgroundColor = 'rgba(156, 39, 176, 0.1)';
-                typeBadge.style.color = '#9C27B0';
-            }
-            
-            // Show modal
-            modal.style.display = 'flex';
-        }
-    });
+        });
+    }
+    
+    // Determine display title based on content type
+    let displayTitle;
+    if (contentType === 'press-release') {
+        displayTitle = 'Press Release';
+    } else if (contentType === 'social-media') {
+        displayTitle = 'Social Media Post';
+    } else {
+        displayTitle = 'Content';
+    }
+    
+    // Update modal content
+    modal.querySelector('.modal-title').textContent = displayTitle;
+    modal.querySelector('.modal-content-title').textContent = title;
+    modal.querySelector('.modal-content-text').textContent = text;
+    modal.querySelector('.modal-image').src = imageSrc;
+    modal.querySelector('.modal-image').alt = imageAlt;
+    modal.querySelector('.modal-date').textContent = date;
+    
+    // Set type badge
+    const typeBadge = modal.querySelector('.modal-type-badge');
+    typeBadge.textContent = displayTitle;
+    typeBadge.className = 'modal-type-badge ' + contentType;
+    
+    // Show modal
+    modal.style.display = 'flex';
+}
 
     // Comments Functionality - Updated Version
 function initializeComments() {
