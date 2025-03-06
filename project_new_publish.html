@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlyte Content Publishing Platform - FSU Graphics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            min-height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .sidebar {
+            background: var(--fsu-gold);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .sidebar h2 {
+            color: var(--fsu-garnet);
+            font-family: 'GothicCustom', sans-serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--fsu-garnet);
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar-item.active {
+            background-color: var(--fsu-garnet);
+            color: var(--fsu-gold);
+        }
+
+        .sidebar-item.active i {
+            color: var(--fsu-gold);
+        }
+
+        .sidebar-item i {
+            margin-right: 12px;
+            color: var(--fsu-garnet);
+            font-size: 20px;
+        }
+
+        .sidebar-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* FSU Header Styles */
+.fsu-header {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fsu-logo {
+    width: 60px;
+    height: auto;
+}
+
+.site-title {
+    color: var(--fsu-garnet);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.project-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.info-item i {
+    color: var(--fsu-garnet);
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: var(--fsu-garnet);
+}
+
+.info-item .info-value {
+    transition: color 0.3s ease;
+}
+
+.status-in-progress .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.status-under-review .info-value {
+    color: #FF9800; /* Orange */
+}
+
+.status-completed .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Status Icon Animations */
+.info-item:nth-child(2) i.material-icons {
+    transition: transform 0.3s ease;
+}
+
+/* Status Badge (Optional) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-badge.in-progress {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.status-badge.under-review {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.status-badge.completed {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+/* Pulse animation for "Under Review" status (optional) */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.status-under-review .info-value {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+</style>
+</head>
+<body>
+    <nav class="sidebar">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
+        <div class="sidebar-item">
+            <i class="material-icons">home</i>
+            <a href="project_new.html"> Home </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">search</i>
+            <a href="project_new_research_page.html"> Research </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">description</i>
+            <a href="project_new_content_draft.html"> Content Draft </a>
+        </div>
+        <div class="sidebar-item active">
+            <i class="material-icons">brush</i>
+            <span>Graphics</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">share</i>
+            <a href="projetc_new_marketing.html"> Marketing </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">equalizer</i>
+            <span>Analytics</span>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+        <!-- FSU Header with Coordinator and Deadline -->
+        <header class="fsu-header">
+            <div class="header-container">
+                <div class="logo-container">
+                    
+                    <h1 class="site-title">FSU Football Season 2025</h1>
+                </div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <i class="material-icons">person</i>
+                        <div class="info-content">
+                            <span class="info-label">Graphics Coordinator</span>
+                            <span class="info-value">Sarah Johnson</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                     <div class="info-content">
+                            <span class="info-label">Phase Status</span>
+                            <span class="info-value">In Progress</span>
+                        </div>
+                    </div>    
+                    
+                        <div class="info-item">
+                        <i class="material-icons">event</i>
+                        <div class="info-content">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">March 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <script>
+
+            
+                    
+                </script>
+            </body>
+            </html>
