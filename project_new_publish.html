@@ -934,7 +934,7 @@
                 <tbody id="published-content-table">
                     <!-- Table will be populated dynamically with published content -->
                     <tr class="no-content-row">
-                        <td colspan="5" class="no-content-message">No content has been published yet. Use the publish buttons in the grid view below to add content.</td>
+                        <td colspan="5" class="no-content-message"></td>
                     </tr>
                 </tbody>
             </table>
@@ -1197,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (publishedContent.length === 0) {
                 publishedTable.innerHTML = `
                     <tr class="no-content-row">
-                        <td colspan="5" class="no-content-message">No content has been published yet. Use the publish buttons in the grid view below to add content.</td>
+                        <td colspan="5" class="no-content-message"></td>
                     </tr>
                 `;
                 totalCountElement.textContent = '0';
@@ -1328,32 +1328,24 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSelectedCount();
         });
         
-        // Submit button click handler (updated for new functionality)
-        const submitReviewBtn = document.getElementById('submit-review-btn');
-        if (submitReviewBtn) {
-            submitReviewBtn.addEventListener('click', () => {
-                const selectedPublishType = document.getElementById('publish-type').value;
-                const selectedItems = document.querySelectorAll('.content-checkbox:checked');
+        // Submit for review button functionality
+    submitReviewBtn.addEventListener('click', function() {
+        // Check if a sponsor has been assigned (button is hidden)
+        if (assignSponsorBtn.style.display === 'none') {
+            // Show confirmation dialog
+            if (confirm('Are you sure you want to submit this for review? This will notify the review team.')) {
+                showNotification('Marketing materials submitted for review', 'success');
                 
-                if (!selectedPublishType) {
-                    alert('Please select a publish type first');
-                    return;
-                }
+                // Here you would typically send data to your backend
+                console.log('Marketing materials submitted for review');
                 
-                if (selectedItems.length === 0) {
-                    alert('Please select at least one content item to publish');
-                    return;
-                }
-                
-                // Get titles of selected items
-                const selectedTitles = Array.from(selectedItems).map(checkbox => {
-                    return checkbox.closest('tr').cells[1].textContent;
-                });
-                
-                // Simulating submission - replace with actual submission logic
-                alert(`Submitting ${selectedItems.length} items for ${selectedPublishType} publication.\n\nSelected items:\n${selectedTitles.join('\n')}`);
-            });
+                // Update the status in the header
+                updateProjectStatus('Under Review');
+            }
+        } else {
+            showNotification('Please assign a sponsor before submitting for review', 'error');
         }
+    });
         
         // Initialize the table
         updatePublishedTable();
@@ -1501,7 +1493,7 @@ function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, 
     modal.style.display = 'flex';
 }
 
-// Add this to your existing JavaScript
+
 document.addEventListener('DOMContentLoaded', function() {
         // Select all publish buttons in the grid
         const publishButtons = document.querySelectorAll('.grid-publish-btn');
