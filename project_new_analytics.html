@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Athlyte Content Publishing Platform - FSU Graphics</title>
+    <title>Athlyte Content Publishing Platform - FSU Analytics</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
         :root {
@@ -219,6 +219,148 @@
     animation: pulse 2s infinite ease-in-out;
 }
 
+        /* Controls Container Styles */
+        .controls-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls-header {
+            color: var(--fsu-garnet);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Dropdown and Button Container Styles */
+        .analytics-dropdown-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            gap: 800px;
+        }
+
+        .analytics-dropdown {
+            position: relative;
+            width: 250px;
+        }
+        
+        .submit-review-btn {
+            background-color: var(--fsu-garnet);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .submit-review-btn:hover {
+            background-color: #5e2532;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-select {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: white;
+            border: 2px solid var(--fsu-garnet);
+            border-radius: 6px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            color: var(--fsu-garnet);
+            font-weight: 600;
+        }
+
+        .dropdown-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+        }
+
+        .dropdown-arrow {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--fsu-garnet);
+        }
+
+        /* Analytics Content Styles */
+        .analytics-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-height: 300px;
+        }
+
+        .analytics-content h2 {
+            color: var(--fsu-garnet);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--fsu-gold);
+            padding-bottom: 10px;
+        }
+
+        .no-content {
+            text-align: center;
+            color: #999;
+            padding: 50px 0;
+        }
+
+        /* Table Styles */
+        .analytics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+        
+        .analytics-table th {
+            background-color: var(--fsu-garnet);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+        
+        .analytics-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .analytics-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .analytics-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .analytics-table td {
+            padding: 12px 15px;
+        }
+        
+        .analytics-table .views {
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
 </style>
 </head>
 <body>
@@ -238,7 +380,7 @@
         </div>
         <div class="sidebar-item">
             <i class="material-icons">brush</i>
-            <span>Graphics</span>
+            <a href="projetc_new_graphics.html"> Graphics</a>
         </div>
         <div class="sidebar-item">
             <i class="material-icons">share</i>
@@ -250,7 +392,7 @@
         </div>
         <div class="sidebar-item active">
             <i class="material-icons">equalizer</i>
-            <a href="project_new_analytics.html"> Analytics</a>
+            <span>Analytics</span>
         </div>
     </nav>
 
@@ -267,7 +409,7 @@
                     <div class="info-item">
                         <i class="material-icons">person</i>
                         <div class="info-content">
-                            <span class="info-label">Publishing Coordinator</span>
+                            <span class="info-label">Analytics Coordinator</span>
                             <span class="info-value">Sarah Johnson</span>
                         </div>
                     </div>
@@ -288,8 +430,207 @@
                 </div>
             </div>
         </header>
-    </script>
-    
+
+        <!-- Controls Container with Dropdown and Submit Button -->
+        <div class="controls-container">
+            
+            <div class="analytics-dropdown-container">
+                <div class="analytics-dropdown">
+                    <select id="analyticsSelect" class="dropdown-select">
+                        <option value="">Select Analytics Type</option>
+                        <option value="press-release">Press Release Analytics</option>
+                        <option value="social-media">Social Media Analytics</option>
+                    </select>
+                    <i class="material-icons dropdown-arrow">arrow_drop_down</i>
+                </div>
+                <button id="submitReviewBtn" class="submit-review-btn">
+                    <i class="material-icons">rate_review</i>
+                    Submit Review
+                </button>
+            </div>
+        </div>
+
+        <!-- Analytics Content Area -->
+        <div id="analyticsContent" class="analytics-content">
+            <div class="no-content">
+                Please select an analytics type from the dropdown
+            </div>
+        </div>
+
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const analyticsSelect = document.getElementById('analyticsSelect');
+            const analyticsContent = document.getElementById('analyticsContent');
+            const submitReviewBtn = document.getElementById('submitReviewBtn');
+
+            // Add click event for the submit review button
+            submitReviewBtn.addEventListener('click', function() {
+                alert('Review form will open here.');
+                // You can replace this with code to show a modal or navigate to a review form
+            });
+
+            analyticsSelect.addEventListener('change', function() {
+                // Clear previous content
+                analyticsContent.innerHTML = '';
+
+                // Create content based on selection
+                switch(this.value) {
+                    case 'press-release':
+                        renderPressReleaseAnalytics();
+                        break;
+                    case 'social-media':
+                        renderSocialMediaAnalytics();
+                        break;
+                    default:
+                        renderDefaultContent();
+                }
+            });
+
+            function renderDefaultContent() {
+                analyticsContent.innerHTML = `
+                    <div class="no-content">
+                        Please select an analytics type from the dropdown
+                    </div>
+                `;
+            }
+
+            function renderPressReleaseAnalytics() {
+                analyticsContent.innerHTML = `
+                    <h2>Press Release Analytics</h2>
+                    <div class="analytics-details">
+                        <div class="metric">
+                            <strong>Total Press Releases:</strong> 5
+                        </div>
+                        <div class="metric">
+                            <strong>Avg. Reach per Release:</strong> 75,000
+                        </div>
+                        <div class="metric">
+                            <strong>Most Successful Release:</strong> Season Preview
+                        </div>
+                        <div class="metric">
+                            <strong>Media Pickup Rate:</strong> 68%
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="analytics-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Page Views</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Season Preview: FSU Football 2025</td>
+                                    <td>January 15, 2025</td>
+                                    <td class="views">126,542</td>
+                                </tr>
+                                <tr>
+                                    <td>Coach Mike Norvell Signs Contract Extension</td>
+                                    <td>January 28, 2025</td>
+                                    <td class="views">98,321</td>
+                                </tr>
+                                <tr>
+                                    <td>FSU Unveils New Stadium Renovations</td>
+                                    <td>February 10, 2025</td>
+                                    <td class="views">82,157</td>
+                                </tr>
+                                <tr>
+                                    <td>Spring Game Announcement</td>
+                                    <td>February 18, 2025</td>
+                                    <td class="views">65,842</td>
+                                </tr>
+                                <tr>
+                                    <td>Recruiting Class Spotlight</td>
+                                    <td>February 25, 2025</td>
+                                    <td class="views">59,378</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            function renderSocialMediaAnalytics() {
+                analyticsContent.innerHTML = `
+                    <h2>Social Media Analytics</h2>
+                    <div class="analytics-details">
+                        <div class="metric">
+                            <strong>Total Followers:</strong> 250,000
+                        </div>
+                        <div class="metric">
+                            <strong>Engagement Rate:</strong> 4.2%
+                        </div>
+                        <div class="metric">
+                            <strong>Top Platform:</strong> Instagram
+                        </div>
+                        <div class="metric">
+                            <strong>Avg. Shares per Post:</strong> 1,250
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="analytics-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Views</th>
+                                    <th>Likes</th>
+                                    <th>Re-tweets</th>
+                                    <th>Favorites</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Game Day Hype Video</td>
+                                    <td>January 12, 2025</td>
+                                    <td class="views">187,923</td>
+                                    <td>24,586</td>
+                                    <td>8,743</td>
+                                    <td>12,651</td>
+                                </tr>
+                                <tr>
+                                    <td>Player Spotlight: QB Travis Hunter</td>
+                                    <td>January 24, 2025</td>
+                                    <td class="views">156,452</td>
+                                    <td>18,924</td>
+                                    <td>6,521</td>
+                                    <td>9,847</td>
+                                </tr>
+                                <tr>
+                                    <td>Behind the Scenes: Weight Room</td>
+                                    <td>February 2, 2025</td>
+                                    <td class="views">132,784</td>
+                                    <td>15,632</td>
+                                    <td>4,823</td>
+                                    <td>7,549</td>
+                                </tr>
+                                <tr>
+                                    <td>Coach's Corner: Defensive Strategy</td>
+                                    <td>February 15, 2025</td>
+                                    <td class="views">98,562</td>
+                                    <td>10,482</td>
+                                    <td>3,157</td>
+                                    <td>5,628</td>
+                                </tr>
+                                <tr>
+                                    <td>Throwback Thursday: 2013 Championship</td>
+                                    <td>February 22, 2025</td>
+                                    <td class="views">120,378</td>
+                                    <td>14,865</td>
+                                    <td>5,274</td>
+                                    <td>8,932</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+        });
     </script>
 </body>
 </html>
