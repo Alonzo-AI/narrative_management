@@ -6,95 +6,95 @@
     <title>Athlyte Content Publishing Platform - FSU Graphics</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
-        :root {
-            --fsu-garnet: #782f40;
-            --fsu-gold: #ceb888;
-            --fsu-black: #231f20;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+:root {
+    --fsu-garnet: #782f40;
+    --fsu-gold: #ceb888;
+    --fsu-black: #231f20;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        @font-face {
-            font-family: 'GothicCustom';
-            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-        }
+@font-face {
+    font-family: 'GothicCustom';
+    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
 
-        body {
-            background-color: var(--fsu-garnet);
-            display: grid;
-            grid-template-columns: 250px 1fr 300px;
-            min-height: 100vh;
-            gap: 24px;
-            padding: 24px;
-        }
+body {
+    background-color: var(--fsu-garnet);
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    min-height: 100vh;
+    gap: 24px;
+    padding: 24px;
+}
 
-        .sidebar {
-            background: var(--fsu-gold);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 24px;
-        }
+.sidebar {
+    background: var(--fsu-gold);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+}
 
-        .sidebar h2 {
-            color: var(--fsu-garnet);
-            font-family: 'GothicCustom', sans-serif;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.sidebar h2 {
+    color: var(--fsu-garnet);
+    font-family: 'GothicCustom', sans-serif;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--fsu-garnet);
-        }
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--fsu-garnet);
+}
 
-        .sidebar-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
+.sidebar-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
 
-        .sidebar-item.active {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
-        }
+.sidebar-item.active {
+    background-color: var(--fsu-garnet);
+    color: var(--fsu-gold);
+}
 
-        .sidebar-item.active i {
-            color: var(--fsu-gold);
-        }
+.sidebar-item.active i {
+    color: var(--fsu-gold);
+}
 
-        .sidebar-item i {
-            margin-right: 12px;
-            color: var(--fsu-garnet);
-            font-size: 20px;
-        }
+.sidebar-item i {
+    margin-right: 12px;
+    color: var(--fsu-garnet);
+    font-size: 20px;
+}
 
-        .sidebar-item a {
-            text-decoration: none;
-            color: inherit;
-        }
+.sidebar-item a {
+    text-decoration: none;
+    color: inherit;
+}
 
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
 
-        /* FSU Header Styles */
+/* FSU Header Styles */
 .fsu-header {
     background-color: white;
     padding: 15px 20px;
@@ -166,7 +166,6 @@
     transition: color 0.3s ease;
 }
 
-/* Status Color Classes */
 .status-in-progress .info-value {
     color: #2196F3; /* Blue */
 }
@@ -180,14 +179,12 @@
     color: #4CAF50; /* Green */
 }
 
-/* Pulsing animation for "Under Review" status */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
+/* Status Icon Animations */
+.info-item:nth-child(2) i.material-icons {
+    transition: transform 0.3s ease;
 }
 
-/* Status Badge Styles (Optional) */
+/* Status Badge (Optional) */
 .status-badge {
     display: inline-block;
     padding: 4px 8px;
@@ -212,110 +209,116 @@
     color: #4CAF50;
 }
 
+/* Pulse animation for "Under Review" status */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
 /* Dashboard styles */
 .dashboard {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            max-width: 1200px;
-            margin: 0 auto 20px auto;
-        }
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+}
 
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
 
-        .dashboard-title {
-            color: var(--fsu-garnet);
-            font-weight: 600;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.dashboard-title {
+    color: var(--fsu-garnet);
+    font-weight: 600;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .dashboard-title i {
-            color: var(--fsu-garnet);
-        }
+.dashboard-title i {
+    color: var(--fsu-garnet);
+}
 
-        .publish-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
+.publish-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
 
-        .select-container {
-            position: relative;
-            min-width: 250px;
-        }
+.select-container {
+    position: relative;
+    min-width: 250px;
+}
 
-        .select-container label {
-            display: block;
-            font-size: 0.85rem;
-            color: #555;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
+.select-container label {
+    display: block;
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
 
-        .custom-select {
-            
-            width: 100%;
-            padding: 12px 45px 12px 15px;
-            font-size: 1rem;
-            background-color: #f8f8f8;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            color: var(--fsu-black);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+.custom-select {
+    width: 100%;
+    padding: 12px 45px 12px 15px;
+    font-size: 1rem;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    color: var(--fsu-black);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-        .custom-select:focus {
-            outline: none;
-            border-color: var(--fsu-gold);
-            box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.3);
-        }
+.custom-select:focus {
+    outline: none;
+    border-color: var(--fsu-gold);
+    box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.3);
+}
 
-        .select-arrow {
-            position: absolute;
-            right: 15px;
-            top: 38px;
-            color: #777;
-            pointer-events: none;
-        }
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 38px;
+    color: #777;
+    pointer-events: none;
+}
 
-        .submit-btn {
-            background-color: var(--fsu-garnet);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 24px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.submit-btn {
+    background-color: var(--fsu-garnet);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .submit-btn:hover {
-            background-color: #651b2a;
-            transform: translateY(-2px);
-        }
+.submit-btn:hover {
+    background-color: #651b2a;
+    transform: translateY(-2px);
+}
 
-        .submit-btn:active {
-            transform: translateY(0);
-        }
+.submit-btn:active {
+    transform: translateY(0);
+}
 
-        /* Review Button State Styles */
+/* Review Button State Styles */
 .submit-btn.review-submitted {
     background-color: #FF9800; /* Orange for review submitted state */
     transform: none;
@@ -331,202 +334,90 @@
     pointer-events: none; /* Prevents further clicks */
 }
 
-        /* Content table styles */
-        .content-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+.submit-btn:disabled {
+    background-color: #ccc;
+    transform: none;
+    cursor: not-allowed;
+}
 
-        .content-table th {
-            background-color: #f5f5f5;
-            color: var(--fsu-garnet);
-            text-align: left;
-            padding: 12px 15px;
-            font-weight: 600;
-            border-bottom: 2px solid #e0e0e0;
-        }
+/* Grid Container Styles */
+.content-grid-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-top: 24px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
 
-        .content-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
 
-        .content-table tr:hover {
-            background-color: #f9f9f9;
-        }
+.grid-header h3 {
+    color: var(--fsu-garnet);
+    margin: 0;
+    font-family: 'GothicCustom', sans-serif;
+    font-size: 1.2rem;
+}
 
-        .content-table tr.selected {
-            background-color: rgba(206, 184, 136, 0.2);
-        }
+.grid-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-        .content-table input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--fsu-garnet);
-            cursor: pointer;
-        }
+/* Grid Item Selection Styles */
+.grid-item {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
 
-        .type-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-align: center;
-            min-width: 90px;
-        }
+.grid-item.selected-item {
+    border-color: var(--fsu-garnet);
+    box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+    transform: translateY(-3px);
+}
 
-        .type-press {
-            background-color: rgba(33, 150, 243, 0.1);
-            color: #2196F3;
-        }
+.grid-item.published-item {
+    border-color: #4CAF50;
+}
 
-        .type-social {
-            background-color: rgba(156, 39, 176, 0.1);
-            color: #9C27B0;
-        }
+.grid-item.selected-item.published-item {
+    border-color: var(--fsu-garnet);
+    box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2), 0 0 0 6px rgba(76, 175, 80, 0.2);
+}
 
-        .table-actions {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.grid-item.review-completed {
+    opacity: 0.9;
+    pointer-events: none;
+}
 
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #f8f8f8;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 8px 12px;
-            width: 300px;
-        }
+/* Selection indicator */
+.grid-item.selected-item::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    background-color: var(--fsu-garnet);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 5;
+}
 
-        .search-box i {
-            color: #777;
-            margin-right: 8px;
-        }
-
-        .search-box input {
-            border: none;
-            background: none;
-            outline: none;
-            font-size: 0.95rem;
-            width: 100%;
-        }
-
-        .content-count {
-            font-size: 0.9rem;
-            color: #666;
-            display: flex;
-            align-items: center;
-        }
-
-        .content-count span {
-            font-weight: 600;
-            color: var(--fsu-garnet);
-            margin: 0 4px;
-        }
-
-        /* Status cell styling */
-    .status-cell {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .status-published {
-        color: #4CAF50;
-    }
-
-    .status-pending {
-        color: #FFA000;
-    }
-
-        /* Table row hover effect */
-    .content-table tbody tr:hover {
-        background-color: rgba(206, 184, 136, 0.1);
-    }
-
-    /* Animation for new items */
-    @keyframes highlightRow {
-        0% { background-color: rgba(206, 184, 136, 0.4); }
-        100% { background-color: transparent; }
-    }
-
-    .highlight-row {
-        animation: highlightRow 2s ease-out;
-    }
-
-    /* Responsive adjustments for table */
-    @media (max-width: 768px) {
-        .content-table thead th:nth-child(4),
-        .content-table tbody td:nth-child(4) {
-            display: none;
-        }
-        
-        .content-table th, 
-        .content-table td {
-            padding: 8px 10px;
-        }
-        
-        .search-box {
-            width: 200px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .table-actions {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        .search-box {
-            width: 100%;
-        }
-        
-        .content-table thead th:nth-child(3),
-        .content-table tbody td:nth-child(3) {
-            display: none;
-        }
-    }
-
-        /* Grid Container Styles */
-    .content-grid-container {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: var(--shadow);
-        margin-top: 24px;
-        margin-bottom: 24px;
-        overflow: hidden;
-    }
-
-    .grid-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .grid-header h3 {
-        color: var(--fsu-garnet);
-        margin: 0;
-        font-family: 'GothicCustom', sans-serif;
-        font-size: 1.2rem;
-    }
-
-    .grid-controls {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    
-    /* Grid View Styles - for combined content */
+/* Grid View Styles */
 .grid-view {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -534,20 +425,408 @@
     padding: 20px;
 }
 
-.grid-item {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    background-color: white;
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for grid items */
+.item-content {
     display: flex;
     flex-direction: column;
 }
 
-.grid-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+.image-preview {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover .preview-image {
+    transform: scale(1.05);
+}
+
+.text-preview {
+    padding: 15px;
+    background-color: #f9f9f9;
+    min-height: 120px;
+}
+
+.text-preview h4 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.text-preview p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Type-specific styling */
+.item-type {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.press-release-type {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.social-media-type {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+}
+
+/* No content message styling */
+.no-content-message {
+    text-align: center;
+    padding: 30px 0;
+    color: #777;
+    font-style: italic;
+}
+
+/* Publish button container */
+.publish-button-container {
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+    text-align: right;
+}
+
+/* Publish button styling */
+.grid-publish-btn {
+    background-color: var(--fsu-garnet);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: auto;
+}
+
+.grid-publish-btn:hover {
+    background-color: #651b2a;
+    transform: translateY(-2px);
+}
+
+.grid-publish-btn:active {
+    transform: translateY(0);
+}
+
+.grid-publish-btn.published {
+    background-color: #4CAF50; /* Green color for published state */
+    pointer-events: none; /* Prevents further clicks */
+}
+
+.grid-publish-btn.published:hover {
+    background-color: #4CAF50; /* Keep the same color on hover */
+    transform: none; /* Disable hover animation */
+    cursor: default;
+}
+
+.grid-publish-btn i {
+    font-size: 16px;
+}
+
+/* Animation for publishing state */
+@keyframes publishing {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+.grid-publish-btn.publishing {
+    background-color: #FFA000; /* Orange color for publishing state */
+    pointer-events: none; /* Prevents clicks during publishing */
+}
+
+.grid-publish-btn.publishing i {
+    animation: publishing 1s infinite; /* Apply bouncing animation to icon */
+}
+
+/* Enhanced modal styles */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--fsu-garnet);
+    color: white;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+}
+
+.modal-text {
+    padding: 20px;
+}
+
+.modal-text h3 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.modal-text p {
+    line-height: 1.6;
+    color: #333;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+}
+
+.modal-type-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.modal-type-badge.press-release {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.modal-type-badge.social-media {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.modal-date {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Grid Controls */
+.grid-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.grid-select-btn {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.grid-select-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.grid-select-btn i {
+    font-size: 18px;
+    color: var(--fsu-garnet);
+}
+
+/* Grid Header with Search & Count */
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.grid-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--fsu-garnet);
+}
+
+.grid-search-box {
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px 12px;
+    width: 250px;
+}
+
+.grid-search-box i {
+    color: #777;
+    margin-right: 8px;
+}
+
+.grid-search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.grid-selection-count {
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+}
+
+.grid-selection-count strong {
+    color: var(--fsu-garnet);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        position: static;
+    }
+    
+    .grid-view {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+    
+    .publish-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .grid-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .grid-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .grid-search-box {
+        width: 100%;
+    }
+    
+    .grid-selection-count {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 576px) {
+    .project-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .info-item {
+        width: 100%;
+    }
 }
 
 /* Style for combined content items */
@@ -931,36 +1210,6 @@
            
         </div>
 
-        <div class="table-container">
-            <div class="table-actions">
-                <div class="search-box">
-                    <i class="material-icons">search</i>
-                    <input type="text" id="search-content" placeholder="Search content...">
-                </div>
-                <div class="content-count">
-                    <input type="checkbox" id="select-all"> <label for="select-all">Select All</label> | Selected: <span id="selected-count">0</span> of <span id="total-count">0</span>
-                </div>
-            </div>
-            
-            <table class="content-table">
-                <thead>
-                    <tr>
-                        <th width="5%"></th>
-                        <th width="45%">Title</th>
-                        <th width="20%">Type</th>
-                        <th width="20%">Date</th>
-                        <th width="10%">Status</th>
-                    </tr>
-                </thead>
-                <tbody id="published-content-table">
-                    <!-- Table will be populated dynamically with published content -->
-                    <tr class="no-content-row">
-                        <td colspan="5" class="no-content-message"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
     <div class="content-grid-container">
         <div class="grid-header">
             
@@ -1128,14 +1377,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let publishedContent = [];
     
     // DOM elements
-const publishedTable = document.getElementById('published-content-table');
-const totalCountElement = document.getElementById('total-count');
-const selectAllCheckbox = document.getElementById('select-all');
-const selectedCountElement = document.getElementById('selected-count');
-const searchInput = document.getElementById('search-content');
-const publishTypeSelect = document.getElementById('publish-type');
-const submitReviewBtn = document.getElementById('submit-review-btn');
-const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value'); // Phase status element
+    const publishTypeSelect = document.getElementById('publish-type');
+    const submitReviewBtn = document.getElementById('submit-review-btn');
+    const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value'); // Phase status element
+    const gridView = document.querySelector('.grid-view');
     
     // Track the review state (not started, submitted, accepted)
     let reviewState = 'not-started';
@@ -1152,6 +1397,30 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
             const dateText = item.querySelector('.item-date').textContent;
             item.dataset.date = dateText.replace('Updated: ', '');
         }
+        
+        // Add selected state functionality to grid items
+        item.addEventListener('click', function(e) {
+            // Prevent triggering if clicking on the publish button
+            if (e.target.closest('.grid-publish-btn')) {
+                return;
+            }
+            
+            // Toggle selected state for the grid item
+            this.classList.toggle('selected-item');
+            
+            // Update the selected count and review button state
+            updateSelectedCount();
+            
+            // Show the modal content preview
+            const itemType = this.dataset.type;
+            const title = this.querySelector('h4').textContent;
+            const text = this.querySelector('p').textContent;
+            const image = this.querySelector('img').src;
+            const imageAlt = this.querySelector('img').alt;
+            const date = this.querySelector('.item-date').textContent;
+            
+            showCombinedContentModal(title, text, image, imageAlt, itemType, date);
+        });
     });
     
     // Set up grid publish buttons
@@ -1203,8 +1472,8 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
                 
                 publishedContent.push(newItem);
                 
-                // Update table
-                updatePublishedTable();
+                // Mark grid item as published
+                gridItem.classList.add('published-item');
                 
                 // Show success state - NO TIMEOUT to reset
                 this.classList.remove('publishing');
@@ -1216,117 +1485,44 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
                     submitReviewBtn.disabled = false;
                     submitReviewBtn.style.opacity = "1";
                 }
+                
+                // Update selected count
+                updateSelectedCount();
             }, 1500);
         });
     });
     
-    // Function to update the published content table
-    function updatePublishedTable() {
-        // Clear table first
-        publishedTable.innerHTML = '';
+    // Update selected count function
+    function updateSelectedCount() {
+        const selectedItems = document.querySelectorAll('.grid-item.selected-item');
+        const publishedItems = document.querySelectorAll('.grid-item.published-item');
         
-        // Show message if no content
-        if (publishedContent.length === 0) {
-            publishedTable.innerHTML = `
-                <tr class="no-content-row">
-                    <td colspan="5" class="no-content-message">No published content yet.</td>
-                </tr>
-            `;
-            totalCountElement.textContent = '0';
-            return;
+        // Add count display if it doesn't exist
+        let countDisplay = document.querySelector('.grid-selection-count');
+        if (!countDisplay) {
+            countDisplay = document.createElement('div');
+            countDisplay.className = 'grid-selection-count';
+            const gridHeader = document.querySelector('.grid-header');
+            if (gridHeader) {
+                gridHeader.appendChild(countDisplay);
+            }
         }
         
-        // Add rows for each published item
-        publishedContent.forEach((item) => {
-            const newRow = document.createElement('tr');
-            newRow.dataset.id = item.id;
-            newRow.classList.add('highlight-row');
-            
-            // Format type display
-            let typeDisplay = item.type;
-            let typeBadgeClass = '';
-            
-            if (item.type === 'press-release') {
-                typeDisplay = 'Press Release';
-                typeBadgeClass = 'type-press';
-            } else if (item.type === 'social-media') {
-                typeDisplay = 'Social Media';
-                typeBadgeClass = 'type-social';
-            }
-            
-            newRow.innerHTML = `
-                <td><input type="checkbox" class="content-checkbox"></td>
-                <td>${item.title}</td>
-                <td><span class="type-badge ${typeBadgeClass}">${typeDisplay}</span></td>
-                <td>${item.date}</td>
-                <td>
-                    <div class="status-cell status-published">
-                        <i class="material-icons">check_circle</i>
-                        <span>Published</span>
-                    </div>
-                </td>
+        // Update count display
+        if (countDisplay) {
+            countDisplay.innerHTML = `
+              
+                <span>Published: <strong>${publishedItems.length}</strong></span> | 
+                <span>Total: <strong>${document.querySelectorAll('.grid-item').length}</strong></span>
             `;
-            
-            publishedTable.appendChild(newRow);
-        });
-        
-        // Update total count
-        totalCountElement.textContent = publishedContent.length;
-        
-        // Set up checkbox events for new rows
-        setupCheckboxes();
-    }
-    
-    // Function to set up checkboxes in the table
-    function setupCheckboxes() {
-        const contentCheckboxes = document.querySelectorAll('.content-checkbox');
-        
-        contentCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const row = this.closest('tr');
-                if (this.checked) {
-                    row.classList.add('selected');
-                } else {
-                    row.classList.remove('selected');
-                }
-                
-                // Update "select all" state
-                const allCheckboxes = Array.from(contentCheckboxes);
-                const allChecked = allCheckboxes.every(cb => cb.checked);
-                selectAllCheckbox.checked = allChecked;
-                
-                // Update selected count
-                updateSelectedCount();
-            });
-        });
-    }
-    
-    // Select/Deselect all content items
-    selectAllCheckbox.addEventListener('change', function() {
-        const contentCheckboxes = document.querySelectorAll('.content-checkbox');
-        
-        contentCheckboxes.forEach(checkbox => {
-            const row = checkbox.closest('tr');
-            checkbox.checked = this.checked;
-            
-            if (this.checked) {
-                row.classList.add('selected');
-            } else {
-                row.classList.remove('selected');
-            }
-        });
-        
-        updateSelectedCount();
-    });
-    
-    // Update selected count
-    function updateSelectedCount() {
-        const selectedCount = document.querySelectorAll('.content-checkbox:checked').length;
-        selectedCountElement.textContent = selectedCount;
+        }
         
         // Enable/disable submit button based on selections
-        if (submitReviewBtn && publishTypeSelect && reviewState === 'not-started') {
-            if (selectedCount > 0 && publishTypeSelect.value) {
+        if (submitReviewBtn && reviewState === 'not-started') {
+            const hasPublishedItems = publishedItems.length > 0;
+            const hasTypeSelected = publishTypeSelect && publishTypeSelect.value;
+            
+            if (hasPublishedItems && hasTypeSelected) {
                 submitReviewBtn.disabled = false;
                 submitReviewBtn.style.opacity = "1";
             } else {
@@ -1336,77 +1532,69 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
         }
     }
     
-    // Search functionality
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const rows = document.querySelectorAll('.content-table tbody tr:not(.no-content-row)');
+    // Add select all/none options to the grid container
+    function addGridSelectionControls() {
+        const gridControls = document.querySelector('.grid-controls');
+        if (!gridControls) return;
         
-        rows.forEach(row => {
-            const title = row.cells[1].textContent.toLowerCase();
-            const type = row.cells[2].textContent.toLowerCase();
-            
-            if (title.includes(searchTerm) || type.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
+        const selectAllBtn = document.createElement('button');
+        selectAllBtn.className = 'grid-select-btn';
+        selectAllBtn.innerHTML = '<i class="material-icons">select_all</i> Select All';
+        
+        const selectNoneBtn = document.createElement('button');
+        selectNoneBtn.className = 'grid-select-btn';
+        selectNoneBtn.innerHTML = '<i class="material-icons">clear</i> Select None';
+        
+        gridControls.appendChild(selectAllBtn);
+        gridControls.appendChild(selectNoneBtn);
+        
+        // Select all grid items
+        selectAllBtn.addEventListener('click', function() {
+            document.querySelectorAll('.grid-item').forEach(item => {
+                item.classList.add('selected-item');
+            });
+            updateSelectedCount();
         });
         
-        // Update select all checkbox state
-        selectAllCheckbox.checked = false;
-        updateSelectedCount();
-    });
+        // Deselect all grid items
+        selectNoneBtn.addEventListener('click', function() {
+            document.querySelectorAll('.grid-item').forEach(item => {
+                item.classList.remove('selected-item');
+            });
+            updateSelectedCount();
+        });
+    }
     
-    // Submit review button functionality
-    if (submitReviewBtn) {
-        submitReviewBtn.addEventListener('click', function() {
-            if (reviewState === 'not-started') {
-                // Get selected items or all published items if none selected
-                const selectedCheckboxes = document.querySelectorAll('.content-checkbox:checked');
-                const selectedCount = selectedCheckboxes.length;
-                const itemsToReview = selectedCount > 0 ? selectedCount : publishedContent.length;
+    // Add search functionality to the grid
+    function addGridSearchFeature() {
+        const gridHeader = document.querySelector('.grid-header');
+        if (!gridHeader) return;
+        
+        const searchBox = document.createElement('div');
+        searchBox.className = 'grid-search-box';
+        searchBox.innerHTML = `
+            <i class="material-icons">search</i>
+            <input type="text" id="search-grid" placeholder="Search content...">
+        `;
+        
+        gridHeader.appendChild(searchBox);
+        
+        // Add search functionality
+        const searchInput = searchBox.querySelector('input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            document.querySelectorAll('.grid-item').forEach(item => {
+                const title = item.querySelector('h4').textContent.toLowerCase();
+                const text = item.querySelector('p').textContent.toLowerCase();
+                const type = item.dataset.type.toLowerCase();
                 
-                // Show confirmation dialog
-                if (confirm(`Are you sure you want to submit ${itemsToReview} item(s) for review? This will notify the review team.`)) {
-                    // Update button text and appearance
-                    this.innerHTML = '<i class="material-icons">rate_review</i> Accept Review';
-                    this.classList.add('review-submitted');
-                    
-                    // Update phase status
-                    updateProjectStatus('Under Review');
-                    
-                    // Update review state
-                    reviewState = 'submitted';
-                    
-                    // Show success notification
-                    alert(`Successfully submitted ${itemsToReview} item(s) for review.`);
+                if (title.includes(searchTerm) || text.includes(searchTerm) || type.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
                 }
-            } else if (reviewState === 'submitted') {
-                // Accept the review
-                if (confirm('Are you sure you want to accept this review?')) {
-                    // Update button text and appearance
-                    this.innerHTML = '<i class="material-icons">check_circle</i> Review Accepted';
-                    this.classList.remove('review-submitted');
-                    this.classList.add('review-accepted');
-                    this.disabled = true;
-                    
-                    // Update phase status
-                    updateProjectStatus('Completed');
-                    
-                    // Update review state
-                    reviewState = 'accepted';
-                    
-                    // Show success notification
-                    alert('Review has been accepted.');
-                    
-                    // Disable checkboxes and selections
-                    const contentCheckboxes = document.querySelectorAll('.content-checkbox');
-                    contentCheckboxes.forEach(checkbox => {
-                        checkbox.disabled = true;
-                    });
-                    selectAllCheckbox.disabled = true;
-                }
-            }
+            });
         });
     }
     
@@ -1414,39 +1602,23 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
     if (publishTypeSelect) {
         publishTypeSelect.addEventListener('change', function() {
             const selectedType = this.value;
-            const rows = document.querySelectorAll('.content-table tbody tr:not(.no-content-row)');
             
-            // Filter rows based on the selected publish type
-            rows.forEach(row => {
-                if (!row.cells || row.cells.length < 3) return;
+            // Filter grid items based on the selected publish type
+            document.querySelectorAll('.grid-item').forEach(item => {
+                const itemType = item.dataset.type;
                 
-                const typeCell = row.cells[2];
-                const typeBadge = typeCell.querySelector('.type-badge');
-                if (!typeBadge) return;
-                
-                const currentType = typeBadge.textContent.toLowerCase();
-                
-                // Make type comparison case-insensitive
-                const normalizedSelectedType = selectedType.toLowerCase();
-                const normalizedCurrentType = currentType.toLowerCase();
-                
-                // Show all rows if no filter is selected, otherwise filter by type
+                // Show all items if no filter is selected, otherwise filter by type
                 if (!selectedType) {
-                    row.style.display = '';
-                } else if (normalizedCurrentType.includes(normalizedSelectedType)) {
-                    row.style.display = '';
+                    item.style.display = '';
+                } else if (itemType === selectedType) {
+                    item.style.display = '';
                 } else {
-                    row.style.display = 'none';
+                    item.style.display = 'none';
                 }
             });
             
-            // Update select all checkbox and counts when filter changes
-            selectAllCheckbox.checked = false;
+            // Update selected count
             updateSelectedCount();
-            
-            // Update the total count to reflect visible rows
-            const visibleRowCount = document.querySelectorAll('.content-table tbody tr:not([style*="display: none"]):not(.no-content-row)').length;
-            totalCountElement.textContent = visibleRowCount > 0 ? visibleRowCount : publishedContent.length;
             
             // Visual feedback on selection change
             this.style.borderColor = '#ceb888';
@@ -1462,30 +1634,81 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
         });
     }
     
+    // Submit Review Button Initialization
+if (submitReviewBtn) {
+    // Make sure the button is always enabled
+    submitReviewBtn.disabled = false;
+    submitReviewBtn.style.opacity = "1";
+    
+    submitReviewBtn.addEventListener('click', function() {
+        if (reviewState === 'not-started') {
+            // Count published items
+            const publishedItems = document.querySelectorAll('.grid-item.published-item');
+            const itemsToReview = publishedItems.length;
+            
+            // Show confirmation dialog - no need to check if items exist since button is always active
+            if (confirm(`Are you sure you want to submit ${itemsToReview > 0 ? itemsToReview : 'all'} items for review? This will notify the review team.`)) {
+                // Update button text and appearance
+                this.innerHTML = '<i class="material-icons">rate_review</i> Accept Review';
+                this.classList.add('review-submitted');
+                
+                // Update phase status
+                updateProjectStatus('Under Review');
+                
+                // Update review state
+                reviewState = 'submitted';
+                
+                // Show success notification
+                alert(`Successfully submitted ${itemsToReview > 0 ? itemsToReview : 'all'} items for review.`);
+            }
+        } else if (reviewState === 'submitted') {
+            // Accept the review
+            if (confirm('Are you sure you want to accept this review?')) {
+                // Update button text and appearance
+                this.innerHTML = '<i class="material-icons">check_circle</i> Review Accepted';
+                this.classList.remove('review-submitted');
+                this.classList.add('review-accepted');
+                
+                // Don't disable the button, just change its appearance
+                // this.disabled = true; (removed)
+                
+                // Update phase status
+                updateProjectStatus('Completed');
+                
+                // Update review state
+                reviewState = 'accepted';
+                
+                // Show success notification
+                alert('Review has been accepted.');
+                
+                // Disable further interaction with grid items
+                document.querySelectorAll('.grid-item').forEach(item => {
+                    item.classList.add('review-completed');
+                });
+            }
+        } else if (reviewState === 'accepted') {
+            // Allow clicking even after acceptance - could reset or perform another action
+            alert('This review has already been accepted.');
+        }
+    });
+}
+
+// Update this in the updateSelectedCount function as well
+function updateSelectedCount() {
+    // ... existing code ...
+    
+    // Submit button should always be enabled regardless of selections
+    if (submitReviewBtn) {
+        submitReviewBtn.disabled = false;
+        submitReviewBtn.style.opacity = "1";
+    }
+}
+    
     // Initialize button state
     if (submitReviewBtn) {
         submitReviewBtn.disabled = true;
         submitReviewBtn.style.opacity = "0.6";
     }
-    
-    // Enhanced grid handling and modal display for combined content
-    const gridItems = document.querySelectorAll('.grid-item');
-    
-    gridItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const itemType = this.dataset.type;
-            
-            // Get content elements
-            const title = this.querySelector('h4').textContent;
-            const text = this.querySelector('p').textContent;
-            const image = this.querySelector('img').src;
-            const imageAlt = this.querySelector('img').alt;
-            const date = this.querySelector('.item-date').textContent;
-            
-            // Show modal with combined content
-            showCombinedContentModal(title, text, image, imageAlt, itemType, date);
-        });
-    });
     
     // Function to display combined content in modal
     function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
@@ -1562,46 +1785,90 @@ const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info
         modal.style.display = 'flex';
     }
     
-    // Initialize the table
-    updatePublishedTable();
-    
     // Function to update project status
-function updateProjectStatus(status) {
-    // Use a more specific selector to target only the phase status element
-    const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value');
-    
-    if (phaseStatusElement) {
-        phaseStatusElement.textContent = status;
+    function updateProjectStatus(status) {
+        // Use a more specific selector to target only the phase status element
+        const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value');
         
-        // Remove any existing status classes
-        phaseStatusElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
-        
-        // Add appropriate status class
-        if (status === 'In Progress') {
-            phaseStatusElement.classList.add('status-in-progress');
-        } else if (status === 'Under Review') {
-            phaseStatusElement.classList.add('status-under-review');
-        } else if (status === 'Completed') {
-            phaseStatusElement.classList.add('status-completed');
-        }
-        
-        // Update parent container class if it exists
-        const parentContainer = phaseStatusElement.closest('.info-item');
-        if (parentContainer) {
-            parentContainer.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+        if (phaseStatusElement) {
+            phaseStatusElement.textContent = status;
             
+            // Remove any existing status classes
+            phaseStatusElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+            
+            // Add appropriate status class
             if (status === 'In Progress') {
-                parentContainer.classList.add('status-in-progress');
+                phaseStatusElement.classList.add('status-in-progress');
             } else if (status === 'Under Review') {
-                parentContainer.classList.add('status-under-review');
+                phaseStatusElement.classList.add('status-under-review');
             } else if (status === 'Completed') {
-                parentContainer.classList.add('status-completed');
+                phaseStatusElement.classList.add('status-completed');
+            }
+            
+            // Update parent container class if it exists
+            const parentContainer = phaseStatusElement.closest('.info-item');
+            if (parentContainer) {
+                parentContainer.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+                
+                if (status === 'In Progress') {
+                    parentContainer.classList.add('status-in-progress');
+                } else if (status === 'Under Review') {
+                    parentContainer.classList.add('status-under-review');
+                } else if (status === 'Completed') {
+                    parentContainer.classList.add('status-completed');
+                }
             }
         }
-    } else {
-        console.error('Phase status element not found');
     }
-}
+    
+    // Initialize grid controls
+    addGridSelectionControls();
+    addGridSearchFeature();
+    updateSelectedCount();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const publishTypeSelect = document.getElementById('publish-type');
+    const gridItems = document.querySelectorAll('.grid-item');
+
+    publishTypeSelect.addEventListener('change', function() {
+        const selectedType = this.value;
+
+        gridItems.forEach(item => {
+            // Determine the item's type based on the data-type attribute
+            const itemType = item.getAttribute('data-type');
+
+            // If no type is selected, show all items
+            if (!selectedType) {
+                item.style.display = '';
+            } 
+            // Otherwise, only show items that match the selected type
+            else if (selectedType === 'social' && itemType === 'social-media') {
+                item.style.display = '';
+            } 
+            else if (selectedType === 'press' && itemType === 'press-release') {
+                item.style.display = '';
+            } 
+            else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Optional: Add visual feedback
+        this.style.borderColor = selectedType ? '#ceb888' : '#e0e0e0';
+        setTimeout(() => {
+            this.style.borderColor = '#e0e0e0';
+        }, 300);
+    });
+
+    // Add an option to reset the filter
+    publishTypeSelect.addEventListener('change', function() {
+        if (!this.value) {
+            gridItems.forEach(item => {
+                item.style.display = '';
+            });
+        }
+    });
 });
 
     </script>
