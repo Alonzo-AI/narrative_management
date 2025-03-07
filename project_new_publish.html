@@ -792,21 +792,33 @@
         font-size: 16px;
     }
 
-    /* Animation for when publishing */
-    @keyframes publishing {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-3px); }
-        100% { transform: translateY(0); }
-    }
+    /* Enhanced styling for publish buttons */
+.grid-publish-btn.published {
+    background-color: #4CAF50; /* Green color for published state */
+    pointer-events: none; /* Prevents further clicks */
+}
 
-    .grid-publish-btn.publishing {
-        background-color: #FFA000;
-        pointer-events: none;
-    }
+.grid-publish-btn.published:hover {
+    background-color: #4CAF50; /* Keep the same color on hover */
+    transform: none; /* Disable hover animation */
+    cursor: default;
+}
 
-    .grid-publish-btn.publishing i {
-        animation: publishing 1s infinite;
-    }                       
+/* Animation for publishing state */
+@keyframes publishing {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+.grid-publish-btn.publishing {
+    background-color: #FFA000; /* Orange color for publishing state */
+    pointer-events: none; /* Prevents clicks during publishing */
+}
+
+.grid-publish-btn.publishing i {
+    animation: publishing 1s infinite; /* Apply bouncing animation to icon */
+}                       
 
 </style>
 </head>
@@ -892,6 +904,7 @@
                     <option value="" disabled selected>Choose publish destination...</option>                  
                     <option value="social">Social Media</option>
                     <option value="press">Press Release</option>
+                    <option value="press">All</option>
                    
                 </select>
                 
@@ -1103,263 +1116,273 @@
      <script>
 
 document.addEventListener('DOMContentLoaded', function() {
-        // Initialize published content array
-        let publishedContent = [];
+    // Initialize published content array
+    let publishedContent = [];
+    
+    // DOM elements
+    const publishedTable = document.getElementById('published-content-table');
+    const totalCountElement = document.getElementById('total-count');
+    const selectAllCheckbox = document.getElementById('select-all');
+    const selectedCountElement = document.getElementById('selected-count');
+    const searchInput = document.getElementById('search-content');
+    const publishTypeSelect = document.getElementById('publish-type');
+    const submitReviewBtn = document.getElementById('submit-review-btn');
+    
+    // Add data attributes to grid items if not already present
+    document.querySelectorAll('.grid-item').forEach((item, index) => {
+        if (!item.dataset.id) {
+            item.dataset.id = `item${index + 1}`;
+        }
+        if (!item.dataset.title) {
+            item.dataset.title = item.querySelector('h4').textContent;
+        }
+        if (!item.dataset.date) {
+            const dateText = item.querySelector('.item-date').textContent;
+            item.dataset.date = dateText.replace('Updated: ', '');
+        }
+    });
+    
+    // Set up grid publish buttons
+    const publishButtons = document.querySelectorAll('.grid-publish-btn');
+    
+    publishButtons.forEach(button => {
+        // Set button's data-id attribute if not already present
+        if (!button.dataset.id) {
+            const parentItem = button.closest('.grid-item');
+            button.dataset.id = parentItem.dataset.id;
+        }
         
-        // DOM elements
-        const publishedTable = document.getElementById('published-content-table');
-        const totalCountElement = document.getElementById('total-count');
-        const selectAllCheckbox = document.getElementById('select-all');
-        const selectedCountElement = document.getElementById('selected-count');
-        const searchInput = document.getElementById('search-content');
-        
-        // Add data attributes to grid items if not already present
-        document.querySelectorAll('.grid-item').forEach((item, index) => {
-            if (!item.dataset.id) {
-                item.dataset.id = `item${index + 1}`;
-            }
-            if (!item.dataset.title) {
-                item.dataset.title = item.querySelector('h4').textContent;
-            }
-            if (!item.dataset.date) {
-                const dateText = item.querySelector('.item-date').textContent;
-                item.dataset.date = dateText.replace('Updated: ', '');
-            }
-        });
-        
-        // Set up grid publish buttons
-        const publishButtons = document.querySelectorAll('.grid-publish-btn');
-        
-        publishButtons.forEach(button => {
-            // Set button's data-id attribute if not already present
-            if (!button.dataset.id) {
-                const parentItem = button.closest('.grid-item');
-                button.dataset.id = parentItem.dataset.id;
-            }
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
             
-            button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                const itemId = this.dataset.id;
-                const gridItem = document.querySelector(`.grid-item[data-id="${itemId}"]`);
-                
-                const contentTitle = gridItem.dataset.title || gridItem.querySelector('h4').textContent;
-                const contentType = gridItem.dataset.type;
-                const contentDate = gridItem.dataset.date || gridItem.querySelector('.item-date').textContent.replace('Updated: ', '');
-                
-                // Check if already published
-                const existingItemIndex = publishedContent.findIndex(item => item.id === itemId);
-                if (existingItemIndex !== -1) {
-                    alert(`"${contentTitle}" is already in the publishing queue.`);
-                    return;
-                }
-                
-                // Show publishing state
-                this.classList.add('publishing');
-                this.innerHTML = '<i class="material-icons">cloud_upload</i> Publishing...';
-                
-                // Simulate publishing process
-                setTimeout(() => {
-                    // Add to published content
-                    const newItem = {
-                        id: itemId,
-                        title: contentTitle,
-                        type: contentType,
-                        date: contentDate,
-                        status: 'published'
-                    };
-                    
-                    publishedContent.push(newItem);
-                    
-                    // Update table
-                    updatePublishedTable();
-                    
-                    // Show success state
-                    this.classList.remove('publishing');
-                    this.classList.add('published');
-                    this.innerHTML = '<i class="material-icons">check_circle</i> Published';
-                    
-                    // Reset after some time
-                    setTimeout(() => {
-                        this.classList.remove('published');
-                        this.innerHTML = '<i class="material-icons">publish</i> Publish';
-                    }, 5000);
-                }, 1500);
-            });
-        });
-        
-        // Function to update the published content table
-        function updatePublishedTable() {
-            // Clear table first
-            publishedTable.innerHTML = '';
-            
-            // Show message if no content
-            if (publishedContent.length === 0) {
-                publishedTable.innerHTML = `
-                    <tr class="no-content-row">
-                        <td colspan="5" class="no-content-message"></td>
-                    </tr>
-                `;
-                totalCountElement.textContent = '0';
+            // If already published, don't do anything
+            if (this.classList.contains('published')) {
                 return;
             }
             
-            // Add rows for each published item
-            publishedContent.forEach((item, index) => {
-                const newRow = document.createElement('tr');
-                newRow.dataset.id = item.id;
-                newRow.classList.add('highlight-row');
-                
-                // Format type display
-                let typeDisplay = item.type;
-                let typeBadgeClass = '';
-                
-                if (item.type === 'press-release') {
-                    typeDisplay = 'Press Release';
-                    typeBadgeClass = 'type-press';
-                } else if (item.type === 'social-media') {
-                    typeDisplay = 'Social Media';
-                    typeBadgeClass = 'type-social';
-                }
-                
-                newRow.innerHTML = `
-                    <td><input type="checkbox" class="content-checkbox"></td>
-                    <td>${item.title}</td>
-                    <td><span class="type-badge ${typeBadgeClass}">${typeDisplay}</span></td>
-                    <td>${item.date}</td>
-                    <td>
-                        <div class="status-cell status-published">
-                            <i class="material-icons">check_circle</i>
-                            <span>Published</span>
-                        </div>
-                    </td>
-                `;
-                
-                publishedTable.appendChild(newRow);
-            });
+            const itemId = this.dataset.id;
+            const gridItem = document.querySelector(`.grid-item[data-id="${itemId}"]`);
             
-            // Update total count
-            totalCountElement.textContent = publishedContent.length;
+            const contentTitle = gridItem.dataset.title || gridItem.querySelector('h4').textContent;
+            const contentType = gridItem.dataset.type;
+            const contentDate = gridItem.dataset.date || gridItem.querySelector('.item-date').textContent.replace('Updated: ', '');
             
-            // Set up checkbox events for new rows
-            setupCheckboxes();
+            // Check if already published
+            const existingItemIndex = publishedContent.findIndex(item => item.id === itemId);
+            if (existingItemIndex !== -1) {
+                alert(`"${contentTitle}" is already in the publishing queue.`);
+                return;
+            }
+            
+            // Show publishing state
+            this.classList.add('publishing');
+            this.innerHTML = '<i class="material-icons">cloud_upload</i> Publishing...';
+            
+            // Simulate publishing process
+            setTimeout(() => {
+                // Add to published content
+                const newItem = {
+                    id: itemId,
+                    title: contentTitle,
+                    type: contentType,
+                    date: contentDate,
+                    status: 'published'
+                };
+                
+                publishedContent.push(newItem);
+                
+                // Update table
+                updatePublishedTable();
+                
+                // Show success state - NO TIMEOUT to reset
+                this.classList.remove('publishing');
+                this.classList.add('published');
+                this.innerHTML = '<i class="material-icons">check_circle</i> Published';
+                
+                // No longer resetting the button state
+            }, 1500);
+        });
+    });
+    
+    // Function to update the published content table
+    function updatePublishedTable() {
+        // Clear table first
+        publishedTable.innerHTML = '';
+        
+        // Show message if no content
+        if (publishedContent.length === 0) {
+            publishedTable.innerHTML = `
+                <tr class="no-content-row">
+                    <td colspan="5" class="no-content-message">No published content yet.</td>
+                </tr>
+            `;
+            totalCountElement.textContent = '0';
+            return;
         }
         
-        // Function to set up checkboxes in the table
-        function setupCheckboxes() {
-            const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+        // Add rows for each published item
+        publishedContent.forEach((item) => {
+            const newRow = document.createElement('tr');
+            newRow.dataset.id = item.id;
+            newRow.classList.add('highlight-row');
             
-            contentCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const row = this.closest('tr');
-                    if (this.checked) {
-                        row.classList.add('selected');
-                    } else {
-                        row.classList.remove('selected');
-                    }
-                    
-                    // Update "select all" state
-                    const allCheckboxes = Array.from(contentCheckboxes);
-                    const allChecked = allCheckboxes.every(cb => cb.checked);
-                    selectAllCheckbox.checked = allChecked;
-                    
-                    // Update selected count
-                    updateSelectedCount();
-                });
-            });
-        }
+            // Format type display
+            let typeDisplay = item.type;
+            let typeBadgeClass = '';
+            
+            if (item.type === 'press-release') {
+                typeDisplay = 'Press Release';
+                typeBadgeClass = 'type-press';
+            } else if (item.type === 'social-media') {
+                typeDisplay = 'Social Media';
+                typeBadgeClass = 'type-social';
+            }
+            
+            
+            newRow.innerHTML = `
+                <td><input type="checkbox" class="content-checkbox"></td>
+                <td>${item.title}</td>
+                <td><span class="type-badge ${typeBadgeClass}">${typeDisplay}</span></td>
+                <td>${item.date}</td>
+                <td>
+                    <div class="status-cell status-published">
+                        <i class="material-icons">check_circle</i>
+                        <span>Published</span>
+                    </div>
+                </td>
+            `;
+            
+            publishedTable.appendChild(newRow);
+        });
         
-        // Select/Deselect all content items
-        selectAllCheckbox.addEventListener('change', function() {
-            const contentCheckboxes = document.querySelectorAll('.content-checkbox');
-            
-            contentCheckboxes.forEach(checkbox => {
-                const row = checkbox.closest('tr');
-                checkbox.checked = this.checked;
-                
+        // Update total count
+        totalCountElement.textContent = publishedContent.length;
+        
+        // Set up checkbox events for new rows
+        setupCheckboxes();
+    }
+    
+    // Function to set up checkboxes in the table
+    function setupCheckboxes() {
+        const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+        
+        contentCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const row = this.closest('tr');
                 if (this.checked) {
                     row.classList.add('selected');
                 } else {
                     row.classList.remove('selected');
                 }
+                
+                // Update "select all" state
+                const allCheckboxes = Array.from(contentCheckboxes);
+                const allChecked = allCheckboxes.every(cb => cb.checked);
+                selectAllCheckbox.checked = allChecked;
+                
+                // Update selected count
+                updateSelectedCount();
             });
+        });
+    }
+    
+    // Select/Deselect all content items
+    selectAllCheckbox.addEventListener('change', function() {
+        const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+        
+        contentCheckboxes.forEach(checkbox => {
+            const row = checkbox.closest('tr');
+            checkbox.checked = this.checked;
             
-            updateSelectedCount();
+            if (this.checked) {
+                row.classList.add('selected');
+            } else {
+                row.classList.remove('selected');
+            }
         });
         
-        // Update selected count
-        function updateSelectedCount() {
-            const selectedCount = document.querySelectorAll('.content-checkbox:checked').length;
-            selectedCountElement.textContent = selectedCount;
-            
-            // Enable/disable submit button based on selections
-            const submitReviewBtn = document.getElementById('submit-review-btn');
-            const publishTypeSelect = document.getElementById('publish-type');
-            
-            if (submitReviewBtn && publishTypeSelect) {
-                if (selectedCount > 0 && publishTypeSelect.value) {
-                    submitReviewBtn.disabled = false;
-                    submitReviewBtn.style.opacity = "1";
-                } else {
-                    submitReviewBtn.disabled = true;
-                    submitReviewBtn.style.opacity = "0.6";
-                }
+        updateSelectedCount();
+    });
+    
+    // Update selected count
+    function updateSelectedCount() {
+        const selectedCount = document.querySelectorAll('.content-checkbox:checked').length;
+        selectedCountElement.textContent = selectedCount;
+        
+        // Enable/disable submit button based on selections
+        if (submitReviewBtn && publishTypeSelect) {
+            if (selectedCount > 0 && publishTypeSelect.value) {
+                submitReviewBtn.disabled = false;
+                submitReviewBtn.style.opacity = "1";
+            } else {
+                submitReviewBtn.disabled = true;
+                submitReviewBtn.style.opacity = "0.6";
             }
         }
+    }
+    
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.content-table tbody tr:not(.no-content-row)');
         
-        // Search functionality
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const rows = document.querySelectorAll('.content-table tbody tr:not(.no-content-row)');
+        rows.forEach(row => {
+            const title = row.cells[1].textContent.toLowerCase();
+            const type = row.cells[2].textContent.toLowerCase();
             
-            rows.forEach(row => {
-                const title = row.cells[1].textContent.toLowerCase();
-                const type = row.cells[2].textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || type.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-            
-            // Update select all checkbox state
-            selectAllCheckbox.checked = false;
-            updateSelectedCount();
+            if (title.includes(searchTerm) || type.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
         });
         
-        // Submit for review button functionality
-    submitReviewBtn.addEventListener('click', function() {
-        // Check if a sponsor has been assigned (button is hidden)
-        if (assignSponsorBtn.style.display === 'none') {
-            // Show confirmation dialog
-            if (confirm('Are you sure you want to submit this for review? This will notify the review team.')) {
-                showNotification('Marketing materials submitted for review', 'success');
-                
-                // Here you would typically send data to your backend
-                console.log('Marketing materials submitted for review');
-                
-                // Update the status in the header
-                updateProjectStatus('Under Review');
+        // Update select all checkbox state
+        selectAllCheckbox.checked = false;
+        updateSelectedCount();
+    });
+    
+    // Submit review button functionality
+    if (submitReviewBtn) {
+        submitReviewBtn.addEventListener('click', function() {
+            // Get selected items
+            const selectedCheckboxes = document.querySelectorAll('.content-checkbox:checked');
+            const selectedItems = Array.from(selectedCheckboxes).map(checkbox => {
+                const row = checkbox.closest('tr');
+                return row.dataset.id;
+            });
+            
+            if (selectedItems.length > 0) {
+                // Show confirmation dialog
+                if (confirm(`Are you sure you want to submit ${selectedItems.length} item(s) for review? This will notify the review team.`)) {
+                    // Show success notification (if you have a notification system)
+                    // For example: showNotification('Items submitted for review', 'success');
+                    
+                    alert(`Successfully submitted ${selectedItems.length} item(s) for review.`);
+                    
+                    // Update project status if needed
+                    // For example: updateProjectStatus('Under Review');
+                }
+            } else {
+                alert('Please select at least one item to submit for review.');
             }
-        } else {
-            showNotification('Please assign a sponsor before submitting for review', 'error');
-        }
-    });
-        
-        // Initialize the table
-        updatePublishedTable();
-    });
-
-        // Handle publish type selection
+        });
+    }
+    
+    // Handle publish type selection
+    if (publishTypeSelect) {
         publishTypeSelect.addEventListener('change', function() {
             const selectedType = this.value;
-            const rows = document.querySelectorAll('.content-table tbody tr');
+            const rows = document.querySelectorAll('.content-table tbody tr:not(.no-content-row)');
             
             // Filter rows based on the selected publish type
             rows.forEach(row => {
+                if (!row.cells || row.cells.length < 3) return;
+                
                 const typeCell = row.cells[2];
                 const typeBadge = typeCell.querySelector('.type-badge');
+                if (!typeBadge) return;
+                
                 const currentType = typeBadge.textContent.toLowerCase();
                 
                 // Make type comparison case-insensitive
@@ -1369,7 +1392,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show all rows if no filter is selected, otherwise filter by type
                 if (!selectedType) {
                     row.style.display = '';
-                } else if (normalizedCurrentType === normalizedSelectedType) {
+                } else if (normalizedCurrentType.includes(normalizedSelectedType)) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
@@ -1381,8 +1404,8 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSelectedCount();
             
             // Update the total count to reflect visible rows
-            const visibleRowCount = document.querySelectorAll('.content-table tbody tr:not([style*="display: none"])').length;
-            document.getElementById('total-count').textContent = visibleRowCount;
+            const visibleRowCount = document.querySelectorAll('.content-table tbody tr:not([style*="display: none"]):not(.no-content-row)').length;
+            totalCountElement.textContent = visibleRowCount > 0 ? visibleRowCount : publishedContent.length;
             
             // Visual feedback on selection change
             this.style.borderColor = '#ceb888';
@@ -1390,13 +1413,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.borderColor = '#e0e0e0';
             }, 300);
         });
-
-        // Initialize button state
+    }
+    
+    // Initialize button state
+    if (submitReviewBtn) {
         submitReviewBtn.disabled = true;
         submitReviewBtn.style.opacity = "0.6";
-
-        // Enhanced grid handling and modal display for combined content
-document.addEventListener('DOMContentLoaded', function() {
+    }
+    
+    // Enhanced grid handling and modal display for combined content
     const gridItems = document.querySelectorAll('.grid-item');
     
     gridItems.forEach(item => {
@@ -1414,123 +1439,98 @@ document.addEventListener('DOMContentLoaded', function() {
             showCombinedContentModal(title, text, image, imageAlt, itemType, date);
         });
     });
-
     
-});
-
-// Function to display combined content in modal
-function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
-    // Check if modal already exists
-    let modal = document.getElementById('preview-modal');
-    
-    if (!modal) {
-        // Create modal container
-        modal = document.createElement('div');
-        modal.id = 'preview-modal';
-        modal.className = 'preview-modal';
+    // Function to display combined content in modal
+    function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
+        // Check if modal already exists
+        let modal = document.getElementById('preview-modal');
         
-        // Add modal HTML structure for combined content
-        modal.innerHTML = `
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title"></h3>
-                    <button class="modal-close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <img class="modal-image" src="" alt="">
-                    <div class="modal-text">
-                        <h3 class="modal-content-title"></h3>
-                        <p class="modal-content-text"></p>
+        if (!modal) {
+            // Create modal container
+            modal = document.createElement('div');
+            modal.id = 'preview-modal';
+            modal.className = 'preview-modal';
+            
+            // Add modal HTML structure for combined content
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"></h3>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="modal-image" src="" alt="">
+                        <div class="modal-text">
+                            <h3 class="modal-content-title"></h3>
+                            <p class="modal-content-text"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <span class="modal-type-badge"></span>
+                        <span class="modal-date"></span>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <span class="modal-type-badge"></span>
-                    <span class="modal-date"></span>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        // Set up close functionality
-        const closeBtn = modal.querySelector('.modal-close');
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        // Close on click outside
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Set up close functionality
+            const closeBtn = modal.querySelector('.modal-close');
+            closeBtn.addEventListener('click', function() {
                 modal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Determine display title based on content type
-    let displayTitle;
-    if (contentType === 'press-release') {
-        displayTitle = 'Press Release';
-    } else if (contentType === 'social-media') {
-        displayTitle = 'Social Media Post';
-    } else {
-        displayTitle = 'Content';
-    }
-    
-    // Update modal content
-    modal.querySelector('.modal-title').textContent = displayTitle;
-    modal.querySelector('.modal-content-title').textContent = title;
-    modal.querySelector('.modal-content-text').textContent = text;
-    modal.querySelector('.modal-image').src = imageSrc;
-    modal.querySelector('.modal-image').alt = imageAlt;
-    modal.querySelector('.modal-date').textContent = date;
-    
-    // Set type badge
-    const typeBadge = modal.querySelector('.modal-type-badge');
-    typeBadge.textContent = displayTitle;
-    typeBadge.className = 'modal-type-badge ' + contentType;
-    
-    // Show modal
-    modal.style.display = 'flex';
-}
-
-
-document.addEventListener('DOMContentLoaded', function() {
-        // Select all publish buttons in the grid
-        const publishButtons = document.querySelectorAll('.grid-publish-btn');
-        
-        publishButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                // Prevent the event from bubbling up to the grid-item
-                e.stopPropagation();
-                
-                // Get the parent grid-item
-                const gridItem = this.closest('.grid-item');
-                const contentTitle = gridItem.querySelector('h4').textContent;
-                const contentType = gridItem.dataset.type;
-                
-                // Show publishing state
-                this.classList.add('publishing');
-                this.innerHTML = '<i class="material-icons">cloud_upload</i> Publishing...';
-                
-                // Simulate publishing process
-                setTimeout(() => {
-                    // Show success state
-                    this.classList.remove('publishing');
-                    this.classList.add('published');
-                    this.innerHTML = '<i class="material-icons">check_circle</i> Published';
-                    
-                    // Show confirmation
-                    alert(`Successfully published: ${contentTitle}\nType: ${contentType}`);
-                    
-                    // Reset after some time (optional)
-                    setTimeout(() => {
-                        this.classList.remove('published');
-                        this.innerHTML = '<i class="material-icons">publish</i> Publish';
-                    }, 5000);
-                }, 1500);
             });
-        });
-    });
+            
+            // Close on click outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Determine display title based on content type
+        let displayTitle;
+        if (contentType === 'press-release') {
+            displayTitle = 'Press Release';
+        } else if (contentType === 'social-media') {
+            displayTitle = 'Social Media Post';
+        } else {
+            displayTitle = 'Content';
+        }
+        
+        // Update modal content
+        modal.querySelector('.modal-title').textContent = displayTitle;
+        modal.querySelector('.modal-content-title').textContent = title;
+        modal.querySelector('.modal-content-text').textContent = text;
+        modal.querySelector('.modal-image').src = imageSrc;
+        modal.querySelector('.modal-image').alt = imageAlt;
+        modal.querySelector('.modal-date').textContent = date;
+        
+        // Set type badge
+        const typeBadge = modal.querySelector('.modal-type-badge');
+        typeBadge.textContent = displayTitle;
+        typeBadge.className = 'modal-type-badge ' + contentType;
+        
+        // Show modal
+        modal.style.display = 'flex';
+    }
+    
+    // Initialize the table
+    updatePublishedTable();
+    
+    // Function to display notifications (you can implement this if needed)
+    function showNotification(message, type) {
+        alert(message);
+    }
+    
+    // Function to update project status (you can implement this if needed)
+    function updateProjectStatus(status) {
+        const statusElement = document.querySelector('.info-item .info-value');
+        if (statusElement) {
+            statusElement.textContent = status;
+        }
+    }
+});
 
     </script>
 </body>
