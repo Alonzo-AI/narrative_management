@@ -166,24 +166,28 @@
     transition: color 0.3s ease;
 }
 
+/* Status Color Classes */
 .status-in-progress .info-value {
     color: #2196F3; /* Blue */
 }
 
 .status-under-review .info-value {
     color: #FF9800; /* Orange */
+    animation: pulse 2s infinite ease-in-out;
 }
 
 .status-completed .info-value {
     color: #4CAF50; /* Green */
 }
 
-/* Status Icon Animations */
-.info-item:nth-child(2) i.material-icons {
-    transition: transform 0.3s ease;
+/* Pulsing animation for "Under Review" status */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
 
-/* Status Badge (Optional) */
+/* Status Badge Styles (Optional) */
 .status-badge {
     display: inline-block;
     padding: 4px 8px;
@@ -206,17 +210,6 @@
 .status-badge.completed {
     background-color: rgba(76, 175, 80, 0.1);
     color: #4CAF50;
-}
-
-/* Pulse animation for "Under Review" status (optional) */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-.status-under-review .info-value {
-    animation: pulse 2s infinite ease-in-out;
 }
 
 /* Dashboard styles */
@@ -321,6 +314,22 @@
         .submit-btn:active {
             transform: translateY(0);
         }
+
+        /* Review Button State Styles */
+.submit-btn.review-submitted {
+    background-color: #FF9800; /* Orange for review submitted state */
+    transform: none;
+}
+
+.submit-btn.review-submitted:hover {
+    background-color: #F57C00;
+}
+
+.submit-btn.review-accepted {
+    background-color: #4CAF50; /* Green for review accepted state */
+    transform: none;
+    pointer-events: none; /* Prevents further clicks */
+}
 
         /* Content table styles */
         .content-table {
@@ -873,11 +882,11 @@
                         </div>
                     </div>
                     <div class="info-item">
-                     <div class="info-content">
-                            <span class="info-label">Phase Status</span>
-                            <span class="info-value">In Progress</span>
+                        <div class="info-content">
+                          <span class="info-label">Phase Status</span>
+                          <span class="info-value">In Progress</span>
                         </div>
-                    </div>    
+                      </div>    
                     
                         <div class="info-item">
                         <i class="material-icons">event</i>
@@ -899,19 +908,18 @@
         <!-- Publishing Options -->
         <div class="publish-options">
             <div class="select-container">
-                <label for="publish-type">Select Publish Type:</label>
+                <label for="publish-type">Select Content Type:</label>
                 <select id="publish-type" class="custom-select">
-                    <option value="" disabled selected>Choose publish destination...</option>                  
+                    <option value="" disabled selected>Choose</option>                  
                     <option value="social">Social Media</option>
                     <option value="press">Press Release</option>
-                    <option value="press">All</option>
                    
                 </select>
                 
             </div>
             
             <button id="submit-review-btn" class="submit-btn">
-                <i class="material-icons">send</i>
+                <i class="material-icons">rate_review</i>
                 Submit Review
             </button>
         </div>
@@ -1120,13 +1128,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let publishedContent = [];
     
     // DOM elements
-    const publishedTable = document.getElementById('published-content-table');
-    const totalCountElement = document.getElementById('total-count');
-    const selectAllCheckbox = document.getElementById('select-all');
-    const selectedCountElement = document.getElementById('selected-count');
-    const searchInput = document.getElementById('search-content');
-    const publishTypeSelect = document.getElementById('publish-type');
-    const submitReviewBtn = document.getElementById('submit-review-btn');
+const publishedTable = document.getElementById('published-content-table');
+const totalCountElement = document.getElementById('total-count');
+const selectAllCheckbox = document.getElementById('select-all');
+const selectedCountElement = document.getElementById('selected-count');
+const searchInput = document.getElementById('search-content');
+const publishTypeSelect = document.getElementById('publish-type');
+const submitReviewBtn = document.getElementById('submit-review-btn');
+const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value'); // Phase status element
+    
+    // Track the review state (not started, submitted, accepted)
+    let reviewState = 'not-started';
     
     // Add data attributes to grid items if not already present
     document.querySelectorAll('.grid-item').forEach((item, index) => {
@@ -1199,7 +1211,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('published');
                 this.innerHTML = '<i class="material-icons">check_circle</i> Published';
                 
-                // No longer resetting the button state
+                // Enable review button if there are published items and not already reviewed
+                if (publishedContent.length > 0 && reviewState === 'not-started') {
+                    submitReviewBtn.disabled = false;
+                    submitReviewBtn.style.opacity = "1";
+                }
             }, 1500);
         });
     });
@@ -1237,7 +1253,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 typeDisplay = 'Social Media';
                 typeBadgeClass = 'type-social';
             }
-            
             
             newRow.innerHTML = `
                 <td><input type="checkbox" class="content-checkbox"></td>
@@ -1310,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedCountElement.textContent = selectedCount;
         
         // Enable/disable submit button based on selections
-        if (submitReviewBtn && publishTypeSelect) {
+        if (submitReviewBtn && publishTypeSelect && reviewState === 'not-started') {
             if (selectedCount > 0 && publishTypeSelect.value) {
                 submitReviewBtn.disabled = false;
                 submitReviewBtn.style.opacity = "1";
@@ -1345,26 +1360,52 @@ document.addEventListener('DOMContentLoaded', function() {
     // Submit review button functionality
     if (submitReviewBtn) {
         submitReviewBtn.addEventListener('click', function() {
-            // Get selected items
-            const selectedCheckboxes = document.querySelectorAll('.content-checkbox:checked');
-            const selectedItems = Array.from(selectedCheckboxes).map(checkbox => {
-                const row = checkbox.closest('tr');
-                return row.dataset.id;
-            });
-            
-            if (selectedItems.length > 0) {
+            if (reviewState === 'not-started') {
+                // Get selected items or all published items if none selected
+                const selectedCheckboxes = document.querySelectorAll('.content-checkbox:checked');
+                const selectedCount = selectedCheckboxes.length;
+                const itemsToReview = selectedCount > 0 ? selectedCount : publishedContent.length;
+                
                 // Show confirmation dialog
-                if (confirm(`Are you sure you want to submit ${selectedItems.length} item(s) for review? This will notify the review team.`)) {
-                    // Show success notification (if you have a notification system)
-                    // For example: showNotification('Items submitted for review', 'success');
+                if (confirm(`Are you sure you want to submit ${itemsToReview} item(s) for review? This will notify the review team.`)) {
+                    // Update button text and appearance
+                    this.innerHTML = '<i class="material-icons">rate_review</i> Accept Review';
+                    this.classList.add('review-submitted');
                     
-                    alert(`Successfully submitted ${selectedItems.length} item(s) for review.`);
+                    // Update phase status
+                    updateProjectStatus('Under Review');
                     
-                    // Update project status if needed
-                    // For example: updateProjectStatus('Under Review');
+                    // Update review state
+                    reviewState = 'submitted';
+                    
+                    // Show success notification
+                    alert(`Successfully submitted ${itemsToReview} item(s) for review.`);
                 }
-            } else {
-                alert('Please select at least one item to submit for review.');
+            } else if (reviewState === 'submitted') {
+                // Accept the review
+                if (confirm('Are you sure you want to accept this review?')) {
+                    // Update button text and appearance
+                    this.innerHTML = '<i class="material-icons">check_circle</i> Review Accepted';
+                    this.classList.remove('review-submitted');
+                    this.classList.add('review-accepted');
+                    this.disabled = true;
+                    
+                    // Update phase status
+                    updateProjectStatus('Completed');
+                    
+                    // Update review state
+                    reviewState = 'accepted';
+                    
+                    // Show success notification
+                    alert('Review has been accepted.');
+                    
+                    // Disable checkboxes and selections
+                    const contentCheckboxes = document.querySelectorAll('.content-checkbox');
+                    contentCheckboxes.forEach(checkbox => {
+                        checkbox.disabled = true;
+                    });
+                    selectAllCheckbox.disabled = true;
+                }
             }
         });
     }
@@ -1412,6 +1453,12 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 this.style.borderColor = '#e0e0e0';
             }, 300);
+            
+            // Enable/disable review button based on selection
+            if (reviewState === 'not-started' && publishedContent.length > 0) {
+                submitReviewBtn.disabled = !selectedType;
+                submitReviewBtn.style.opacity = selectedType ? "1" : "0.6";
+            }
         });
     }
     
@@ -1518,18 +1565,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the table
     updatePublishedTable();
     
-    // Function to display notifications (you can implement this if needed)
-    function showNotification(message, type) {
-        alert(message);
-    }
+    // Function to update project status
+function updateProjectStatus(status) {
+    // Use a more specific selector to target only the phase status element
+    const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value');
     
-    // Function to update project status (you can implement this if needed)
-    function updateProjectStatus(status) {
-        const statusElement = document.querySelector('.info-item .info-value');
-        if (statusElement) {
-            statusElement.textContent = status;
+    if (phaseStatusElement) {
+        phaseStatusElement.textContent = status;
+        
+        // Remove any existing status classes
+        phaseStatusElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+        
+        // Add appropriate status class
+        if (status === 'In Progress') {
+            phaseStatusElement.classList.add('status-in-progress');
+        } else if (status === 'Under Review') {
+            phaseStatusElement.classList.add('status-under-review');
+        } else if (status === 'Completed') {
+            phaseStatusElement.classList.add('status-completed');
         }
+        
+        // Update parent container class if it exists
+        const parentContainer = phaseStatusElement.closest('.info-item');
+        if (parentContainer) {
+            parentContainer.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+            
+            if (status === 'In Progress') {
+                parentContainer.classList.add('status-in-progress');
+            } else if (status === 'Under Review') {
+                parentContainer.classList.add('status-under-review');
+            } else if (status === 'Completed') {
+                parentContainer.classList.add('status-completed');
+            }
+        }
+    } else {
+        console.error('Phase status element not found');
     }
+}
 });
 
     </script>
