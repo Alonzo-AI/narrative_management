@@ -1864,6 +1864,14 @@ if (document.readyState === "complete" || document.readyState === "interactive")
         if (localStorage.getItem('fsuReviewState')) {
             reviewState = parseInt(localStorage.getItem('fsuReviewState'));
             console.log("Loaded previous state:", reviewState);
+            
+            // If the state is "Review Accepted" (2) when page loads, 
+            // reset it to initial state (0) for a fresh cycle
+            if (reviewState === 2) {
+                console.log("Found 'Review Accepted' state on page load, resetting to initial state");
+                reviewState = 0;
+                localStorage.setItem('fsuReviewState', reviewState);
+            }
         }
         
         // Try multiple ways to find the submit review button
@@ -1946,6 +1954,21 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 if (typeof window.showNotification === 'function') {
                     window.showNotification('Review accepted', 'success');
                 }
+                
+                // Set a timeout to reset back to initial state after delay
+                setTimeout(function() {
+                    console.log("Auto-resetting to initial state after delay");
+                    reviewState = 0;
+                    updateButtonAndStatus();
+                    
+                    // Use the existing notification system if available
+                    if (typeof window.showNotification === 'function') {
+                        window.showNotification('Ready for next review cycle', 'info');
+                    }
+                    
+                    // Update localStorage
+                    localStorage.setItem('fsuReviewState', reviewState);
+                }, 5000); // 5 second delay - adjust as needed
             }
             
             // Save state to localStorage with a unique key to avoid conflicts
@@ -1977,6 +2000,13 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 submitReviewBtn.textContent = 'Review Accepted';
                 submitReviewBtn.style.backgroundColor = '#4CAF50'; // Green
             }
+            
+            // Add a subtle animation to highlight the button change
+            submitReviewBtn.style.transition = 'background-color 0.5s ease, transform 0.3s ease';
+            submitReviewBtn.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                submitReviewBtn.style.transform = 'scale(1)';
+            }, 300);
             
             // 2. Update project status
             updateProjectStatus();
