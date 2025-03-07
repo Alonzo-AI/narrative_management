@@ -166,57 +166,73 @@
     transition: color 0.3s ease;
 }
 
-.status-in-progress .info-value {
+/* Review Button State Styles */
+.submit-review-btn {
+    padding: 12px 24px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--fsu-garnet);
+}
+
+.submit-review-btn:hover {
+    transform: translateY(-2px);
+    background-color: #662535;
+}
+
+.submit-review-btn.review-state {
+    background-color: #FF9800; /* Orange for pending review */
+}
+
+.submit-review-btn.review-state:hover {
+    background-color: #e08600;
+}
+
+.submit-review-btn.accepted-state {
+    background-color: #4CAF50; /* Green for accepted */
+}
+
+.submit-review-btn.accepted-state:hover {
+    background-color: #3d9140;
+}
+
+/* Button state transition animations */
+@keyframes buttonStateChange {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.button-state-change {
+    animation: buttonStateChange 0.4s ease;
+}
+
+/* Status colors for the info items */
+.info-item.status-in-progress .info-value {
     color: #2196F3; /* Blue */
 }
 
-.status-under-review .info-value {
+.info-item.status-under-review .info-value {
     color: #FF9800; /* Orange */
+    animation: pulse 2s infinite ease-in-out;
 }
 
-.status-completed .info-value {
+.info-item.status-completed .info-value {
     color: #4CAF50; /* Green */
 }
 
-/* Status Icon Animations */
-.info-item:nth-child(2) i.material-icons {
-    transition: transform 0.3s ease;
-}
-
-/* Status Badge (Optional) */
-.status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-left: 8px;
-}
-
-.status-badge.in-progress {
-    background-color: rgba(33, 150, 243, 0.1);
-    color: #2196F3;
-}
-
-.status-badge.under-review {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.status-badge.completed {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-/* Pulse animation for "Under Review" status (optional) */
+/* Pulse animation for "Under Review" status */
 @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.7; }
     100% { opacity: 1; }
-}
-
-.status-under-review .info-value {
-    animation: pulse 2s infinite ease-in-out;
 }
 
 .sponsor-container {
@@ -318,7 +334,7 @@
         gap: 12px;
     }
 
-    .assign-sponsor-btn, .submit-review-btn {
+    .assign-sponsor-btn {
         padding: 12px 24px;
         color: white;
         border: none;
@@ -336,12 +352,7 @@
         background-color: var(--fsu-garnet);
     }
     
-    .submit-review-btn {
-        background-color: var(--fsu-garnet);
-        
-    }
-
-    .assign-sponsor-btn:hover, .submit-review-btn:hover {
+   .assign-sponsor-btn:hover {
         transform: translateY(-2px);
     }
     
@@ -349,11 +360,7 @@
         background-color: #662535;
     }
     
-    .submit-review-btn:hover {
-        background-color: #662535;
-    }
-
-    .assign-sponsor-btn:active, .submit-review-btn:active {
+   .assign-sponsor-btn:active {
         transform: translateY(0);
     }
 
@@ -386,15 +393,13 @@
         padding: 15px 20px;
         border-radius: 8px;
         margin-top: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
         display: none;    
         align-items: center;
-        border-left: 4px solid var(--fsu-gold);
+        
         transition: all 0.3s ease;
     }
-    
-   
- 
+
     .sponsor-icon {
         background-color: rgba(120, 47, 64, 0.1);
         padding: 10px;
@@ -980,8 +985,9 @@
                             <span class="info-value">Sarah Johnson</span>
                         </div>
                     </div>
-                    <div class="info-item">
-                     <div class="info-content">
+                    <div class="info-item status-in-progress">
+                        <i class="material-icons">assignment</i>
+                        <div class="info-content">
                             <span class="info-label">Phase Status</span>
                             <span class="info-value">In Progress</span>
                         </div>
@@ -1189,7 +1195,7 @@
     const customSponsorName = document.getElementById('custom-sponsor-name');
     const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
     const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
-    const submitReviewBtn = document.getElementById('submit-review-btn');
+    
     const sponsorContainer = document.querySelector('.sponsor-container');
     const sponsorSelection = document.querySelector('.sponsor-selection');
     
@@ -1256,26 +1262,9 @@
         }
     });
     
-    // Submit for review button functionality
-    submitReviewBtn.addEventListener('click', function() {
-        // Check if a sponsor has been assigned (button is hidden)
-        if (assignSponsorBtn.style.display === 'none') {
-            // Show confirmation dialog
-            if (confirm('Are you sure you want to submit this for review? This will notify the review team.')) {
-                showNotification('Marketing materials submitted for review', 'success');
-                
-                // Here you would typically send data to your backend
-                console.log('Marketing materials submitted for review');
-                
-                // Update the status in the header
-                updateProjectStatus('Under Review');
-            }
-        } else {
-            showNotification('Please assign a sponsor before submitting for review', 'error');
-        }
-    });
+    
 
-    // Helper function to replace dropdown with sponsor name
+ // Helper function to replace dropdown with sponsor name
     function replaceDropdownWithSponsorName(sponsorName) {
         // Create sponsor display element
         const sponsorDisplay = document.createElement('div');
@@ -1300,8 +1289,8 @@
                     align-items: center;
                     gap: 12px;
                     padding: 12px 15px;
-                    background-color: #f9f9f9;
-                    border: 2px solid var(--fsu-gold);
+                    background-color: white;
+                    
                     border-radius: 6px;
                     animation: fadeIn 0.3s ease;
                 }
@@ -1862,6 +1851,235 @@ if (document.readyState === "complete" || document.readyState === "interactive")
     console.log("Document already loaded, initializing comments immediately");
     setTimeout(initializeComments, 100); // Short timeout to ensure execution
 }
+
+(function() {
+    // Wait for everything to be fully loaded
+    window.addEventListener('load', function() {
+        console.log("FSU Marketing Review Button Handler Initializing...");
+        
+        // Track review state (0=initial, 1=submitted, 2=accepted)
+        let reviewState = 0;
+        
+        // Load state from localStorage if previously saved
+        if (localStorage.getItem('fsuReviewState')) {
+            reviewState = parseInt(localStorage.getItem('fsuReviewState'));
+            console.log("Loaded previous state:", reviewState);
+        }
+        
+        // Try multiple ways to find the submit review button
+        let submitReviewBtn = document.getElementById('submit-review-btn');
+        
+        // If ID doesn't work, try finding it by its class and text content
+        if (!submitReviewBtn) {
+            console.log("Button not found by ID, trying alternative methods");
+            const buttons = document.querySelectorAll('.submit-review-btn');
+            
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === 'Submit Review') {
+                    submitReviewBtn = btn;
+                    console.log("Button found by class and text content");
+                }
+            });
+        }
+        
+        // If still not found, try finding any button that looks like a submit button
+        if (!submitReviewBtn) {
+            console.log("Button not found by class, trying by text content only");
+            const allButtons = document.querySelectorAll('button');
+            
+            allButtons.forEach(btn => {
+                if (btn.textContent.trim().includes('Review') || 
+                    btn.textContent.trim().includes('review')) {
+                    submitReviewBtn = btn;
+                    console.log("Button found by text content search:", btn.textContent);
+                }
+            });
+        }
+        
+        // Final check if we found the button
+        if (!submitReviewBtn) {
+            console.error("CRITICAL: Submit review button could not be found by any method");
+            return;
+        } else {
+            console.log("SUCCESS: Submit review button found:", submitReviewBtn.textContent);
+        }
+        
+        // Reference to the assign sponsor button (optional)
+        const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
+        
+        // Update initial state without breaking existing functionality
+        updateButtonAndStatus();
+        
+        // Create a new click handler that will be called after any existing ones
+        const originalOnClick = submitReviewBtn.onclick;
+        
+        submitReviewBtn.onclick = function(e) {
+            console.log("Review button clicked, current state:", reviewState);
+            
+            // Call the original click handler if it exists
+            if (typeof originalOnClick === 'function') {
+                originalOnClick.call(this, e);
+            }
+            
+            // Our custom state management logic
+            if (reviewState === 0) {
+                // First click: Submit for Review
+                if (!assignSponsorBtn || assignSponsorBtn.style.display === 'none') {
+                    // Sponsor is assigned, proceed to submit
+                    reviewState = 1;
+                    updateButtonAndStatus();
+                    
+                    // Use the existing notification system if available
+                    if (typeof window.showNotification === 'function') {
+                        window.showNotification('Marketing materials submitted for review', 'success');
+                    }
+                } else {
+                    // No sponsor assigned - let the original click handler handle this
+                }
+            } 
+            else if (reviewState === 1) {
+                // Second click: Accept Review
+                reviewState = 2;
+                updateButtonAndStatus();
+                
+                // Use the existing notification system if available
+                if (typeof window.showNotification === 'function') {
+                    window.showNotification('Review accepted', 'success');
+                }
+            }
+            
+            // Save state to localStorage with a unique key to avoid conflicts
+            localStorage.setItem('fsuReviewState', reviewState);
+            
+            // Don't prevent default or return false to allow other handlers to work
+        };
+        
+        // Function to update button appearance based on state
+        function updateButtonAndStatus() {
+            console.log("Updating button and status for state:", reviewState);
+            
+            // 1. Update button appearance while preserving other styles
+            if (reviewState === 0) {
+                submitReviewBtn.textContent = 'Submit Review';
+                
+                // Only update background if needed
+                if (submitReviewBtn.style.backgroundColor !== '#782f40' &&
+                    !submitReviewBtn.classList.contains('submit-review-btn-initial')) {
+                    submitReviewBtn.style.backgroundColor = '#782f40'; // FSU garnet
+                    submitReviewBtn.style.transition = 'background-color 0.3s ease';
+                }
+            } 
+            else if (reviewState === 1) {
+                submitReviewBtn.textContent = 'Accept Review';
+                submitReviewBtn.style.backgroundColor = '#FF9800'; // Orange
+            } 
+            else if (reviewState === 2) {
+                submitReviewBtn.textContent = 'Review Accepted';
+                submitReviewBtn.style.backgroundColor = '#4CAF50'; // Green
+            }
+            
+            // 2. Update project status
+            updateProjectStatus();
+        }
+        
+        // Update the project status based on current review state
+        function updateProjectStatus() {
+            let statusText = 'In Progress';
+            let statusColor = '#2196F3'; // Blue
+            
+            if (reviewState === 1) {
+                statusText = 'Under Review';
+                statusColor = '#FF9800'; // Orange
+            } else if (reviewState === 2) {
+                statusText = 'Completed';
+                statusColor = '#4CAF50'; // Green
+            }
+            
+            // Try different approaches to find the status element
+            const statusSelectors = [
+                '.info-item:nth-child(2) .info-value',
+                '.info-item .info-value',
+                '.info-content .info-value',
+                '.project-info .info-value'
+            ];
+            
+            let statusValue = null;
+            
+            for (const selector of statusSelectors) {
+                const elements = document.querySelectorAll(selector);
+                for (const el of elements) {
+                    // Look for elements with status-related text
+                    if (el.textContent.includes('Progress') || 
+                        el.textContent.includes('Review') || 
+                        el.textContent.includes('Completed')) {
+                        statusValue = el;
+                        console.log("Status element found using selector:", selector);
+                        break;
+                    }
+                }
+                if (statusValue) break;
+            }
+            
+            if (statusValue) {
+                // Update text
+                statusValue.textContent = statusText;
+                
+                // Update color directly with inline style
+                statusValue.style.color = statusColor;
+                
+                // Add or remove pulsing effect
+                if (reviewState === 1) {
+                    // Only add animation if it doesn't already exist
+                    if (statusValue.style.animation !== 'pulse 2s infinite ease-in-out') {
+                        // First make sure we have the animation defined
+                        ensurePulseAnimationExists();
+                        statusValue.style.animation = 'pulse 2s infinite ease-in-out';
+                    }
+                } else {
+                    statusValue.style.animation = 'none';
+                }
+                
+                console.log("Status updated to:", statusText);
+            } else {
+                console.error("Status value element not found");
+            }
+        }
+        
+        // Make sure the pulse animation exists in the stylesheet
+        function ensurePulseAnimationExists() {
+            // Check if the animation already exists
+            let animationExists = false;
+            for (let i = 0; i < document.styleSheets.length; i++) {
+                try {
+                    const rules = document.styleSheets[i].cssRules || document.styleSheets[i].rules;
+                    for (let j = 0; j < rules.length; j++) {
+                        if (rules[j].name === 'pulse') {
+                            animationExists = true;
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    // Ignore security errors from accessing stylesheets
+                }
+                if (animationExists) break;
+            }
+            
+            // If animation doesn't exist, add it
+            if (!animationExists) {
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes pulse {
+                        0% { opacity: 1; }
+                        50% { opacity: 0.7; }
+                        100% { opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                console.log("Added pulse animation to stylesheet");
+            }
+        }
+    });
+})();
             
 
 </script>
