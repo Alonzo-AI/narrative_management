@@ -277,13 +277,26 @@
             background-color: white;
         }
         
-        .analytics-table th {
-            background-color: var(--fsu-garnet);
-            color: white;
-            text-align: left;
-            padding: 12px 15px;
-            visibility: visible !important;
-        }
+        /* Make sure table headers are always visible when table is shown */
+.analytics-table th {
+    background-color: var(--fsu-garnet);
+    color: white;
+    text-align: left;
+    padding: 12px 15px;
+    visibility: visible !important;
+}
+
+/* Ensure the clickable elements in headers are visible */
+.analytics-table .clickable {
+    visibility: visible !important;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+.analytics-table .clickable:hover {
+    text-decoration: underline;
+}
         
         .analytics-table tr {
             border-bottom: 1px solid #eee;
@@ -304,12 +317,6 @@
         .analytics-table .views {
             font-weight: 600;
         }
-
-        .analytics-table .clickable {
-            visibility: visible !important;
-            display: inline-block;
-            width: 100%;
-        }
         
         .table-container {
             margin-top: 20px;
@@ -317,6 +324,7 @@
             display: none;
             transition: opacity 0.3s ease;
             opacity: 0;
+            margin-bottom: 60px;
         }
 
         .table-container.visible {
@@ -391,7 +399,6 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    
 }
 
 /* Y-axis styling */
@@ -409,6 +416,23 @@
     font-size: 11px !important;
     color: #666 !important;
 }
+
+/* Chart title styling */
+.chart-title {
+    color: var(--fsu-garnet);
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+/* Chart legend styling */
+.chart-legend {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
 
 </style>
 </head>
@@ -561,7 +585,7 @@
         }
     ];
     
-    // Function to draw chart with inline styles to ensure visibility
+    // Function to draw chart for press releases
     function drawBarChart(containerId, data, metric, metricLabel) {
         // Get the container and set initial styles
         const container = document.getElementById(containerId);
@@ -675,47 +699,239 @@
             container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     }
+
+    // Function to create vertical bar charts for social media
+    function createVerticalBarChart(container, data, metric, metricLabel) {
+        // Clear any existing content
+        container.innerHTML = '';
+        
+        // Find max value for scaling
+        const maxValue = Math.max(...data.map(item => item[metric]));
+        
+        // Add title
+        const titleDiv = document.createElement('div');
+        titleDiv.style.fontSize = '18px';
+        titleDiv.style.fontWeight = 'bold';
+        titleDiv.style.marginBottom = '15px';
+        titleDiv.style.color = 'var(--fsu-garnet)';
+        titleDiv.textContent = metricLabel + ' Comparison';
+        container.appendChild(titleDiv);
+        
+        // Create chart container
+        const chartDiv = document.createElement('div');
+        chartDiv.style.height = '300px';
+        chartDiv.style.position = 'relative';
+        chartDiv.style.backgroundColor = '#f9f9f9';
+        chartDiv.style.borderRadius = '8px';
+        chartDiv.style.padding = '20px';
+        chartDiv.style.marginTop = '10px';
+        
+        // Create bars container
+        const barsDiv = document.createElement('div');
+        barsDiv.style.display = 'flex';
+        barsDiv.style.height = '220px';
+        barsDiv.style.alignItems = 'flex-end';
+        barsDiv.style.justifyContent = 'space-around';
+        barsDiv.style.position = 'relative';
+        barsDiv.style.marginLeft = '40px'; // Space for y-axis
+        
+        // Create y-axis
+        const yAxis = document.createElement('div');
+        yAxis.style.position = 'absolute';
+        yAxis.style.left = '0';
+        yAxis.style.top = '0';
+        yAxis.style.bottom = '30px'; // Space for x-axis labels
+        yAxis.style.width = '40px';
+        
+        // Add y-axis labels
+        for (let i = 0; i <= 5; i++) {
+            const yLabel = document.createElement('div');
+            yLabel.style.position = 'absolute';
+            yLabel.style.right = '5px';
+            yLabel.style.top = (100 - i * 20) + '%';
+            yLabel.style.transform = 'translateY(-50%)';
+            yLabel.style.fontSize = '12px';
+            yLabel.style.color = '#666';
+            yLabel.textContent = Math.round((maxValue * i / 5)).toLocaleString();
+            yAxis.appendChild(yLabel);
+        }
+        
+        // Create horizontal grid lines
+        for (let i = 0; i <= 5; i++) {
+            const gridLine = document.createElement('div');
+            gridLine.style.position = 'absolute';
+            gridLine.style.left = '40px';
+            gridLine.style.right = '10px';
+            gridLine.style.top = (100 - i * 20) + '%';
+            gridLine.style.borderTop = '1px dashed #ddd';
+            gridLine.style.height = '1px';
+            chartDiv.appendChild(gridLine);
+        }
+        
+        // Create bars for each data point
+        data.forEach((item, index) => {
+            // Calculate height percentage based on value
+            const percentage = item[metric] / maxValue;
+            const height = Math.max(percentage * 220, 5); // Minimum 5px height
+            
+            // Create bar container
+            const barContainer = document.createElement('div');
+            barContainer.style.display = 'flex';
+            barContainer.style.flexDirection = 'column';
+            barContainer.style.alignItems = 'center';
+            barContainer.style.justifyContent = 'flex-end';
+            barContainer.style.height = '100%';
+            barContainer.style.flex = '1';
+            barContainer.style.maxWidth = '60px';
+            
+            // Create actual bar
+            const bar = document.createElement('div');
+            bar.style.width = '80%';
+            bar.style.height = height + 'px';
+            bar.style.backgroundColor = 'var(--fsu-garnet)';
+            bar.style.borderTopLeftRadius = '4px';
+            bar.style.borderTopRightRadius = '4px';
+            bar.title = item.title + ': ' + item[metric].toLocaleString();
+            
+            // Create x-axis label
+            const label = document.createElement('div');
+            label.style.marginTop = '10px';
+            label.style.fontSize = '11px';
+            label.style.textAlign = 'center';
+            label.style.maxWidth = '100%';
+            label.style.overflow = 'hidden';
+            label.style.textOverflow = 'ellipsis';
+            label.title = item.title;
+            label.textContent = item.title.split(':')[0].substring(0, 8);
+            
+            // Add value label
+            const valueLabel = document.createElement('div');
+            valueLabel.style.marginTop = '5px';
+            valueLabel.style.fontSize = '10px';
+            valueLabel.style.color = '#666';
+            valueLabel.textContent = item[metric].toLocaleString();
+            
+            // Append elements
+            barContainer.appendChild(bar);
+            barContainer.appendChild(label);
+            barContainer.appendChild(valueLabel);
+            barsDiv.appendChild(barContainer);
+        });
+        
+        // Assemble the chart
+        chartDiv.appendChild(yAxis);
+        chartDiv.appendChild(barsDiv);
+        container.appendChild(chartDiv);
+    }
     
-    function attachChartEventListeners() {
-        // For all tables
-        document.querySelectorAll('.analytics-table .clickable').forEach(header => {
-            header.addEventListener('click', function() {
-                const metric = this.getAttribute('data-metric');
-                const metricLabel = this.textContent;
-                
-                // Update visual selection
-                document.querySelectorAll('.analytics-table .clickable').forEach(h => {
-                    h.style.textDecoration = '';
-                    h.style.fontWeight = '';
-                });
-                
-                this.style.textDecoration = 'underline';
-                this.style.fontWeight = 'bold';
-                
-                // Clear any existing charts first
-                document.querySelectorAll('.chart-container').forEach(chart => {
-                    chart.style.display = 'none';
-                    chart.classList.remove('visible');
-                });
-                
-                // Add spacer between table and chart
-                const tableContainer = document.querySelector('.table-container');
-                if (tableContainer) {
-                    tableContainer.style.marginBottom = '60px';
-                }
-                
-                // Draw the chart with proper spacing
-                setTimeout(() => {
-                    if (analyticsSelect.value === 'press-release') {
-                        drawBarChart('pressReleaseChart', pressReleaseData, metric, metricLabel);
-                    } else if (analyticsSelect.value === 'social-media') {
-                        drawBarChart('socialMediaChart', socialMediaData, metric, metricLabel);
-                    }
-                }, 50);
-            });
+    // Function to render social media analytics with vertical charts
+function renderSocialMediaAnalyticsWithCharts() {
+    // Generate basic content
+    analyticsContent.innerHTML = `
+        <h2>Social Media Analytics</h2>
+        <div class="analytics-details">
+            <div class="metric">
+                <strong>Total Followers:</strong> 250,000
+            </div>
+            <div class="metric">
+                <strong>Engagement Rate:</strong> 4.2%
+            </div>
+            <div class="metric">
+                <strong>Top Platform:</strong> Instagram
+            </div>
+            <div class="metric">
+                <strong>Avg. Shares per Post:</strong> 1,250
+            </div>
+        </div>
+        <div class="table-container" style="display: block !important; opacity: 1 !important; visibility: visible !important;">
+            <table class="analytics-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Views</th>
+                        <th>Likes</th>
+                        <th>Re-tweets</th>
+                        <th>Favorites</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Game Day Hype Video</td>
+                        <td>January 12, 2025</td>
+                        <td class="views">187,923</td>
+                        <td>24,586</td>
+                        <td>8,743</td>
+                        <td>12,651</td>
+                    </tr>
+                    <tr>
+                        <td>Player Spotlight: QB Travis Hunter</td>
+                        <td>January 24, 2025</td>
+                        <td class="views">156,452</td>
+                        <td>18,924</td>
+                        <td>6,521</td>
+                        <td>9,847</td>
+                    </tr>
+                    <tr>
+                        <td>Behind the Scenes: Weight Room</td>
+                        <td>February 2, 2025</td>
+                        <td class="views">132,784</td>
+                        <td>15,632</td>
+                        <td>4,823</td>
+                        <td>7,549</td>
+                    </tr>
+                    <tr>
+                        <td>Coach's Corner: Defensive Strategy</td>
+                        <td>February 15, 2025</td>
+                        <td class="views">98,562</td>
+                        <td>10,482</td>
+                        <td>3,157</td>
+                        <td>5,628</td>
+                    </tr>
+                    <tr>
+                        <td>Throwback Thursday: 2013 Championship</td>
+                        <td>February 22, 2025</td>
+                        <td class="views">120,378</td>
+                        <td>14,865</td>
+                        <td>5,274</td>
+                        <td>8,932</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Vertical charts container -->
+        <div id="charts-column" style="display: flex; flex-direction: column; gap: 30px; margin-top: 30px;"></div>
+    `;
+        
+        // Define metrics to display
+        const metrics = [
+            { metric: 'views', label: 'Views' },
+            { metric: 'likes', label: 'Likes' },
+            { metric: 'retweets', label: 'Re-tweets' },
+            { metric: 'favorites', label: 'Favorites' }
+        ];
+        
+        // Create charts for each metric immediately without delay
+        const chartsColumn = document.getElementById('charts-column');
+        
+        metrics.forEach(metricInfo => {
+            // Create chart container
+            const chartContainer = document.createElement('div');
+            chartContainer.style.backgroundColor = 'white';
+            chartContainer.style.padding = '20px';
+            chartContainer.style.borderRadius = '8px';
+            chartContainer.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            
+            // Create the chart
+            createVerticalBarChart(chartContainer, socialMediaData, metricInfo.metric, metricInfo.label);
+            
+            // Add to the column
+            chartsColumn.appendChild(chartContainer);
         });
     }
 
+    // Add event listener for dropdown
     analyticsSelect.addEventListener('change', function() {
         // Clear previous content
         analyticsContent.innerHTML = '';
@@ -733,22 +949,23 @@
         switch(this.value) {
             case 'press-release':
                 renderPressReleaseAnalytics();
-                // Use setTimeout to ensure DOM is fully updated before we add the visible class
                 setTimeout(() => {
+                    // Make table visible explicitly
                     const tableContainer = document.querySelector('.table-container');
                     if (tableContainer) {
-                        tableContainer.classList.add('visible');
+                        tableContainer.style.display = 'block';
+                        tableContainer.style.opacity = '1';
                     }
+                    
+                    // Show chart after a short delay
+                    setTimeout(() => {
+                        drawBarChart('pressReleaseChart', pressReleaseData, 'pageviews', 'Page Views');
+                    }, 300);
                 }, 100);
                 break;
             case 'social-media':
-                renderSocialMediaAnalytics();
-                setTimeout(() => {
-                    const tableContainer = document.querySelector('.table-container');
-                    if (tableContainer) {
-                        tableContainer.classList.add('visible');
-                    }
-                }, 100);
+                // Use our custom function that renders charts vertically
+                renderSocialMediaAnalyticsWithCharts();
                 break;
             default:
                 renderDefaultContent();
@@ -756,14 +973,7 @@
         }
     });
 
-    function renderDefaultContent() {
-        analyticsContent.innerHTML = `
-            <div class="no-content">
-                Please select an analytics type
-            </div>
-        `;
-    }
-
+    // Function to render Press Release analytics
     function renderPressReleaseAnalytics() {
         analyticsContent.innerHTML = `
             <h2>Press Release Analytics</h2>
@@ -781,7 +991,7 @@
                     <strong>Media Pickup Rate:</strong> 68%
                 </div>
             </div>
-            <div class="table-container">
+            <div class="table-container" style="display: block; margin-bottom: 30px;">
                 <table class="analytics-table">
                     <thead>
                         <tr>
@@ -828,94 +1038,26 @@
             </div>
         `;
         
-        // Directly attach event listeners after rendering
-        attachChartEventListeners();
+        // Add click event listeners for the clickable columns in the press release table
+        setTimeout(() => {
+            document.querySelectorAll('.analytics-table .clickable').forEach(header => {
+                header.addEventListener('click', function() {
+                    const metric = this.getAttribute('data-metric');
+                    const metricLabel = this.textContent;
+                    
+                    drawBarChart('pressReleaseChart', pressReleaseData, metric, metricLabel);
+                });
+            });
+        }, 100);
     }
 
-    function renderSocialMediaAnalytics() {
+    // Default content when nothing is selected
+    function renderDefaultContent() {
         analyticsContent.innerHTML = `
-            <h2>Social Media Analytics</h2>
-            <div class="analytics-details">
-                <div class="metric">
-                    <strong>Total Followers:</strong> 250,000
-                </div>
-                <div class="metric">
-                    <strong>Engagement Rate:</strong> 4.2%
-                </div>
-                <div class="metric">
-                    <strong>Top Platform:</strong> Instagram
-                </div>
-                <div class="metric">
-                    <strong>Avg. Shares per Post:</strong> 1,250
-                </div>
-            </div>
-            <div class="table-container">
-                <table class="analytics-table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Date</th>
-                            <th><span class="clickable" data-metric="views">Views</span></th>
-                            <th><span class="clickable" data-metric="likes">Likes</span></th>
-                            <th><span class="clickable" data-metric="retweets">Re-tweets</span></th>
-                            <th><span class="clickable" data-metric="favorites">Favorites</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Game Day Hype Video</td>
-                            <td>January 12, 2025</td>
-                            <td class="views">187,923</td>
-                            <td>24,586</td>
-                            <td>8,743</td>
-                            <td>12,651</td>
-                        </tr>
-                        <tr>
-                            <td>Player Spotlight: QB Travis Hunter</td>
-                            <td>January 24, 2025</td>
-                            <td class="views">156,452</td>
-                            <td>18,924</td>
-                            <td>6,521</td>
-                            <td>9,847</td>
-                        </tr>
-                        <tr>
-                            <td>Behind the Scenes: Weight Room</td>
-                            <td>February 2, 2025</td>
-                            <td class="views">132,784</td>
-                            <td>15,632</td>
-                            <td>4,823</td>
-                            <td>7,549</td>
-                        </tr>
-                        <tr>
-                            <td>Coach's Corner: Defensive Strategy</td>
-                            <td>February 15, 2025</td>
-                            <td class="views">98,562</td>
-                            <td>10,482</td>
-                            <td>3,157</td>
-                            <td>5,628</td>
-                        </tr>
-                        <tr>
-                            <td>Throwback Thursday: 2013 Championship</td>
-                            <td>February 22, 2025</td>
-                            <td class="views">120,378</td>
-                            <td>14,865</td>
-                            <td>5,274</td>
-                            <td>8,932</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="socialMediaChart" class="chart-container">
-                <div class="chart-title">Social Media Metrics Comparison</div>
-                <div class="chart-area" id="socialMediaChartArea">
-                    <!-- Chart will be dynamically generated here -->
-                </div>
-                
+            <div class="no-content">
+                Please select an analytics type
             </div>
         `;
-        
-        // Directly attach event listeners after rendering
-        attachChartEventListeners();
     }
     
     // Initialize with empty selection
