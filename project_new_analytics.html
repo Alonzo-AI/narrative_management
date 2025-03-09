@@ -241,6 +241,14 @@
             padding: 50px 0;
         }
 
+        .analytics-content .no-content {
+            display: block;
+        }
+
+        .analytics-content.content-loaded .no-content {
+            display: none;
+        }
+
         .analytics-details {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -274,6 +282,7 @@
             color: white;
             text-align: left;
             padding: 12px 15px;
+            visibility: visible !important;
         }
         
         .analytics-table tr {
@@ -291,15 +300,124 @@
         .analytics-table td {
             padding: 12px 15px;
         }
-        
+
         .analytics-table .views {
             font-weight: 600;
-            text-align: right;
+        }
+
+        .analytics-table .clickable {
+            visibility: visible !important;
+            display: inline-block;
+            width: 100%;
         }
         
         .table-container {
             margin-top: 20px;
             overflow-x: auto;
+            display: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .table-container.visible {
+            opacity: 1;
+            display: block;
+        }
+        
+        /* Chart Styles */
+        .chart-container {
+            margin-top: 30px;
+            height: 350px;
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .chart-container.visible {
+            opacity: 1;
+            display: block;
+        }
+        
+        .chart-title {
+            color: var(--fsu-garnet);
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .chart-area {
+            height: 280px;
+            width: 100%;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        
+        .bar {
+            position: absolute;
+            bottom: 40px;
+            background-color: var(--fsu-garnet);
+            width: 40px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            transition: height 0.5s ease;
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            padding: 10px 2px;
+            transform: rotate(-45deg);
+            transform-origin: left top;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .clickable {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        
+        .clickable:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        .y-axis {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        .y-axis-label {
+            font-size: 0.75rem;
+            color: #666;
+            padding-left: 5px;
+        }
+        
+        .x-axis {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            right: 0;
+            height: 40px;
         }
 
 </style>
@@ -368,7 +486,7 @@
         <!-- Analytics Content Area -->
         <div id="analyticsContent" class="analytics-content">
             <div class="no-content">
-                Please select an analytics type from the dropdown
+                Please select an analytics type
             </div>
         </div>
 
@@ -377,168 +495,375 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const analyticsSelect = document.getElementById('analyticsSelect');
-            const analyticsContent = document.getElementById('analyticsContent');
-
-            analyticsSelect.addEventListener('change', function() {
-                // Clear previous content
-                analyticsContent.innerHTML = '';
-
-                // Create content based on selection
-                switch(this.value) {
-                    case 'press-release':
-                        renderPressReleaseAnalytics();
-                        break;
-                    case 'social-media':
-                        renderSocialMediaAnalytics();
-                        break;
-                    default:
-                        renderDefaultContent();
+    const analyticsSelect = document.getElementById('analyticsSelect');
+    const analyticsContent = document.getElementById('analyticsContent');
+    
+    // Press release data
+    const pressReleaseData = [
+        {
+            title: "Season Preview: FSU Football 2025",
+            date: "January 15, 2025",
+            pageviews: 126542
+        },
+        {
+            title: "Coach Mike Norvell Signs Contract Extension",
+            date: "January 28, 2025",
+            pageviews: 98321
+        },
+        {
+            title: "FSU Unveils New Stadium Renovations",
+            date: "February 10, 2025",
+            pageviews: 82157
+        },
+        {
+            title: "Spring Game Announcement",
+            date: "February 18, 2025",
+            pageviews: 65842
+        },
+        {
+            title: "Recruiting Class Spotlight",
+            date: "February 25, 2025",
+            pageviews: 59378
+        }
+    ];
+    
+    // Social media data
+    const socialMediaData = [
+        {
+            title: "Game Day Hype Video",
+            date: "January 12, 2025",
+            views: 187923,
+            likes: 24586,
+            retweets: 8743,
+            favorites: 12651
+        },
+        {
+            title: "Player Spotlight: QB Travis Hunter",
+            date: "January 24, 2025",
+            views: 156452,
+            likes: 18924,
+            retweets: 6521,
+            favorites: 9847
+        },
+        {
+            title: "Behind the Scenes: Weight Room",
+            date: "February 2, 2025",
+            views: 132784,
+            likes: 15632,
+            retweets: 4823,
+            favorites: 7549
+        },
+        {
+            title: "Coach's Corner: Defensive Strategy",
+            date: "February 15, 2025",
+            views: 98562,
+            likes: 10482,
+            retweets: 3157,
+            favorites: 5628
+        },
+        {
+            title: "Throwback Thursday: 2013 Championship",
+            date: "February 22, 2025",
+            views: 120378,
+            likes: 14865,
+            retweets: 5274,
+            favorites: 8932
+        }
+    ];
+    
+    // Function to draw chart
+    function drawBarChart(containerId, data, metric, metricLabel) {
+        const container = document.getElementById(containerId);
+        if (!container) return; // Safety check
+        
+        const chartArea = container.querySelector('.chart-area');
+        
+        // Update chart title
+        const titleElement = container.querySelector('.chart-title');
+        if (titleElement) {
+            titleElement.textContent = metricLabel + ' Comparison';
+        }
+        
+        // Clear previous chart
+        chartArea.innerHTML = '';
+        
+        // Find maximum value for scaling
+        const maxValue = Math.max(...data.map(item => item[metric]));
+        
+        // Create y-axis
+        const yAxis = document.createElement('div');
+        yAxis.className = 'y-axis';
+        
+        // Create 5 y-axis labels (0%, 25%, 50%, 75%, 100%)
+        for (let i = 5; i >= 0; i--) {
+            const label = document.createElement('div');
+            label.className = 'y-axis-label';
+            label.textContent = Math.round(maxValue * i / 5).toLocaleString();
+            yAxis.appendChild(label);
+        }
+        
+        chartArea.appendChild(yAxis);
+        
+        // Create x-axis
+        const xAxis = document.createElement('div');
+        xAxis.className = 'x-axis';
+        chartArea.appendChild(xAxis);
+        
+        // Create bars
+        const barWidth = Math.min(70, (chartArea.offsetWidth - 70) / data.length - 10);
+        const spacing = (chartArea.offsetWidth - 70 - barWidth * data.length) / (data.length + 1);
+        
+        data.forEach((item, index) => {
+            const barHeight = (item[metric] / maxValue) * (chartArea.offsetHeight - 50);
+            
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.height = barHeight + 'px';
+            bar.style.width = barWidth + 'px';
+            bar.style.left = (70 + spacing + index * (barWidth + spacing)) + 'px';
+            
+            // Add tooltip with exact value
+            bar.title = item.title + ': ' + item[metric].toLocaleString();
+            
+            // Create label for x-axis
+            const label = document.createElement('div');
+            label.className = 'bar-label';
+            label.textContent = item.title.split(':')[0];
+            label.style.left = (70 + spacing + index * (barWidth + spacing)) + 'px';
+            label.style.width = barWidth + 'px';
+            
+            chartArea.appendChild(bar);
+            xAxis.appendChild(label);
+        });
+        
+        // Show the chart with animation - first make it display block, then add visible class for opacity transition
+        container.style.display = 'block';
+        setTimeout(() => {
+            container.classList.add('visible');
+        }, 50);
+    }
+    
+    function attachChartEventListeners() {
+        // For all tables
+        document.querySelectorAll('.analytics-table .clickable').forEach(header => {
+            header.addEventListener('click', function() {
+                const metric = this.getAttribute('data-metric');
+                const metricLabel = this.textContent;
+                
+                if (analyticsSelect.value === 'press-release') {
+                    drawBarChart('pressReleaseChart', pressReleaseData, metric, metricLabel);
+                } else if (analyticsSelect.value === 'social-media') {
+                    drawBarChart('socialMediaChart', socialMediaData, metric, metricLabel);
                 }
             });
-
-            function renderDefaultContent() {
-                analyticsContent.innerHTML = `
-                    <div class="no-content">
-                        Please select an analytics type from the dropdown
-                    </div>
-                `;
-            }
-
-            function renderPressReleaseAnalytics() {
-                analyticsContent.innerHTML = `
-                    <h2>Press Release Analytics</h2>
-                    <div class="analytics-details">
-                        <div class="metric">
-                            <strong>Total Press Releases:</strong> 5
-                        </div>
-                        <div class="metric">
-                            <strong>Avg. Reach per Release:</strong> 75,000
-                        </div>
-                        <div class="metric">
-                            <strong>Most Successful Release:</strong> Season Preview
-                        </div>
-                        <div class="metric">
-                            <strong>Media Pickup Rate:</strong> 68%
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <table class="analytics-table">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Date</th>
-                                    <th>Page Views</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Season Preview: FSU Football 2025</td>
-                                    <td>January 15, 2025</td>
-                                    <td class="views">126,542</td>
-                                </tr>
-                                <tr>
-                                    <td>Coach Mike Norvell Signs Contract Extension</td>
-                                    <td>January 28, 2025</td>
-                                    <td class="views">98,321</td>
-                                </tr>
-                                <tr>
-                                    <td>FSU Unveils New Stadium Renovations</td>
-                                    <td>February 10, 2025</td>
-                                    <td class="views">82,157</td>
-                                </tr>
-                                <tr>
-                                    <td>Spring Game Announcement</td>
-                                    <td>February 18, 2025</td>
-                                    <td class="views">65,842</td>
-                                </tr>
-                                <tr>
-                                    <td>Recruiting Class Spotlight</td>
-                                    <td>February 25, 2025</td>
-                                    <td class="views">59,378</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            }
-
-            function renderSocialMediaAnalytics() {
-                analyticsContent.innerHTML = `
-                    <h2>Social Media Analytics</h2>
-                    <div class="analytics-details">
-                        <div class="metric">
-                            <strong>Total Followers:</strong> 250,000
-                        </div>
-                        <div class="metric">
-                            <strong>Engagement Rate:</strong> 4.2%
-                        </div>
-                        <div class="metric">
-                            <strong>Top Platform:</strong> Instagram
-                        </div>
-                        <div class="metric">
-                            <strong>Avg. Shares per Post:</strong> 1,250
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <table class="analytics-table">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Date</th>
-                                    <th>Views</th>
-                                    <th>Likes</th>
-                                    <th>Re-tweets</th>
-                                    <th>Favorites</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Game Day Hype Video</td>
-                                    <td>January 12, 2025</td>
-                                    <td class="views">187,923</td>
-                                    <td>24,586</td>
-                                    <td>8,743</td>
-                                    <td>12,651</td>
-                                </tr>
-                                <tr>
-                                    <td>Player Spotlight: QB Travis Hunter</td>
-                                    <td>January 24, 2025</td>
-                                    <td class="views">156,452</td>
-                                    <td>18,924</td>
-                                    <td>6,521</td>
-                                    <td>9,847</td>
-                                </tr>
-                                <tr>
-                                    <td>Behind the Scenes: Weight Room</td>
-                                    <td>February 2, 2025</td>
-                                    <td class="views">132,784</td>
-                                    <td>15,632</td>
-                                    <td>4,823</td>
-                                    <td>7,549</td>
-                                </tr>
-                                <tr>
-                                    <td>Coach's Corner: Defensive Strategy</td>
-                                    <td>February 15, 2025</td>
-                                    <td class="views">98,562</td>
-                                    <td>10,482</td>
-                                    <td>3,157</td>
-                                    <td>5,628</td>
-                                </tr>
-                                <tr>
-                                    <td>Throwback Thursday: 2013 Championship</td>
-                                    <td>February 22, 2025</td>
-                                    <td class="views">120,378</td>
-                                    <td>14,865</td>
-                                    <td>5,274</td>
-                                    <td>8,932</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            }
         });
+    }
+
+    analyticsSelect.addEventListener('change', function() {
+        // Clear previous content
+        analyticsContent.innerHTML = '';
+
+        if (this.value === '') {
+            // If nothing is selected, show default content
+            renderDefaultContent();
+            return;
+        }
+
+        // Add class to indicate content is loaded
+        analyticsContent.classList.add('content-loaded');
+
+        // Create content based on selection
+        switch(this.value) {
+            case 'press-release':
+                renderPressReleaseAnalytics();
+                // Use setTimeout to ensure DOM is fully updated before we add the visible class
+                setTimeout(() => {
+                    const tableContainer = document.querySelector('.table-container');
+                    if (tableContainer) {
+                        tableContainer.classList.add('visible');
+                    }
+                }, 100);
+                break;
+            case 'social-media':
+                renderSocialMediaAnalytics();
+                setTimeout(() => {
+                    const tableContainer = document.querySelector('.table-container');
+                    if (tableContainer) {
+                        tableContainer.classList.add('visible');
+                    }
+                }, 100);
+                break;
+            default:
+                renderDefaultContent();
+                analyticsContent.classList.remove('content-loaded');
+        }
+    });
+
+    function renderDefaultContent() {
+        analyticsContent.innerHTML = `
+            <div class="no-content">
+                Please select an analytics type from the dropdown
+            </div>
+        `;
+    }
+
+    function renderPressReleaseAnalytics() {
+        analyticsContent.innerHTML = `
+            <h2>Press Release Analytics</h2>
+            <div class="analytics-details">
+                <div class="metric">
+                    <strong>Total Press Releases:</strong> 5
+                </div>
+                <div class="metric">
+                    <strong>Avg. Reach per Release:</strong> 75,000
+                </div>
+                <div class="metric">
+                    <strong>Most Successful Release:</strong> Season Preview
+                </div>
+                <div class="metric">
+                    <strong>Media Pickup Rate:</strong> 68%
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="analytics-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th><span class="clickable" data-metric="pageviews">Page Views</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Season Preview: FSU Football 2025</td>
+                            <td>January 15, 2025</td>
+                            <td class="views">126,542</td>
+                        </tr>
+                        <tr>
+                            <td>Coach Mike Norvell Signs Contract Extension</td>
+                            <td>January 28, 2025</td>
+                            <td class="views">98,321</td>
+                        </tr>
+                        <tr>
+                            <td>FSU Unveils New Stadium Renovations</td>
+                            <td>February 10, 2025</td>
+                            <td class="views">82,157</td>
+                        </tr>
+                        <tr>
+                            <td>Spring Game Announcement</td>
+                            <td>February 18, 2025</td>
+                            <td class="views">65,842</td>
+                        </tr>
+                        <tr>
+                            <td>Recruiting Class Spotlight</td>
+                            <td>February 25, 2025</td>
+                            <td class="views">59,378</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="pressReleaseChart" class="chart-container">
+                <div class="chart-title">Page Views Comparison</div>
+                <div class="chart-area" id="pressReleaseChartArea">
+                    <!-- Chart will be dynamically generated here -->
+                </div>
+            </div>
+        `;
+        
+        // Directly attach event listeners after rendering
+        attachChartEventListeners();
+    }
+
+    function renderSocialMediaAnalytics() {
+        analyticsContent.innerHTML = `
+            <h2>Social Media Analytics</h2>
+            <div class="analytics-details">
+                <div class="metric">
+                    <strong>Total Followers:</strong> 250,000
+                </div>
+                <div class="metric">
+                    <strong>Engagement Rate:</strong> 4.2%
+                </div>
+                <div class="metric">
+                    <strong>Top Platform:</strong> Instagram
+                </div>
+                <div class="metric">
+                    <strong>Avg. Shares per Post:</strong> 1,250
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="analytics-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th><span class="clickable" data-metric="views">Views</span></th>
+                            <th><span class="clickable" data-metric="likes">Likes</span></th>
+                            <th><span class="clickable" data-metric="retweets">Re-tweets</span></th>
+                            <th><span class="clickable" data-metric="favorites">Favorites</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Game Day Hype Video</td>
+                            <td>January 12, 2025</td>
+                            <td class="views">187,923</td>
+                            <td>24,586</td>
+                            <td>8,743</td>
+                            <td>12,651</td>
+                        </tr>
+                        <tr>
+                            <td>Player Spotlight: QB Travis Hunter</td>
+                            <td>January 24, 2025</td>
+                            <td class="views">156,452</td>
+                            <td>18,924</td>
+                            <td>6,521</td>
+                            <td>9,847</td>
+                        </tr>
+                        <tr>
+                            <td>Behind the Scenes: Weight Room</td>
+                            <td>February 2, 2025</td>
+                            <td class="views">132,784</td>
+                            <td>15,632</td>
+                            <td>4,823</td>
+                            <td>7,549</td>
+                        </tr>
+                        <tr>
+                            <td>Coach's Corner: Defensive Strategy</td>
+                            <td>February 15, 2025</td>
+                            <td class="views">98,562</td>
+                            <td>10,482</td>
+                            <td>3,157</td>
+                            <td>5,628</td>
+                        </tr>
+                        <tr>
+                            <td>Throwback Thursday: 2013 Championship</td>
+                            <td>February 22, 2025</td>
+                            <td class="views">120,378</td>
+                            <td>14,865</td>
+                            <td>5,274</td>
+                            <td>8,932</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="socialMediaChart" class="chart-container">
+                <div class="chart-title">Social Media Metrics Comparison</div>
+                <div class="chart-area" id="socialMediaChartArea">
+                    <!-- Chart will be dynamically generated here -->
+                </div>
+            </div>
+        `;
+        
+        // Directly attach event listeners after rendering
+        attachChartEventListeners();
+    }
+    
+    // Initialize with empty selection
+    analyticsSelect.value = '';
+    renderDefaultContent();
+});
+
     </script>
 </body>
 </html>
