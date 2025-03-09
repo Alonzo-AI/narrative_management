@@ -324,101 +324,91 @@
             display: block;
         }
         
-        /* Chart Styles */
-        .chart-container {
-            margin-top: 30px;
-            height: 350px;
-            width: 100%;
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: none;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-        }
+        /* Chart container styling */
+.chart-container {
+    display: none;
+    height: 400px !important;
+    margin-top: 60px !important;
+    position: relative !important;
+    z-index: 10 !important;
+    border: 1px solid #eee !important;
+    padding: 25px !important;
+    overflow: visible !important;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
 
-        .chart-container.visible {
-            opacity: 1;
-            display: block;
-        }
-        
-        .chart-title {
-            color: var(--fsu-garnet);
-            margin-bottom: 15px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .chart-area {
-            height: 280px;
-            width: 100%;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            position: relative;
-        }
-        
-        .bar {
-            position: absolute;
-            bottom: 40px;
-            background-color: var(--fsu-garnet);
-            width: 40px;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            transition: height 0.5s ease;
-        }
-        
-        .bar-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-size: 0.8rem;
-            padding: 10px 2px;
-            transform: rotate(-45deg);
-            transform-origin: left top;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .clickable {
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-        
-        .clickable:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-        
-        .y-axis {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 10px 0;
-        }
-        
-        .y-axis-label {
-            font-size: 0.75rem;
-            color: #666;
-            padding-left: 5px;
-        }
-        
-        .x-axis {
-            position: absolute;
-            bottom: 0;
-            left: 50px;
-            right: 0;
-            height: 40px;
-        }
+.chart-container.visible {
+    display: block;
+    opacity: 1;
+}
+
+/* Chart area styling */
+.chart-area {
+    height: 300px !important;
+    position: relative !important;
+    padding-bottom: 70px !important;
+    margin-top: 20px !important;
+    background: #f9f9f9 !important;
+    overflow: visible !important;
+    border-radius: 6px;
+}
+
+/* Bar styling */
+.bar {
+    position: absolute !important;
+    bottom: 40px !important;
+    width: 40px !important;
+    background-color: var(--fsu-garnet) !important;
+    z-index: 5 !important;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    transition: height 0.5s ease;
+}
+
+/* X-axis styling */
+.x-axis {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50px !important;
+    right: 0 !important;
+    height: 60px !important;
+    overflow: visible !important;
+}
+
+/* Bar label styling */
+.bar-label {
+    position: absolute !important;
+    bottom: -40px !important; 
+    transform: rotate(-45deg) !important;
+    transform-origin: left top !important;
+    text-align: left !important;
+    font-size: 11px !important;
+    width: 100px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    
+}
+
+/* Y-axis styling */
+.y-axis {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    height: 100% !important;
+    width: 50px !important;
+}
+
+.y-axis-label {
+    position: absolute !important;
+    left: 0 !important;
+    font-size: 11px !important;
+    color: #666 !important;
+}
 
 </style>
 </head>
@@ -571,12 +561,26 @@
         }
     ];
     
-    // Function to draw chart
+    // Function to draw chart with inline styles to ensure visibility
     function drawBarChart(containerId, data, metric, metricLabel) {
+        // Get the container and set initial styles
         const container = document.getElementById(containerId);
-        if (!container) return; // Safety check
+        if (!container) return;
+        
+        // Set container styles directly to ensure visibility
+        container.style.display = 'block';
+        container.style.height = '400px';
+        container.style.marginTop = '60px';
+        container.style.position = 'relative';
+        container.style.zIndex = '10';
         
         const chartArea = container.querySelector('.chart-area');
+        chartArea.style.height = '300px';
+        chartArea.style.position = 'relative';
+        chartArea.style.paddingBottom = '70px';
+        
+        // Clear previous chart
+        chartArea.innerHTML = '';
         
         // Update chart title
         const titleElement = container.querySelector('.chart-title');
@@ -584,63 +588,92 @@
             titleElement.textContent = metricLabel + ' Comparison';
         }
         
-        // Clear previous chart
-        chartArea.innerHTML = '';
-        
         // Find maximum value for scaling
         const maxValue = Math.max(...data.map(item => item[metric]));
         
-        // Create y-axis
+        // Create y-axis with inline styles
         const yAxis = document.createElement('div');
         yAxis.className = 'y-axis';
+        yAxis.style.position = 'absolute';
+        yAxis.style.left = '0';
+        yAxis.style.top = '0';
+        yAxis.style.height = '100%';
+        yAxis.style.width = '50px';
         
-        // Create 5 y-axis labels (0%, 25%, 50%, 75%, 100%)
+        // Create y-axis labels with absolute positioning
         for (let i = 5; i >= 0; i--) {
             const label = document.createElement('div');
             label.className = 'y-axis-label';
+            label.style.position = 'absolute';
+            label.style.left = '0';
+            label.style.top = (100 - (i * 20)) + '%';
+            label.style.fontSize = '11px';
             label.textContent = Math.round(maxValue * i / 5).toLocaleString();
             yAxis.appendChild(label);
         }
         
         chartArea.appendChild(yAxis);
         
-        // Create x-axis
+        // Create x-axis with ample space for labels
         const xAxis = document.createElement('div');
         xAxis.className = 'x-axis';
+        xAxis.style.position = 'absolute';
+        xAxis.style.bottom = '0';
+        xAxis.style.left = '50px';
+        xAxis.style.right = '0';
+        xAxis.style.height = '60px';
+        xAxis.style.overflow = 'visible';
+        
         chartArea.appendChild(xAxis);
         
-        // Create bars
-        const barWidth = Math.min(70, (chartArea.offsetWidth - 70) / data.length - 10);
-        const spacing = (chartArea.offsetWidth - 70 - barWidth * data.length) / (data.length + 1);
+        // Calculate proper spacing for bars
+        const availableWidth = chartArea.offsetWidth - 70;
+        const barWidth = Math.min(40, (availableWidth / data.length) - 20);
+        const spacing = (availableWidth - (barWidth * data.length)) / (data.length + 1);
         
+        // Create bars with proper spacing and inline styles
         data.forEach((item, index) => {
-            const barHeight = (item[metric] / maxValue) * (chartArea.offsetHeight - 50);
+            const barHeight = ((item[metric] / maxValue) * (chartArea.offsetHeight - 90)) || 0;
             
+            // Create bar with proper position
             const bar = document.createElement('div');
             bar.className = 'bar';
             bar.style.height = barHeight + 'px';
             bar.style.width = barWidth + 'px';
-            bar.style.left = (70 + spacing + index * (barWidth + spacing)) + 'px';
+            bar.style.left = (60 + spacing + index * (barWidth + spacing)) + 'px';
+            bar.style.position = 'absolute';
+            bar.style.bottom = '40px';
+            bar.style.backgroundColor = 'var(--fsu-garnet)';
+            bar.style.zIndex = '5';
             
             // Add tooltip with exact value
             bar.title = item.title + ': ' + item[metric].toLocaleString();
             
-            // Create label for x-axis
+            // Create label with proper offset to avoid overlap
             const label = document.createElement('div');
             label.className = 'bar-label';
             label.textContent = item.title.split(':')[0];
-            label.style.left = (70 + spacing + index * (barWidth + spacing)) + 'px';
-            label.style.width = barWidth + 'px';
+            label.style.left = (60 + spacing + index * (barWidth + spacing)) + 'px';
+            label.style.bottom = '-40px';
+            label.style.position = 'absolute';
+            label.style.transform = 'rotate(-45deg)';
+            label.style.transformOrigin = 'left top';
+            label.style.textAlign = 'left';
+            label.style.fontSize = '11px';
+            label.style.width = '100px';
             
             chartArea.appendChild(bar);
             xAxis.appendChild(label);
         });
         
-        // Show the chart with animation - first make it display block, then add visible class for opacity transition
-        container.style.display = 'block';
+        // Ensure chart is visible
+        container.classList.add('visible');
+        container.style.opacity = '1';
+        
+        // Scroll to the chart
         setTimeout(() => {
-            container.classList.add('visible');
-        }, 50);
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
     }
     
     function attachChartEventListeners() {
@@ -650,11 +683,35 @@
                 const metric = this.getAttribute('data-metric');
                 const metricLabel = this.textContent;
                 
-                if (analyticsSelect.value === 'press-release') {
-                    drawBarChart('pressReleaseChart', pressReleaseData, metric, metricLabel);
-                } else if (analyticsSelect.value === 'social-media') {
-                    drawBarChart('socialMediaChart', socialMediaData, metric, metricLabel);
+                // Update visual selection
+                document.querySelectorAll('.analytics-table .clickable').forEach(h => {
+                    h.style.textDecoration = '';
+                    h.style.fontWeight = '';
+                });
+                
+                this.style.textDecoration = 'underline';
+                this.style.fontWeight = 'bold';
+                
+                // Clear any existing charts first
+                document.querySelectorAll('.chart-container').forEach(chart => {
+                    chart.style.display = 'none';
+                    chart.classList.remove('visible');
+                });
+                
+                // Add spacer between table and chart
+                const tableContainer = document.querySelector('.table-container');
+                if (tableContainer) {
+                    tableContainer.style.marginBottom = '60px';
                 }
+                
+                // Draw the chart with proper spacing
+                setTimeout(() => {
+                    if (analyticsSelect.value === 'press-release') {
+                        drawBarChart('pressReleaseChart', pressReleaseData, metric, metricLabel);
+                    } else if (analyticsSelect.value === 'social-media') {
+                        drawBarChart('socialMediaChart', socialMediaData, metric, metricLabel);
+                    }
+                }, 50);
             });
         });
     }
@@ -702,7 +759,7 @@
     function renderDefaultContent() {
         analyticsContent.innerHTML = `
             <div class="no-content">
-                Please select an analytics type from the dropdown
+                Please select an analytics type
             </div>
         `;
     }
@@ -767,6 +824,7 @@
                 <div class="chart-area" id="pressReleaseChartArea">
                     <!-- Chart will be dynamically generated here -->
                 </div>
+                
             </div>
         `;
         
@@ -852,6 +910,7 @@
                 <div class="chart-area" id="socialMediaChartArea">
                     <!-- Chart will be dynamically generated here -->
                 </div>
+                
             </div>
         `;
         
