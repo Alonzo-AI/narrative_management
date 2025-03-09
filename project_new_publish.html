@@ -1189,10 +1189,10 @@ body {
             <div class="select-container">
                 <label for="publish-type">Select Content Type:</label>
                 <select id="publish-type" class="custom-select">
-                    <option value="" disabled selected>Choose</option>                  
+                    <option value="" disabled selected>Choose</option>
+                    <option value="all">All Content</option>
                     <option value="social">Social Media</option>
                     <option value="press">Press Release</option>
-                   
                 </select>
                 
             </div>
@@ -1496,6 +1496,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateSelectedCount() {
         const selectedItems = document.querySelectorAll('.grid-item.selected-item');
         const publishedItems = document.querySelectorAll('.grid-item.published-item');
+        const visibleItems = Array.from(document.querySelectorAll('.grid-item')).filter(item => 
+            !item.style.display || item.style.display !== 'none'
+        );
         
         // Add count display if it doesn't exist
         let countDisplay = document.querySelector('.grid-selection-count');
@@ -1511,7 +1514,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update count display
         if (countDisplay) {
             countDisplay.innerHTML = `
-              
+                
                 <span>Published: <strong>${publishedItems.length}</strong></span> | 
                 <span>Total: <strong>${document.querySelectorAll('.grid-item').length}</strong></span>
             `;
@@ -1595,6 +1598,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     item.style.display = 'none';
                 }
             });
+            
+            // Update the count after search filtering
+            updateSelectedCount();
         });
     }
     
@@ -1607,10 +1613,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.grid-item').forEach(item => {
                 const itemType = item.dataset.type;
                 
-                // Show all items if no filter is selected, otherwise filter by type
-                if (!selectedType) {
+                // Show all items if "all" is selected or no filter is selected
+                if (!selectedType || selectedType === 'all') {
                     item.style.display = '';
-                } else if (itemType === selectedType) {
+                } else if (selectedType === 'social' && itemType === 'social-media') {
+                    item.style.display = '';
+                } else if (selectedType === 'press' && itemType === 'press-release') {
                     item.style.display = '';
                 } else {
                     item.style.display = 'none';
@@ -1635,79 +1643,62 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Submit Review Button Initialization
-if (submitReviewBtn) {
-    // Make sure the button is always enabled
-    submitReviewBtn.disabled = false;
-    submitReviewBtn.style.opacity = "1";
-    
-    submitReviewBtn.addEventListener('click', function() {
-        if (reviewState === 'not-started') {
-            // Count published items
-            const publishedItems = document.querySelectorAll('.grid-item.published-item');
-            const itemsToReview = publishedItems.length;
-            
-            // Show confirmation dialog - no need to check if items exist since button is always active
-            if (confirm(`Are you sure you want to submit ${itemsToReview > 0 ? itemsToReview : 'all'} items for review? This will notify the review team.`)) {
-                // Update button text and appearance
-                this.innerHTML = '<i class="material-icons">rate_review</i> Accept Review';
-                this.classList.add('review-submitted');
-                
-                // Update phase status
-                updateProjectStatus('Under Review');
-                
-                // Update review state
-                reviewState = 'submitted';
-                
-                // Show success notification
-                alert(`Successfully submitted ${itemsToReview > 0 ? itemsToReview : 'all'} items for review.`);
-            }
-        } else if (reviewState === 'submitted') {
-            // Accept the review
-            if (confirm('Are you sure you want to accept this review?')) {
-                // Update button text and appearance
-                this.innerHTML = '<i class="material-icons">check_circle</i> Review Accepted';
-                this.classList.remove('review-submitted');
-                this.classList.add('review-accepted');
-                
-                // Don't disable the button, just change its appearance
-                // this.disabled = true; (removed)
-                
-                // Update phase status
-                updateProjectStatus('Completed');
-                
-                // Update review state
-                reviewState = 'accepted';
-                
-                // Show success notification
-                alert('Review has been accepted.');
-                
-                // Disable further interaction with grid items
-                document.querySelectorAll('.grid-item').forEach(item => {
-                    item.classList.add('review-completed');
-                });
-            }
-        } else if (reviewState === 'accepted') {
-            // Allow clicking even after acceptance - could reset or perform another action
-            alert('This review has already been accepted.');
-        }
-    });
-}
-
-// Update this in the updateSelectedCount function as well
-function updateSelectedCount() {
-    // ... existing code ...
-    
-    // Submit button should always be enabled regardless of selections
     if (submitReviewBtn) {
+        // Make sure the button is always enabled
         submitReviewBtn.disabled = false;
         submitReviewBtn.style.opacity = "1";
-    }
-}
-    
-    // Initialize button state
-    if (submitReviewBtn) {
-        submitReviewBtn.disabled = true;
-        submitReviewBtn.style.opacity = "0.6";
+        
+        submitReviewBtn.addEventListener('click', function() {
+            if (reviewState === 'not-started') {
+                // Count published items
+                const publishedItems = document.querySelectorAll('.grid-item.published-item');
+                const itemsToReview = publishedItems.length;
+                
+                // Show confirmation dialog - no need to check if items exist since button is always active
+                if (confirm(`Are you sure you want to submit ${itemsToReview > 0 ? itemsToReview : 'all'} items for review? This will notify the review team.`)) {
+                    // Update button text and appearance
+                    this.innerHTML = '<i class="material-icons">rate_review</i> Accept Review';
+                    this.classList.add('review-submitted');
+                    
+                    // Update phase status
+                    updateProjectStatus('Under Review');
+                    
+                    // Update review state
+                    reviewState = 'submitted';
+                    
+                    // Show success notification
+                    alert(`Successfully submitted ${itemsToReview > 0 ? itemsToReview : 'all'} items for review.`);
+                }
+            } else if (reviewState === 'submitted') {
+                // Accept the review
+                if (confirm('Are you sure you want to accept this review?')) {
+                    // Update button text and appearance
+                    this.innerHTML = '<i class="material-icons">check_circle</i> Review Accepted';
+                    this.classList.remove('review-submitted');
+                    this.classList.add('review-accepted');
+                    
+                    // Don't disable the button, just change its appearance
+                    // this.disabled = true; (removed)
+                    
+                    // Update phase status
+                    updateProjectStatus('Completed');
+                    
+                    // Update review state
+                    reviewState = 'accepted';
+                    
+                    // Show success notification
+                    alert('Review has been accepted.');
+                    
+                    // Disable further interaction with grid items
+                    document.querySelectorAll('.grid-item').forEach(item => {
+                        item.classList.add('review-completed');
+                    });
+                }
+            } else if (reviewState === 'accepted') {
+                // Allow clicking even after acceptance - could reset or perform another action
+                alert('This review has already been accepted.');
+            }
+        });
     }
     
     // Function to display combined content in modal
@@ -1825,50 +1816,6 @@ function updateSelectedCount() {
     addGridSelectionControls();
     addGridSearchFeature();
     updateSelectedCount();
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const publishTypeSelect = document.getElementById('publish-type');
-    const gridItems = document.querySelectorAll('.grid-item');
-
-    publishTypeSelect.addEventListener('change', function() {
-        const selectedType = this.value;
-
-        gridItems.forEach(item => {
-            // Determine the item's type based on the data-type attribute
-            const itemType = item.getAttribute('data-type');
-
-            // If no type is selected, show all items
-            if (!selectedType) {
-                item.style.display = '';
-            } 
-            // Otherwise, only show items that match the selected type
-            else if (selectedType === 'social' && itemType === 'social-media') {
-                item.style.display = '';
-            } 
-            else if (selectedType === 'press' && itemType === 'press-release') {
-                item.style.display = '';
-            } 
-            else {
-                item.style.display = 'none';
-            }
-        });
-
-        // Optional: Add visual feedback
-        this.style.borderColor = selectedType ? '#ceb888' : '#e0e0e0';
-        setTimeout(() => {
-            this.style.borderColor = '#e0e0e0';
-        }, 300);
-    });
-
-    // Add an option to reset the filter
-    publishTypeSelect.addEventListener('change', function() {
-        if (!this.value) {
-            gridItems.forEach(item => {
-                item.style.display = '';
-            });
-        }
-    });
 });
 
     </script>
