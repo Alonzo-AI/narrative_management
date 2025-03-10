@@ -6,118 +6,123 @@
     <title>Athlyte Content Publishing Platform - FSU</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
-        :root {
-            --fsu-garnet: #782f40;
-            --fsu-gold: #ceb888;
-            --fsu-black: #231f20;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+        /* Root Variables */
+:root {
+    --fsu-garnet: #782f40;
+    --fsu-gold: #ceb888;
+    --fsu-black: #231f20;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        @font-face {
-            font-family: 'GothicCustom';
-            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-        }
+/* Font Face */
+@font-face {
+    font-family: 'GothicCustom';
+    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
 
-        body {
-            background-color: var(--fsu-garnet);
-            display: grid;
-            grid-template-columns: 250px 1fr 300px;
-            min-height: 100vh;
-            gap: 24px;
-            padding: 24px;
-        }
+body {
+    background-color: var(--fsu-garnet);
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    min-height: 100vh;
+    gap: 24px;
+    padding: 24px;
+}
 
-        .sidebar {
-            background: var(--fsu-gold);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 24px;
-        }
+/* Sidebar Styles */
+.sidebar {
+    background: var(--fsu-gold);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+}
 
-        .sidebar h2 {
-            color: var(--fsu-garnet);
-            font-family: 'GothicCustom', sans-serif;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.sidebar h2 {
+    color: var(--fsu-garnet);
+    font-family: 'GothicCustom', sans-serif;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--fsu-garnet);
-        }
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--fsu-garnet);
+}
 
-        .sidebar-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
+.sidebar-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
 
-        .sidebar-item.active {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
-        }
+.sidebar-item.active {
+    background-color: var(--fsu-garnet);
+    color: var(--fsu-gold);
+}
 
-        .sidebar-item.active i {
-            color: var(--fsu-gold);
-        }
+.sidebar-item.active i {
+    color: var(--fsu-gold);
+}
 
-        .sidebar-item i {
-            margin-right: 12px;
-            color: var(--fsu-garnet);
-            font-size: 20px;
-        }
+.sidebar-item i {
+    margin-right: 12px;
+    color: var(--fsu-garnet);
+    font-size: 20px;
+}
 
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+/* Main Content Styles */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
 
-        .header, .overview {
-            background: white;
-            border-radius: 8px;
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
+.header, .overview {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
 
-        .header h1 {
-            color: var(--fsu-garnet);
-            margin-bottom: 16px;
-        }
+.header h1 {
+    color: var(--fsu-garnet);
+    margin-bottom: 16px;
+}
 
-        .header-meta {
-            display: flex;
-            gap: 24px;
-            color: #666;
-        }
+.header-meta {
+    display: flex;
+    gap: 24px;
+    color: #666;
+}
 
-        .header-meta div {
-            display: flex;
-            align-items: center;
-        }
+.header-meta div {
+    display: flex;
+    align-items: center;
+}
 
-        .header-meta i {
-            margin-right: 8px;
-            color: var(--fsu-garnet);
-        }
+.header-meta i {
+    margin-right: 8px;
+    color: var(--fsu-garnet);
+}
 
- /* Progress tracker container */
+/* Progress Tracker Styles */
 .progress-tracker {
     display: flex;
     align-items: center;
@@ -127,7 +132,6 @@
     padding: 0 24px;
 }
 
-/* Progress line */
 .progress-tracker::before {
     content: '';
     position: absolute;
@@ -151,7 +155,6 @@
     transition: width 0.8s ease;
 }
 
-/* Progress step */
 .progress-step {
     display: flex;
     flex-direction: column;
@@ -173,7 +176,6 @@
     transition: all 0.5s ease;
 }
 
-/* Initial state for icons */
 .progress-step i {
     color: #e0e0e0;
     font-size: 20px;
@@ -187,7 +189,6 @@
     transition: color 0.5s ease;
 }
 
-/* Completed state */
 .progress-step.completed .progress-step-circle {
     background-color: #782f40;
     border-color: #782f40;
@@ -201,7 +202,6 @@
     color: #782f40;
 }
 
-/* Current (in-progress) state */
 .progress-step.current .progress-step-circle {
     background-color: #782f40;
     border-color: #782f40;
@@ -215,711 +215,971 @@
     color: #782f40;
 }
 
-        .header {
-            background: white;
-            color: var(--fsu-garnet);
-        }
-        
-        .header h1 {
-            color: var(--fsu-gold);
-            font-family: 'GothicCustom', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .header-meta {
-            color: var(--fsu-garnet);
-        }
-        
-        .header-meta i {
-            color: var(--fsu-garnet);
-        }
-        
-        .sidebar-item:hover {
-            background-color: var(--fsu-gold);
-            color: var(--fsu-garnet);
-        }
-        
-        .sidebar-item:hover i {
-            color: var(--fsu-garnet);
-        }
+.header {
+    background: white;
+    color: var(--fsu-garnet);
+}
 
-        .progress-step i {
-            font-size: 20px;
-        }
+.header h1 {
+    color: var(--fsu-gold);
+    font-family: 'GothicCustom', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .notification-sidebar {
-            position: fixed;
-            right: 0;
-            width: 300px;
-            height: min-content;
-            background: white;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            overflow-y: auto;
-            z-index: 100;
-            border-radius: 6px;
-            margin-left: auto;
-        }
+.header-meta {
+    color: var(--fsu-garnet);
+}
 
-        .notification {
-            padding: 12px;
-            border-left: 3px solid var(--fsu-garnet);
-            margin: 12px 0;
-            background: #f8f8f8;
-            border-radius: 0 4px 4px 0;
-            transition: transform 0.2s ease;
-        }
+.header-meta i {
+    color: var(--fsu-garnet);
+}
 
-        .notification:hover {
-            transform: translateX(-5px);
-        }
+.sidebar-item:hover {
+    background-color: var(--fsu-gold);
+    color: var(--fsu-garnet);
+}
 
-        .notification-title {
-            color: var(--fsu-garnet);
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
+.sidebar-item:hover i {
+    color: var(--fsu-garnet);
+}
 
-        .notification-content {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-        }
+/* Notification Sidebar Styles */
+.notification-sidebar {
+    position: fixed;
+    right: 0;
+    width: 300px;
+    height: min-content;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 100;
+    border-radius: 6px;
+    margin-left: auto;
+}
 
-        .notification-time {
-            color: #999;
-            font-size: 0.8rem;
-        }
+.notification {
+    padding: 12px;
+    border-left: 3px solid var(--fsu-garnet);
+    margin: 12px 0;
+    background: #f8f8f8;
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.2s ease;
+}
 
-        .main-content {
-            margin-right: 300px;
-        }
+.notification:hover {
+    transform: translateX(-5px);
+}
 
-        @media (max-width: 1200px) {
-            body {
-                grid-template-columns: 200px 1fr 250px;
-                padding: 16px;
-                gap: 16px;
-            }
-        }
+.notification-title {
+    color: var(--fsu-garnet);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
 
-        @media (max-width: 900px) {
-            body {
-                grid-template-columns: 1fr;
-            }
-            .sidebar, .notifications {
-                display: none;
-            }
-         }
+.notification-content {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
 
-      
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.notification-time {
+    color: #999;
+    font-size: 0.8rem;
+}
 
-        .team-management {
-            margin-top: 10px;
-            background: white;
-            border-radius: 8px;
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
+.main-content {
+    margin-right: 300px;
+}
 
-        h2 {
-            color: var(--fsu-garnet);
-            margin-bottom: 24px;
-            font-size: 1.5rem;
-        }
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        .team-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
+/* Team Management Styles */
+.team-management {
+    margin-top: 10px;
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
 
-        .team-option {
-            display: flex;
-            align-items: flex-start;
-            padding: 20px;
-            background: #f8f8f8;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            transition: all 0.3s ease;
-        }
+h2 {
+    color: var(--fsu-garnet);
+    margin-bottom: 24px;
+    font-size: 1.5rem;
+}
 
-        .team-option:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
+/* Team Cards Styles */
+.team-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
 
-        .team-option i {
-            color: var(--fsu-garnet);
-            font-size: 24px;
-            margin-right: 16px;
-            margin-top: 4px;
-        }
+.team-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        .option-content {
-            flex: 1;
-        }
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
 
-        .option-content h3 {
-            color: var(--fsu-garnet);
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
+.card-header {
+    background-color: var(--fsu-garnet);
+    color: white;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+}
 
-        .option-content p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-        }
+.card-header i {
+    font-size: 24px;
+    margin-right: 12px;
+}
 
-        .assigned-coordinator {
-            margin-top: 8px;
-            font-weight: 500;
-            color: var(--fsu-garnet);
-            display: flex;
-            align-items: center;
-        }
+.card-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
 
-        .assigned-coordinator i {
-            font-size: 16px;
-            margin-right: 6px;
-            color: var(--fsu-gold);
-        }
+.card-body {
+    padding: 20px;
+}
 
-        .team-button {
-            background: var(--fsu-garnet);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
+.card-body p {
+    color: #555;
+    margin-bottom: 16px;
+}
 
-        .team-button:hover {
-            background: var(--fsu-gold);
-            color: var(--fsu-garnet);
-        }
+.card-status {
+    margin-bottom: 16px;
+}
 
-        .form-row {
-            margin-bottom: 12px;
-        }
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
 
-        .form-row select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: white;
-        }
+.status-indicator i {
+    font-size: 16px;
+    margin-right: 4px;
+}
 
-        .form-row label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            color: var(--fsu-garnet);
-        }
+.status-indicator.not-started {
+    background-color: #f0f0f0;
+    color: #666;
+}
 
-        .coordinator-form {
-            background-color: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 12px;
-            border: 1px solid #eee;
-        }
+.status-indicator.in-progress {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ff9800;
+}
 
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
+.status-indicator.completed {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
 
-        .cancel-button {
-            background: #f0f0f0;
-            color: #333;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
-        }
+.assignment-info {
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 16px;
+}
 
-        .cancel-button:hover {
-            background: #e0e0e0;
-        }
+.assigned-coordinator, .due-date {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
 
-        .multi-select {
-            width: 100%;
-            height: 150px;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: white;
-        }
-        
-        .multi-select option {
-            padding: 8px 12px;
-            font-size: 14px;
-        }
+.assigned-coordinator:last-child, .due-date:last-child {
+    margin-bottom: 0;
+}
 
-        .stat {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--fsu-garnet);
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 4px;
-        }
+.info-label {
+    font-weight: 600;
+    color: #555;
+}
 
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .status-badge.urgent {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: #dc3545;
-        }
-        
-        .status-badge.upcoming {
-            background-color: rgba(255, 193, 7, 0.1);
-            color: #ffc107;
-        }
-        
-        .status-badge.completed {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-        }
-       
-        .assigned-members {
-            background-color: #f8f8f8;
-            border-radius: 6px;
-            padding: 10px;
-        }
-        
-        .team-members-list ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .team-members-list li {
-            display: flex;
-            align-items: center;
-            padding: 6px 0;
-            color: var(--fsu-garnet);
-        }
-        
-        .team-members-list li::before {
-            content: '•';
-            margin-right: 8px;
-            color: var(--fsu-gold);
-            font-size: 1.2em;
-        }
+.info-value {
+    color: var(--fsu-garnet);
+}
 
-        
-        .form-section {
-        background-color: white;
-        border-radius: 8px;
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+.team-button {
+    width: 100%;
+    background: var(--fsu-garnet);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-button i {
+    margin-right: 8px;
+}
+
+.team-button:hover {
+    background: var(--fsu-gold);
+    color: var(--fsu-garnet);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 40px 0;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--fsu-garnet);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-modal:hover {
+    color: var(--fsu-garnet);
+}
+
+.form-section {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-section h4 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: var(--fsu-garnet);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: var(--fsu-gold);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
+}
+
+.form-actions {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.primary-button, .secondary-button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.primary-button {
+    background-color: var(--fsu-garnet);
+    color: white;
+    border: none;
+}
+
+.primary-button:hover {
+    background-color: #692a38;
+}
+
+.secondary-button {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+}
+
+.secondary-button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Multiselect Dropdown Styles */
+.multiselect-container {
+    position: relative;
+    width: 100%;
+}
+
+.multiselect-dropdown {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.multiselect-dropdown:after {
+    content: '\25BC';
+    font-size: 0.8rem;
+    color: var(--fsu-garnet);
+}
+
+.multiselect-dropdown-list {
+    position: absolute;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: white;
+    z-index: 100;
+    display: none;
+    margin-top: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.multiselect-dropdown-list.show {
+    display: block;
+}
+
+.multiselect-dropdown-item {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.multiselect-dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.multiselect-dropdown-item input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+    width: auto;
+}
+
+.multiselect-dropdown-selected {
+    color: #333;
+}
+
+.multiselect-dropdown-selected.placeholder {
+    color: #999;
+}
+
+.selected-items {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selected-item {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--fsu-gold);
+    color: var(--fsu-garnet);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+.selected-item .remove {
+    margin-left: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Original team management styles */
+.team-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.team-option {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.team-option:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.team-option i {
+    color: var(--fsu-garnet);
+    font-size: 24px;
+    margin-right: 16px;
+    margin-top: 4px;
+}
+
+.option-content {
+    flex: 1;
+}
+
+.option-content h3 {
+    color: var(--fsu-garnet);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.option-content p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.assigned-coordinator {
+    margin-top: 8px;
+    font-weight: 500;
+    color: var(--fsu-garnet);
+    display: flex;
+    align-items: center;
+}
+
+.assigned-coordinator i {
+    font-size: 16px;
+    margin-right: 6px;
+    color: var(--fsu-gold);
+}
+
+.form-row {
+    margin-bottom: 12px;
+}
+
+.form-row select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: var(--fsu-garnet);
+}
+
+.coordinator-form {
+    background-color: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+    border: 1px solid #eee;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.cancel-button {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.cancel-button:hover {
+    background: #e0e0e0;
+}
+
+.multi-select {
+    width: 100%;
+    height: 150px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.multi-select option {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--fsu-garnet);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.urgent {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.status-badge.upcoming {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.status-badge.completed {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.assigned-members {
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.team-members-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.team-members-list li {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+    color: var(--fsu-garnet);
+}
+
+.team-members-list li::before {
+    content: '•';
+    margin-right: 8px;
+    color: var(--fsu-gold);
+    font-size: 1.2em;
+}
+
+.form-section h3 {
+    color: var(--fsu-garnet);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.help-text {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.text-button {
+    background: none;
+    border: none;
+    color: var(--fsu-garnet);
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.text-button i {
+    margin-right: 6px;
+}
+
+.text-button:hover {
+    color: var(--fsu-gold);
+}
+
+#assignment-summary {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.summary-section {
+    margin-bottom: 24px;
+}
+
+.summary-section h4 {
+    color: var(--fsu-garnet);
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+
+.assigned-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+}
+
+.assigned-item i {
+    color: var(--fsu-garnet);
+    margin-right: 12px;
+}
+
+.department-badge {
+    margin-left: auto;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    background-color: var(--fsu-gold);
+    color: var(--fsu-garnet);
+}
+
+.assigned-members-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.assigned-members-list li {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+}
+
+.assigned-members-list li::before {
+    content: '•';
+    color: var(--fsu-gold);
+    font-size: 1.5em;
+    margin-right: 8px;
+}
+
+.multiselect-dropdown-selected.placeholder {
+    color: #999;
+}
+
+.multiselect-dropdown-selected {
+    padding: 6px 0;
+    color: #666;
+}
+
+.multi-select-checkbox {
+    width: auto !important;
+}
+
+.multi-select-checkbox-label {
+    margin-bottom: 0 !important;
+}
+
+/* Due date inputs styling */
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+    border-color: var(--fsu-gold);
+    box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
+    outline: none;
+}
+
+/* Due date summary styling */
+.due-date-display {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    padding: 12px;
+    background-color: rgba(120, 47, 64, 0.05);
+    border-radius: 6px;
+}
+
+.due-date-display i {
+    color: var(--fsu-garnet);
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+.due-date-info {
+    font-weight: 500;
+    color: var(--fsu-garnet);
+}
+
+.time-remaining {
+    margin-left: auto;
+    padding: 4px 8px;
+    background-color: var(--fsu-gold);
+    color: var(--fsu-garnet);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.summary-section.due-date-section {
+    margin-top: 16px;
+}
+
+.status-bar-container {
+    margin-bottom: 24px;
+}
+
+.status-bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.status-bar-title {
+    color: var(--fsu-garnet);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-indicator i {
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+.status-indicator.not-started {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.status-indicator.in-progress {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ff9800;
+}
+
+.status-indicator.completed {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.status-indicator.overdue {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+.status-bar {
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.status-bar-progress {
+    height: 100%;
+    background: linear-gradient(to right, var(--fsu-garnet), var(--fsu-gold));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    body {
+        grid-template-columns: 200px 1fr 250px;
+        padding: 16px;
+        gap: 16px;
     }
+}
 
-    .form-section h3 {
-        color: var(--fsu-garnet);
-        margin-bottom: 20px;
-        font-size: 1.2rem;
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 1fr;
     }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        color: var(--fsu-garnet);
-    }
-
-    .form-group select, 
-    .form-group input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1rem;
-        background-color: #f9f9f9;
-        transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .form-group select:focus,
-    .form-group input:focus {
-        border-color: var(--fsu-gold);
-        box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
-        outline: none;
-    }
-
-    .form-group select[multiple] {
-        height: 200px;
-    }
-
-    .help-text {
-        margin-top: 6px;
-        font-size: 0.85rem;
-        color: #666;
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 12px;
-        margin-top: 24px;
-    }
-
-    .primary-button, .secondary-button, .text-button {
-        padding: 10px 20px;
-        border-radius: 6px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .primary-button {
-        background-color: var(--fsu-garnet);
-        color: white;
-        border: none;
-    }
-
-    .primary-button:hover {
-        background-color: #692a38;
-        transform: translateY(-1px);
-    }
-
-   
-    .text-button {
-        background: none;
-        border: none;
-        color: var(--fsu-garnet);
-        display: flex;
-        align-items: center;
-        padding: 8px 0;
-    }
-
-    .text-button i {
-        margin-right: 6px;
-    }
-
-    .text-button:hover {
-        color: var(--fsu-gold);
-    }
-
-    #assignment-summary {
-        background-color: white;
-        border-radius: 8px;
-        padding: 24px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .summary-section {
-        margin-bottom: 24px;
-    }
-
-    .summary-section h4 {
-        color: var(--fsu-garnet);
-        margin-bottom: 12px;
-        font-size: 1rem;
-    }
-
-    .assigned-item {
-        display: flex;
-        align-items: center;
-        padding: 12px;
-        background-color: #f9f9f9;
-        border-radius: 6px;
-    }
-
-    .assigned-item i {
-        color: var(--fsu-garnet);
-        margin-right: 12px;
-    }
-
-    .department-badge {
-        margin-left: auto;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        background-color: var(--fsu-gold);
-        color: var(--fsu-garnet);
-    }
-
-    .assigned-members-list {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .assigned-members-list li {
-        display: flex;
-        align-items: center;
-        padding: 8px 12px;
-        margin-bottom: 8px;
-        background-color: #f9f9f9;
-        border-radius: 6px;
-    }
-
-    .assigned-members-list li::before {
-        content: '•';
-        color: var(--fsu-gold);
-        font-size: 1.5em;
-        margin-right: 8px;
-    }
-
-        @media (max-width: 768px) {
-            .team-options {
-                grid-template-columns: 1fr;
-            }
-            
-            body {
-                padding: 16px;
-            }    
-        }
-
-        .multiselect-container {
-        position: relative;
-        width: 100%;
-    }
-    
-    .multiselect-dropdown {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1rem;
-        background-color: #f9f9f9;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .multiselect-dropdown:after {
-        content: '\25BC';
-        font-size: 0.8rem;
-        color: var(--fsu-garnet);
-    }
-    
-    .multiselect-dropdown-list {
-        position: absolute;
-        width: 100%;
-        max-height: 250px;
-        overflow-y: auto;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background-color: white;
-        z-index: 100;
+    .sidebar, .notifications {
         display: none;
-        margin-top: 4px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    
-    .multiselect-dropdown-list.show {
-        display: block;
-    }
-    
-    .multiselect-dropdown-item {
-        padding: 10px 12px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-    
-    .multiselect-dropdown-item:hover {
-        background-color: #f5f5f5;
-    }
-    
-    .multiselect-dropdown-item input[type="checkbox"] {
-        margin-right: 10px;
-        cursor: pointer;
-    }
-    
-    .multiselect-dropdown-selected {
-        padding: 6px 0;
-        color: #666;
-    }
-    
-    .multiselect-dropdown-selected.placeholder {
-        color: #999;
-    }
-    
-    .selected-items {
-        margin-top: 8px;
-    }
-    
-    .selected-item {
-        display: inline-flex;
-        align-items: center;
-        background-color: var(--fsu-gold);
-        color: var(--fsu-garnet);
-        border-radius: 4px;
-        padding: 4px 8px;
-        margin: 4px;
-        font-size: 0.9rem;
-    }
-    
-    .selected-item .remove {
-        margin-left: 6px;
-        cursor: pointer;
-        font-size: 1rem;
-    }
-    .multi-select-checkbox {
-        width: auto !important;
-    }
-    .multi-select-checkbox-label {
-        margin-bottom: 0 !important;
-    }
+}
 
-    /* Due date inputs styling */
-    input[type="date"],
-    input[type="time"] {
+@media (max-width: 768px) {
+    .team-options, .team-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    body {
+        padding: 16px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
         width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1rem;
-        background-color: #f9f9f9;
-        transition: border-color 0.2s, box-shadow 0.2s;
     }
-    
-    input[type="date"]:focus,
-    input[type="time"]:focus {
-        border-color: var(--fsu-gold);
-        box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.2);
-        outline: none;
-    }
-       
-    
-    /* Due date summary styling */
-    .due-date-display {
-        display: flex;
-        align-items: center;
-        margin-top: 16px;
-        padding: 12px;
-        background-color: rgba(120, 47, 64, 0.05);
-        border-radius: 6px;
-    }
-    
-    .due-date-display i {
-        color: var(--fsu-garnet);
-        margin-right: 12px;
-        font-size: 20px;
-    }
-    
-    .due-date-info {
-        font-weight: 500;
-        color: var(--fsu-garnet);
-    }
-    
-    .time-remaining {
-        margin-left: auto;
-        padding: 4px 8px;
-        background-color: var(--fsu-gold);
-        color: var(--fsu-garnet);
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
+}
 
-    .summary-section.due-date-section {
-        margin-top: 16px;
-    }
+/* Add these styles to your existing CSS */
 
-    .status-bar-container {
-        margin-bottom: 24px;
-    }
-    
-    .status-bar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-    
-    .status-bar-title {
-        color: var(--fsu-garnet);
-        font-weight: 600;
-        font-size: 1rem;
-    }
-    
-    .status-indicator {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 10px;
-        border-radius: 16px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-    
-    .status-indicator i {
-        font-size: 16px;
-        margin-right: 4px;
-    }
-    
-    .status-indicator.not-started {
-        background-color: #f0f0f0;
-        color: #666;
-    }
-    
-    .status-indicator.in-progress {
-        background-color: rgba(255, 193, 7, 0.2);
-        color: #ff9800;
-    }
-    
-    .status-indicator.completed {
-        background-color: rgba(40, 167, 69, 0.2);
-        color: #28a745;
-    }
-    
-    .status-indicator.overdue {
-        background-color: rgba(220, 53, 69, 0.2);
-        color: #dc3545;
-    }
-    
-    .status-bar {
-        height: 8px;
-        background-color: #f0f0f0;
-        border-radius: 4px;
-        overflow: hidden;
-    }
-    
-    .status-bar-progress {
-        height: 100%;
-        background: linear-gradient(to right, var(--fsu-garnet), var(--fsu-gold));
-        border-radius: 4px;
-        transition: width 0.5s ease;
-    }
+.card-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.team-button {
+    flex: 1;
+    background: var(--fsu-garnet);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-button i {
+    margin-right: 8px;
+}
+
+.team-button:hover {
+    background: var(--fsu-gold);
+    color: var(--fsu-garnet);
+}
+
+.edit-button {
+    flex: 1;
+    background: var(--fsu-gold);
+    color: var(--fsu-garnet);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-button i {
+    margin-right: 8px;
+}
+
+.edit-button:hover {
+    background: #d9c597;
+}
 
     </style>
 </head>
@@ -1028,27 +1288,146 @@
 
             </section>
    
-
-        <section class="team-management">
-            <h2>Research Team</h2>
-        
-            <form id="team-assignment-form">
-                <div class="form-section">
-                    <h3>Coordinator</h3>
-                    <div class="form-group">
-                        <label for="coordinator-department">Department</label>
-                        <select id="coordinator-department" name="coordinator-department" required>
-                            <option value="">Select department</option>
-                            <option value="content">Content Team</option>
-                            <option value="design">Design Team</option>
-                            <option value="marketing">Marketing Team</option>
-                        </select>
+<!-- Team Management Section with Cards -->
+<section class="team-management">
+    <h2>Project Teams</h2>
+    
+    <div class="team-cards">
+        <!-- Content Draft Card -->
+        <div class="team-card">
+            <div class="card-header">
+                <i class="material-icons">description</i>
+                <h3>Content Draft</h3>
+            </div>
+            <div class="card-body">
+                <p>Develop article content covering key games, player highlights, and season statistics.</p>
+                
+                <div class="card-status">
+                    <div class="status-indicator not-started">
+                        <i class="material-icons">schedule</i>
+                        <span>Not Started</span>
                     </div>
+                </div>
+                
+                <div class="assignment-info">
+                    <div class="assigned-coordinator">
+                        <div class="info-label">Coordinator:</div>
+                        <div class="info-value" id="content-coordinator">Not assigned</div>
+                    </div>
+                    <div class="due-date">
+                        <div class="info-label">Due Date:</div>
+                        <div class="info-value" id="content-due-date">Not set</div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="team-button assign-button" data-team="content">
+                        <i class="material-icons">person_add</i> Assign
+                    </button>
+                    <button class="edit-button" data-team="content" style="display: none;">
+                        <i class="material-icons">edit</i> Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Graphics Card -->
+        <div class="team-card">
+            <div class="card-header">
+                <i class="material-icons">brush</i>
+                <h3>Graphics</h3>
+            </div>
+            <div class="card-body">
+                <p>Create visuals, game highlights, player stats infographics, and action photography.</p>
+                
+                <div class="card-status">
+                    <div class="status-indicator not-started">
+                        <i class="material-icons">schedule</i>
+                        <span>Not Started</span>
+                    </div>
+                </div>
+                
+                <div class="assignment-info">
+                    <div class="assigned-coordinator">
+                        <div class="info-label">Coordinator:</div>
+                        <div class="info-value" id="graphics-coordinator">Not assigned</div>
+                    </div>
+                    <div class="due-date">
+                        <div class="info-label">Due Date:</div>
+                        <div class="info-value" id="graphics-due-date">Not set</div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="team-button assign-button" data-team="graphics">
+                        <i class="material-icons">person_add</i> Assign
+                    </button>
+                    <button class="edit-button" data-team="graphics" style="display: none;">
+                        <i class="material-icons">edit</i> Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Marketing Card -->
+        <div class="team-card">
+            <div class="card-header">
+                <i class="material-icons">share</i>
+                <h3>Marketing</h3>
+            </div>
+            <div class="card-body">
+                <p>Plan distribution strategy, social media campaigns, and audience engagement tactics.</p>
+                
+                <div class="card-status">
+                    <div class="status-indicator not-started">
+                        <i class="material-icons">schedule</i>
+                        <span>Not Started</span>
+                    </div>
+                </div>
+                
+                <div class="assignment-info">
+                    <div class="assigned-coordinator">
+                        <div class="info-label">Coordinator:</div>
+                        <div class="info-value" id="marketing-coordinator">Not assigned</div>
+                    </div>
+                    <div class="due-date">
+                        <div class="info-label">Due Date:</div>
+                        <div class="info-value" id="marketing-due-date">Not set</div>
+                    </div>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="team-button assign-button" data-team="marketing">
+                        <i class="material-icons">person_add</i> Assign
+                    </button>
+                    <button class="edit-button" data-team="marketing" style="display: none;">
+                        <i class="material-icons">edit</i> Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Assignment Modal -->
+    <div id="assignment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Assign</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form id="team-assignment-form" class="assignment-form">
+                <input type="hidden" id="team-type" value="">
+                <input type="hidden" id="is-edit-mode" value="false">
+                
+                <!-- Coordinator Section -->
+                <div class="form-section">
+                    <h4>Assign Coordinator</h4>
                     
                     <div class="form-group">
                         <label for="coordinator-name">Coordinator</label>
-                        <select id="coordinator-name" name="coordinator-name" required>
-                            <option value="">Choose a coordinator</option>
+                        <select id="coordinator-name" required>
+                            <option value="">Select coordinator</option>
                             <option value="1">Sarah Johnson</option>
                             <option value="2">Michael Chen</option>
                             <option value="3">Emily Rodriguez</option>
@@ -1057,93 +1436,33 @@
                         </select>
                     </div>
                 </div>
-        
-                <div class="form-group">
-                    <label for="team-members-dropdown">Team Members</label>
-                    <div class="multiselect-container">
-                        <div class="multiselect-dropdown" id="team-members-dropdown">
-                            <div class="multiselect-dropdown-selected placeholder">Select team members</div>
-                        </div>
-                        <div class="multiselect-dropdown-list" id="team-members-options">
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-1" value="1" class="multi-select-checkbox">
-                                <label for="member-1" class="multi-select-checkbox-label">Alex Foster</label>
-                            </div>
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-2" value="2" class="multi-select-checkbox">
-                                <label for="member-2" class="multi-select-checkbox-label">Maria Garcia</label>
-                            </div>
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-3" value="3" class="multi-select-checkbox">
-                                <label for="member-3" class="multi-select-checkbox-label">James Wilson</label>
-                            </div>
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-4" value="4" class="multi-select-checkbox">
-                                <label for="member-4" class="multi-select-checkbox-label">Lisa Park</label>
-                            </div>
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-5" value="5" class="multi-select-checkbox">
-                                <label for="member-5" class="multi-select-checkbox-label">Andre Thomas</label>
-                            </div>
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-6" value="6" class="multi-select-checkbox">
-                                <label for="member-6" class="multi-select-checkbox-label">Sophie Martinez</label>
-                            </div>
-                            <div class="multiselect-dropdown-item">
-                                <input type="checkbox" id="member-7" value="7" class="multi-select-checkbox">
-                                <label for="member-7" class="multi-select-checkbox-label">Ryan Cooper</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="selected-items" id="selected-team-members"></div>
-                    <input type="hidden" name="team-members[]" id="team-members-input">
-                    <div class="help-text">Click to select multiple team members</div>
-                </div>
-
+                
+                <!-- Due Date Section -->
                 <div class="form-section">
-                    <h3>Set Due Date</h3>
+                    <h4>Set Deadline</h4>
+                    
                     <div class="form-group">
                         <label for="due-date">Due Date</label>
-                        <input type="date" id="due-date" name="due-date" required>
-                        <div class="help-text">Select the project deadline date</div>
+                        <input type="date" id="due-date" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="due-time">Due Time</label>
-                        <input type="time" id="due-time" name="due-time" required>
-                        <div class="help-text">Specify the deadline time</div>
+                        <input type="time" id="due-time" required>
                     </div>
                 </div>
                 
-                <!-- Modify the form-actions div to include the Start button -->
                 <div class="form-actions">
-                    <button type="submit" class="primary-button">Assign & Start</button>
-                    
+                    <button type="submit" class="primary-button" id="save-button">Save Assignment</button>
+                    <button type="button" class="secondary-button cancel-button">Cancel</button>
                 </div>
+            </form>
+        </div>
+    </div>
+</section>
                 </form>
                 
-                <div id="assignment-summary" style="display: none;">
                 
-                
-                    <div class="summary-section">
-                        <h4>Coordinator</h4>
-                        <div class="assigned-item">
-                            <i class="material-icons">person</i>
-                            <span id="summary-coordinator-name">Not assigned</span>
-                            <span class="department-badge" id="summary-coordinator-department"></span>
-                        </div>
-                    </div>
-            
-                    <div class="summary-section">
-                        <h4>Team Members</h4>
-                        <ul id="summary-team-members" class="assigned-members-list">
-                            <!-- Members will be added here dynamically -->
-                        </ul>
-                    </div>
-
-                    <div id="project-status-container"></div>
-      
-                    </div>
             
         </section>
        
@@ -1164,124 +1483,347 @@
     
 
     <script>
-        // Function to update progress bar style
-function updateProgressBar() {
-    const progressStyles = `
-        .progress-tracker::before {
-            content: '';
-            position: absolute;
-            height: 2px;
-            background: #e0e0e0;
-            width: calc(100% - 48px);
-            top: 20px;
-            left: 24px;
-            z-index: 1;
+        // Team Management Card Scripts
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM elements
+    const assignButtons = document.querySelectorAll('.assign-button');
+    const editButtons = document.querySelectorAll('.edit-button');
+    const modal = document.getElementById('assignment-modal');
+    const closeModalButton = document.querySelector('.close-modal');
+    const cancelButton = document.querySelector('.cancel-button');
+    const assignmentForm = document.getElementById('team-assignment-form');
+    const teamTypeInput = document.getElementById('team-type');
+    const isEditModeInput = document.getElementById('is-edit-mode');
+    const modalTitle = document.getElementById('modal-title');
+    const saveButton = document.getElementById('save-button');
+    
+    // Team data storage
+    const teamData = {
+        content: {
+            name: 'Content Draft',
+            coordinator: null,
+            dueDate: null,
+            dueTime: null,
+            status: 'not-started'
+        },
+        graphics: {
+            name: 'Graphics',
+            coordinator: null,
+            dueDate: null,
+            dueTime: null,
+            status: 'not-started'
+        },
+        marketing: {
+            name: 'Marketing',
+            coordinator: null,
+            dueDate: null,
+            dueTime: null,
+            status: 'not-started'
         }
-
-        .progress-tracker::after {
-            content: '';
-            position: absolute;
-            height: 2px;
-            background: var(--fsu-garnet);
-            width: 0%;
-            top: 20px;
-            left: 24px;
-            z-index: 2;
-            transition: width 0.8s ease;
-        }
-
-        .progress-step {
-            position: relative;
-            z-index: 3;
-        }
-
-        /* Initial state - colorless and static */
-        .progress-step-circle {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s ease;
-        }
-
-        .progress-step i {
-            color: #e0e0e0;
-            transition: color 0.5s ease;
-        }
-
-        .progress-step-label {
-            color: #e0e0e0;
-            margin-top: 8px;
-            font-size: 0.875rem;
-        }
-
-        /* Remove hover effects */
-        .progress-step:hover {
-            transform: none;
-        }
-
-        .progress-step-circle:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Completed state */
-        .progress-step.completed .progress-step-circle {
-            background: var(--fsu-garnet);
-            border-color: var(--fsu-garnet);
-        }
-
-        .progress-step.completed i {
-            color: white;
-        }
-
-        .progress-step.completed .progress-step-label {
-            color: var(--fsu-garnet);
-        }
-    `;
-
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = progressStyles;
-    document.head.appendChild(styleSheet);
-}
-
-    function updateProjectStatus() {
-    // Initialize all steps as colorless
-    const steps = document.querySelectorAll('.progress-step');
-    steps.forEach(step => {
-        step.classList.remove('completed', 'current');
-        
-        const circle = step.querySelector('.progress-step-circle');
-        if (circle) {
-            circle.style.backgroundColor = 'white';
-            circle.style.borderColor = '#e0e0e0';
-        }
-
-        const icon = step.querySelector('i');
-        if (icon) {
-            icon.style.color = '#e0e0e0';
-        }
-
-        const label = step.querySelector('.progress-step-label');
-        if (label) {
-            label.style.color = '#e0e0e0';
+    };
+    
+    // Reference data
+    const coordinatorNames = {
+        "1": "Sarah Johnson",
+        "2": "Michael Chen",
+        "3": "Emily Rodriguez",
+        "4": "David Kim",
+        "5": "Rachel Thompson"
+    };
+    
+    // Open modal when assign button is clicked
+    assignButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const teamType = this.getAttribute('data-team');
+            openAssignmentModal(teamType, false);
+        });
+    });
+    
+    // Open modal in edit mode when edit button is clicked
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const teamType = this.getAttribute('data-team');
+            openAssignmentModal(teamType, true);
+        });
+    });
+    
+    // Close modal functions
+    function closeModal() {
+        modal.style.display = 'none';
+        resetForm();
+    }
+    
+    closeModalButton.addEventListener('click', closeModal);
+    cancelButton.addEventListener('click', closeModal);
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
         }
     });
-
-    // Reset progress bar
-    const progressTracker = document.querySelector('.progress-tracker');
-    if (progressTracker) {
-        const progressBar = progressTracker.querySelector('::after');
-        if (progressBar) {
-            progressBar.style.width = '0%';
+    
+    // Open assignment modal and populate with existing data if available
+    function openAssignmentModal(teamType, isEdit) {
+        const team = teamData[teamType];
+        teamTypeInput.value = teamType;
+        isEditModeInput.value = isEdit.toString();
+        
+        // Set appropriate title and button text based on mode
+        if (isEdit) {
+            modalTitle.textContent = `Edit ${team.name} Assignment`;
+            saveButton.textContent = 'Update Assignment';
+        } else {
+            modalTitle.textContent = `Assign ${team.name} `;
+            saveButton.textContent = 'Save Assignment';
+        }
+        
+        // Always populate form with existing data regardless of mode
+        if (team.coordinator) {
+            document.getElementById('coordinator-name').value = team.coordinator;
+        }
+        
+        if (team.dueDate) {
+            document.getElementById('due-date').value = team.dueDate;
+        }
+        
+        if (team.dueTime) {
+            document.getElementById('due-time').value = team.dueTime;
+        }
+        
+        modal.style.display = 'block';
+    }
+    
+    // Reset form when closing modal
+    function resetForm() {
+        assignmentForm.reset();
+    }
+    
+    // Form submission
+    assignmentForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const teamType = teamTypeInput.value;
+        const isEdit = isEditModeInput.value === 'true';
+        const coordinatorId = document.getElementById('coordinator-name').value;
+        const dueDate = document.getElementById('due-date').value;
+        const dueTime = document.getElementById('due-time').value;
+        
+        // Validate required fields
+        if (!coordinatorId || !dueDate || !dueTime) {
+            alert('Please complete all required fields');
+            return;
+        }
+        
+        // Check if anything changed in edit mode
+        let hasChanges = false;
+        if (isEdit) {
+            const team = teamData[teamType];
+            hasChanges = team.coordinator !== coordinatorId || 
+                         team.dueDate !== dueDate || 
+                         team.dueTime !== dueTime;
+            
+            if (!hasChanges) {
+                closeModal();
+                return; // No changes, just close the modal
+            }
+        }
+        
+        // Save team data
+        const prevCoordinator = teamData[teamType].coordinator 
+            ? coordinatorNames[teamData[teamType].coordinator] 
+            : null;
+        
+        teamData[teamType].coordinator = coordinatorId;
+        teamData[teamType].dueDate = dueDate;
+        teamData[teamType].dueTime = dueTime;
+        teamData[teamType].status = 'in-progress';
+        
+        // Update card display
+        updateCardDisplay(teamType);
+        
+        // Create notification
+        const coordinatorName = coordinatorNames[coordinatorId];
+        const teamName = teamData[teamType].name;
+        const formattedDate = formatDate(new Date(`${dueDate}T${dueTime}`));
+        
+        if (isEdit) {
+            let notificationMessage = `${teamName} team assignment updated.`;
+            if (prevCoordinator !== coordinatorName) {
+                notificationMessage += ` Coordinator changed from ${prevCoordinator} to ${coordinatorName}.`;
+            }
+            notificationMessage += ` Due: ${formattedDate}`;
+            
+            addNotification(
+                'update',
+                `${teamName} Assignment Updated`,
+                notificationMessage
+            );
+        } else {
+            addNotification(
+                'assignment',
+                `${teamName} Team Assigned`,
+                `${coordinatorName} has been assigned as coordinator for the ${teamName} team. Due: ${formattedDate}`
+            );
+        }
+        
+        // Close modal
+        closeModal();
+    });
+    
+    // Update card display with team data
+    function updateCardDisplay(teamType) {
+        const team = teamData[teamType];
+        
+        // Update coordinator display
+        const coordinatorElement = document.getElementById(`${teamType}-coordinator`);
+        if (team.coordinator) {
+            coordinatorElement.textContent = coordinatorNames[team.coordinator];
+        } else {
+            coordinatorElement.textContent = 'Not assigned';
+        }
+        
+        // Update due date display
+        const dueDateElement = document.getElementById(`${teamType}-due-date`);
+        if (team.dueDate && team.dueTime) {
+            const dueDateTime = new Date(`${team.dueDate}T${team.dueTime}`);
+            dueDateElement.textContent = formatDate(dueDateTime);
+        } else {
+            dueDateElement.textContent = 'Not set';
+        }
+        
+        // Update status indicator
+        const cardElement = document.querySelector(`[data-team="${teamType}"]`).closest('.team-card');
+        const statusIndicator = cardElement.querySelector('.status-indicator');
+        
+        statusIndicator.className = `status-indicator ${team.status}`;
+        
+        // Update status icon and text
+        const statusIcon = statusIndicator.querySelector('i');
+        const statusText = statusIndicator.querySelector('span');
+        
+        if (team.status === 'not-started') {
+            statusIcon.textContent = 'schedule';
+            statusText.textContent = 'Not Started';
+        } else if (team.status === 'in-progress') {
+            statusIcon.textContent = 'hourglass_empty';
+            statusText.textContent = 'In Progress';
+        } else if (team.status === 'completed') {
+            statusIcon.textContent = 'check_circle';
+            statusText.textContent = 'Completed';
+        }
+        
+        // Show/hide buttons based on assignment status
+        const assignButton = cardElement.querySelector('.assign-button');
+        const editButton = cardElement.querySelector('.edit-button');
+        
+        if (team.coordinator) {
+            // If team has a coordinator, hide assign button and show edit button
+            assignButton.style.display = 'none';
+            editButton.style.display = 'flex';
+        } else {
+            // If no coordinator yet, show assign button and hide edit button
+            assignButton.style.display = 'flex';
+            editButton.style.display = 'none';
+        }
+        
+        // Update progress tracker
+        updateProgressTracker();
+    }
+    
+    // Format date for display
+    function formatDate(date) {
+        return date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    // Function to add notification
+    function addNotification(type, title, message) {
+        const notificationList = document.querySelector('.notification-list');
+        if (!notificationList) return;
+        
+        const notification = document.createElement('div');
+        notification.className = `notification type-${type} new`;
+        
+        const icon = getIconForType(type);
+        
+        notification.innerHTML = `
+            <i class="material-icons notification-icon">${icon}</i>
+            <div class="notification-content">
+                <div class="notification-title">${title}</div>
+                <div class="notification-message">${message}</div>
+                <div class="notification-time">Just now</div>
+            </div>
+        `;
+        
+        notificationList.insertBefore(notification, notificationList.firstChild);
+        
+        // Fade out "new" tag after some time
+        setTimeout(() => {
+            notification.classList.remove('new');
+        }, 5000);
+    }
+    
+    // Get icon based on notification type
+    function getIconForType(type) {
+        const icons = {
+            assignment: 'person_add',
+            progress: 'trending_up',
+            review: 'rate_review',
+            update: 'update',
+            alert: 'warning',
+            default: 'notifications'
+        };
+        
+        return icons[type] || icons.default;
+    }
+    
+    // Function to update progress tracker
+    function updateProgressTracker() {
+        // Get completed phases count
+        let completedPhases = 0;
+        
+        // Count teams that have been assigned
+        for (const teamType in teamData) {
+            if (teamData[teamType].coordinator) {
+                completedPhases++;
+            }
+        }
+        
+        // Update progress tracker visual
+        const progressSteps = document.querySelectorAll('.progress-step');
+        const progressTracker = document.querySelector('.progress-tracker');
+        
+        // Update progress percentage (if progress tracker exists)
+        if (progressTracker && progressSteps.length > 0) {
+            const progressPercentage = (completedPhases / 5) * 100; // 5 total steps
+            
+            // Set custom property for progress width
+            document.documentElement.style.setProperty('--progress-width', `${progressPercentage}%`);
+            
+            // Update step visuals
+            progressSteps.forEach((step, index) => {
+                if (index < completedPhases) {
+                    step.classList.add('completed');
+                    step.classList.remove('current');
+                } else if (index === completedPhases) {
+                    step.classList.add('current');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('completed', 'current');
+                }
+            });
         }
     }
-}
+});
 
+// Progress tracker update function (for external use)
 function updateProgress(completedPhase) {
     const progressTracker = document.querySelector('.progress-tracker');
     const totalSteps = document.querySelectorAll('.progress-step').length;
@@ -1298,11 +1840,6 @@ function updateProgress(completedPhase) {
             step.classList.add('completed');
             step.classList.remove('current');
             if (icon) {
-                if (index === 0) { // Research icon
-                    icon.textContent = icon.textContent; // Keep original icon
-                } else {
-                    icon.textContent = 'done'; // Change to checkmark for other completed steps
-                }
                 icon.style.color = 'white';
             }
             if (circle) {
@@ -1329,568 +1866,39 @@ function updateProgress(completedPhase) {
     });
 
     // Update progress bar
-    const progressBar = progressTracker.querySelector('::after');
-    if (progressBar) {
-        progressBar.style.width = `${progressPercentage}%`;
-    }
+    progressTracker.style.setProperty('--progress-width', `${progressPercentage}%`);
 }
 
-// Initialize on document load
-document.addEventListener('DOMContentLoaded', function() {
-    updateProjectStatus(); // Set initial colorless state
+// Function to add notification (for global use)
+function addNotification(type, title, message) {
+    const notificationList = document.querySelector('.notification-list');
+    if (!notificationList) return;
     
-    // Add to form submission handler
-    const form = document.getElementById('team-assignment-form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Your existing form handling code...
-            
-            // Start with first phase (Research) completed
-            updateProgress(0);
-        });
-    }
-});       
-        // Function to add notification (stub)
-        function addNotification(message, time) {
-            const notificationSidebar = document.querySelector('.notification-sidebar');
-            const newNotification = document.createElement('div');
-            newNotification.className = 'notification';
-            newNotification.innerHTML = `
-                <div class="notification-title">Status Update</div>
-                <div class="notification-content">${message}</div>
-                <div class="notification-time">${time}</div>
-            `;
-            notificationSidebar.insertBefore(newNotification, notificationSidebar.children[1]);
-        }
-        
-        // Notification System
-class NotificationSystem {
-    constructor() {
-        this.notifications = [];
-        this.container = document.querySelector('.notification-list');
-        this.counter = document.querySelector('.notification-counter');
-    }
-
-    addNotification(type, title, message) {
-        const notification = {
-            id: Date.now(),
-            type,
-            title,
-            message,
-            timestamp: new Date(),
-            isNew: true
-        };
-
-        // Add to beginning of array
-        this.notifications.unshift(notification);
-        
-        // Keep only latest 10 notifications
-        if (this.notifications.length > 10) {
-            this.notifications.pop();
-        }
-
-        this.renderNotifications();
-        this.updateCounter();
-
-        // Remove 'new' tag after 1 hour
-        setTimeout(() => {
-            notification.isNew = false;
-            this.renderNotifications();
-        }, 3600000);
-    }
-
-    getIconForType(type) {
-        const icons = {
-            assignment: 'person_add',
-            progress: 'trending_up',
-            review: 'rate_review',
-            alert: 'warning'
-        };
-        return icons[type] || 'info';
-    }
-
-    formatTimeAgo(timestamp) {
-        const seconds = Math.floor((new Date() - timestamp) / 1000);
-        
-        let interval = Math.floor(seconds / 31536000);
-        if (interval > 1) return interval + ' years ago';
-        
-        interval = Math.floor(seconds / 2592000);
-        if (interval > 1) return interval + ' months ago';
-        
-        interval = Math.floor(seconds / 86400);
-        if (interval > 1) return interval + ' days ago';
-        
-        interval = Math.floor(seconds / 3600);
-        if (interval > 1) return interval + ' hours ago';
-        
-        interval = Math.floor(seconds / 60);
-        if (interval > 1) return interval + ' minutes ago';
-        
-        return 'just now';
-    }
-
-    updateCounter() {
-        const newCount = this.notifications.filter(n => n.isNew).length;
-        // this.counter.textContent = newCount;
-        // this.counter.style.display = newCount > 0 ? 'block' : 'none';
-    }
-
-    renderNotifications() {
-        this.container.innerHTML = this.notifications
-            .map(notification => `
-                <div class="notification type-${notification.type} ${notification.isNew ? 'new' : ''}">
-                    <i class="material-icons notification-icon">
-                        ${this.getIconForType(notification.type)}
-                    </i>
-                    <div class="notification-content">
-                        <div class="notification-title">${notification.title}</div>
-                        <div class="notification-message">${notification.message}</div>
-                        <div class="notification-time">
-                            ${this.formatTimeAgo(notification.timestamp)}
-                        </div>
-                    </div>
-                </div>
-            `)
-            .join('');
-    }
+    const notification = document.createElement('div');
+    notification.className = `notification type-${type} new`;
+    
+    // Get appropriate icon
+    const icons = {
+        assignment: 'person_add',
+        progress: 'trending_up',
+        review: 'rate_review',
+        update: 'update',
+        alert: 'warning',
+        default: 'notifications'
+    };
+    const icon = icons[type] || icons.default;
+    
+    notification.innerHTML = `
+        <i class="material-icons notification-icon">${icon}</i>
+        <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+            <div class="notification-time">Just now</div>
+        </div>
+    `;
+    
+    notificationList.insertBefore(notification, notificationList.firstChild);
 }
-
-// Initialize notification system
-const notificationSystem = new NotificationSystem();
-
-// Example usage for project stages
-document.addEventListener('DOMContentLoaded', () => {
-    // Listen for form submission
-    const form = document.getElementById('team-assignment-form');
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const coordinator = document.getElementById('coordinator-name');
-            const department = document.getElementById('coordinator-department');
-            
-            if (coordinator.value && department.value) {
-                // Get values
-                const coordinatorName = coordinator.options[coordinator.selectedIndex].text;
-                const departmentName = department.options[department.selectedIndex].text;
-                
-                // Create notifications object for better organization
-                const notifications = {
-                    coordinator: {
-                        type: 'assignment',
-                        title: 'Team Coordinator Assigned',
-                        message: `${coordinatorName} has been assigned as coordinator for ${departmentName}`
-                    }
-                };
-
-                notificationSystem.addNotification(
-                        notifications.coordinator.type,
-                        notifications.coordinator.title,
-                        notifications.coordinator.message
-                );
-
-                notificationSystem.addNotification(
-                        notifications.coordinator.type,
-                        'Acknowledgement from Team Coordinator',
-                        `${coordinatorName} has acknowledged the assignment as coordinator`,
-                );
-
-                // Get selected team members
-                const selectedMembers = [];
-                const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
-                checkboxes.forEach(checkbox => {
-                    const memberName = checkbox.nextElementSibling.textContent;
-                    selectedMembers.push(memberName);
-                });
-
-                // Add team members notification if any members are selected
-                if (selectedMembers.length > 0) {
-                    const memberNames = selectedMembers.length > 2 
-                        ? `${selectedMembers.slice(0, 2).join(', ')} and ${selectedMembers.length - 2} others` 
-                        : selectedMembers.join(' and ');
-                    
-                    notifications.team = {
-                        type: 'assignment',
-                        title: 'Team Members Added',
-                        message: `${memberNames} ${selectedMembers.length > 1 ? 'have' : 'has'} been assigned to the project.`
-                        
-                    };
-                    notificationSystem.addNotification(
-                        notifications.team.type,
-                        notifications.team.title,
-                        notifications.team.message
-
-                    );
-                    notificationSystem.addNotification(
-                        notifications.coordinator.type,
-                        'Acknowledgement from Team Members',
-                        `${memberNames} ${selectedMembers.length > 1 ? 'have' : 'has' } acknowledged the assignment`,
-                     );
-
-                };
-
-              
-
-
-                // Ensure coordinator notification is always added
-                // setTimeout(() => {
-                //     notificationSystem.addNotification(
-                //         notifications.coordinator.type,
-                //         notifications.coordinator.title,
-                //         notifications.coordinator.message
-                //     );
-                // }, 500);
-
-                // Debug log to verify notifications are being created
-                console.log('Adding notifications:', notifications);
-            }
-        });
-    }
-});
-
-        
-        // Store coordinator names
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('team-assignment-form');
-    const summary = document.getElementById('assignment-summary');
-    const editButton = document.getElementById('edit-assignment-button');
-    
-    // Store coordinator names and departments for reference
-    const coordinatorNames = {
-        "1": "Sarah Johnson",
-        "2": "Michael Chen",
-        "3": "Emily Rodriguez",
-        "4": "David Kim",
-        "5": "Rachel Thompson"
-    };
-    
-    const teamMembers = {
-        "1": "Alex Foster",
-        "2": "Maria Garcia",
-        "3": "James Wilson",
-        "4": "Lisa Park",
-        "5": "Andre Thomas",
-        "6": "Sophie Martinez",
-        "7": "Ryan Cooper"
-    };
-    
-    // Initialize the multiselect dropdown
-    initMultiSelectDropdown();
-    
-    // Form submission
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const departmentSelect = document.getElementById('coordinator-department');
-        const coordinatorSelect = document.getElementById('coordinator-name');
-        
-        const departmentId = departmentSelect.value;
-        const coordinatorId = coordinatorSelect.value;
-        
-        // Get due date and time values
-        const dueDateInput = document.getElementById('due-date');
-        const dueTimeInput = document.getElementById('due-time');
-        const dueDate = dueDateInput.value;
-        const dueTime = dueTimeInput.value;
-        
-        // Get selected team members from checkboxes
-        const selectedTeamMembers = [];
-        const checkboxes = document.querySelectorAll('#team-members-options input[type="checkbox"]:checked');
-        checkboxes.forEach(checkbox => {
-            selectedTeamMembers.push(checkbox.value);
-        });
-        
-        // Validate required fields
-        if (!departmentId || !coordinatorId || selectedTeamMembers.length === 0) {
-            alert('Please complete all required fields');
-            return;
-        }
-        
-        if (!dueDate || !dueTime) {
-            alert('Please set both date and time for the deadline');
-            return;
-        }
-        
-        // Update summary view
-        const departmentName = departmentSelect.options[departmentSelect.selectedIndex].text;
-        const coordinatorName = coordinatorNames[coordinatorId];
-        
-        document.getElementById('summary-coordinator-name').textContent = coordinatorName;
-        document.getElementById('summary-coordinator-department').textContent = departmentName;
-        
-        // Update team members list
-        const teamMembersList = document.getElementById('summary-team-members');
-        teamMembersList.innerHTML = '';
-        
-        selectedTeamMembers.forEach(memberId => {
-            const li = document.createElement('li');
-            li.textContent = teamMembers[memberId];
-            teamMembersList.appendChild(li);
-        });
-        
-        // Format the due date and time
-        const dueDateObj = new Date(`${dueDate}T${dueTime}:00`);
-        const formattedDate = dueDateObj.toLocaleDateString('en-US', {
-            weekday: 'short',
-            month: 'short', 
-            day: 'numeric',
-            year: 'numeric'
-        });
-        
-        const formattedTime = dueDateObj.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        
-        // Calculate time remaining
-        const now = new Date();
-        const diffTime = dueDateObj - now;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        // Create and add project status bar
-        const statusBarSection = document.createElement('div');
-        statusBarSection.className = 'summary-section status-bar-section';
-        
-        // Determine project status based on progress tracker and due date
-        const completedSteps = document.querySelectorAll('.progress-step.completed').length;
-        const totalSteps = document.querySelectorAll('.progress-step').length;
-        const progressPercentage = Math.round((completedSteps / totalSteps) * 100);
-        
-        let statusClass = 'in progress';
-        let statusText = 'In Progress';
-        let statusIcon = 'hourglass_empty';
-        
-        if (completedSteps === totalSteps) {
-            statusClass = 'completed';
-            statusText = 'Completed';
-            statusIcon = 'check_circle';
-        } else if (diffDays < 0) {
-            statusClass = 'overdue';
-            statusText = 'Overdue';
-            statusIcon = 'error_outline';
-        } else if (completedSteps > 0) {
-            statusClass = 'in-progress';
-            statusText = 'In Progress';
-            statusIcon = 'autorenew';
-        }
-        
-        statusBarSection.innerHTML = `
-            <h4>Status</h4>
-            <div class="status-bar-container">
-                <div class="status-bar-header">
-                    <div class="status-info">
-                        <div class="status-indicator ${statusClass}">
-                            <i class="material-icons">${statusIcon}</i>
-                            <span>${statusText}</span>
-                        </div>
-                   
-                </div>
-            </div>
-        `;
-        
-        // Create due date section in summary
-        const dueDateSection = document.createElement('div');
-        dueDateSection.className = 'summary-section due-date-section';
-        dueDateSection.innerHTML = `
-            <h4>Phase Deadline</h4>
-            <div id="summary-due-date" class="due-date-display">
-                <i class="material-icons">event</i>
-                <div class="due-date-info">Due: ${formattedDate} at ${formattedTime}</div>
-                <div class="time-remaining">${diffDays} days remaining</div>
-            </div>
-        `;
-        
-        // Add status styles if not already in document
-        if (!document.getElementById('status-bar-styles')) {
-            const styleElement = document.createElement('style');
-            styleElement.id = 'status-bar-styles';
-            styleElement.textContent = `
-                .status-bar-container {
-                    margin-top: 12px;
-                }
-                
-                .status-bar-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 8px;
-                }
-                
-                .progress-percentage {
-                    font-size: 0.9rem;
-                    color: var(--fsu-garnet);
-                    font-weight: 500;
-                }
-                
-                .status-indicator {
-                    display: inline-flex;
-                    align-items: center;
-                    padding: 4px 10px;
-                    border-radius: 16px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                }
-                
-                .status-indicator i {
-                    font-size: 16px;
-                    margin-right: 4px;
-                }
-                
-                .status-indicator.not-started {
-                    background-color: #f0f0f0;
-                    color: #666;
-                }
-                
-                .status-indicator.in-progress {
-                    background-color: rgba(255, 193, 7, 0.2);
-                    color: #ff9800;
-                }
-                
-                .status-indicator.completed {
-                    background-color: rgba(40, 167, 69, 0.2);
-                    color: #28a745;
-                }
-                
-                .status-indicator.overdue {
-                    background-color: rgba(220, 53, 69, 0.2);
-                    color: #dc3545;
-                }
-                
-                .status-bar {
-                    height: 8px;
-                    background-color: #f0f0f0;
-                    border-radius: 4px;
-                    overflow: hidden;
-                }
-                
-                .status-bar-progress {
-                    height: 100%;
-                    background: linear-gradient(to right, var(--fsu-garnet), var(--fsu-gold));
-                    border-radius: 4px;
-                    transition: width 0.5s ease;
-                }
-            `;
-            document.head.appendChild(styleElement);
-        }
-        
-        // Insert status bar at the top of the summary
-        summary.insertBefore(statusBarSection, summary.firstChild);
-        
-        // Insert due date section after coordinator section and before team members
-        const coordinatorSection = document.querySelector('#assignment-summary .summary-section:nth-child(2)');
-        const teamMembersSection = document.querySelector('#assignment-summary .summary-section:nth-child(3)');
-        summary.insertBefore(dueDateSection, teamMembersSection);
-        
-        // Update header due date display
-        const headerDueDateElement = document.querySelector('.header-meta div:nth-child(2) span');
-        headerDueDateElement.textContent = `Due: ${formattedDate}`;
-        
-        // Hide form, show summary
-        form.style.display = 'none';
-        summary.style.display = 'block';
-        
-        // Create notification with due date info
-        addNotification(`Team assignment updated by ${coordinatorName}. Project deadline: ${formattedDate} at ${formattedTime}`, 'Just now');
-        
-        console.log('Assignment saved:', {
-            coordinator: {
-                id: coordinatorId,
-                name: coordinatorName,
-                department: departmentName
-            },
-            teamMembers: selectedTeamMembers.map(id => ({
-                id: id,
-                name: teamMembers[id]
-            })),
-            deadline: {
-                date: formattedDate,
-                time: formattedTime,
-                daysRemaining: diffDays
-            },
-            status: {
-                text: statusText,
-                progress: progressPercentage
-            }
-        });
-    });
-    
-    // Initialize multiselect dropdown
-    function initMultiSelectDropdown() {
-        const dropdown = document.getElementById('team-members-dropdown');
-        const optionsList = document.getElementById('team-members-options');
-        const selectedDisplay = dropdown.querySelector('.multiselect-dropdown-selected');
-        const selectedContainer = document.getElementById('selected-team-members');
-        
-        // Toggle dropdown
-        dropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-            optionsList.classList.toggle('show');
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function() {
-            optionsList.classList.remove('show');
-        });
-        
-        // Prevent dropdown from closing when clicking inside options list
-        optionsList.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-        
-        // Handle checkbox changes
-        const checkboxes = optionsList.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateSelection);
-        });
-        
-        function updateSelection() {
-            const selectedOptions = [];
-            
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    const value = checkbox.value;
-                    const label = checkbox.nextElementSibling.textContent;
-                    selectedOptions.push({ value, label });
-                }
-            });
-            
-            // Update selected items display
-            selectedContainer.innerHTML = '';
-            if (selectedOptions.length > 0) {
-                selectedDisplay.textContent = `${selectedOptions.length} member${selectedOptions.length > 1 ? 's' : ''} selected`;
-                selectedDisplay.classList.remove('placeholder');
-                
-                selectedOptions.forEach(option => {
-                    const item = document.createElement('div');
-                    item.className = 'selected-item';
-                    item.innerHTML = `
-                        ${option.label}
-                        <span class="remove" data-value="${option.value}">&times;</span>
-                    `;
-                    selectedContainer.appendChild(item);
-                });
-                
-                // Add event listeners to remove buttons
-                const removeButtons = selectedContainer.querySelectorAll('.remove');
-                removeButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const value = this.getAttribute('data-value');
-                        const checkbox = document.querySelector(`input[value="${value}"]`);
-                        checkbox.checked = false;
-                        updateSelection();
-                    });
-                });
-            } else {
-                selectedDisplay.textContent = 'Select team members';
-                selectedDisplay.classList.add('placeholder');
-            }
-        }
-    }
-});
-    
     
 </script>
   
