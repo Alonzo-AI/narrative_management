@@ -28,7 +28,10 @@
         body {
             background-color: var(--fsu-garnet);
             display: grid;
-            grid-template-columns: 250px 1fr 300px;
+            grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                    180px,
+                    1fr
+                );
             min-height: 100vh;
             gap: 24px;
             padding: 24px;
@@ -347,19 +350,19 @@
         align-items: center;
         justify-content: center;
     }
-    
+
     .assign-sponsor-btn {
         background-color: var(--fsu-garnet);
     }
-    
+
    .assign-sponsor-btn:hover {
         transform: translateY(-2px);
     }
-    
+
     .assign-sponsor-btn:hover {
         background-color: #662535;
     }
-    
+
    .assign-sponsor-btn:active {
         transform: translateY(0);
     }
@@ -393,10 +396,10 @@
         padding: 15px 20px;
         border-radius: 8px;
         margin-top: 15px;
-        
-        display: none;    
+
+        display: none;
         align-items: center;
-        
+
         transition: all 0.3s ease;
     }
 
@@ -406,29 +409,29 @@
         border-radius: 50%;
         color: var(--fsu-garnet);
     }
-    
+
     .sponsor-info {
         display: flex;
         flex-direction: column;
     }
-    
+
     .sponsor-label {
         font-size: 0.8rem;
         color: #666;
     }
-    
+
     .sponsor-name {
         font-size: 1.1rem;
         font-weight: 600;
         color: var(--fsu-garnet);
     }
-    
+
     /* Animation for when sponsor is assigned */
     @keyframes sponsorAssigned {
         0% { transform: translateY(-10px); opacity: 0; }
         100% { transform: translateY(0); opacity: 1; }
     }
-    
+
     .sponsor-assigned-animation {
         animation: sponsorAssigned 0.4s ease forwards;
     }
@@ -700,7 +703,7 @@
     .grid-view {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-content {
         width: 95%;
     }
@@ -933,6 +936,50 @@
     animation: fadeIn 0.3s ease forwards;
 }
 
+.notification-sidebar {
+   /* position: fixed;
+   right: 0; */
+   width: 200px;
+   height: min-content;
+   background: white;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   padding: 20px;
+   overflow-y: auto;
+   z-index: 100;
+   border-radius: 6px;
+   /* margin-left: auto; */
+}
+
+.notification {
+   padding: 12px;
+   border-left: 3px solid var(--fsu-garnet);
+   margin: 12px 0;
+   background: #f8f8f8;
+   border-radius: 0 4px 4px 0;
+   transition: transform 0.2s ease;
+}
+
+.notification:hover {
+   transform: translateX(-5px);
+}
+
+.notification-title {
+   color: var(--fsu-garnet);
+   font-weight: 600;
+   margin-bottom: 4px;
+}
+
+.notification-content {
+   color: #666;
+   font-size: 0.9rem;
+   margin-bottom: 4px;
+}
+
+.notification-time {
+   color: #999;
+   font-size: 0.8rem;
+}
+
    </style>
 </head>
 <body>
@@ -969,12 +1016,12 @@
     </nav>
 
     <!-- Main Content Area -->
-    <div class="content-area">
+    <main class="content-area">
         <!-- FSU Header with Coordinator and Deadline -->
         <header class="fsu-header">
             <div class="header-container">
                 <div class="logo-container">
-                    
+
                     <h1 class="site-title">FSU Football Season 2025</h1>
                 </div>
                 <div class="project-info">
@@ -991,8 +1038,8 @@
                             <span class="info-label">Phase Status</span>
                             <span class="info-value">In Progress</span>
                         </div>
-                    </div>    
-                    
+                    </div>
+
                         <div class="info-item">
                         <i class="material-icons">event</i>
                         <div class="info-content">
@@ -1003,7 +1050,7 @@
                 </div>
             </div>
         </header>
-         
+
         <div class="sponsor-container">
             <div class="sponsor-selection">
                 <h3>Assign Sponsor</h3>
@@ -1033,8 +1080,8 @@
         </div>
 
         <div id="assigned-sponsor-display" class="assigned-sponsor-display hidden">
-            
-            
+
+
         </div>
 
         <div class="content-grid-container">
@@ -1047,7 +1094,7 @@
                     </button>
                 </div>
             </div>
-        
+
             <div class="grid-view">
                 <!-- Combined content items with both text and images -->
                 <div class="grid-item" data-type="press-release">
@@ -1067,7 +1114,7 @@
                         <span class="item-date">Updated: Feb 28, 2025</span>
                     </div>
                 </div>
-        
+
                 <div class="grid-item" data-type="social-media">
                     <div class="item-preview">
                         <div class="item-content">
@@ -1085,7 +1132,7 @@
                         <span class="item-date">Updated: Mar 1, 2025</span>
                     </div>
                 </div>
-        
+
                 <div class="grid-item" data-type="press-release">
                     <div class="item-preview">
                         <div class="item-content">
@@ -1103,7 +1150,7 @@
                         <span class="item-date">Updated: Mar 2, 2025</span>
                     </div>
                 </div>
-        
+
                 <div class="grid-item" data-type="social-media">
                     <div class="item-preview">
                         <div class="item-content">
@@ -1121,7 +1168,7 @@
                         <span class="item-date">Updated: Mar 3, 2025</span>
                     </div>
                 </div>
-        
+
                 <div class="grid-item" data-type="social-media">
                     <div class="item-preview">
                         <div class="item-content">
@@ -1139,7 +1186,7 @@
                         <span class="item-date">Updated: Mar 4, 2025</span>
                     </div>
                 </div>
-        
+
                 <div class="grid-item" data-type="press-release">
                     <div class="item-preview">
                         <div class="item-content">
@@ -1160,45 +1207,52 @@
             </div>
         </div>
 
-<!-- Comments Section -->
-<main class="main-content">
-    <div class="comments-section">
-        <h2 class="section-title">
-            Comments   
-        </h2>
-        
-        <div class="comment-form">
-            <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
-            <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
-        </div>
-        
-        <div class="comments-list" id="commentsList">
-            <!-- Example comments -->
-            <div class="comment-item">
-              
+    <!-- Comments Section -->
+    <main class="main-content">
+        <div class="comments-section">
+            <h2 class="section-title">
+                Comments
+            </h2>
+
+            <div class="comment-form">
+                <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
             </div>
-            
-            <div class="comment-item">
-             
+
+            <div class="comments-list" id="commentsList">
+                <!-- Example comments -->
+                <div class="comment-item">
+
+                </div>
+
+                <div class="comment-item">
+
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
-    </div>
-</main>
-
+    </main>
+    <aside class="notification-sidebar">
+        <div class="notification-header">
+            <h2>Notifications</h2>
+        </div>
+        <div class="notification-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+    </aside>
 <script>
-            
+
     document.addEventListener('DOMContentLoaded', function() {
     const sponsorDropdown = document.getElementById('sponsor-dropdown');
     const customSponsorInput = document.getElementById('custom-sponsor-input');
     const customSponsorName = document.getElementById('custom-sponsor-name');
     const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
     const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
-    
+
     const sponsorContainer = document.querySelector('.sponsor-container');
     const sponsorSelection = document.querySelector('.sponsor-selection');
-    
+
     // Show/hide custom sponsor input based on dropdown selection
     sponsorDropdown.addEventListener('change', function() {
         if (this.value === 'custom') {
@@ -1212,24 +1266,24 @@
     // Add custom sponsor to dropdown
     addCustomSponsorBtn.addEventListener('click', function() {
         const sponsorName = customSponsorName.value.trim();
-        
+
         if (sponsorName) {
             // Create new option
             const newOption = document.createElement('option');
             newOption.value = sponsorName.toLowerCase().replace(/\s+/g, '-');
             newOption.textContent = sponsorName;
-            
+
             // Insert before the "Add Custom Sponsor..." option
             const customOption = sponsorDropdown.querySelector('option[value="custom"]');
             sponsorDropdown.insertBefore(newOption, customOption);
-            
+
             // Select the new option
             sponsorDropdown.value = newOption.value;
-            
+
             // Hide custom input
             customSponsorInput.classList.add('hidden');
             customSponsorName.value = '';
-            
+
             // Show confirmation message
             showNotification(`Added ${sponsorName} to sponsors list`);
         } else {
@@ -1240,20 +1294,25 @@
     // Assign sponsor button functionality
     assignSponsorBtn.addEventListener('click', function() {
         const selectedOption = sponsorDropdown.options[sponsorDropdown.selectedIndex];
-        
+
         if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
             // Get the selected sponsor name
             const sponsorName = selectedOption.textContent;
-            
+
             // Replace dropdown with sponsor name display
             replaceDropdownWithSponsorName(sponsorName);
-            
+
             // Hide the assign sponsor button
             assignSponsorBtn.style.display = 'none';
-            
+
             // Show notification
-            showNotification(`Assigned ${sponsorName} as sponsor`, 'success');
-            
+           // showNotification(`Assigned ${sponsorName} as sponsor`, 'success');
+            addNotification(
+             "update",
+             `Sponsor Assigned`,
+             `Assigned ${sponsorName} as sponsor`,
+         );
+
             // You would typically send data to your backend here
             console.log(`Sponsor assigned: ${sponsorName}`);
         } else {
@@ -1261,8 +1320,8 @@
             showNotification('Please select a sponsor', 'error');
         }
     });
-    
-    
+
+
 
  // Helper function to replace dropdown with sponsor name
     function replaceDropdownWithSponsorName(sponsorName) {
@@ -1278,7 +1337,7 @@
                 <span class="sponsor-name">${sponsorName}</span>
             </div>
         `;
-        
+
         // Add styles for the sponsor display if not already in document
         if (!document.getElementById('sponsor-display-styles')) {
             const displayStyles = document.createElement('style');
@@ -1290,11 +1349,11 @@
                     gap: 12px;
                     padding: 12px 15px;
                     background-color: white;
-                    
+
                     border-radius: 6px;
                     animation: fadeIn 0.3s ease;
                 }
-                
+
                 .sponsor-icon {
                     display: flex;
                     align-items: center;
@@ -1304,27 +1363,27 @@
                     background-color: rgba(120, 47, 64, 0.1);
                     border-radius: 50%;
                 }
-                
+
                 .sponsor-icon i {
                     color: var(--fsu-garnet);
                 }
-                
+
                 .sponsor-info {
                     display: flex;
                     flex-direction: column;
                 }
-                
+
                 .sponsor-label {
                     font-size: 0.8rem;
                     color: #666;
                 }
-                
+
                 .sponsor-name {
                     font-size: 1.1rem;
                     font-weight: 600;
                     color: var(--fsu-garnet);
                 }
-                
+
                 @keyframes fadeIn {
                     from { opacity: 0; }
                     to { opacity: 1; }
@@ -1332,11 +1391,11 @@
             `;
             document.head.appendChild(displayStyles);
         }
-        
+
         // Hide dropdown wrapper and custom input
         const dropdownWrapper = document.querySelector('.sponsor-dropdown-wrapper');
         dropdownWrapper.style.display = 'none';
-        
+
         // Add the sponsor display to the selection area
         sponsorSelection.appendChild(sponsorDisplay);
     }
@@ -1345,12 +1404,12 @@
     function showNotification(message, type = 'info') {
         // Check if notification container exists, create if not
         let notificationContainer = document.querySelector('.notification-container');
-        
+
         if (!notificationContainer) {
             notificationContainer = document.createElement('div');
             notificationContainer.className = 'notification-container';
             document.body.appendChild(notificationContainer);
-            
+
             // Add styles for notification container
             const style = document.createElement('style');
             style.textContent = `
@@ -1360,7 +1419,7 @@
                     right: 20px;
                     z-index: 1000;
                 }
-                
+
                 .notification {
                     margin-bottom: 10px;
                     padding: 15px 20px;
@@ -1374,21 +1433,21 @@
                     min-width: 300px;
                     animation: slideIn 0.3s ease forwards;
                 }
-                
+
                 @keyframes slideIn {
                     from { transform: translateX(100%); opacity: 0; }
                     to { transform: translateX(0); opacity: 1; }
                 }
-                
+
                 @keyframes slideOut {
                     from { transform: translateX(0); opacity: 1; }
                     to { transform: translateX(100%); opacity: 0; }
                 }
-                
+
                 .notification.info { background-color: #2196F3; }
                 .notification.success { background-color: #4CAF50; }
                 .notification.error { background-color: #F44336; }
-                
+
                 .notification-close {
                     cursor: pointer;
                     margin-left: 15px;
@@ -1396,7 +1455,7 @@
             `;
             document.head.appendChild(style);
         }
-        
+
         // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
@@ -1404,22 +1463,22 @@
             ${message}
             <span class="notification-close">&times;</span>
         `;
-        
+
         // Add to container
         notificationContainer.appendChild(notification);
-        
+
         // Handle close button
         const closeBtn = notification.querySelector('.notification-close');
         closeBtn.addEventListener('click', function() {
             removeNotification(notification);
         });
-        
+
         // Auto remove after 4 seconds
         setTimeout(() => {
             removeNotification(notification);
         }, 4000);
     }
-    
+
     function removeNotification(notification) {
         notification.style.animation = 'slideOut 0.3s ease forwards';
         setTimeout(() => {
@@ -1428,17 +1487,17 @@
             }
         }, 300);
     }
-    
+
     // Helper function to update project status in the header
     function updateProjectStatus(status) {
         const statusValue = document.querySelector('.info-item:nth-child(2) .info-value');
         if (statusValue) {
             // Remove any existing status classes
             statusValue.parentElement.parentElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
-            
+
             // Update text
             statusValue.textContent = status;
-            
+
             // Add appropriate class
             switch(status) {
                 case 'In Progress':
@@ -1455,23 +1514,23 @@
     }
 });
 
-    
-        
+
+
         // Enhanced grid handling and modal display for combined content
 document.addEventListener('DOMContentLoaded', function() {
     const gridItems = document.querySelectorAll('.grid-item');
-    
+
     gridItems.forEach(item => {
         item.addEventListener('click', function() {
             const itemType = this.dataset.type;
-            
+
             // Get content elements
             const title = this.querySelector('h4').textContent;
             const text = this.querySelector('p').textContent;
             const image = this.querySelector('img').src;
             const imageAlt = this.querySelector('img').alt;
             const date = this.querySelector('.item-date').textContent;
-            
+
             // Show modal with combined content
             showCombinedContentModal(title, text, image, imageAlt, itemType, date);
         });
@@ -1483,11 +1542,11 @@ document.addEventListener('DOMContentLoaded', function() {
         refreshGridBtn.addEventListener('click', function() {
             const icon = this.querySelector('i');
             icon.style.animation = 'spin 1s linear';
-            
+
             setTimeout(() => {
                 icon.style.animation = '';
             }, 1000);
-            
+
             console.log('Refreshing content...');
         });
     }
@@ -1497,13 +1556,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
     // Check if modal already exists
     let modal = document.getElementById('preview-modal');
-    
+
     if (!modal) {
         // Create modal container
         modal = document.createElement('div');
         modal.id = 'preview-modal';
         modal.className = 'preview-modal';
-        
+
         // Add modal HTML structure for combined content
         modal.innerHTML = `
             <div class="modal-content">
@@ -1524,15 +1583,15 @@ function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, 
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(modal);
-        
+
         // Set up close functionality
         const closeBtn = modal.querySelector('.modal-close');
         closeBtn.addEventListener('click', function() {
             modal.style.display = 'none';
         });
-        
+
         // Close on click outside
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
@@ -1540,7 +1599,7 @@ function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, 
             }
         });
     }
-    
+
     // Determine display title based on content type
     let displayTitle;
     if (contentType === 'press-release') {
@@ -1550,7 +1609,7 @@ function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, 
     } else {
         displayTitle = 'Content';
     }
-    
+
     // Update modal content
     modal.querySelector('.modal-title').textContent = displayTitle;
     modal.querySelector('.modal-content-title').textContent = title;
@@ -1558,12 +1617,12 @@ function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, 
     modal.querySelector('.modal-image').src = imageSrc;
     modal.querySelector('.modal-image').alt = imageAlt;
     modal.querySelector('.modal-date').textContent = date;
-    
+
     // Set type badge
     const typeBadge = modal.querySelector('.modal-type-badge');
     typeBadge.textContent = displayTitle;
     typeBadge.className = 'modal-type-badge ' + contentType;
-    
+
     // Show modal
     modal.style.display = 'flex';
 }
@@ -1571,39 +1630,39 @@ function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, 
     // Comments Functionality - Updated Version
 function initializeComments() {
     console.log("Initializing comments functionality");
-    
+
     // Get DOM elements
     const commentInput = document.getElementById('commentInput');
     const postCommentBtn = document.getElementById('postCommentBtn');
     const commentsList = document.getElementById('commentsList');
-    
+
     // Debug log to check if elements are found
     console.log("Comment elements:", {
         input: commentInput,
         button: postCommentBtn,
         list: commentsList
     });
-    
+
     // Ensure elements exist before adding event listeners
     if (!commentInput || !postCommentBtn || !commentsList) {
         console.error("Could not find required comment elements");
         return;
     }
-    
+
     // Remove any existing event listeners by cloning
     const newPostBtn = postCommentBtn.cloneNode(true);
     postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
-    
+
     // Add event listener to post button
     newPostBtn.addEventListener('click', function(e) {
         console.log("Post comment button clicked");
         e.preventDefault();
-        
+
         const commentText = commentInput.value.trim();
         if (commentText) {
             addNewComment(commentText, commentsList);
             commentInput.value = '';
-            
+
             // Scroll to the new comment
             setTimeout(() => {
                 const firstComment = commentsList.firstChild;
@@ -1615,7 +1674,7 @@ function initializeComments() {
             alert('Please enter a comment');
         }
     });
-    
+
     // Add keypress event to also submit on Enter
     commentInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -1623,16 +1682,16 @@ function initializeComments() {
             newPostBtn.click();
         }
     });
-    
+
     // Auto-resize the textarea as user types
     commentInput.addEventListener('input', function() {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
     });
-    
+
     // Add event listeners to existing comment buttons
     setupCommentButtons();
-    
+
     console.log("Comments functionality initialized");
 }
 
@@ -1645,20 +1704,20 @@ function addNewComment(text, commentsList) {
             return;
         }
     }
-    
+
     console.log("Adding new comment:", text);
-    
+
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
     });
-    
+
     // Create a new comment element
     const newComment = document.createElement('div');
     newComment.className = 'comment-item';
-    
+
     // Create comment HTML without avatar image
     newComment.innerHTML = `
         <div class="comment-avatar">
@@ -1676,27 +1735,29 @@ function addNewComment(text, commentsList) {
             </div>
         </div>
     `;
-    
+
     // Add to the beginning of the list with a fade-in effect
     newComment.style.opacity = '0';
     newComment.style.transition = 'opacity 0.3s ease';
-    
+
     if (commentsList.firstChild) {
         commentsList.insertBefore(newComment, commentsList.firstChild);
     } else {
         commentsList.appendChild(newComment);
     }
-    
+
     // Trigger the fade-in animation
     setTimeout(() => {
         newComment.style.opacity = '1';
     }, 10);
-    
+
     console.log("Comment added to list");
-    
+
     // Add event listeners to the new comment's buttons
     setupCommentButtonsForElement(newComment);
-    
+
+    addNotification("comment", `New Comment !`, `${text}`);
+
     // Update the comments counter if it exists
     updateCommentsCounter();
 }
@@ -1711,11 +1772,11 @@ function updateCommentsCounter() {
 
 function setupCommentButtons() {
     console.log("Setting up comment buttons for all comments");
-    
+
     // Get all comment items
     const commentItems = document.querySelectorAll('.comment-item');
     console.log(`Found ${commentItems.length} comments`);
-    
+
     commentItems.forEach((item, index) => {
         console.log(`Setting up buttons for comment ${index}`);
         setupCommentButtonsForElement(item);
@@ -1727,30 +1788,30 @@ function setupCommentButtonsForElement(element) {
         console.error("No element provided to setupCommentButtonsForElement");
         return;
     }
-    
+
     // Reply button - using more specific selector with the added class
-    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') ||
                      element.querySelector('.comment-action-btn:first-child');
-                     
+
     if (replyBtn) {
         // Remove existing event listeners by cloning
         const newReplyBtn = replyBtn.cloneNode(true);
         replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
-        
+
         newReplyBtn.addEventListener('click', function() {
             const commentAuthor = element.querySelector('.comment-author').textContent;
             const commentInput = document.getElementById('commentInput');
             if (commentInput) {
                 commentInput.value = `@${commentAuthor} `;
                 commentInput.focus();
-                
+
                 // Auto-resize the textarea after setting value
                 commentInput.style.height = 'auto';
                 commentInput.style.height = (commentInput.scrollHeight) + 'px';
-                
+
                 // Scroll to the comment form
                 commentInput.scrollIntoView({ behavior: 'smooth' });
-                
+
                 console.log(`Set reply to ${commentAuthor}`);
             } else {
                 console.error("Comment input not found");
@@ -1759,32 +1820,32 @@ function setupCommentButtonsForElement(element) {
     } else {
         console.warn("Reply button not found in comment", element);
     }
-    
+
     // Edit button - using more specific selector with the added class
-    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') ||
                     element.querySelector('.comment-action-btn:nth-child(2)');
-                    
+
     if (editBtn) {
         // Remove existing event listeners by cloning
         const newEditBtn = editBtn.cloneNode(true);
         editBtn.parentNode.replaceChild(newEditBtn, editBtn);
-        
+
         newEditBtn.addEventListener('click', function() {
             const commentText = element.querySelector('.comment-text');
             if (!commentText) {
                 console.error("Comment text element not found");
                 return;
             }
-            
+
             const originalText = commentText.textContent;
             console.log("Editing comment:", originalText);
-            
+
             // Check if we're already editing this comment
             if (element.querySelector('.comment-edit-interface')) {
                 console.warn("Edit interface already open");
                 return;
             }
-            
+
             // Create edit interface
             const editInterface = document.createElement('div');
             editInterface.className = 'comment-edit-interface';
@@ -1795,25 +1856,25 @@ function setupCommentButtonsForElement(element) {
                     <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
                 </div>
             `;
-            
+
             // Replace comment text with edit interface
             commentText.style.display = 'none';
             commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
-            
+
             // Focus the textarea and auto-resize
             const textarea = editInterface.querySelector('.comment-edit-input');
             textarea.focus();
-            
+
             // Set initial height based on content
             textarea.style.height = 'auto';
             textarea.style.height = (textarea.scrollHeight) + 'px';
-            
+
             // Add auto-resize on input
             textarea.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
             });
-            
+
             // Add event listeners for save and cancel buttons
             const saveBtn = editInterface.querySelector('.save-edit-btn');
             saveBtn.addEventListener('click', function() {
@@ -1826,7 +1887,7 @@ function setupCommentButtonsForElement(element) {
                 commentText.style.display = 'block';
                 editInterface.remove();
             });
-            
+
             const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
             cancelBtn.addEventListener('click', function() {
                 // Just clean up without saving
@@ -1856,16 +1917,16 @@ if (document.readyState === "complete" || document.readyState === "interactive")
     // Wait for everything to be fully loaded
     window.addEventListener('load', function() {
         console.log("FSU Marketing Review Button Handler Initializing...");
-        
+
         // Track review state (0=initial, 1=submitted, 2=accepted)
         let reviewState = 0;
-        
+
         // Load state from localStorage if previously saved
         if (localStorage.getItem('fsuReviewState')) {
             reviewState = parseInt(localStorage.getItem('fsuReviewState'));
             console.log("Loaded previous state:", reviewState);
-            
-            // If the state is "Review Accepted" (2) when page loads, 
+
+            // If the state is "Review Accepted" (2) when page loads,
             // reset it to initial state (0) for a fresh cycle
             if (reviewState === 2) {
                 console.log("Found 'Review Accepted' state on page load, resetting to initial state");
@@ -1873,15 +1934,15 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 localStorage.setItem('fsuReviewState', reviewState);
             }
         }
-        
+
         // Try multiple ways to find the submit review button
         let submitReviewBtn = document.getElementById('submit-review-btn');
-        
+
         // If ID doesn't work, try finding it by its class and text content
         if (!submitReviewBtn) {
             console.log("Button not found by ID, trying alternative methods");
             const buttons = document.querySelectorAll('.submit-review-btn');
-            
+
             buttons.forEach(btn => {
                 if (btn.textContent.trim() === 'Submit Review') {
                     submitReviewBtn = btn;
@@ -1889,21 +1950,21 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 }
             });
         }
-        
+
         // If still not found, try finding any button that looks like a submit button
         if (!submitReviewBtn) {
             console.log("Button not found by class, trying by text content only");
             const allButtons = document.querySelectorAll('button');
-            
+
             allButtons.forEach(btn => {
-                if (btn.textContent.trim().includes('Review') || 
+                if (btn.textContent.trim().includes('Review') ||
                     btn.textContent.trim().includes('review')) {
                     submitReviewBtn = btn;
                     console.log("Button found by text content search:", btn.textContent);
                 }
             });
         }
-        
+
         // Final check if we found the button
         if (!submitReviewBtn) {
             console.error("CRITICAL: Submit review button could not be found by any method");
@@ -1911,24 +1972,24 @@ if (document.readyState === "complete" || document.readyState === "interactive")
         } else {
             console.log("SUCCESS: Submit review button found:", submitReviewBtn.textContent);
         }
-        
+
         // Reference to the assign sponsor button (optional)
         const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
-        
+
         // Update initial state without breaking existing functionality
         updateButtonAndStatus();
-        
+
         // Create a new click handler that will be called after any existing ones
         const originalOnClick = submitReviewBtn.onclick;
-        
+
         submitReviewBtn.onclick = function(e) {
             console.log("Review button clicked, current state:", reviewState);
-            
+
             // Call the original click handler if it exists
             if (typeof originalOnClick === 'function') {
                 originalOnClick.call(this, e);
             }
-            
+
             // Our custom state management logic
             if (reviewState === 0) {
                 // First click: Submit for Review
@@ -1936,87 +1997,95 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                     // Sponsor is assigned, proceed to submit
                     reviewState = 1;
                     updateButtonAndStatus();
-                    
+
                     // Use the existing notification system if available
-                    if (typeof window.showNotification === 'function') {
-                        window.showNotification('Marketing materials submitted for review', 'success');
-                    }
-                } else {
-                    // No sponsor assigned - let the original click handler handle this
+                    //if (typeof window.showNotification === 'function') {
+                       // window.showNotification('Marketing materials submitted for review', 'success');
+                          addNotification(
+                            "update",
+                            `Marketing Review Request`,
+                            `Review request submitted successfully`,
+                      );
+
                 }
-            } 
+            }
             else if (reviewState === 1) {
                 // Second click: Accept Review
                 reviewState = 2;
                 updateButtonAndStatus();
-                
+
                 // Use the existing notification system if available
-                if (typeof window.showNotification === 'function') {
-                    window.showNotification('Review accepted', 'success');
-                }
-                
+               // if (typeof window.showNotification === 'function') {
+                    //window.showNotification('Review accepted', 'success');
+                    addNotification(
+                     "progress",
+                     `Graphics Review Accepted`,
+                     `Review accepted !`,
+                 );
+                    // }
+
                 // Set a timeout to reset back to initial state after delay
                 setTimeout(function() {
                     console.log("Auto-resetting to initial state after delay");
                     reviewState = 0;
                     updateButtonAndStatus();
-                    
+
                     // Use the existing notification system if available
-                    if (typeof window.showNotification === 'function') {
-                        window.showNotification('Ready for next review cycle', 'info');
-                    }
-                    
+                    // if (typeof window.showNotification === 'function') {
+                    //     window.showNotification('Ready for next review cycle', 'info');
+                    // }
+
                     // Update localStorage
                     localStorage.setItem('fsuReviewState', reviewState);
                 }, 5000); // 5 second delay - adjust as needed
             }
-            
+
             // Save state to localStorage with a unique key to avoid conflicts
             localStorage.setItem('fsuReviewState', reviewState);
-            
+
             // Don't prevent default or return false to allow other handlers to work
         };
-        
+
         // Function to update button appearance based on state
         function updateButtonAndStatus() {
             console.log("Updating button and status for state:", reviewState);
-            
+
             // 1. Update button appearance while preserving other styles
             if (reviewState === 0) {
                 submitReviewBtn.textContent = 'Submit Review';
-                
+
                 // Only update background if needed
                 if (submitReviewBtn.style.backgroundColor !== '#782f40' &&
                     !submitReviewBtn.classList.contains('submit-review-btn-initial')) {
                     submitReviewBtn.style.backgroundColor = '#782f40'; // FSU garnet
                     submitReviewBtn.style.transition = 'background-color 0.3s ease';
                 }
-            } 
+            }
             else if (reviewState === 1) {
                 submitReviewBtn.textContent = 'Accept Review';
                 submitReviewBtn.style.backgroundColor = '#FF9800'; // Orange
-            } 
+            }
             else if (reviewState === 2) {
                 submitReviewBtn.textContent = 'Review Accepted';
                 submitReviewBtn.style.backgroundColor = '#4CAF50'; // Green
             }
-            
+
             // Add a subtle animation to highlight the button change
             submitReviewBtn.style.transition = 'background-color 0.5s ease, transform 0.3s ease';
             submitReviewBtn.style.transform = 'scale(1.05)';
             setTimeout(() => {
                 submitReviewBtn.style.transform = 'scale(1)';
             }, 300);
-            
+
             // 2. Update project status
             updateProjectStatus();
         }
-        
+
         // Update the project status based on current review state
         function updateProjectStatus() {
             let statusText = 'In Progress';
             let statusColor = '#2196F3'; // Blue
-            
+
             if (reviewState === 1) {
                 statusText = 'Under Review';
                 statusColor = '#FF9800'; // Orange
@@ -2024,7 +2093,7 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 statusText = 'Completed';
                 statusColor = '#4CAF50'; // Green
             }
-            
+
             // Try different approaches to find the status element
             const statusSelectors = [
                 '.info-item:nth-child(2) .info-value',
@@ -2032,15 +2101,15 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 '.info-content .info-value',
                 '.project-info .info-value'
             ];
-            
+
             let statusValue = null;
-            
+
             for (const selector of statusSelectors) {
                 const elements = document.querySelectorAll(selector);
                 for (const el of elements) {
                     // Look for elements with status-related text
-                    if (el.textContent.includes('Progress') || 
-                        el.textContent.includes('Review') || 
+                    if (el.textContent.includes('Progress') ||
+                        el.textContent.includes('Review') ||
                         el.textContent.includes('Completed')) {
                         statusValue = el;
                         console.log("Status element found using selector:", selector);
@@ -2049,14 +2118,14 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 }
                 if (statusValue) break;
             }
-            
+
             if (statusValue) {
                 // Update text
                 statusValue.textContent = statusText;
-                
+
                 // Update color directly with inline style
                 statusValue.style.color = statusColor;
-                
+
                 // Add or remove pulsing effect
                 if (reviewState === 1) {
                     // Only add animation if it doesn't already exist
@@ -2068,13 +2137,13 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 } else {
                     statusValue.style.animation = 'none';
                 }
-                
+
                 console.log("Status updated to:", statusText);
             } else {
                 console.error("Status value element not found");
             }
         }
-        
+
         // Make sure the pulse animation exists in the stylesheet
         function ensurePulseAnimationExists() {
             // Check if the animation already exists
@@ -2093,7 +2162,7 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                 }
                 if (animationExists) break;
             }
-            
+
             // If animation doesn't exist, add it
             if (!animationExists) {
                 const style = document.createElement('style');
@@ -2110,7 +2179,52 @@ if (document.readyState === "complete" || document.readyState === "interactive")
         }
     });
 })();
-            
+
+
+function addNotification(type, title, message) {
+    const notificationList =
+        document.querySelector(".notification-list");
+    if (!notificationList) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification type-${type} new`;
+
+    const icon = getIconForType(type);
+
+    notification.innerHTML = `
+<i class="material-icons notification-icon">${icon}</i>
+<div class="notification-content">
+<div class="notification-title">${title}</div>
+<div class="notification-message">${message}</div>
+<div class="notification-time">Just now</div>
+</div>
+`;
+
+    notificationList.insertBefore(
+        notification,
+        notificationList.firstChild,
+    );
+
+    // Fade out "new" tag after some time
+    setTimeout(() => {
+        notification.classList.remove("new");
+    }, 5000);
+}
+
+// Get icon based on notification type
+function getIconForType(type) {
+    const icons = {
+        assignment: "person_add",
+        progress: "trending_up",
+        review: "rate_review",
+        update: "update",
+        alert: "warning",
+        comment: "comment",
+        default: "notifications",
+    };
+
+    return icons[type] || icons.default;
+}
 
 </script>
 </body>

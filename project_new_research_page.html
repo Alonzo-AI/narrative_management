@@ -23,9 +23,20 @@
 
         body {
             background-color: var(--fsu-garnet);
+            display: grid;
+            grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                    180px,
+                    1fr
+                );
             min-height: 100vh;
-            padding: 20px;
+            gap: 24px;
+            padding: 24px;
         }
+
+        /* body * {
+          outline: 1px dashed rgba(0, 0, 0, 0.1);
+        } */
+
 
         .dashboard {
             display: grid;
@@ -425,21 +436,21 @@
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .header-top {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .header-buttons {
         width: 100%;
         justify-content: space-between;
     }
-    
+
     .project-info {
         width: 100%;
     }
-    
+
     .info-item {
         flex: 1;
         min-width: 150px;
@@ -476,6 +487,8 @@
             position: relative;
             transform: translateY(-20px);
             transition: transform 0.3s ease;
+            max-height: 700px;
+            overflow-y: scroll;
         }
 
         .modal.show .modal-content {
@@ -916,6 +929,9 @@ textarea.form-input {
     justify-content: space-between;
     align-items: center;
 }
+.story-image {
+    display: none;
+}
 
 .story-date {
     color: #888;
@@ -965,7 +981,7 @@ textarea.form-input {
     .stories-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .filter-tags {
         margin-top: 15px;
     }
@@ -1350,11 +1366,100 @@ textarea.form-input {
     }
 }
 
+@media (max-width: 1200px) {
+    body {
+        grid-template-columns: minmax(200px, 1fr) 3fr minmax(
+                250px,
+                1fr
+            );
+        padding: 16px;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .notification-sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .team-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        margin-bottom: 16px;
+    }
+
+    .card-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .team-button,
+    .edit-button {
+        width: 100%;
+    }
+}
+.notification-sidebar {
+    /* position: fixed;
+    right: 0; */
+    width: 200px;
+    height: min-content;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 100;
+    border-radius: 6px;
+    /* margin-left: auto; */
+}
+
+.notification {
+    padding: 12px;
+    border-left: 3px solid var(--fsu-garnet);
+    margin: 12px 0;
+    background: #f8f8f8;
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.2s ease;
+}
+
+.notification:hover {
+    transform: translateX(-5px);
+}
+
+.notification-title {
+    color: var(--fsu-garnet);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.notification-content {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.notification-time {
+    color: #999;
+    font-size: 0.8rem;
+}
     </style>
 </head>
 <body>
     <!-- Comprehensive Dashboard Structure with Header and Buttons -->
-<div class="dashboard">
     <!-- Sidebar -->
     <aside class="sidebar">
         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
@@ -1382,7 +1487,7 @@ textarea.form-input {
             <i class="material-icons">share</i>
             <a href="project_new_publish.html"> Publish</a>
         </div>
-        
+
         <div class="nav-item">
             <i class="material-icons">equalizer</i>
             <a href="project_new_analytics.html"> Analytics</a>
@@ -1390,12 +1495,12 @@ textarea.form-input {
     </aside>
 
     <!-- Main Content Area -->
-    <div class="content-area">
+    <main class="content-area">
         <!-- FSU Header with Coordinator and Deadline -->
         <header class="fsu-header">
             <div class="header-container">
                 <div class="logo-container">
-                    
+
                     <h1 class="site-title">FSU Football Season 2025</h1>
                 </div>
                 <div class="project-info">
@@ -1411,8 +1516,8 @@ textarea.form-input {
                             <span class="info-label">Phase Status</span>
                             <span class="info-value">In Progress</span>
                         </div>
-                    </div>    
-                    
+                    </div>
+
                         <div class="info-item">
                         <i class="material-icons">event</i>
                         <div class="info-content">
@@ -1452,30 +1557,37 @@ textarea.form-input {
         <main class="main-content">
             <div class="comments-section">
                 <h2 class="section-title">
-                    Comments   
+                    Comments
                 </h2>
-                
+
                 <div class="comment-form">
                     <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
                     <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
                 </div>
-                
+
                 <div class="comments-list" id="commentsList">
                     <!-- Example comments -->
                     <div class="comment-item">
-                      
+
                     </div>
-                    
+
                     <div class="comment-item">
-                     
+
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </main>
         </main>
-    </div>
-</div>
+    </main>
+
+    <aside class="notification-sidebar">
+        <div class="notification-header">
+            <h2>Notifications</h2>
+        </div>
+        <div class="notification-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+    </aside>
 
 <!-- Add New Modal -->
 <div id="addNewModal" class="modal">
@@ -1541,7 +1653,7 @@ textarea.form-input {
                     <button class="upload-btn submit" id="upload-btn" onclick="uploadFiles()">Upload</button>
                 </div>
             </div>
-            
+
             <!-- Web Links Form (hidden by default) -->
             <div id="webLinksForm" class="form-container" style="display: none;">
                 <div class="form-group">
@@ -1549,44 +1661,26 @@ textarea.form-input {
                     <input type="text" id="linkTitle" class="form-input" placeholder="Enter website title or description">
                     <div class="error-message" id="titleError">Please enter a title with at least 3 characters.</div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="linkUrl">URL</label>
                     <input type="url" id="linkUrl" class="form-input" placeholder="https://example.com/resource">
                     <div class="error-message" id="urlError">Please enter a valid URL starting with http:// or https://</div>
                 </div>
-                
+
                 <div class="upload-actions">
                     <button class="upload-btn cancel" id="cancel-weblink" onclick="cancelUpload()">Cancel</button>
                     <button class="upload-btn submit" id="submit-weblink" onclick="submitWebLink()" disabled>Add Link</button>
                 </div>
             </div>
-            
+
                 <div id="story-section" style="display: none;">
                 <!-- Athlete Stories Grid (hidden by default) -->
                     <div id="athleteStoriesGrid" class="form-container" style="display: none;">
                         <!-- All the athlete stories content -->
                     </div>
-                    
-                    <div class="filter-section">
-                        <div class="form-group search-group">
-                            <label for="storySearch">Search Athletes</label>
-                            <div class="search-input-wrapper">
-                                <input type="text" id="storySearch" class="form-input" placeholder="Search by name, sport, or keywords">
-                                <i class="material-icons search-icon">search</i>
-                            </div>
-                        </div>
-                        
-                        <div class="filter-tags">
-                            <span class="filter-label">Popular Tags:</span>
-                            <button class="filter-tag" data-tag="football">Football</button>
-                            <button class="filter-tag" data-tag="basketball">Basketball</button>
-                            <button class="filter-tag" data-tag="track">Track & Field</button>
-                            <button class="filter-tag" data-tag="volleyball">Volleyball</button>
-                            <button class="filter-tag" data-tag="championship">Championship</button>
-                        </div>
-                    </div>
-                    
+
+
                     <div class="stories-grid">
                         <!-- Story Card 1 -->
                         <div class="story-card" data-story-id="1">
@@ -1602,7 +1696,7 @@ textarea.form-input {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Story Card 2 -->
                         <div class="story-card" data-story-id="2">
                             <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
@@ -1617,7 +1711,7 @@ textarea.form-input {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Story Card 3 -->
                         <div class="story-card" data-story-id="3">
                             <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
@@ -1632,7 +1726,7 @@ textarea.form-input {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Story Card 4 -->
                         <div class="story-card" data-story-id="4">
                             <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
@@ -1647,7 +1741,7 @@ textarea.form-input {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Story Card 5 -->
                         <div class="story-card" data-story-id="5">
                             <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
@@ -1662,7 +1756,7 @@ textarea.form-input {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Story Card 6 -->
                         <div class="story-card" data-story-id="6">
                             <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
@@ -1678,8 +1772,8 @@ textarea.form-input {
                             </div>
                         </div>
                     </div>
-                    
-                   
+
+
                 </div>
             </div>
         </div>
@@ -1695,7 +1789,7 @@ let currentContentType = '';
 // Helper function to get appropriate icon name based on file type
 function getFileIconName(fileType) {
     if (!fileType) return 'insert_drive_file';
-    
+
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -1719,37 +1813,42 @@ function getFileIconName(fileType) {
 function submitReview() {
     // You can customize this function based on your requirements
     console.log("Submit Review button clicked");
-    
+
     // Show confirmation dialog
     const confirmSubmit = confirm("Are you sure you want to submit your review? This action can't be undone.");
-    
+
     if (confirmSubmit) {
         // Show loading state
         const submitBtn = document.querySelector('.submit-review-btn');
         submitBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Submitting...';
         submitBtn.disabled = true;
-        
+
         // Simulate API call with timeout
         setTimeout(() => {
             // Show success message
-            alert("Your review has been successfully submitted!");
-            
+           // alert("Your review has been successfully submitted!");
+             addNotification(
+               "default",
+               `Review Request`,
+               `Research Review request raised.`,
+           );
+
             // Update Phase Status to "Under Review"
             updatePhaseStatus("Under Review", "reviews");
-            
+
             // Change the button to "Accept Review" instead of resetting to original state
             submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
             submitBtn.disabled = false;
-            
+
             // You might want to change the class name or add a new class to style it differently
             submitBtn.classList.remove('submit-review-btn');
             submitBtn.classList.add('accept-review-btn');
-            
+
             // Optionally change the onclick function
             submitBtn.onclick = function() {
                 acceptReview();
             };
-            
+
         }, 1500);
     }
 }
@@ -1757,24 +1856,30 @@ function submitReview() {
 // New function for Accept Review functionality
 function acceptReview() {
     console.log("Accept Review button clicked");
-    
+
     // Show confirmation dialog
     const confirmAccept = confirm("Are you sure you want to accept this review?");
-    
+
     if (confirmAccept) {
         // Show loading state
         const acceptBtn = document.querySelector('.accept-review-btn');
         acceptBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Processing...';
         acceptBtn.disabled = true;
-        
+
         // Simulate API call with timeout
         setTimeout(() => {
             // Show success message
-            alert("Review has been accepted successfully!");
-            
+          //  alert("Review has been accepted successfully!");
+
+          addNotification(
+            "progress",
+            `Review Accepted`,
+            `Research Review Accepted`,
+        );
+
             // Update Phase Status to "Completed"
             updatePhaseStatus("Completed", "task_alt");
-            
+
             // Update button state
             acceptBtn.innerHTML = '<i class="material-icons">done_all</i> Accepted';
             acceptBtn.disabled = true;
@@ -1786,16 +1891,16 @@ function acceptReview() {
 function updatePhaseStatus(status, iconName) {
     const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
     const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
-    
+
     if (statusElement) {
         // Apply fade-out effect
         statusElement.style.transition = 'opacity 0.3s ease';
         statusElement.style.opacity = '0';
-        
+
         // Update status text and fade back in
         setTimeout(() => {
             statusElement.textContent = status;
-            
+
             // Add color based on status
             if (status === "In Progress") {
                 statusElement.style.color = '#2196F3'; // Blue
@@ -1804,11 +1909,11 @@ function updatePhaseStatus(status, iconName) {
             } else if (status === "Completed") {
                 statusElement.style.color = '#4CAF50'; // Green
             }
-            
+
             statusElement.style.opacity = '1';
         }, 300);
     }
-    
+
     if (iconElement && iconName) {
         // Update icon with animation
         iconElement.style.transform = 'scale(0)';
@@ -1823,15 +1928,15 @@ function updatePhaseStatus(status, iconName) {
 function initPhaseStatusStyles() {
     const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
     const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
-    
+
     if (statusElement) {
         statusElement.style.transition = 'opacity 0.3s ease, color 0.3s ease';
     }
-    
+
     if (iconElement) {
         iconElement.style.transition = 'transform 0.3s ease';
     }
-    
+
     // Set initial status color
     updatePhaseStatus("In Progress", "pending_actions");
 }
@@ -1857,7 +1962,7 @@ function addCardEventListeners(card, type, files) {
                 alert(`Viewing: ${title}`);
             }
         });
-        
+
         // Second button (Download/Copy Link)
         buttons[1].addEventListener('click', function() {
             const title = card.querySelector('.card-title').textContent;
@@ -1910,11 +2015,11 @@ function cancelUpload() {
     // Close the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.remove('show');
-    
+
     // Open the Add New modal again
     const addNewModal = document.getElementById('addNewModal');
     addNewModal.classList.add('show');
-    
+
     console.log('Canceled upload, returning to Add New popup');
 }
 
@@ -1922,7 +2027,7 @@ function resetUploadForm() {
     // Clear selected files
     selectedFiles = [];
     document.getElementById('file-list').innerHTML = '';
-    
+
     // Reset upload button
     document.getElementById('upload-btn').disabled = true;
 }
@@ -1966,9 +2071,9 @@ document.addEventListener('keydown', function(event) {
 // File handling functionality
 function handleFileSelect(event) {
     const files = event.target.files || event.dataTransfer.files;
-    
+
     console.log("Files selected:", files.length);
-    
+
     if (files.length > 0) {
         // Convert FileList to Array and add to selectedFiles
         Array.from(files).forEach(file => {
@@ -1977,12 +2082,12 @@ function handleFileSelect(event) {
                 selectedFiles.push(file);
             }
         });
-        
+
         console.log("Selected files after adding:", selectedFiles.length);
-        
+
         // Update the file list
         updateFileList();
-        
+
         // Enable the upload button if we have files
         document.getElementById('upload-btn').disabled = false;
     }
@@ -1991,18 +2096,18 @@ function handleFileSelect(event) {
 function updateFileList() {
     const fileList = document.getElementById('file-list');
     fileList.innerHTML = '';
-    
+
     selectedFiles.forEach((file, index) => {
         // Create a file item element
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
-        
+
         // Format the file size
         const fileSize = formatFileSize(file.size);
-        
+
         // Get file icon based on type
         const fileIcon = getFileIcon(file.type);
-        
+
         // Set the file item content
         fileItem.innerHTML = `
             <div class="file-info">
@@ -2012,19 +2117,19 @@ function updateFileList() {
             </div>
             <i class="material-icons file-remove" data-index="${index}">close</i>
         `;
-        
+
         fileList.appendChild(fileItem);
     });
-    
+
     // Add click event to remove buttons
     document.querySelectorAll('.file-remove').forEach(button => {
         button.addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
             selectedFiles.splice(index, 1);
             updateFileList();
-            
+
             // Disable upload button if no files left
-            if (selectedFiles.length === 0 && 
+            if (selectedFiles.length === 0 &&
                 (currentContentType === 'documents' || currentContentType === 'media')) {
                 document.getElementById('upload-btn').disabled = true;
             }
@@ -2034,7 +2139,7 @@ function updateFileList() {
 
 function getFileIcon(fileType) {
     if (!fileType) return 'insert_drive_file';
-    
+
     if (fileType.includes('image')) {
         return 'image';
     } else if (fileType.includes('video')) {
@@ -2057,22 +2162,22 @@ function getFileIcon(fileType) {
 // Upload function - completely revised
 function uploadFiles() {
     console.log("Upload function called");
-    
-    // Check if we need files but don't have any
-    if (selectedFiles.length === 0 && 
+
+   // Check if we need files but don't have any
+    if (selectedFiles.length === 0 &&
         (currentContentType === 'documents' || currentContentType === 'media')) {
-        alert('Please select at least one file to upload.');
+      //  consol('Please select at least one file to upload.');
         return;
     }
 
     console.log("Files to be uploaded:", selectedFiles);
     console.log("Content type:", currentContentType);
-    
+
     try {
         // Generate automatic title and description
         let title = '';
         let description = '';
-        
+
         if (currentContentType === 'media') {
             title = 'Media';
             description = 'Uploaded media files';
@@ -2086,7 +2191,7 @@ function uploadFiles() {
             title = 'Research Document';
             description = 'Uploaded research document';
         }
-        
+
         // If we have files, use the first file name as title
         if (selectedFiles.length > 0) {
             // Get the file name without extension
@@ -2095,26 +2200,26 @@ function uploadFiles() {
                 title = fileName;
             }
         }
-        
+
         // Call the original addToResearchGrid function with title and description
         const researchGrid = document.querySelector('.research-grid');
         if (!researchGrid) {
             alert("Error: Cannot find research grid element");
             return;
         }
-        
+
         // Get current date for display
         const today = new Date();
-        const dateString = today.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric' 
+        const dateString = today.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
         });
-        
+
         // Create a new research card
         const researchCard = document.createElement('div');
         researchCard.className = 'research-card';
-        
+
         // Determine icon based on content type
         let iconName = 'description';
         if (currentContentType === 'media') {
@@ -2124,21 +2229,21 @@ function uploadFiles() {
         } else if (currentContentType === 'breaking-news') {
             iconName = 'flash_on';
         }
-        
+
         // Create card header with icon
         let cardIcon = `
             <div class="card-icon">
                 <i class="material-icons">${iconName}</i>
             </div>
         `;
-        
+
         // Set up the content section
         let cardContent = `
             <div class="card-content">
                 <h3 class="card-title">${title}</h3>
                 <p class="card-description">${description}</p>
         `;
-        
+
         // Add file information based on content type
         if (currentContentType === 'web-links') {
             cardContent += `
@@ -2163,7 +2268,7 @@ function uploadFiles() {
                     if (index < 2) {
                         const fileIcon = getFileIconName(file.type);
                         const fileSize = formatFileSize(file.size);
-                        
+
                         cardContent += `
                             <div class="card-file">
                                 <i class="material-icons">${fileIcon}</i>
@@ -2172,7 +2277,7 @@ function uploadFiles() {
                         `;
                     }
                 });
-                
+
                 // If there are more files, indicate that
                 if (selectedFiles.length > 2) {
                     cardContent += `
@@ -2192,16 +2297,16 @@ function uploadFiles() {
                 `;
             }
         }
-        
+
         // Add date and close content div
         cardContent += `
                 <div class="card-date">Added: ${dateString}</div>
             </div>
         `;
-        
+
         // Set up action buttons based on content type
         let cardActions = '<div class="card-actions">';
-        
+
         if (currentContentType === 'web-links') {
             cardActions += `
                 <button class="btn btn-secondary">Visit</button>
@@ -2210,7 +2315,7 @@ function uploadFiles() {
         } else if (currentContentType === 'media' && selectedFiles.length > 0) {
             // Check the first file type to determine appropriate buttons
             const firstFile = selectedFiles[0];
-            
+
             if (firstFile.type.includes('video')) {
                 cardActions += `
                     <button class="btn btn-secondary">Play</button>
@@ -2240,12 +2345,12 @@ function uploadFiles() {
                 <button class="btn btn-primary">Download</button>
             `;
         }
-        
+
         cardActions += '</div>';
-        
+
         // Combine all parts
         researchCard.innerHTML = cardIcon + cardContent + cardActions;
-        
+
         // Add custom background color based on type
         if (currentContentType === 'media') {
             researchCard.querySelector('.card-icon').style.backgroundColor = '#2196F3';
@@ -2254,16 +2359,16 @@ function uploadFiles() {
         } else if (currentContentType === 'breaking-news') {
             researchCard.querySelector('.card-icon').style.backgroundColor = '#FF9800';
         }
-        
+
         // Insert the card at the beginning of the grid
         if (researchGrid.firstChild) {
             researchGrid.insertBefore(researchCard, researchGrid.firstChild);
         } else {
             researchGrid.appendChild(researchCard);
         }
-        
+
         console.log("Card added to grid");
-        
+
         // Add event listeners to the new card's buttons
         const buttons = researchCard.querySelectorAll('.btn');
         if (buttons.length >= 2) {
@@ -2280,7 +2385,7 @@ function uploadFiles() {
                     alert(`Viewing: ${cardTitle}`);
                 }
             });
-            
+
             // Second button (Download/Copy Link)
             buttons[1].addEventListener('click', function() {
                 const cardTitle = researchCard.querySelector('.card-title').textContent;
@@ -2293,23 +2398,27 @@ function uploadFiles() {
                 }
             });
         }
-        
+
         // Show success message
         const contentTypeNames = {
             'documents': 'Document',
             'web-links': 'Web Link',
-            'breaking-news': 'News', 
+            'breaking-news': 'News',
             'media': 'Media'
         };
-        
-        alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
-        
+
+        // alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
+        addNotification(
+            "default",
+            `${contentTypeNames[currentContentType]} has been added`,
+            `${title} has been added to your research deck.`,
+        );
         // Close the modal
         closeUploadModal();
-        
+
         // Clear selected files
         selectedFiles = [];
-        
+
     } catch (error) {
         console.error("Error during upload:", error);
         alert("An error occurred while adding content to the grid. Please try again.");
@@ -2323,7 +2432,7 @@ function testUpload() {
         alert("Can't find research grid!");
         return;
     }
-    
+
     const testCard = document.createElement('div');
     testCard.className = 'research-card';
     testCard.innerHTML = `
@@ -2340,13 +2449,13 @@ function testUpload() {
             <button class="btn btn-primary">OK</button>
         </div>
     `;
-    
+
     if (grid.firstChild) {
         grid.insertBefore(testCard, grid.firstChild);
     } else {
         grid.appendChild(testCard);
     }
-    
+
     alert("Test card added!");
     closeUploadModal();
 }
@@ -2356,11 +2465,11 @@ function setupFileInput() {
     const fileInput = document.getElementById('file-input');
     if (fileInput) {
         console.log("File input found, setting up event listener");
-        
+
         // Remove any existing listeners by cloning
         const newFileInput = fileInput.cloneNode(true);
         fileInput.parentNode.replaceChild(newFileInput, fileInput);
-        
+
         // Add new event listener
         newFileInput.addEventListener('change', function(event) {
             console.log("File input changed");
@@ -2380,7 +2489,7 @@ function addDebugButton() {
         debugBtn.className = 'upload-btn';
         debugBtn.style.backgroundColor = '#333';
         debugBtn.style.color = 'white';
-        
+
         debugBtn.addEventListener('click', function() {
             console.log("--- DEBUG INFO ---");
             console.log("Selected Files:", selectedFiles);
@@ -2390,7 +2499,7 @@ function addDebugButton() {
             console.log("Research Grid:", document.querySelector('.research-grid'));
             alert("Debug info printed to console");
         });
-        
+
         uploadActions.appendChild(debugBtn);
     }
 }
@@ -2403,7 +2512,7 @@ function addTestButton() {
         testBtn.textContent = 'Test Upload';
         testBtn.className = 'upload-btn';
         testBtn.style.backgroundColor = 'green';
-        
+
         testBtn.addEventListener('click', testUpload);
         uploadActions.appendChild(testBtn);
     }
@@ -2412,48 +2521,48 @@ function addTestButton() {
 // Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
-    
+
     // Add event listener to the Add New button
     const addNewBtn = document.querySelector('.add-new-btn');
     if (addNewBtn) {
         // Remove any previous listeners by cloning
         const newAddBtn = addNewBtn.cloneNode(true);
         addNewBtn.parentNode.replaceChild(newAddBtn, addNewBtn);
-        
+
         // Add direct click event listener
         newAddBtn.addEventListener('click', function() {
             console.log("Add New button clicked");
             openModal();
         });
     }
-    
+
     // Add event listeners to the close buttons in the modals
     const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
     if (closeAddModalBtn) {
         // Remove any previous listeners by cloning
         const newCloseBtn = closeAddModalBtn.cloneNode(true);
         closeAddModalBtn.parentNode.replaceChild(newCloseBtn, closeAddModalBtn);
-        
+
         // Add direct click event listener
         newCloseBtn.addEventListener('click', function() {
             console.log("Close Add modal button clicked");
             closeModal();
         });
     }
-    
+
     const closeUploadModalBtn = document.querySelector('#uploadModal .close-btn');
     if (closeUploadModalBtn) {
         // Remove any previous listeners by cloning
         const newCloseBtn = closeUploadModalBtn.cloneNode(true);
         closeUploadModalBtn.parentNode.replaceChild(newCloseBtn, closeUploadModalBtn);
-        
+
         // Add direct click event listener
         newCloseBtn.addEventListener('click', function() {
             console.log("Close Upload modal button clicked");
             closeUploadModal();
         });
     }
-    
+
     // Setup content type grid for the Add New modal
     const modalBody = document.querySelector('#addNewModal .modal-body');
     if (modalBody) {
@@ -2483,20 +2592,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Upload images, videos, and other media</p>
                 </div>
             `;
-            
+
             // Clear any existing content and add the grid
             modalBody.innerHTML = '';
             modalBody.appendChild(contentTypeGrid);
         }
     }
-    
+
     // Add event listeners to all content type cards, but first remove any existing ones
     const contentTypeCards = document.querySelectorAll('.content-type-card');
     contentTypeCards.forEach(card => {
         // Remove existing event listeners by cloning the node
         const newCard = card.cloneNode(true);
         card.parentNode.replaceChild(newCard, card);
-        
+
         // Add the event listener to the new card
         newCard.addEventListener('click', function() {
             const type = this.getAttribute('data-type');
@@ -2506,27 +2615,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Set up drag and drop functionality
     const uploadArea = document.getElementById('upload-area');
     if (uploadArea) {
         // Create a new element to replace the old one (removes all existing listeners)
         const newUploadArea = uploadArea.cloneNode(true);
         uploadArea.parentNode.replaceChild(newUploadArea, uploadArea);
-        
+
         // Drag and drop events on the new element
         newUploadArea.addEventListener('dragover', function(e) {
             e.preventDefault();
             e.stopPropagation();
             this.classList.add('dragover');
         });
-        
+
         newUploadArea.addEventListener('dragleave', function(e) {
             e.preventDefault();
             e.stopPropagation();
             this.classList.remove('dragover');
         });
-        
+
         newUploadArea.addEventListener('drop', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -2534,17 +2643,17 @@ document.addEventListener('DOMContentLoaded', function() {
             handleFileSelect(e);
         });
     }
-    
+
     // Setup file input
     setupFileInput();
-    
+
     // Add direct event listener to upload button
     const uploadBtn = document.getElementById('upload-btn');
     if (uploadBtn) {
         // Remove any previous event listeners by cloning the button
         const newBtn = uploadBtn.cloneNode(true);
         uploadBtn.parentNode.replaceChild(newBtn, uploadBtn);
-        
+
         // Add a direct click event listener
         newBtn.addEventListener('click', function(e) {
             console.log("Upload button clicked directly");
@@ -2553,14 +2662,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         console.log("Direct upload button event listener added");
     }
-    
+
     // Add direct event listener to cancel button
     const cancelBtn = document.getElementById('cancel-upload');
     if (cancelBtn) {
         // Remove any previous event listeners by cloning the button
         const newBtn = cancelBtn.cloneNode(true);
         cancelBtn.parentNode.replaceChild(newBtn, cancelBtn);
-        
+
         // Add a direct click event listener
         newBtn.addEventListener('click', function(e) {
             console.log("Cancel button clicked directly");
@@ -2568,8 +2677,8 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelUpload();
         });
     }
-    
-    
+
+
 });
 
 
@@ -2579,10 +2688,10 @@ function validateWebLink() {
     const titleInput = document.getElementById('linkTitle');
     const urlInput = document.getElementById('linkUrl');
     const submitBtn = document.getElementById('submit-weblink');
-    
+
     // Validate title (required, at least 3 characters)
     const titleValid = titleInput.value.trim().length >= 3;
-    
+
     // Validate URL (required, must be a valid URL)
     let urlValid = false;
     try {
@@ -2591,17 +2700,17 @@ function validateWebLink() {
     } catch (_) {
         urlValid = false;
     }
-    
+
     // Add visual validation feedback
     titleInput.classList.toggle('valid', titleValid);
     titleInput.classList.toggle('invalid', !titleValid && titleInput.value.trim() !== '');
-    
+
     urlInput.classList.toggle('valid', urlValid);
     urlInput.classList.toggle('invalid', !urlValid && urlInput.value.trim() !== '');
-    
+
     // Enable/disable submit button
     submitBtn.disabled = !(titleValid && urlValid);
-    
+
     return titleValid && urlValid;
 }
 
@@ -2611,26 +2720,31 @@ function submitWebLink() {
     if (!validateWebLink()) {
         return;
     }
-    
+
     // Get form values
     const title = document.getElementById('linkTitle').value.trim();
     const url = document.getElementById('linkUrl').value.trim();
-    
+
     console.log("Submitting web link:", { title, url });
-    
+
     // Create a web link object
     const webLink = {
         title: title,
         url: url,
         date: new Date()
     };
-    
+
     // Add to research grid
     addWebLinkToResearchGrid(webLink);
-    
+
     // Show success message
-    alert(`Web link "${title}" has been added to your research projects.`);
-    
+    // alert(`Web link "${title}" has been added to your research projects.`);
+    addNotification(
+        "default",
+        `Web link has been added`,
+        `${title} has been added to your research deck.`,
+    );
+
     // Close the modal
     closeUploadModal();
 }
@@ -2684,7 +2798,7 @@ function addWebLinkToResearchGrid(webLink) {
 
     // Get the research grid
     const researchGrid = document.querySelector('.research-grid');
-    
+
     if (researchGrid) {
         // Add to the beginning so newest appears first
         if (researchGrid.firstChild) {
@@ -2707,7 +2821,7 @@ function copyToClipboard(text) {
             tooltip.className = 'clipboard-tooltip';
             tooltip.textContent = 'Link copied!';
             document.body.appendChild(tooltip);
-            
+
             // Remove after animation
             setTimeout(() => {
                 tooltip.remove();
@@ -2723,14 +2837,14 @@ function copyToClipboard(text) {
 function resetWebLinkForm() {
     const titleInput = document.getElementById('linkTitle');
     const urlInput = document.getElementById('linkUrl');
-    
+
     if (titleInput && urlInput) {
         titleInput.value = '';
         urlInput.value = '';
-        
+
         titleInput.classList.remove('valid', 'invalid');
         urlInput.classList.remove('valid', 'invalid');
-        
+
         document.getElementById('submit-weblink').disabled = true;
     }
 }
@@ -2740,7 +2854,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up validation for web link form
     const linkTitle = document.getElementById('linkTitle');
     const linkUrl = document.getElementById('linkUrl');
-    
+
     if (linkTitle && linkUrl) {
         linkTitle.addEventListener('input', validateWebLink);
         linkUrl.addEventListener('input', validateWebLink);
@@ -2758,13 +2872,13 @@ function addSelectedStoryToGrid(storyId) {
         console.error(`Story with ID ${storyId} not found`);
         return;
     }
-    
+
     // Extract story details
     const title = storyCard.querySelector('.story-title').textContent;
     const excerpt = storyCard.querySelector('.story-excerpt').textContent;
     const tag = storyCard.querySelector('.story-tag').textContent;
     const date = storyCard.querySelector('.story-date').textContent;
-    
+
     // Create a story object
     const story = {
         id: storyId,
@@ -2773,13 +2887,18 @@ function addSelectedStoryToGrid(storyId) {
         tag: tag,
         date: date
     };
-    
+
     // Add to research grid
     addBreakingNewsToResearchGrid(story);
-    
+
     // Show success message
-    alert(`Story "${title}" has been added to your research projects.`);
-    
+    //alert(`Story "${title}" has been added to your research projects.`);
+    addNotification(
+        "default",
+        `Story has been added`,
+        `${title} has been added to your research deck.`,
+    );
+
     // Close the modal
     closeUploadModal();
 }
@@ -2833,7 +2952,7 @@ function addBreakingNewsToResearchGrid(story) {
 
     // Get the research grid
     const researchGrid = document.querySelector('.research-grid');
-    
+
     if (researchGrid) {
         // Add to the beginning so newest appears first
         if (researchGrid.firstChild) {
@@ -2851,12 +2970,12 @@ function addBreakingNewsToResearchGrid(story) {
 // function submitSelectedStories() {
 //     // Get all selected story cards
 //     const selectedCards = document.querySelectorAll('.story-card.selected');
-    
+
 //     if (selectedCards.length === 0) {
 //         alert('Please select at least one athlete story');
 //         return;
 //     }
-    
+
 //     // For each selected card, add to research grid
 //     selectedCards.forEach(card => {
 //         const storyId = card.getAttribute('data-story-id');
@@ -2877,7 +2996,7 @@ function editStoryDetails(storyId) {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize athlete stories
     initializeAthleteStories();
-    
+
     // Add submit functionality to the athlete stories form
     // const storySelectBtns = document.querySelectorAll('.story-select-btn');
     // storySelectBtns.forEach(btn => {
@@ -2941,7 +3060,7 @@ function showUploadForm(type) {
         // Show web links form instead of file upload
         document.getElementById('webLinksForm').style.display = 'block';
         document.querySelector('.upload-container').style.display = 'none';
-        
+
         // Focus on the first field
         setTimeout(() => {
             document.getElementById('linkTitle').focus();
@@ -2950,7 +3069,7 @@ function showUploadForm(type) {
         // For other content types, show the regular file upload
         document.getElementById('webLinksForm').style.display = 'none';
         document.querySelector('.upload-container').style.display = 'block';
-        
+
         // If it's a breaking news, enable the upload button right away
         if (type === 'breaking-news') {
             document.getElementById('upload-btn').disabled = false;
@@ -2974,7 +3093,7 @@ function showUploadForm(type) {
         });
         document.querySelector('.upload-container').style.display = 'none';
     } else {
-      
+
         document.getElementById('story-section').style.display = "none";
         document.querySelector('.upload-container').style.display = 'block';
     }
@@ -2991,18 +3110,18 @@ function closeUploadModal() {
     // Close the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.remove('show');
-    
+
     // Open the Add New modal again instead of returning to main page
     const addNewModal = document.getElementById('addNewModal');
     addNewModal.classList.add('show');
-    
+
     console.log('Closing upload modal, returning to Add New popup');
 }
 
 // Function to handle cancel button click (used in both file upload and web links)
 function cancelUpload() {
     console.log('Cancel upload button clicked');
-    
+
     // Same behavior as close button - return to Add New modal
     closeUploadModal();
 }
@@ -3021,19 +3140,19 @@ function closeUploadModalButton() {
 document.addEventListener('DOMContentLoaded', function() {
     // Set up the close button in the upload modal
     closeUploadModalButton();
-    
+
     // Optional: Also handle Escape key to return to Add New modal instead of closing completely
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             const uploadModal = document.getElementById('uploadModal');
             const addNewModal = document.getElementById('addNewModal');
-            
+
             if (uploadModal && uploadModal.classList.contains('show')) {
                 event.preventDefault(); // Prevent default Escape behavior
                 closeUploadModal(); // Return to Add New modal
                 return;
             }
-            
+
             // Only close completely if we're in the Add New modal
             if (addNewModal && addNewModal.classList.contains('show')) {
                 closeModal();
@@ -3045,39 +3164,39 @@ document.addEventListener('DOMContentLoaded', function() {
 // Comments Functionality - Updated Version
 function initializeComments() {
     console.log("Initializing comments functionality");
-    
+
     // Get DOM elements
     const commentInput = document.getElementById('commentInput');
     const postCommentBtn = document.getElementById('postCommentBtn');
     const commentsList = document.getElementById('commentsList');
-    
+
     // Debug log to check if elements are found
     console.log("Comment elements:", {
         input: commentInput,
         button: postCommentBtn,
         list: commentsList
     });
-    
+
     // Ensure elements exist before adding event listeners
     if (!commentInput || !postCommentBtn || !commentsList) {
         console.error("Could not find required comment elements");
         return;
     }
-    
+
     // Remove any existing event listeners by cloning
     const newPostBtn = postCommentBtn.cloneNode(true);
     postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
-    
+
     // Add event listener to post button
     newPostBtn.addEventListener('click', function(e) {
         console.log("Post comment button clicked");
         e.preventDefault();
-        
+
         const commentText = commentInput.value.trim();
         if (commentText) {
             addNewComment(commentText, commentsList);
             commentInput.value = '';
-            
+
             // Scroll to the new comment
             setTimeout(() => {
                 const firstComment = commentsList.firstChild;
@@ -3085,11 +3204,14 @@ function initializeComments() {
                     firstComment.scrollIntoView({ behavior: 'smooth' });
                 }
             }, 100);
+
+
+
         } else {
             alert('Please enter a comment');
         }
     });
-    
+
     // Add keypress event to also submit on Enter
     commentInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -3097,16 +3219,16 @@ function initializeComments() {
             newPostBtn.click();
         }
     });
-    
+
     // Auto-resize the textarea as user types
     commentInput.addEventListener('input', function() {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
     });
-    
+
     // Add event listeners to existing comment buttons
     setupCommentButtons();
-    
+
     console.log("Comments functionality initialized");
 }
 
@@ -3119,20 +3241,20 @@ function addNewComment(text, commentsList) {
             return;
         }
     }
-    
+
     console.log("Adding new comment:", text);
-    
+
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
     });
-    
+
     // Create a new comment element
     const newComment = document.createElement('div');
     newComment.className = 'comment-item';
-    
+
     // Create comment HTML without avatar image
     newComment.innerHTML = `
         <div class="comment-avatar">
@@ -3150,29 +3272,35 @@ function addNewComment(text, commentsList) {
             </div>
         </div>
     `;
-    
+
     // Add to the beginning of the list with a fade-in effect
     newComment.style.opacity = '0';
     newComment.style.transition = 'opacity 0.3s ease';
-    
+
     if (commentsList.firstChild) {
         commentsList.insertBefore(newComment, commentsList.firstChild);
     } else {
         commentsList.appendChild(newComment);
     }
-    
+
     // Trigger the fade-in animation
     setTimeout(() => {
         newComment.style.opacity = '1';
     }, 10);
-    
+
     console.log("Comment added to list");
-    
+
     // Add event listeners to the new comment's buttons
     setupCommentButtonsForElement(newComment);
-    
+
     // Update the comments counter if it exists
     updateCommentsCounter();
+
+    addNotification(
+        "comment",
+        `New Comment !`,
+        `${text}`,
+    );
 }
 
 function updateCommentsCounter() {
@@ -3185,11 +3313,11 @@ function updateCommentsCounter() {
 
 function setupCommentButtons() {
     console.log("Setting up comment buttons for all comments");
-    
+
     // Get all comment items
     const commentItems = document.querySelectorAll('.comment-item');
     console.log(`Found ${commentItems.length} comments`);
-    
+
     commentItems.forEach((item, index) => {
         console.log(`Setting up buttons for comment ${index}`);
         setupCommentButtonsForElement(item);
@@ -3201,30 +3329,30 @@ function setupCommentButtonsForElement(element) {
         console.error("No element provided to setupCommentButtonsForElement");
         return;
     }
-    
+
     // Reply button - using more specific selector with the added class
-    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') ||
                      element.querySelector('.comment-action-btn:first-child');
-                     
+
     if (replyBtn) {
         // Remove existing event listeners by cloning
         const newReplyBtn = replyBtn.cloneNode(true);
         replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
-        
+
         newReplyBtn.addEventListener('click', function() {
             const commentAuthor = element.querySelector('.comment-author').textContent;
             const commentInput = document.getElementById('commentInput');
             if (commentInput) {
                 commentInput.value = `@${commentAuthor} `;
                 commentInput.focus();
-                
+
                 // Auto-resize the textarea after setting value
                 commentInput.style.height = 'auto';
                 commentInput.style.height = (commentInput.scrollHeight) + 'px';
-                
+
                 // Scroll to the comment form
                 commentInput.scrollIntoView({ behavior: 'smooth' });
-                
+
                 console.log(`Set reply to ${commentAuthor}`);
             } else {
                 console.error("Comment input not found");
@@ -3233,32 +3361,32 @@ function setupCommentButtonsForElement(element) {
     } else {
         console.warn("Reply button not found in comment", element);
     }
-    
+
     // Edit button - using more specific selector with the added class
-    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') ||
                     element.querySelector('.comment-action-btn:nth-child(2)');
-                    
+
     if (editBtn) {
         // Remove existing event listeners by cloning
         const newEditBtn = editBtn.cloneNode(true);
         editBtn.parentNode.replaceChild(newEditBtn, editBtn);
-        
+
         newEditBtn.addEventListener('click', function() {
             const commentText = element.querySelector('.comment-text');
             if (!commentText) {
                 console.error("Comment text element not found");
                 return;
             }
-            
+
             const originalText = commentText.textContent;
             console.log("Editing comment:", originalText);
-            
+
             // Check if we're already editing this comment
             if (element.querySelector('.comment-edit-interface')) {
                 console.warn("Edit interface already open");
                 return;
             }
-            
+
             // Create edit interface
             const editInterface = document.createElement('div');
             editInterface.className = 'comment-edit-interface';
@@ -3269,25 +3397,25 @@ function setupCommentButtonsForElement(element) {
                     <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
                 </div>
             `;
-            
+
             // Replace comment text with edit interface
             commentText.style.display = 'none';
             commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
-            
+
             // Focus the textarea and auto-resize
             const textarea = editInterface.querySelector('.comment-edit-input');
             textarea.focus();
-            
+
             // Set initial height based on content
             textarea.style.height = 'auto';
             textarea.style.height = (textarea.scrollHeight) + 'px';
-            
+
             // Add auto-resize on input
             textarea.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
             });
-            
+
             // Add event listeners for save and cancel buttons
             const saveBtn = editInterface.querySelector('.save-edit-btn');
             saveBtn.addEventListener('click', function() {
@@ -3300,7 +3428,7 @@ function setupCommentButtonsForElement(element) {
                 commentText.style.display = 'block';
                 editInterface.remove();
             });
-            
+
             const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
             cancelBtn.addEventListener('click', function() {
                 // Just clean up without saving
@@ -3326,6 +3454,50 @@ if (document.readyState === "complete" || document.readyState === "interactive")
     setTimeout(initializeComments, 100); // Short timeout to ensure execution
 }
 
+function addNotification(type, title, message) {
+    const notificationList =
+        document.querySelector(".notification-list");
+    if (!notificationList) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification type-${type} new`;
+
+    const icon = getIconForType(type);
+
+    notification.innerHTML = `
+<i class="material-icons notification-icon">${icon}</i>
+<div class="notification-content">
+<div class="notification-title">${title}</div>
+<div class="notification-message">${message}</div>
+<div class="notification-time">Just now</div>
+</div>
+`;
+
+    notificationList.insertBefore(
+        notification,
+        notificationList.firstChild,
+    );
+
+    // Fade out "new" tag after some time
+    setTimeout(() => {
+        notification.classList.remove("new");
+    }, 5000);
+}
+
+// Get icon based on notification type
+function getIconForType(type) {
+    const icons = {
+        assignment: "person_add",
+        progress: "trending_up",
+        review: "rate_review",
+        update: "update",
+        alert: "warning",
+        comment: "comment",
+        default: "notifications",
+    };
+
+    return icons[type] || icons.default;
+}
 
     </script>
 </body>

@@ -1,833 +1,934 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Athlyte Content Publishing Platform - FSU Analytics</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --fsu-garnet: #782f40;
-            --fsu-gold: #ceb888;
-            --fsu-black: #231f20;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Athlyte Content Publishing Platform - FSU Analytics</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --fsu-garnet: #782f40;
+                --fsu-gold: #ceb888;
+                --fsu-black: #231f20;
+                --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
 
-        @font-face {
-            font-family: 'GothicCustom';
-            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-        }
+            @font-face {
+                font-family: "GothicCustom";
+                src: url("https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf")
+                    format("truetype");
+            }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+            }
 
-        body {
-            background-color: var(--fsu-garnet);
-            display: grid;
-            grid-template-columns: 250px 1fr 300px;
-            min-height: 100vh;
-            gap: 24px;
-            padding: 24px;
-        }
+            body {
+                background-color: var(--fsu-garnet);
+                display: grid;
+                grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                        180px,
+                        1fr
+                    );
+                min-height: 100vh;
+                gap: 24px;
+                padding: 24px;
+            }
 
-        .sidebar {
-            background: var(--fsu-gold);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 24px;
-        }
+            .sidebar {
+                background: var(--fsu-gold);
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: var(--shadow);
+                height: fit-content;
+                position: sticky;
+                top: 24px;
+            }
 
-        .sidebar h2 {
-            color: var(--fsu-garnet);
-            font-family: 'GothicCustom', sans-serif;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+            .sidebar h2 {
+                color: var(--fsu-garnet);
+                font-family: "GothicCustom", sans-serif;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
 
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--fsu-garnet);
-        }
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                margin: 8px 0;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: var(--fsu-garnet);
+            }
 
-        .sidebar-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
+            .sidebar-item:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                transform: translateX(5px);
+            }
 
-        .sidebar-item.active {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
-        }
+            .sidebar-item.active {
+                background-color: var(--fsu-garnet);
+                color: var(--fsu-gold);
+            }
 
-        .sidebar-item.active i {
-            color: var(--fsu-gold);
-        }
+            .sidebar-item.active i {
+                color: var(--fsu-gold);
+            }
 
-        .sidebar-item i {
-            margin-right: 12px;
-            color: var(--fsu-garnet);
-            font-size: 20px;
-        }
+            .sidebar-item i {
+                margin-right: 12px;
+                color: var(--fsu-garnet);
+                font-size: 20px;
+            }
 
-        .sidebar-item a {
-            text-decoration: none;
-            color: inherit;
-        }
+            .sidebar-item a {
+                text-decoration: none;
+                color: inherit;
+            }
 
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+            .main-content {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
 
-        /* FSU Header Styles */
-        .fsu-header {
-            background-color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+            /* FSU Header Styles */
+            .fsu-header {
+                background-color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
 
-        .fsu-logo {
-            width: 60px;
-            height: auto;
-        }
+            .fsu-logo {
+                width: 60px;
+                height: auto;
+            }
 
-        .site-title {
-            color: var(--fsu-garnet);
-            font-size: 1.8rem;
-            margin: 0;
-        }
+            .site-title {
+                color: var(--fsu-garnet);
+                font-size: 1.8rem;
+                margin: 0;
+            }
 
-        .project-info {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+            .project-info {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
 
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: #f8f8f8;
-            padding: 8px 12px;
-            border-radius: 6px;
-        }
+            .info-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background-color: #f8f8f8;
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
 
-        .info-item i {
-            color: var(--fsu-garnet);
-        }
+            .info-item i {
+                color: var(--fsu-garnet);
+            }
 
-        .info-content {
-            display: flex;
-            flex-direction: column;
-        }
+            .info-content {
+                display: flex;
+                flex-direction: column;
+            }
 
-        .info-label {
-            font-size: 0.75rem;
-            color: #666;
-        }
+            .info-label {
+                font-size: 0.75rem;
+                color: #666;
+            }
 
-        .info-value {
-            font-weight: 600;
-            color: var(--fsu-garnet);
-        }
+            .info-value {
+                font-weight: 600;
+                color: var(--fsu-garnet);
+            }
 
-        /* Controls Container Styles */
-        .controls-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .controls-header {
-            color: var(--fsu-garnet);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        /* Dropdown and Button Container Styles */
-        .analytics-dropdown-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
+            /* Controls Container Styles */
+            .controls-container {
+                background-color: white;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
 
-        .analytics-dropdown {
-            position: relative;
-            width: 250px;
-        }
-        
-        .dropdown-select {
-            width: 100%;
-            padding: 10px 15px;
-            background-color: white;
-            border: 2px solid var(--fsu-garnet);
-            border-radius: 6px;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            cursor: pointer;
-            color: var(--fsu-garnet);
-            font-weight: 600;
-        }
+            .controls-header {
+                color: var(--fsu-garnet);
+                margin-bottom: 15px;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
 
-        .dropdown-select:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
-        }
+            /* Dropdown and Button Container Styles */
+            .analytics-dropdown-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 20px;
+            }
 
-        .dropdown-arrow {
-            position: absolute;
-            top: 50%;
-            right: 15px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: var(--fsu-garnet);
-        }
+            .analytics-dropdown {
+                position: relative;
+                width: 250px;
+            }
 
-        /* Analytics Content Styles */
-        .analytics-content {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            min-height: 300px;
-        }
+            .dropdown-select {
+                width: 100%;
+                padding: 10px 15px;
+                background-color: white;
+                border: 2px solid var(--fsu-garnet);
+                border-radius: 6px;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                cursor: pointer;
+                color: var(--fsu-garnet);
+                font-weight: 600;
+            }
 
-        .analytics-content h2 {
-            color: var(--fsu-garnet);
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--fsu-gold);
-            padding-bottom: 10px;
-        }
+            .dropdown-select:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+            }
 
-        .no-content {
-            text-align: center;
-            color: #999;
-            padding: 50px 0;
-        }
+            .dropdown-arrow {
+                position: absolute;
+                top: 50%;
+                right: 15px;
+                transform: translateY(-50%);
+                pointer-events: none;
+                color: var(--fsu-garnet);
+            }
 
-        .analytics-content .no-content {
-            display: block;
-        }
+            /* Analytics Content Styles */
+            .analytics-content {
+                background-color: white;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                min-height: 300px;
+            }
 
-        .analytics-content.content-loaded .no-content {
-            display: none;
-        }
+            .analytics-content h2 {
+                color: var(--fsu-garnet);
+                margin-bottom: 15px;
+                border-bottom: 2px solid var(--fsu-gold);
+                padding-bottom: 10px;
+            }
 
-        .analytics-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
+            .no-content {
+                text-align: center;
+                color: #999;
+                padding: 50px 0;
+            }
 
-        .metric {
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border-left: 4px solid var(--fsu-garnet);
-        }
+            .analytics-content .no-content {
+                display: block;
+            }
 
-        .metric strong {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--fsu-garnet);
-        }
+            .analytics-content.content-loaded .no-content {
+                display: none;
+            }
 
-        /* Table Styles */
-        .analytics-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: white;
-        }
-        
-        /* Make sure table headers are always visible when table is shown */
-.analytics-table th {
-    background-color: var(--fsu-garnet);
-    color: white;
-    text-align: left;
-    padding: 12px 15px;
-    visibility: visible !important;
-}
+            .analytics-details {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+                margin-top: 20px;
+            }
 
-/* Ensure the clickable elements in headers are visible */
-.analytics-table .clickable {
-    visibility: visible !important;
-    display: inline-block;
-    width: 100%;
-    cursor: pointer;
-}
+            .metric {
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                border-left: 4px solid var(--fsu-garnet);
+            }
 
-.analytics-table .clickable:hover {
-    text-decoration: underline;
-}
-        
-        .analytics-table tr {
-            border-bottom: 1px solid #eee;
-        }
-        
-        .analytics-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .analytics-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        
-        .analytics-table td {
-            padding: 12px 15px;
-        }
+            .metric strong {
+                display: block;
+                margin-bottom: 5px;
+                color: var(--fsu-garnet);
+            }
 
-        .analytics-table .views {
-            font-weight: 600;
-        }
-        
-        .table-container {
-            margin-top: 20px;
-            overflow-x: auto;
-            display: none;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            margin-bottom: 60px;
-        }
+            /* Table Styles */
+            .analytics-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                background-color: white;
+            }
 
-        .table-container.visible {
-            opacity: 1;
-            display: block;
-        }
-        
-        /* Chart container styling */
-.chart-container {
-    display: none;
-    height: 400px !important;
-    margin-top: 60px !important;
-    position: relative !important;
-    z-index: 10 !important;
-    border: 1px solid #eee !important;
-    padding: 25px !important;
-    overflow: visible !important;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
+            /* Make sure table headers are always visible when table is shown */
+            .analytics-table th {
+                background-color: var(--fsu-garnet);
+                color: white;
+                text-align: left;
+                padding: 12px 15px;
+                visibility: visible !important;
+            }
 
-.chart-container.visible {
-    display: block;
-    opacity: 1;
-}
+            /* Ensure the clickable elements in headers are visible */
+            .analytics-table .clickable {
+                visibility: visible !important;
+                display: inline-block;
+                width: 100%;
+                cursor: pointer;
+            }
 
-/* Chart area styling */
-.chart-area {
-    height: 300px !important;
-    position: relative !important;
-    padding-bottom: 70px !important;
-    margin-top: 20px !important;
-    background: #f9f9f9 !important;
-    overflow: visible !important;
-    border-radius: 6px;
-}
+            .analytics-table .clickable:hover {
+                text-decoration: underline;
+            }
 
-/* Bar styling */
-.bar {
-    position: absolute !important;
-    bottom: 40px !important;
-    width: 40px !important;
-    background-color: var(--fsu-garnet) !important;
-    z-index: 5 !important;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    transition: height 0.5s ease;
-}
+            .analytics-table tr {
+                border-bottom: 1px solid #eee;
+            }
 
-/* X-axis styling */
-.x-axis {
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 50px !important;
-    right: 0 !important;
-    height: 60px !important;
-    overflow: visible !important;
-}
+            .analytics-table tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
 
-/* Bar label styling */
-.bar-label {
-    position: absolute !important;
-    bottom: -40px !important; 
-    transform: rotate(-45deg) !important;
-    transform-origin: left top !important;
-    text-align: left !important;
-    font-size: 11px !important;
-    width: 100px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
+            .analytics-table tr:hover {
+                background-color: #f1f1f1;
+            }
 
-/* Y-axis styling */
-.y-axis {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    height: 100% !important;
-    width: 50px !important;
-}
+            .analytics-table td {
+                padding: 12px 15px;
+            }
 
-.y-axis-label {
-    position: absolute !important;
-    left: 0 !important;
-    font-size: 11px !important;
-    color: #666 !important;
-}
+            .analytics-table .views {
+                font-weight: 600;
+            }
 
-/* Chart title styling */
-.chart-title {
-    color: var(--fsu-garnet);
-    font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 10px;
-}
+            .table-container {
+                margin-top: 20px;
+                overflow-x: auto;
+                display: none;
+                transition: opacity 0.3s ease;
+                opacity: 0;
+                margin-bottom: 60px;
+            }
 
-/* Chart legend styling */
-.chart-legend {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #666;
-}
+            .table-container.visible {
+                opacity: 1;
+                display: block;
+            }
 
+            /* Chart container styling */
+            .chart-container {
+                display: none;
+                height: 400px !important;
+                margin-top: 60px !important;
+                position: relative !important;
+                z-index: 10 !important;
+                border: 1px solid #eee !important;
+                padding: 25px !important;
+                overflow: visible !important;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: opacity 0.3s ease;
+                opacity: 0;
+            }
 
-</style>
-</head>
-<body>
-    <nav class="sidebar">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
-        <div class="sidebar-item">
-            <i class="material-icons">home</i>
-            <a href="project_new.html"> Home </a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">search</i>
-            <a href="project_new_research_page.html"> Research </a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">description</i>
-            <a href="project_new_content_draft.html"> Content Draft </a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">brush</i>
-            <a href="projetc_new_graphics.html"> Graphics</a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">share</i>
-            <a href="projetc_new_marketing.html"> Marketing</a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">publish</i>
-            <a href="project_new_publish.html"> Publish</a>
-        </div>
-        <div class="sidebar-item active">
-            <i class="material-icons">equalizer</i>
-            <span>Analytics</span>
-        </div>
-    </nav>
+            .chart-container.visible {
+                display: block;
+                opacity: 1;
+            }
 
-    <!-- Main Content Area -->
-    <div class="content-area">
-        <!-- FSU Header with Coordinator and Deadline -->
-        <header class="fsu-header">
-            <div class="header-container">
-                <div class="logo-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" class="fsu-logo" width="60">
-                    <h1 class="site-title">FSU Football Season 2025</h1>
+            /* Chart area styling */
+            .chart-area {
+                height: 300px !important;
+                position: relative !important;
+                padding-bottom: 70px !important;
+                margin-top: 20px !important;
+                background: #f9f9f9 !important;
+                overflow: visible !important;
+                border-radius: 6px;
+            }
+
+            /* Bar styling */
+            .bar {
+                position: absolute !important;
+                bottom: 40px !important;
+                width: 40px !important;
+                background-color: var(--fsu-garnet) !important;
+                z-index: 5 !important;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                transition: height 0.5s ease;
+            }
+
+            /* X-axis styling */
+            .x-axis {
+                position: absolute !important;
+                bottom: 0 !important;
+                left: 50px !important;
+                right: 0 !important;
+                height: 60px !important;
+                overflow: visible !important;
+            }
+
+            /* Bar label styling */
+            .bar-label {
+                position: absolute !important;
+                bottom: -40px !important;
+                transform: rotate(-45deg) !important;
+                transform-origin: left top !important;
+                text-align: left !important;
+                font-size: 11px !important;
+                width: 100px !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            /* Y-axis styling */
+            .y-axis {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                height: 100% !important;
+                width: 50px !important;
+            }
+
+            .y-axis-label {
+                position: absolute !important;
+                left: 0 !important;
+                font-size: 11px !important;
+                color: #666 !important;
+            }
+
+            /* Chart title styling */
+            .chart-title {
+                color: var(--fsu-garnet);
+                font-weight: bold;
+                font-size: 1.1em;
+                margin-bottom: 10px;
+            }
+
+            /* Chart legend styling */
+            .chart-legend {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 0.9rem;
+                color: #666;
+            }
+
+            .notification-sidebar {
+                /* position: fixed;
+   right: 0; */
+                width: 200px;
+                height: min-content;
+                background: white;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                overflow-y: auto;
+                z-index: 100;
+                border-radius: 6px;
+                /* margin-left: auto; */
+            }
+
+            .notification {
+                padding: 12px;
+                border-left: 3px solid var(--fsu-garnet);
+                margin: 12px 0;
+                background: #f8f8f8;
+                border-radius: 0 4px 4px 0;
+                transition: transform 0.2s ease;
+            }
+
+            .notification:hover {
+                transform: translateX(-5px);
+            }
+
+            .notification-title {
+                color: var(--fsu-garnet);
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+
+            .notification-content {
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 4px;
+            }
+
+            .notification-time {
+                color: #999;
+                font-size: 0.8rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="sidebar">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+                alt="FSU Logo"
+                width="100"
+            />
+            <div class="sidebar-item">
+                <i class="material-icons">home</i>
+                <a href="project_new.html"> Home </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">search</i>
+                <a href="project_new_research_page.html"> Research </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">description</i>
+                <a href="project_new_content_draft.html"> Content Draft </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">brush</i>
+                <a href="projetc_new_graphics.html"> Graphics</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">share</i>
+                <a href="projetc_new_marketing.html"> Marketing</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">publish</i>
+                <a href="project_new_publish.html"> Publish</a>
+            </div>
+            <div class="sidebar-item active">
+                <i class="material-icons">equalizer</i>
+                <span>Analytics</span>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- FSU Header with Coordinator and Deadline -->
+            <header class="fsu-header">
+                <div class="header-container">
+                    <div class="logo-container">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+                            alt="FSU Logo"
+                            class="fsu-logo"
+                            width="60"
+                        />
+                        <h1 class="site-title">FSU Football Season 2025</h1>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Controls Container with Dropdown and Submit Button -->
+            <div class="controls-container">
+                <div class="analytics-dropdown-container">
+                    <div class="analytics-dropdown">
+                        <select id="analyticsSelect" class="dropdown-select">
+                            <option value="">Select Analytics Type</option>
+                            <option value="press-release">
+                                Press Release Analytics
+                            </option>
+                            <option value="social-media">
+                                Social Media Analytics
+                            </option>
+                        </select>
+                        <i class="material-icons dropdown-arrow"
+                            >arrow_drop_down</i
+                        >
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <!-- Controls Container with Dropdown and Submit Button -->
-        <div class="controls-container">
-            
-            <div class="analytics-dropdown-container">
-                <div class="analytics-dropdown">
-                    <select id="analyticsSelect" class="dropdown-select">
-                        <option value="">Select Analytics Type</option>
-                        <option value="press-release">Press Release Analytics</option>
-                        <option value="social-media">Social Media Analytics</option>
-                    </select>
-                    <i class="material-icons dropdown-arrow">arrow_drop_down</i>
-                </div>
-                
+            <!-- Analytics Content Area -->
+            <div id="analyticsContent" class="analytics-content">
+                <div class="no-content">Please select an analytics type</div>
             </div>
-        </div>
+        </main>
 
-        <!-- Analytics Content Area -->
-        <div id="analyticsContent" class="analytics-content">
-            <div class="no-content">
-                Please select an analytics type
+        <aside class="notification-sidebar">
+            <div class="notification-header">
+                <h2>Notifications</h2>
             </div>
-        </div>
+            <div class="notification-list">
+                <!-- Notifications will be dynamically inserted here -->
+            </div>
+        </aside>
 
-        
-    </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const analyticsSelect =
+                    document.getElementById("analyticsSelect");
+                const analyticsContent =
+                    document.getElementById("analyticsContent");
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const analyticsSelect = document.getElementById('analyticsSelect');
-    const analyticsContent = document.getElementById('analyticsContent');
-    
-    // Press release data
-    const pressReleaseData = [
-        {
-            title: "Season Preview: FSU Football 2025",
-            date: "January 15, 2025",
-            pageviews: 126542
-        },
-        {
-            title: "Coach Mike Norvell Signs Contract Extension",
-            date: "January 28, 2025",
-            pageviews: 98321
-        },
-        {
-            title: "FSU Unveils New Stadium Renovations",
-            date: "February 10, 2025",
-            pageviews: 82157
-        },
-        {
-            title: "Spring Game Announcement",
-            date: "February 18, 2025",
-            pageviews: 65842
-        },
-        {
-            title: "Recruiting Class Spotlight",
-            date: "February 25, 2025",
-            pageviews: 59378
-        }
-    ];
-    
-    // Social media data
-    const socialMediaData = [
-        {
-            title: "Game Day Hype Video",
-            date: "January 12, 2025",
-            views: 187923,
-            likes: 24586,
-            retweets: 8743,
-            favorites: 12651
-        },
-        {
-            title: "Player Spotlight: QB Travis Hunter",
-            date: "January 24, 2025",
-            views: 156452,
-            likes: 18924,
-            retweets: 6521,
-            favorites: 9847
-        },
-        {
-            title: "Behind the Scenes: Weight Room",
-            date: "February 2, 2025",
-            views: 132784,
-            likes: 15632,
-            retweets: 4823,
-            favorites: 7549
-        },
-        {
-            title: "Coach's Corner: Defensive Strategy",
-            date: "February 15, 2025",
-            views: 98562,
-            likes: 10482,
-            retweets: 3157,
-            favorites: 5628
-        },
-        {
-            title: "Throwback Thursday: 2013 Championship",
-            date: "February 22, 2025",
-            views: 120378,
-            likes: 14865,
-            retweets: 5274,
-            favorites: 8932
-        }
-    ];
-    
-    // Function to draw chart for press releases
-    function drawBarChart(containerId, data, metric, metricLabel) {
-        // Get the container and set initial styles
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        
-        // Set container styles directly to ensure visibility
-        container.style.display = 'block';
-        container.style.height = '400px';
-        container.style.marginTop = '60px';
-        container.style.position = 'relative';
-        container.style.zIndex = '10';
-        
-        const chartArea = container.querySelector('.chart-area');
-        chartArea.style.height = '300px';
-        chartArea.style.position = 'relative';
-        chartArea.style.paddingBottom = '70px';
-        
-        // Clear previous chart
-        chartArea.innerHTML = '';
-        
-        // Update chart title
-        const titleElement = container.querySelector('.chart-title');
-        if (titleElement) {
-            titleElement.textContent = metricLabel + ' Comparison';
-        }
-        
-        // Find maximum value for scaling
-        const maxValue = Math.max(...data.map(item => item[metric]));
-        
-        // Create y-axis with inline styles
-        const yAxis = document.createElement('div');
-        yAxis.className = 'y-axis';
-        yAxis.style.position = 'absolute';
-        yAxis.style.left = '0';
-        yAxis.style.top = '0';
-        yAxis.style.height = '100%';
-        yAxis.style.width = '50px';
-        
-        // Create y-axis labels with absolute positioning
-        for (let i = 5; i >= 0; i--) {
-            const label = document.createElement('div');
-            label.className = 'y-axis-label';
-            label.style.position = 'absolute';
-            label.style.left = '0';
-            label.style.top = (100 - (i * 20)) + '%';
-            label.style.fontSize = '11px';
-            label.textContent = Math.round(maxValue * i / 5).toLocaleString();
-            yAxis.appendChild(label);
-        }
-        
-        chartArea.appendChild(yAxis);
-        
-        // Create x-axis with ample space for labels
-        const xAxis = document.createElement('div');
-        xAxis.className = 'x-axis';
-        xAxis.style.position = 'absolute';
-        xAxis.style.bottom = '0';
-        xAxis.style.left = '50px';
-        xAxis.style.right = '0';
-        xAxis.style.height = '60px';
-        xAxis.style.overflow = 'visible';
-        
-        chartArea.appendChild(xAxis);
-        
-        // Calculate proper spacing for bars
-        const availableWidth = chartArea.offsetWidth - 70;
-        const barWidth = Math.min(40, (availableWidth / data.length) - 20);
-        const spacing = (availableWidth - (barWidth * data.length)) / (data.length + 1);
-        
-        // Create bars with proper spacing and inline styles
-        data.forEach((item, index) => {
-            const barHeight = ((item[metric] / maxValue) * (chartArea.offsetHeight - 90)) || 0;
-            
-            // Create bar with proper position
-            const bar = document.createElement('div');
-            bar.className = 'bar';
-            bar.style.height = barHeight + 'px';
-            bar.style.width = barWidth + 'px';
-            bar.style.left = (60 + spacing + index * (barWidth + spacing)) + 'px';
-            bar.style.position = 'absolute';
-            bar.style.bottom = '40px';
-            bar.style.backgroundColor = 'var(--fsu-garnet)';
-            bar.style.zIndex = '5';
-            
-            // Add tooltip with exact value
-            bar.title = item.title + ': ' + item[metric].toLocaleString();
-            
-            // Create label with proper offset to avoid overlap
-            const label = document.createElement('div');
-            label.className = 'bar-label';
-            label.textContent = item.title.split(':')[0];
-            label.style.left = (60 + spacing + index * (barWidth + spacing)) + 'px';
-            label.style.bottom = '-40px';
-            label.style.position = 'absolute';
-            label.style.transform = 'rotate(-45deg)';
-            label.style.transformOrigin = 'left top';
-            label.style.textAlign = 'left';
-            label.style.fontSize = '11px';
-            label.style.width = '100px';
-            
-            chartArea.appendChild(bar);
-            xAxis.appendChild(label);
-        });
-        
-        // Ensure chart is visible
-        container.classList.add('visible');
-        container.style.opacity = '1';
-        
-        // Scroll to the chart
-        setTimeout(() => {
-            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    }
+                // Press release data
+                const pressReleaseData = [
+                    {
+                        title: "Season Preview: FSU Football 2025",
+                        date: "January 15, 2025",
+                        pageviews: 126542,
+                    },
+                    {
+                        title: "Coach Mike Norvell Signs Contract Extension",
+                        date: "January 28, 2025",
+                        pageviews: 98321,
+                    },
+                    {
+                        title: "FSU Unveils New Stadium Renovations",
+                        date: "February 10, 2025",
+                        pageviews: 82157,
+                    },
+                    {
+                        title: "Spring Game Announcement",
+                        date: "February 18, 2025",
+                        pageviews: 65842,
+                    },
+                    {
+                        title: "Recruiting Class Spotlight",
+                        date: "February 25, 2025",
+                        pageviews: 59378,
+                    },
+                ];
 
-    // Function to create vertical bar charts for social media
-    function createVerticalBarChart(container, data, metric, metricLabel) {
-        // Clear any existing content
-        container.innerHTML = '';
-        
-        // Find max value for scaling
-        const maxValue = Math.max(...data.map(item => item[metric]));
-        
-        // Add title
-        const titleDiv = document.createElement('div');
-        titleDiv.style.fontSize = '18px';
-        titleDiv.style.fontWeight = 'bold';
-        titleDiv.style.marginBottom = '15px';
-        titleDiv.style.color = 'var(--fsu-garnet)';
-        titleDiv.textContent = metricLabel + ' Comparison';
-        container.appendChild(titleDiv);
-        
-        // Create chart container
-        const chartDiv = document.createElement('div');
-        chartDiv.style.height = '300px';
-        chartDiv.style.position = 'relative';
-        chartDiv.style.backgroundColor = '#f9f9f9';
-        chartDiv.style.borderRadius = '8px';
-        chartDiv.style.padding = '20px';
-        chartDiv.style.marginTop = '10px';
-        
-        // Create bars container
-        const barsDiv = document.createElement('div');
-        barsDiv.style.display = 'flex';
-        barsDiv.style.height = '220px';
-        barsDiv.style.alignItems = 'flex-end';
-        barsDiv.style.justifyContent = 'space-around';
-        barsDiv.style.position = 'relative';
-        barsDiv.style.marginLeft = '40px'; // Space for y-axis
-        
-        // Create y-axis
-        const yAxis = document.createElement('div');
-        yAxis.style.position = 'absolute';
-        yAxis.style.left = '0';
-        yAxis.style.top = '0';
-        yAxis.style.bottom = '30px'; // Space for x-axis labels
-        yAxis.style.width = '40px';
-        
-        // Add y-axis labels
-        for (let i = 0; i <= 5; i++) {
-            const yLabel = document.createElement('div');
-            yLabel.style.position = 'absolute';
-            yLabel.style.right = '5px';
-            yLabel.style.top = (100 - i * 20) + '%';
-            yLabel.style.transform = 'translateY(-50%)';
-            yLabel.style.fontSize = '12px';
-            yLabel.style.color = '#666';
-            yLabel.textContent = Math.round((maxValue * i / 5)).toLocaleString();
-            yAxis.appendChild(yLabel);
-        }
-        
-        // Create horizontal grid lines
-        for (let i = 0; i <= 5; i++) {
-            const gridLine = document.createElement('div');
-            gridLine.style.position = 'absolute';
-            gridLine.style.left = '40px';
-            gridLine.style.right = '10px';
-            gridLine.style.top = (100 - i * 20) + '%';
-            gridLine.style.borderTop = '1px dashed #ddd';
-            gridLine.style.height = '1px';
-            chartDiv.appendChild(gridLine);
-        }
-        
-        // Create bars for each data point
-        data.forEach((item, index) => {
-            // Calculate height percentage based on value
-            const percentage = item[metric] / maxValue;
-            const height = Math.max(percentage * 220, 5); // Minimum 5px height
-            
-            // Create bar container
-            const barContainer = document.createElement('div');
-            barContainer.style.display = 'flex';
-            barContainer.style.flexDirection = 'column';
-            barContainer.style.alignItems = 'center';
-            barContainer.style.justifyContent = 'flex-end';
-            barContainer.style.height = '100%';
-            barContainer.style.flex = '1';
-            barContainer.style.maxWidth = '60px';
-            
-            // Create actual bar
-            const bar = document.createElement('div');
-            bar.style.width = '80%';
-            bar.style.height = height + 'px';
-            bar.style.backgroundColor = 'var(--fsu-garnet)';
-            bar.style.borderTopLeftRadius = '4px';
-            bar.style.borderTopRightRadius = '4px';
-            bar.title = item.title + ': ' + item[metric].toLocaleString();
-            
-            // Create x-axis label
-            const label = document.createElement('div');
-            label.style.marginTop = '10px';
-            label.style.fontSize = '11px';
-            label.style.textAlign = 'center';
-            label.style.maxWidth = '100%';
-            label.style.overflow = 'hidden';
-            label.style.textOverflow = 'ellipsis';
-            label.title = item.title;
-            label.textContent = item.title.split(':')[0].substring(0, 8);
-            
-            // Add value label
-            const valueLabel = document.createElement('div');
-            valueLabel.style.marginTop = '5px';
-            valueLabel.style.fontSize = '10px';
-            valueLabel.style.color = '#666';
-            valueLabel.textContent = item[metric].toLocaleString();
-            
-            // Append elements
-            barContainer.appendChild(bar);
-            barContainer.appendChild(label);
-            barContainer.appendChild(valueLabel);
-            barsDiv.appendChild(barContainer);
-        });
-        
-        // Assemble the chart
-        chartDiv.appendChild(yAxis);
-        chartDiv.appendChild(barsDiv);
-        container.appendChild(chartDiv);
-    }
-    
-    // Function to render social media analytics with vertical charts
-function renderSocialMediaAnalyticsWithCharts() {
-    // Generate basic content
-    analyticsContent.innerHTML = `
+                // Social media data
+                const socialMediaData = [
+                    {
+                        title: "Game Day Hype Video",
+                        date: "January 12, 2025",
+                        views: 187923,
+                        likes: 24586,
+                        retweets: 8743,
+                        favorites: 12651,
+                    },
+                    {
+                        title: "Player Spotlight: QB Travis Hunter",
+                        date: "January 24, 2025",
+                        views: 156452,
+                        likes: 18924,
+                        retweets: 6521,
+                        favorites: 9847,
+                    },
+                    {
+                        title: "Behind the Scenes: Weight Room",
+                        date: "February 2, 2025",
+                        views: 132784,
+                        likes: 15632,
+                        retweets: 4823,
+                        favorites: 7549,
+                    },
+                    {
+                        title: "Coach's Corner: Defensive Strategy",
+                        date: "February 15, 2025",
+                        views: 98562,
+                        likes: 10482,
+                        retweets: 3157,
+                        favorites: 5628,
+                    },
+                    {
+                        title: "Throwback Thursday: 2013 Championship",
+                        date: "February 22, 2025",
+                        views: 120378,
+                        likes: 14865,
+                        retweets: 5274,
+                        favorites: 8932,
+                    },
+                ];
+
+                // Function to draw chart for press releases
+                function drawBarChart(containerId, data, metric, metricLabel) {
+                    // Get the container and set initial styles
+                    const container = document.getElementById(containerId);
+                    if (!container) return;
+
+                    // Set container styles directly to ensure visibility
+                    container.style.display = "block";
+                    container.style.height = "400px";
+                    container.style.marginTop = "60px";
+                    container.style.position = "relative";
+                    container.style.zIndex = "10";
+
+                    const chartArea = container.querySelector(".chart-area");
+                    chartArea.style.height = "300px";
+                    chartArea.style.position = "relative";
+                    chartArea.style.paddingBottom = "70px";
+
+                    // Clear previous chart
+                    chartArea.innerHTML = "";
+
+                    // Update chart title
+                    const titleElement =
+                        container.querySelector(".chart-title");
+                    if (titleElement) {
+                        titleElement.textContent = metricLabel + " Comparison";
+                    }
+
+                    // Find maximum value for scaling
+                    const maxValue = Math.max(
+                        ...data.map((item) => item[metric]),
+                    );
+
+                    // Create y-axis with inline styles
+                    const yAxis = document.createElement("div");
+                    yAxis.className = "y-axis";
+                    yAxis.style.position = "absolute";
+                    yAxis.style.left = "0";
+                    yAxis.style.top = "0";
+                    yAxis.style.height = "100%";
+                    yAxis.style.width = "50px";
+
+                    // Create y-axis labels with absolute positioning
+                    for (let i = 5; i >= 0; i--) {
+                        const label = document.createElement("div");
+                        label.className = "y-axis-label";
+                        label.style.position = "absolute";
+                        label.style.left = "0";
+                        label.style.top = 100 - i * 20 + "%";
+                        label.style.fontSize = "11px";
+                        label.textContent = Math.round(
+                            (maxValue * i) / 5,
+                        ).toLocaleString();
+                        yAxis.appendChild(label);
+                    }
+
+                    chartArea.appendChild(yAxis);
+
+                    // Create x-axis with ample space for labels
+                    const xAxis = document.createElement("div");
+                    xAxis.className = "x-axis";
+                    xAxis.style.position = "absolute";
+                    xAxis.style.bottom = "0";
+                    xAxis.style.left = "50px";
+                    xAxis.style.right = "0";
+                    xAxis.style.height = "60px";
+                    xAxis.style.overflow = "visible";
+
+                    chartArea.appendChild(xAxis);
+
+                    // Calculate proper spacing for bars
+                    const availableWidth = chartArea.offsetWidth - 70;
+                    const barWidth = Math.min(
+                        40,
+                        availableWidth / data.length - 20,
+                    );
+                    const spacing =
+                        (availableWidth - barWidth * data.length) /
+                        (data.length + 1);
+
+                    // Create bars with proper spacing and inline styles
+                    data.forEach((item, index) => {
+                        const barHeight =
+                            (item[metric] / maxValue) *
+                                (chartArea.offsetHeight - 90) || 0;
+
+                        // Create bar with proper position
+                        const bar = document.createElement("div");
+                        bar.className = "bar";
+                        bar.style.height = barHeight + "px";
+                        bar.style.width = barWidth + "px";
+                        bar.style.left =
+                            60 + spacing + index * (barWidth + spacing) + "px";
+                        bar.style.position = "absolute";
+                        bar.style.bottom = "40px";
+                        bar.style.backgroundColor = "var(--fsu-garnet)";
+                        bar.style.zIndex = "5";
+
+                        // Add tooltip with exact value
+                        bar.title =
+                            item.title + ": " + item[metric].toLocaleString();
+
+                        // Create label with proper offset to avoid overlap
+                        const label = document.createElement("div");
+                        label.className = "bar-label";
+                        label.textContent = item.title.split(":")[0];
+                        label.style.left =
+                            60 + spacing + index * (barWidth + spacing) + "px";
+                        label.style.bottom = "-40px";
+                        label.style.position = "absolute";
+                        label.style.transform = "rotate(-45deg)";
+                        label.style.transformOrigin = "left top";
+                        label.style.textAlign = "left";
+                        label.style.fontSize = "11px";
+                        label.style.width = "100px";
+
+                        chartArea.appendChild(bar);
+                        xAxis.appendChild(label);
+                    });
+
+                    // Ensure chart is visible
+                    container.classList.add("visible");
+                    container.style.opacity = "1";
+
+                    // Scroll to the chart
+                    setTimeout(() => {
+                        container.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }, 100);
+                }
+
+                // Function to create vertical bar charts for social media
+                function createVerticalBarChart(
+                    container,
+                    data,
+                    metric,
+                    metricLabel,
+                ) {
+                    // Clear any existing content
+                    container.innerHTML = "";
+
+                    // Find max value for scaling
+                    const maxValue = Math.max(
+                        ...data.map((item) => item[metric]),
+                    );
+
+                    // Add title
+                    const titleDiv = document.createElement("div");
+                    titleDiv.style.fontSize = "18px";
+                    titleDiv.style.fontWeight = "bold";
+                    titleDiv.style.marginBottom = "15px";
+                    titleDiv.style.color = "var(--fsu-garnet)";
+                    titleDiv.textContent = metricLabel + " Comparison";
+                    container.appendChild(titleDiv);
+
+                    // Create chart container
+                    const chartDiv = document.createElement("div");
+                    chartDiv.style.height = "300px";
+                    chartDiv.style.position = "relative";
+                    chartDiv.style.backgroundColor = "#f9f9f9";
+                    chartDiv.style.borderRadius = "8px";
+                    chartDiv.style.padding = "20px";
+                    chartDiv.style.marginTop = "10px";
+
+                    // Create bars container
+                    const barsDiv = document.createElement("div");
+                    barsDiv.style.display = "flex";
+                    barsDiv.style.height = "220px";
+                    barsDiv.style.alignItems = "flex-end";
+                    barsDiv.style.justifyContent = "space-around";
+                    barsDiv.style.position = "relative";
+                    barsDiv.style.marginLeft = "40px"; // Space for y-axis
+
+                    // Create y-axis
+                    const yAxis = document.createElement("div");
+                    yAxis.style.position = "absolute";
+                    yAxis.style.left = "0";
+                    yAxis.style.top = "0";
+                    yAxis.style.bottom = "30px"; // Space for x-axis labels
+                    yAxis.style.width = "40px";
+
+                    // Add y-axis labels
+                    for (let i = 0; i <= 5; i++) {
+                        const yLabel = document.createElement("div");
+                        yLabel.style.position = "absolute";
+                        yLabel.style.right = "5px";
+                        yLabel.style.top = 100 - i * 20 + "%";
+                        yLabel.style.transform = "translateY(-50%)";
+                        yLabel.style.fontSize = "12px";
+                        yLabel.style.color = "#666";
+                        yLabel.textContent = Math.round(
+                            (maxValue * i) / 5,
+                        ).toLocaleString();
+                        yAxis.appendChild(yLabel);
+                    }
+
+                    // Create horizontal grid lines
+                    for (let i = 0; i <= 5; i++) {
+                        const gridLine = document.createElement("div");
+                        gridLine.style.position = "absolute";
+                        gridLine.style.left = "40px";
+                        gridLine.style.right = "10px";
+                        gridLine.style.top = 100 - i * 20 + "%";
+                        gridLine.style.borderTop = "1px dashed #ddd";
+                        gridLine.style.height = "1px";
+                        chartDiv.appendChild(gridLine);
+                    }
+
+                    // Create bars for each data point
+                    data.forEach((item, index) => {
+                        // Calculate height percentage based on value
+                        const percentage = item[metric] / maxValue;
+                        const height = Math.max(percentage * 220, 5); // Minimum 5px height
+
+                        // Create bar container
+                        const barContainer = document.createElement("div");
+                        barContainer.style.display = "flex";
+                        barContainer.style.flexDirection = "column";
+                        barContainer.style.alignItems = "center";
+                        barContainer.style.justifyContent = "flex-end";
+                        barContainer.style.height = "100%";
+                        barContainer.style.flex = "1";
+                        barContainer.style.maxWidth = "60px";
+
+                        // Create actual bar
+                        const bar = document.createElement("div");
+                        bar.style.width = "80%";
+                        bar.style.height = height + "px";
+                        bar.style.backgroundColor = "var(--fsu-garnet)";
+                        bar.style.borderTopLeftRadius = "4px";
+                        bar.style.borderTopRightRadius = "4px";
+                        bar.title =
+                            item.title + ": " + item[metric].toLocaleString();
+
+                        // Create x-axis label
+                        const label = document.createElement("div");
+                        label.style.marginTop = "10px";
+                        label.style.fontSize = "11px";
+                        label.style.textAlign = "center";
+                        label.style.maxWidth = "100%";
+                        label.style.overflow = "hidden";
+                        label.style.textOverflow = "ellipsis";
+                        label.title = item.title;
+                        label.textContent = item.title
+                            .split(":")[0]
+                            .substring(0, 8);
+
+                        // Add value label
+                        const valueLabel = document.createElement("div");
+                        valueLabel.style.marginTop = "5px";
+                        valueLabel.style.fontSize = "10px";
+                        valueLabel.style.color = "#666";
+                        valueLabel.textContent = item[metric].toLocaleString();
+
+                        // Append elements
+                        barContainer.appendChild(bar);
+                        barContainer.appendChild(label);
+                        barContainer.appendChild(valueLabel);
+                        barsDiv.appendChild(barContainer);
+                    });
+
+                    // Assemble the chart
+                    chartDiv.appendChild(yAxis);
+                    chartDiv.appendChild(barsDiv);
+                    container.appendChild(chartDiv);
+                }
+
+                // Function to render social media analytics with vertical charts
+                function renderSocialMediaAnalyticsWithCharts() {
+                    // Generate basic content
+                    analyticsContent.innerHTML = `
         <h2>Social Media Analytics</h2>
         <div class="analytics-details">
             <div class="metric">
@@ -899,83 +1000,96 @@ function renderSocialMediaAnalyticsWithCharts() {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Vertical charts container -->
         <div id="charts-column" style="display: flex; flex-direction: column; gap: 30px; margin-top: 30px;"></div>
     `;
-        
-        // Define metrics to display
-        const metrics = [
-            { metric: 'views', label: 'Views' },
-            { metric: 'likes', label: 'Likes' },
-            { metric: 'retweets', label: 'Re-tweets' },
-            { metric: 'favorites', label: 'Favorites' }
-        ];
-        
-        // Create charts for each metric immediately without delay
-        const chartsColumn = document.getElementById('charts-column');
-        
-        metrics.forEach(metricInfo => {
-            // Create chart container
-            const chartContainer = document.createElement('div');
-            chartContainer.style.backgroundColor = 'white';
-            chartContainer.style.padding = '20px';
-            chartContainer.style.borderRadius = '8px';
-            chartContainer.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-            
-            // Create the chart
-            createVerticalBarChart(chartContainer, socialMediaData, metricInfo.metric, metricInfo.label);
-            
-            // Add to the column
-            chartsColumn.appendChild(chartContainer);
-        });
-    }
 
-    // Add event listener for dropdown
-    analyticsSelect.addEventListener('change', function() {
-        // Clear previous content
-        analyticsContent.innerHTML = '';
+                    // Define metrics to display
+                    const metrics = [
+                        { metric: "views", label: "Views" },
+                        { metric: "likes", label: "Likes" },
+                        { metric: "retweets", label: "Re-tweets" },
+                        { metric: "favorites", label: "Favorites" },
+                    ];
 
-        if (this.value === '') {
-            // If nothing is selected, show default content
-            renderDefaultContent();
-            return;
-        }
+                    // Create charts for each metric immediately without delay
+                    const chartsColumn =
+                        document.getElementById("charts-column");
 
-        // Add class to indicate content is loaded
-        analyticsContent.classList.add('content-loaded');
+                    metrics.forEach((metricInfo) => {
+                        // Create chart container
+                        const chartContainer = document.createElement("div");
+                        chartContainer.style.backgroundColor = "white";
+                        chartContainer.style.padding = "20px";
+                        chartContainer.style.borderRadius = "8px";
+                        chartContainer.style.boxShadow =
+                            "0 2px 4px rgba(0,0,0,0.1)";
 
-        // Create content based on selection
-        switch(this.value) {
-            case 'press-release':
-                renderPressReleaseAnalytics();
-                setTimeout(() => {
-                    // Make table visible explicitly
-                    const tableContainer = document.querySelector('.table-container');
-                    if (tableContainer) {
-                        tableContainer.style.display = 'block';
-                        tableContainer.style.opacity = '1';
+                        // Create the chart
+                        createVerticalBarChart(
+                            chartContainer,
+                            socialMediaData,
+                            metricInfo.metric,
+                            metricInfo.label,
+                        );
+
+                        // Add to the column
+                        chartsColumn.appendChild(chartContainer);
+                    });
+                }
+
+                // Add event listener for dropdown
+                analyticsSelect.addEventListener("change", function () {
+                    // Clear previous content
+                    analyticsContent.innerHTML = "";
+
+                    if (this.value === "") {
+                        // If nothing is selected, show default content
+                        renderDefaultContent();
+                        return;
                     }
-                    
-                    // Show chart after a short delay
-                    setTimeout(() => {
-                        drawBarChart('pressReleaseChart', pressReleaseData, 'pageviews', 'Page Views');
-                    }, 300);
-                }, 100);
-                break;
-            case 'social-media':
-                // Use our custom function that renders charts vertically
-                renderSocialMediaAnalyticsWithCharts();
-                break;
-            default:
-                renderDefaultContent();
-                analyticsContent.classList.remove('content-loaded');
-        }
-    });
 
-    // Function to render Press Release analytics
-    function renderPressReleaseAnalytics() {
-        analyticsContent.innerHTML = `
+                    // Add class to indicate content is loaded
+                    analyticsContent.classList.add("content-loaded");
+
+                    // Create content based on selection
+                    switch (this.value) {
+                        case "press-release":
+                            renderPressReleaseAnalytics();
+                            setTimeout(() => {
+                                // Make table visible explicitly
+                                const tableContainer =
+                                    document.querySelector(".table-container");
+                                if (tableContainer) {
+                                    tableContainer.style.display = "block";
+                                    tableContainer.style.opacity = "1";
+                                }
+
+                                // Show chart after a short delay
+                                setTimeout(() => {
+                                    drawBarChart(
+                                        "pressReleaseChart",
+                                        pressReleaseData,
+                                        "pageviews",
+                                        "Page Views",
+                                    );
+                                }, 300);
+                            }, 100);
+                            break;
+                        case "social-media":
+                            // Use our custom function that renders charts vertically
+                            renderSocialMediaAnalyticsWithCharts();
+                            break;
+                        default:
+                            renderDefaultContent();
+                            analyticsContent.classList.remove("content-loaded");
+                    }
+                });
+
+                // Function to render Press Release analytics
+                function renderPressReleaseAnalytics() {
+                    analyticsContent.innerHTML = `
             <h2>Press Release Analytics</h2>
             <div class="analytics-details">
                 <div class="metric">
@@ -1034,37 +1148,44 @@ function renderSocialMediaAnalyticsWithCharts() {
                 <div class="chart-area" id="pressReleaseChartArea">
                     <!-- Chart will be dynamically generated here -->
                 </div>
-                
+
             </div>
         `;
-        
-        // Add click event listeners for the clickable columns in the press release table
-        setTimeout(() => {
-            document.querySelectorAll('.analytics-table .clickable').forEach(header => {
-                header.addEventListener('click', function() {
-                    const metric = this.getAttribute('data-metric');
-                    const metricLabel = this.textContent;
-                    
-                    drawBarChart('pressReleaseChart', pressReleaseData, metric, metricLabel);
-                });
-            });
-        }, 100);
-    }
 
-    // Default content when nothing is selected
-    function renderDefaultContent() {
-        analyticsContent.innerHTML = `
+                    // Add click event listeners for the clickable columns in the press release table
+                    setTimeout(() => {
+                        document
+                            .querySelectorAll(".analytics-table .clickable")
+                            .forEach((header) => {
+                                header.addEventListener("click", function () {
+                                    const metric =
+                                        this.getAttribute("data-metric");
+                                    const metricLabel = this.textContent;
+
+                                    drawBarChart(
+                                        "pressReleaseChart",
+                                        pressReleaseData,
+                                        metric,
+                                        metricLabel,
+                                    );
+                                });
+                            });
+                    }, 100);
+                }
+
+                // Default content when nothing is selected
+                function renderDefaultContent() {
+                    analyticsContent.innerHTML = `
             <div class="no-content">
                 Please select an analytics type
             </div>
         `;
-    }
-    
-    // Initialize with empty selection
-    analyticsSelect.value = '';
-    renderDefaultContent();
-});
+                }
 
-    </script>
-</body>
+                // Initialize with empty selection
+                analyticsSelect.value = "";
+                renderDefaultContent();
+            });
+        </script>
+    </body>
 </html>

@@ -1,1719 +1,1985 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Athlyte Content Publishing Platform - FSU Graphics</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
-    <style>
-:root {
-    --fsu-garnet: #782f40;
-    --fsu-gold: #ceb888;
-    --fsu-black: #231f20;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-@font-face {
-    font-family: 'GothicCustom';
-    src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-
-body {
-    background-color: var(--fsu-garnet);
-    display: grid;
-    grid-template-columns: 250px 1fr 300px;
-    min-height: 100vh;
-    gap: 24px;
-    padding: 24px;
-}
-
-.sidebar {
-    background: var(--fsu-gold);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    height: fit-content;
-    position: sticky;
-    top: 24px;
-}
-
-.sidebar h2 {
-    color: var(--fsu-garnet);
-    font-family: 'GothicCustom', sans-serif;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--fsu-garnet);
-}
-
-.sidebar-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-}
-
-.sidebar-item.active {
-    background-color: var(--fsu-garnet);
-    color: var(--fsu-gold);
-}
-
-.sidebar-item.active i {
-    color: var(--fsu-gold);
-}
-
-.sidebar-item i {
-    margin-right: 12px;
-    color: var(--fsu-garnet);
-    font-size: 20px;
-}
-
-.sidebar-item a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-/* FSU Header Styles */
-.fsu-header {
-    background-color: white;
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.fsu-logo {
-    width: 60px;
-    height: auto;
-}
-
-.site-title {
-    color: var(--fsu-garnet);
-    font-size: 1.8rem;
-    margin: 0;
-}
-
-.project-info {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.info-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #f8f8f8;
-    padding: 8px 12px;
-    border-radius: 6px;
-}
-
-.info-item i {
-    color: var(--fsu-garnet);
-}
-
-.info-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-label {
-    font-size: 0.75rem;
-    color: #666;
-}
-
-.info-value {
-    font-weight: 600;
-    color: var(--fsu-garnet);
-}
-
-.info-item .info-value {
-    transition: color 0.3s ease;
-}
-
-.status-in-progress .info-value {
-    color: #2196F3; /* Blue */
-}
-
-.status-under-review .info-value {
-    color: #FF9800; /* Orange */
-    animation: pulse 2s infinite ease-in-out;
-}
-
-.status-completed .info-value {
-    color: #4CAF50; /* Green */
-}
-
-/* Status Icon Animations */
-.info-item:nth-child(2) i.material-icons {
-    transition: transform 0.3s ease;
-}
-
-/* Status Badge (Optional) */
-.status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-left: 8px;
-}
-
-.status-badge.in-progress {
-    background-color: rgba(33, 150, 243, 0.1);
-    color: #2196F3;
-}
-
-.status-badge.under-review {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.status-badge.completed {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-/* Pulse animation for "Under Review" status */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-/* Dashboard styles */
-.dashboard {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    max-width: 1200px;
-    margin: 0 auto 20px auto;
-}
-
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.dashboard-title {
-    color: var(--fsu-garnet);
-    font-weight: 600;
-    font-size: 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.dashboard-title i {
-    color: var(--fsu-garnet);
-}
-
-.publish-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.select-container {
-    position: relative;
-    min-width: 250px;
-}
-
-.select-container label {
-    display: block;
-    font-size: 0.85rem;
-    color: #555;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-.custom-select {
-    width: 100%;
-    padding: 12px 45px 12px 15px;
-    font-size: 1rem;
-    background-color: #f8f8f8;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    color: var(--fsu-black);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.custom-select:focus {
-    outline: none;
-    border-color: var(--fsu-gold);
-    box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.3);
-}
-
-.select-arrow {
-    position: absolute;
-    right: 15px;
-    top: 38px;
-    color: #777;
-    pointer-events: none;
-}
-
-.submit-btn {
-    background-color: var(--fsu-garnet);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 24px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.submit-btn:hover {
-    background-color: #651b2a;
-    transform: translateY(-2px);
-}
-
-.submit-btn:active {
-    transform: translateY(0);
-}
-
-/* Review Button State Styles */
-.submit-btn.review-submitted {
-    background-color: #FF9800; /* Orange for review submitted state */
-    transform: none;
-}
-
-.submit-btn.review-submitted:hover {
-    background-color: #F57C00;
-}
-
-.submit-btn.review-accepted {
-    background-color: #4CAF50; /* Green for review accepted state */
-    transform: none;
-    pointer-events: none; /* Prevents further clicks */
-}
-
-.submit-btn:disabled {
-    background-color: #ccc;
-    transform: none;
-    cursor: not-allowed;
-}
-
-/* Grid Container Styles */
-.content-grid-container {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    margin-top: 24px;
-    margin-bottom: 24px;
-    overflow: hidden;
-}
-
-.grid-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.grid-header h3 {
-    color: var(--fsu-garnet);
-    margin: 0;
-    font-family: 'GothicCustom', sans-serif;
-    font-size: 1.2rem;
-}
-
-.grid-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* Grid Item Selection Styles */
-.grid-item {
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border: 2px solid transparent;
-    cursor: pointer;
-}
-
-.grid-item.selected-item {
-    border-color: var(--fsu-garnet);
-    box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
-    transform: translateY(-3px);
-}
-
-.grid-item.published-item {
-    border-color: #4CAF50;
-}
-
-.grid-item.selected-item.published-item {
-    border-color: var(--fsu-garnet);
-    box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2), 0 0 0 6px rgba(76, 175, 80, 0.2);
-}
-
-.grid-item.review-completed {
-    opacity: 0.9;
-    pointer-events: none;
-}
-
-/* Selection indicator */
-.grid-item.selected-item::after {
-    content: '✓';
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 25px;
-    height: 25px;
-    background-color: var(--fsu-garnet);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    z-index: 5;
-}
-
-/* Grid View Styles */
-.grid-view {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-.grid-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* Style for grid items */
-.item-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.image-preview {
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-    flex-grow: 1;
-}
-
-.preview-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.grid-item:hover .preview-image {
-    transform: scale(1.05);
-}
-
-.text-preview {
-    padding: 15px;
-    background-color: #f9f9f9;
-    min-height: 120px;
-}
-
-.text-preview h4 {
-    color: var(--fsu-garnet);
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-}
-
-.text-preview p {
-    margin: 0;
-    color: #555;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Type-specific styling */
-.item-type {
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.8rem;
-}
-
-.press-release-type {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-.social-media-type {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.item-details {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.8rem;
-}
-
-/* No content message styling */
-.no-content-message {
-    text-align: center;
-    padding: 30px 0;
-    color: #777;
-    font-style: italic;
-}
-
-/* Publish button container */
-.publish-button-container {
-    padding: 10px 15px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #e0e0e0;
-    text-align: right;
-}
-
-/* Publish button styling */
-.grid-publish-btn {
-    background-color: var(--fsu-garnet);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-left: auto;
-}
-
-.grid-publish-btn:hover {
-    background-color: #651b2a;
-    transform: translateY(-2px);
-}
-
-.grid-publish-btn:active {
-    transform: translateY(0);
-}
-
-.grid-publish-btn.published {
-    background-color: #4CAF50; /* Green color for published state */
-    pointer-events: none; /* Prevents further clicks */
-}
-
-.grid-publish-btn.published:hover {
-    background-color: #4CAF50; /* Keep the same color on hover */
-    transform: none; /* Disable hover animation */
-    cursor: default;
-}
-
-.grid-publish-btn i {
-    font-size: 16px;
-}
-
-/* Animation for publishing state */
-@keyframes publishing {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0); }
-}
-
-.grid-publish-btn.publishing {
-    background-color: #FFA000; /* Orange color for publishing state */
-    pointer-events: none; /* Prevents clicks during publishing */
-}
-
-.grid-publish-btn.publishing i {
-    animation: publishing 1s infinite; /* Apply bouncing animation to icon */
-}
-
-/* Enhanced modal styles */
-.preview-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.modal-content {
-    background-color: white;
-    width: 90%;
-    max-width: 800px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: var(--fsu-garnet);
-    color: white;
-}
-
-.modal-title {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.modal-body {
-    padding: 0;
-    max-height: 70vh;
-    overflow-y: auto;
-}
-
-.modal-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: contain;
-    background-color: #f0f0f0;
-}
-
-.modal-text {
-    padding: 20px;
-}
-
-.modal-text h3 {
-    color: var(--fsu-garnet);
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-.modal-text p {
-    line-height: 1.6;
-    color: #333;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 20px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #e0e0e0;
-}
-
-.modal-type-badge {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.modal-type-badge.press-release {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-.modal-type-badge.social-media {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.modal-date {
-    color: #777;
-    font-size: 0.9rem;
-}
-
-/* Grid Controls */
-.grid-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.grid-select-btn {
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.grid-select-btn:hover {
-    background-color: #e0e0e0;
-}
-
-.grid-select-btn i {
-    font-size: 18px;
-    color: var(--fsu-garnet);
-}
-
-/* Grid Header with Search & Count */
-.grid-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.grid-header h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: var(--fsu-garnet);
-}
-
-.grid-search-box {
-    display: flex;
-    align-items: center;
-    background-color: #f8f8f8;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 6px 12px;
-    width: 250px;
-}
-
-.grid-search-box i {
-    color: #777;
-    margin-right: 8px;
-}
-
-.grid-search-box input {
-    border: none;
-    background: none;
-    outline: none;
-    font-size: 0.95rem;
-    width: 100%;
-}
-
-.grid-selection-count {
-    font-size: 0.9rem;
-    color: #555;
-    background-color: #f8f8f8;
-    padding: 5px 10px;
-    border-radius: 4px;
-    display: flex;
-    gap: 10px;
-}
-
-.grid-selection-count strong {
-    color: var(--fsu-garnet);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    body {
-        grid-template-columns: 1fr;
-    }
-    
-    .sidebar {
-        position: static;
-    }
-    
-    .grid-view {
-        grid-template-columns: 1fr;
-    }
-    
-    .modal-content {
-        width: 95%;
-    }
-    
-    .publish-options {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .grid-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    
-    .grid-controls {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .grid-search-box {
-        width: 100%;
-    }
-    
-    .grid-selection-count {
-        margin-top: 10px;
-        width: 100%;
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 576px) {
-    .project-info {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .info-item {
-        width: 100%;
-    }
-}
-
-/* Style for combined content items */
-.item-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.image-preview {
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-    flex-grow: 1;
-}
-
-/* No content message styling */
-.no-content-message {
-        text-align: center;
-        padding: 30px 0;
-        color: #777;
-        font-style: italic;
-    }
-
-.preview-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.grid-item:hover .preview-image {
-    transform: scale(1.05);
-}
-
-.text-preview {
-    padding: 15px;
-    background-color: #f9f9f9;
-    min-height: 120px;
-}
-
-.text-preview h4 {
-    color: var(--fsu-garnet);
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-}
-
-.text-preview p {
-    margin: 0;
-    color: #555;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Type-specific styling */
-.item-type {
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.8rem;
-}
-
-.press-release-type {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-.social-media-type {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.item-details {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.8rem;
-}
-
-/* Enhanced modal styles for combined content */
-.preview-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.modal-content {
-    background-color: white;
-    width: 90%;
-    max-width: 800px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: var(--fsu-garnet);
-    color: white;
-}
-
-.modal-title {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.modal-body {
-    padding: 0;
-    max-height: 70vh;
-    overflow-y: auto;
-}
-
-.modal-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: contain;
-    background-color: #f0f0f0;
-}
-
-.modal-text {
-    padding: 20px;
-}
-
-.modal-text h3 {
-    color: var(--fsu-garnet);
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-.modal-text p {
-    line-height: 1.6;
-    color: #333;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 20px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #e0e0e0;
-}
-
-.modal-type-badge {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.modal-type-badge.press-release {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-.modal-type-badge.social-media {
-    background-color: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.modal-date {
-    color: #777;
-    font-size: 0.9rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .grid-view {
-        grid-template-columns: 1fr;
-    }
-    
-    .modal-content {
-        width: 95%;
-    }
-}
-
-/* Publish button container */
-.publish-button-container {
-        padding: 10px 15px;
-        background-color: #f9f9f9;
-        border-top: 1px solid #e0e0e0;
-        text-align: right;
-    }
-
-    /* Publish button styling */
-    .grid-publish-btn {
-        background-color: var(--fsu-garnet);
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 12px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-left: auto;
-    }
-
-    .grid-publish-btn:hover {
-        background-color: #651b2a;
-        transform: translateY(-2px);
-    }
-
-    .grid-publish-btn:active {
-        transform: translateY(0);
-    }
-
-    .grid-publish-btn.published {
-        background-color: #4CAF50;
-    }
-
-    .grid-publish-btn i {
-        font-size: 16px;
-    }
-
-    /* Enhanced styling for publish buttons */
-.grid-publish-btn.published {
-    background-color: #4CAF50; /* Green color for published state */
-    pointer-events: none; /* Prevents further clicks */
-}
-
-.grid-publish-btn.published:hover {
-    background-color: #4CAF50; /* Keep the same color on hover */
-    transform: none; /* Disable hover animation */
-    cursor: default;
-}
-
-/* Animation for publishing state */
-@keyframes publishing {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0); }
-}
-
-.grid-publish-btn.publishing {
-    background-color: #FFA000; /* Orange color for publishing state */
-    pointer-events: none; /* Prevents clicks during publishing */
-}
-
-.grid-publish-btn.publishing i {
-    animation: publishing 1s infinite; /* Apply bouncing animation to icon */
-}                       
-
-</style>
-</head>
-<body>
-    <nav class="sidebar">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
-        <div class="sidebar-item">
-            <i class="material-icons">home</i>
-            <a href="project_new.html"> Home </a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">search</i>
-            <a href="project_new_research_page.html"> Research </a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">description</i>
-            <a href="project_new_content_draft.html"> Content Draft </a>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">brush</i>
-            <span>Graphics</span>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">share</i>
-            <a href="projetc_new_marketing.html"> Marketing </a>
-        </div>
-        <div class="sidebar-item active">
-            <i class="material-icons">publish</i>
-            <span>Publish</span>
-        </div>
-        <div class="sidebar-item">
-            <i class="material-icons">equalizer</i>
-            <a href="project_new_analytics.html"> Analytics</a>
-        </div>
-    </nav>
-
-    <!-- Main Content Area -->
-    <div class="content-area">
-        <!-- FSU Header with Coordinator and Deadline -->
-        <header class="fsu-header">
-            <div class="header-container">
-                <div class="logo-container">
-                    
-                    <h1 class="site-title">FSU Football Season 2025</h1>
-                </div>
-                <div class="project-info">
-                    <div class="info-item">
-                        <i class="material-icons">person</i>
-                        <div class="info-content">
-                            <span class="info-label">Publishing Coordinator</span>
-                            <span class="info-value">Sarah Johnson</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-content">
-                          <span class="info-label">Phase Status</span>
-                          <span class="info-value">In Progress</span>
-                        </div>
-                      </div>    
-                    
-                        <div class="info-item">
-                        <i class="material-icons">event</i>
-                        <div class="info-content">
-                            <span class="info-label">Deadline</span>
-                            <span class="info-value">March 15, 2025</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Publishing Dashboard -->
-    <div class="dashboard">
-        <div class="dashboard-header">
-           
-        </div>
-
-        <!-- Publishing Options -->
-        <div class="publish-options">
-            <div class="select-container">
-                <label for="publish-type">Select Content Type:</label>
-                <select id="publish-type" class="custom-select">
-                    <option value="" disabled selected>Choose</option>
-                    <option value="all">All Content</option>
-                    <option value="social">Social Media</option>
-                    <option value="press">Press Release</option>
-                </select>
-                
-            </div>
-            
-            <button id="submit-review-btn" class="submit-btn">
-                <i class="material-icons">rate_review</i>
-                Submit Review
-            </button>
-        </div>
-    </div>
-
-     <!-- Content Table Dashboard -->
-     <div class="dashboard">
-        <div class="dashboard-header">
-           
-        </div>
-
-    <div class="content-grid-container">
-        <div class="grid-header">
-            
-        </div>
-    
-        <div class="grid-view">
-            <!-- Combined content items with both text and images -->
-            <div class="grid-item" data-type="press-release">
-                <div class="item-preview">
-                    <div class="item-content">
-                        <div class="image-preview">
-                            <img src="https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM=" alt="Season Opener Image" class="preview-image">
-                        </div>
-                        <div class="text-preview">
-                            <h4>Season Opener Press Release</h4>
-                            <p>Florida State University's football team is set to begin its 2025 season with renewed energy and determination...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-details">
-                    <span class="item-type press-release-type">Press Release</span>
-                    <span class="item-date">Updated: Feb 28, 2025</span>
-                </div>
-                
-                <div class="publish-button-container">
-                    <button class="grid-publish-btn">
-                        <i class="material-icons">publish</i>
-                        Publish
-                    </button>
-                </div>
-            </div>
-    
-            <div class="grid-item" data-type="social-media">
-                <div class="item-preview">
-                    <div class="item-content">
-                        <div class="image-preview">
-                            <img src="https://media.gettyimages.com/id/1243367519/photo/louisville-ky-a-florida-state-seminoles-logo-is-seen-on-a-flag-as-the-team-runs-onto-the.jpg?s=612x612&w=gi&k=20&c=2qUdiXv60GHq_-ccudrWu2kYSVO6-tLRzeZbIjlrU6M=" alt="Team Banner 2025" class="preview-image">
-                        </div>
-                        <div class="text-preview">
-                            <h4>Home Game Announcement</h4>
-                            <p>Join us this Saturday as the Seminoles take on their rivals in the season's most anticipated matchup...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-details">
-                    <span class="item-type social-media-type">Social Media Post</span>
-                    <span class="item-date">Updated: Mar 1, 2025</span>
-                </div>
-
-                <div class="publish-button-container">
-                    <button class="grid-publish-btn">
-                        <i class="material-icons">publish</i>
-                        Publish
-                    </button>
-                </div>
-            </div>
-    
-            <div class="grid-item" data-type="press-release">
-                <div class="item-preview">
-                    <div class="item-content">
-                        <div class="image-preview">
-                            <img src="https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768" alt="Marcus Johnson" class="preview-image">
-                        </div>
-                        <div class="text-preview">
-                            <h4>Player Spotlight: Marcus Johnson</h4>
-                            <p>Quarterback Marcus Johnson has been training rigorously during the off-season to prepare for what analysts predict will be his breakout year...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-details">
-                    <span class="item-type press-release-type">Press Release</span>
-                    <span class="item-date">Updated: Mar 2, 2025</span>
-                </div>
-
-                <div class="publish-button-container">
-                    <button class="grid-publish-btn">
-                        <i class="material-icons">publish</i>
-                        Publish
-                    </button>
-                </div>
-            </div>
-    
-            <div class="grid-item" data-type="social-media">
-                <div class="item-preview">
-                    <div class="item-content">
-                        <div class="image-preview">
-                            <img src="https://familyweekend.fsu.edu/sites/g/files/upcbnu2046/files/pictures/football-graphic-fw-2024.jpg" alt="Season Tickets" class="preview-image">
-                        </div>
-                        <div class="text-preview">
-                            <h4>Season Ticket Promotion</h4>
-                            <p>Get ready for an unforgettable season with FSU Football! Early bird season tickets now available with exclusive benefits for loyal fans...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-details">
-                    <span class="item-type social-media-type">Social Media Post</span>
-                    <span class="item-date">Updated: Mar 3, 2025</span>
-                </div>
-
-                <div class="publish-button-container">
-                    <button class="grid-publish-btn">
-                        <i class="material-icons">publish</i>
-                        Publish
-                    </button>
-                </div>
-            </div>
-    
-            <div class="grid-item" data-type="social-media">
-                <div class="item-preview">
-                    <div class="item-content">
-                        <div class="image-preview">
-                            <img src="https://ik.imagekit.io/0bocj83w8/https://dzfa1uifb0sb6.cloudfront.net/preview_for_templates/template_1338_preview.jpg?tr=w-600,q-35" alt="Social Media Kit" class="preview-image">
-                        </div>
-                        <div class="text-preview">
-                            <h4>Game Day Countdown</h4>
-                            <p>Only 3 days until kickoff! Share your excitement and game day traditions with us using #FSUGameDay...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-details">
-                    <span class="item-type social-media-type">Social Media Post</span>
-                    <span class="item-date">Updated: Mar 4, 2025</span>
-                </div>
-
-                <div class="publish-button-container">
-                    <button class="grid-publish-btn">
-                        <i class="material-icons">publish</i>
-                        Publish
-                    </button>
-                </div>
-            </div>
-    
-            <div class="grid-item" data-type="press-release">
-                <div class="item-preview">
-                    <div class="item-content">
-                        <div class="image-preview">
-                            <img src="https://www.tallahassee.com/gcdn/authoring/authoring-images/2024/10/06/PTCN/75540869007-usatsi-24420080.jpg?crop=3851,2167,x0,y215&width=660&height=371&format=pjpg&auto=webp" alt="Coach Interview" class="preview-image">
-                        </div>
-                        <div class="text-preview">
-                            <h4>Coach's Corner: Pre-Season Interview</h4>
-                            <p>Head Coach Mike Thompson discusses training camp progress, team strategy, and expectations for the upcoming 2025 season...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-details">
-                    <span class="item-type press-release-type">Press Release</span>
-                    <span class="item-date">Updated: Feb 25, 2025</span>
-                </div>
-
-                <div class="publish-button-container">
-                    <button class="grid-publish-btn">
-                        <i class="material-icons">publish</i>
-                        Publish
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-     <script>
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize published content array
-    let publishedContent = [];
-    
-    // DOM elements
-    const publishTypeSelect = document.getElementById('publish-type');
-    const submitReviewBtn = document.getElementById('submit-review-btn');
-    const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value'); // Phase status element
-    const gridView = document.querySelector('.grid-view');
-    
-    // Track the review state (not started, submitted, accepted)
-    let reviewState = 'not-started';
-    
-    // Add data attributes to grid items if not already present
-    document.querySelectorAll('.grid-item').forEach((item, index) => {
-        if (!item.dataset.id) {
-            item.dataset.id = `item${index + 1}`;
-        }
-        if (!item.dataset.title) {
-            item.dataset.title = item.querySelector('h4').textContent;
-        }
-        if (!item.dataset.date) {
-            const dateText = item.querySelector('.item-date').textContent;
-            item.dataset.date = dateText.replace('Updated: ', '');
-        }
-        
-        // Add selected state functionality to grid items
-        item.addEventListener('click', function(e) {
-            // Prevent triggering if clicking on the publish button
-            if (e.target.closest('.grid-publish-btn')) {
-                return;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Athlyte Content Publishing Platform - FSU Graphics</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --fsu-garnet: #782f40;
+                --fsu-gold: #ceb888;
+                --fsu-black: #231f20;
+                --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
-            
-            // Toggle selected state for the grid item
-            this.classList.toggle('selected-item');
-            
-            // Update the selected count and review button state
-            updateSelectedCount();
-            
-            // Show the modal content preview
-            const itemType = this.dataset.type;
-            const title = this.querySelector('h4').textContent;
-            const text = this.querySelector('p').textContent;
-            const image = this.querySelector('img').src;
-            const imageAlt = this.querySelector('img').alt;
-            const date = this.querySelector('.item-date').textContent;
-            
-            showCombinedContentModal(title, text, image, imageAlt, itemType, date);
-        });
-    });
-    
-    // Set up grid publish buttons
-    const publishButtons = document.querySelectorAll('.grid-publish-btn');
-    
-    publishButtons.forEach(button => {
-        // Set button's data-id attribute if not already present
-        if (!button.dataset.id) {
-            const parentItem = button.closest('.grid-item');
-            button.dataset.id = parentItem.dataset.id;
-        }
-        
-        button.addEventListener('click', function(e) {
-            e.stopPropagation();
-            
-            // If already published, don't do anything
-            if (this.classList.contains('published')) {
-                return;
+
+            @font-face {
+                font-family: "GothicCustom";
+                src: url("https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf")
+                    format("truetype");
             }
-            
-            const itemId = this.dataset.id;
-            const gridItem = document.querySelector(`.grid-item[data-id="${itemId}"]`);
-            
-            const contentTitle = gridItem.dataset.title || gridItem.querySelector('h4').textContent;
-            const contentType = gridItem.dataset.type;
-            const contentDate = gridItem.dataset.date || gridItem.querySelector('.item-date').textContent.replace('Updated: ', '');
-            
-            // Check if already published
-            const existingItemIndex = publishedContent.findIndex(item => item.id === itemId);
-            if (existingItemIndex !== -1) {
-                alert(`"${contentTitle}" is already in the publishing queue.`);
-                return;
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
             }
-            
-            // Show publishing state
-            this.classList.add('publishing');
-            this.innerHTML = '<i class="material-icons">cloud_upload</i> Publishing...';
-            
-            // Simulate publishing process
-            setTimeout(() => {
-                // Add to published content
-                const newItem = {
-                    id: itemId,
-                    title: contentTitle,
-                    type: contentType,
-                    date: contentDate,
-                    status: 'published'
-                };
-                
-                publishedContent.push(newItem);
-                
-                // Mark grid item as published
-                gridItem.classList.add('published-item');
-                
-                // Show success state - NO TIMEOUT to reset
-                this.classList.remove('publishing');
-                this.classList.add('published');
-                this.innerHTML = '<i class="material-icons">check_circle</i> Published';
-                
-                // Enable review button if there are published items and not already reviewed
-                if (publishedContent.length > 0 && reviewState === 'not-started') {
-                    submitReviewBtn.disabled = false;
-                    submitReviewBtn.style.opacity = "1";
+
+            body {
+                background-color: var(--fsu-garnet);
+                display: grid;
+                grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                        180px,
+                        1fr
+                    );
+                min-height: 100vh;
+                gap: 24px;
+                padding: 24px;
+            }
+
+            .sidebar {
+                background: var(--fsu-gold);
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: var(--shadow);
+                height: fit-content;
+                position: sticky;
+                top: 24px;
+            }
+
+            .sidebar h2 {
+                color: var(--fsu-garnet);
+                font-family: "GothicCustom", sans-serif;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                margin: 8px 0;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: var(--fsu-garnet);
+            }
+
+            .sidebar-item:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                transform: translateX(5px);
+            }
+
+            .sidebar-item.active {
+                background-color: var(--fsu-garnet);
+                color: var(--fsu-gold);
+            }
+
+            .sidebar-item.active i {
+                color: var(--fsu-gold);
+            }
+
+            .sidebar-item i {
+                margin-right: 12px;
+                color: var(--fsu-garnet);
+                font-size: 20px;
+            }
+
+            .sidebar-item a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .main-content {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            /* FSU Header Styles */
+            .fsu-header {
+                background-color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .fsu-logo {
+                width: 60px;
+                height: auto;
+            }
+
+            .site-title {
+                color: var(--fsu-garnet);
+                font-size: 1.8rem;
+                margin: 0;
+            }
+
+            .project-info {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .info-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background-color: #f8f8f8;
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+
+            .info-item i {
+                color: var(--fsu-garnet);
+            }
+
+            .info-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .info-label {
+                font-size: 0.75rem;
+                color: #666;
+            }
+
+            .info-value {
+                font-weight: 600;
+                color: var(--fsu-garnet);
+            }
+
+            .info-item .info-value {
+                transition: color 0.3s ease;
+            }
+
+            .status-in-progress .info-value {
+                color: #2196f3; /* Blue */
+            }
+
+            .status-under-review .info-value {
+                color: #ff9800; /* Orange */
+                animation: pulse 2s infinite ease-in-out;
+            }
+
+            .status-completed .info-value {
+                color: #4caf50; /* Green */
+            }
+
+            /* Status Icon Animations */
+            .info-item:nth-child(2) i.material-icons {
+                transition: transform 0.3s ease;
+            }
+
+            /* Status Badge (Optional) */
+            .status-badge {
+                display: inline-block;
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 0.8rem;
+                font-weight: 500;
+                margin-left: 8px;
+            }
+
+            .status-badge.in-progress {
+                background-color: rgba(33, 150, 243, 0.1);
+                color: #2196f3;
+            }
+
+            .status-badge.under-review {
+                background-color: rgba(255, 152, 0, 0.1);
+                color: #ff9800;
+            }
+
+            .status-badge.completed {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #4caf50;
+            }
+
+            /* Pulse animation for "Under Review" status */
+            @keyframes pulse {
+                0% {
+                    opacity: 1;
                 }
-                
-                // Update selected count
-                updateSelectedCount();
-            }, 1500);
-        });
-    });
-    
-    // Update selected count function
-    function updateSelectedCount() {
-        const selectedItems = document.querySelectorAll('.grid-item.selected-item');
-        const publishedItems = document.querySelectorAll('.grid-item.published-item');
-        const visibleItems = Array.from(document.querySelectorAll('.grid-item')).filter(item => 
-            !item.style.display || item.style.display !== 'none'
-        );
-        
-        // Add count display if it doesn't exist
-        let countDisplay = document.querySelector('.grid-selection-count');
-        if (!countDisplay) {
-            countDisplay = document.createElement('div');
-            countDisplay.className = 'grid-selection-count';
-            const gridHeader = document.querySelector('.grid-header');
-            if (gridHeader) {
-                gridHeader.appendChild(countDisplay);
+                50% {
+                    opacity: 0.7;
+                }
+                100% {
+                    opacity: 1;
+                }
             }
-        }
-        
-        // Update count display
-        if (countDisplay) {
-            countDisplay.innerHTML = `
-                
-                <span>Published: <strong>${publishedItems.length}</strong></span> | 
-                <span>Total: <strong>${document.querySelectorAll('.grid-item').length}</strong></span>
+
+            /* Dashboard styles */
+            .dashboard {
+                background-color: white;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: var(--shadow);
+                /* max-width: 1200px; */
+                margin: 0 auto 20px auto;
+            }
+
+            .dashboard-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .dashboard-title {
+                color: var(--fsu-garnet);
+                font-weight: 600;
+                font-size: 1.4rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .dashboard-title i {
+                color: var(--fsu-garnet);
+            }
+
+            .publish-options {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .select-container {
+                position: relative;
+                min-width: 250px;
+            }
+
+            .select-container label {
+                display: block;
+                font-size: 0.85rem;
+                color: #555;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+
+            .custom-select {
+                width: 100%;
+                padding: 12px 45px 12px 15px;
+                font-size: 1rem;
+                background-color: #f8f8f8;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                color: var(--fsu-black);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .custom-select:focus {
+                outline: none;
+                border-color: var(--fsu-gold);
+                box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.3);
+            }
+
+            .select-arrow {
+                position: absolute;
+                right: 15px;
+                top: 38px;
+                color: #777;
+                pointer-events: none;
+            }
+
+            .submit-btn {
+                background-color: var(--fsu-garnet);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .submit-btn:hover {
+                background-color: #651b2a;
+                transform: translateY(-2px);
+            }
+
+            .submit-btn:active {
+                transform: translateY(0);
+            }
+
+            /* Review Button State Styles */
+            .submit-btn.review-submitted {
+                background-color: #ff9800; /* Orange for review submitted state */
+                transform: none;
+            }
+
+            .submit-btn.review-submitted:hover {
+                background-color: #f57c00;
+            }
+
+            .submit-btn.review-accepted {
+                background-color: #4caf50; /* Green for review accepted state */
+                transform: none;
+                pointer-events: none; /* Prevents further clicks */
+            }
+
+            .submit-btn:disabled {
+                background-color: #ccc;
+                transform: none;
+                cursor: not-allowed;
+            }
+
+            /* Grid Container Styles */
+            .content-grid-container {
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: var(--shadow);
+                margin-top: 24px;
+                margin-bottom: 24px;
+                overflow: hidden;
+            }
+
+            .grid-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .grid-header h3 {
+                color: var(--fsu-garnet);
+                margin: 0;
+                font-family: "GothicCustom", sans-serif;
+                font-size: 1.2rem;
+            }
+
+            .grid-controls {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            /* Grid Item Selection Styles */
+            .grid-item {
+                position: relative;
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+                border: 2px solid transparent;
+                cursor: pointer;
+            }
+
+            .grid-item.selected-item {
+                border-color: var(--fsu-garnet);
+                box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+                transform: translateY(-3px);
+            }
+
+            .grid-item.published-item {
+                border-color: #4caf50;
+            }
+
+            .grid-item.selected-item.published-item {
+                border-color: var(--fsu-garnet);
+                box-shadow:
+                    0 0 0 3px rgba(120, 47, 64, 0.2),
+                    0 0 0 6px rgba(76, 175, 80, 0.2);
+            }
+
+            .grid-item.review-completed {
+                opacity: 0.9;
+                pointer-events: none;
+            }
+
+            /* Selection indicator */
+            .grid-item.selected-item::after {
+                content: "✓";
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 25px;
+                height: 25px;
+                background-color: var(--fsu-garnet);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                z-index: 5;
+            }
+
+            /* Grid View Styles */
+            .grid-view {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .grid-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Style for grid items */
+            .item-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .image-preview {
+                width: 100%;
+                height: 180px;
+                overflow: hidden;
+                flex-grow: 1;
+            }
+
+            .preview-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .grid-item:hover .preview-image {
+                transform: scale(1.05);
+            }
+
+            .text-preview {
+                padding: 15px;
+                background-color: #f9f9f9;
+                min-height: 120px;
+            }
+
+            .text-preview h4 {
+                color: var(--fsu-garnet);
+                margin-top: 0;
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+            }
+
+            .text-preview p {
+                margin: 0;
+                color: #555;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Type-specific styling */
+            .item-type {
+                padding: 3px 8px;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 0.8rem;
+            }
+
+            .press-release-type {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #4caf50;
+            }
+
+            .social-media-type {
+                background-color: rgba(255, 152, 0, 0.1);
+                color: #ff9800;
+            }
+
+            .item-details {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 15px;
+                background-color: #f5f5f5;
+                border-top: 1px solid #e0e0e0;
+                font-size: 0.8rem;
+            }
+
+            /* No content message styling */
+            .no-content-message {
+                text-align: center;
+                padding: 30px 0;
+                color: #777;
+                font-style: italic;
+            }
+
+            /* Publish button container */
+            .publish-button-container {
+                padding: 10px 15px;
+                background-color: #f9f9f9;
+                border-top: 1px solid #e0e0e0;
+                text-align: right;
+            }
+
+            /* Publish button styling */
+            .grid-publish-btn {
+                background-color: var(--fsu-garnet);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-left: auto;
+            }
+
+            .grid-publish-btn:hover {
+                background-color: #651b2a;
+                transform: translateY(-2px);
+            }
+
+            .grid-publish-btn:active {
+                transform: translateY(0);
+            }
+
+            .grid-publish-btn.published {
+                background-color: #4caf50; /* Green color for published state */
+                pointer-events: none; /* Prevents further clicks */
+            }
+
+            .grid-publish-btn.published:hover {
+                background-color: #4caf50; /* Keep the same color on hover */
+                transform: none; /* Disable hover animation */
+                cursor: default;
+            }
+
+            .grid-publish-btn i {
+                font-size: 16px;
+            }
+
+            /* Animation for publishing state */
+            @keyframes publishing {
+                0% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-3px);
+                }
+                100% {
+                    transform: translateY(0);
+                }
+            }
+
+            .grid-publish-btn.publishing {
+                background-color: #ffa000; /* Orange color for publishing state */
+                pointer-events: none; /* Prevents clicks during publishing */
+            }
+
+            .grid-publish-btn.publishing i {
+                animation: publishing 1s infinite; /* Apply bouncing animation to icon */
+            }
+
+            /* Enhanced modal styles */
+            .preview-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .modal-content {
+                background-color: white;
+                width: 90%;
+                max-width: 800px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                background-color: var(--fsu-garnet);
+                color: white;
+            }
+
+            .modal-title {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+
+            .modal-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .modal-body {
+                padding: 0;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
+            .modal-image {
+                width: 100%;
+                max-height: 400px;
+                object-fit: contain;
+                background-color: #f0f0f0;
+            }
+
+            .modal-text {
+                padding: 20px;
+            }
+
+            .modal-text h3 {
+                color: var(--fsu-garnet);
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+
+            .modal-text p {
+                line-height: 1.6;
+                color: #333;
+            }
+
+            .modal-footer {
+                display: flex;
+                justify-content: space-between;
+                padding: 15px 20px;
+                background-color: #f5f5f5;
+                border-top: 1px solid #e0e0e0;
+            }
+
+            .modal-type-badge {
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+
+            .modal-type-badge.press-release {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #4caf50;
+            }
+
+            .modal-type-badge.social-media {
+                background-color: rgba(255, 152, 0, 0.1);
+                color: #ff9800;
+            }
+
+            .modal-date {
+                color: #777;
+                font-size: 0.9rem;
+            }
+
+            /* Grid Controls */
+            .grid-controls {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .grid-select-btn {
+                background-color: #f0f0f0;
+                border: none;
+                border-radius: 4px;
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .grid-select-btn:hover {
+                background-color: #e0e0e0;
+            }
+
+            .grid-select-btn i {
+                font-size: 18px;
+                color: var(--fsu-garnet);
+            }
+
+            /* Grid Header with Search & Count */
+            .grid-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .grid-header h3 {
+                margin: 0;
+                font-size: 1.2rem;
+                color: var(--fsu-garnet);
+            }
+
+            .grid-search-box {
+                display: flex;
+                align-items: center;
+                background-color: #f8f8f8;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                padding: 6px 12px;
+                width: 250px;
+            }
+
+            .grid-search-box i {
+                color: #777;
+                margin-right: 8px;
+            }
+
+            .grid-search-box input {
+                border: none;
+                background: none;
+                outline: none;
+                font-size: 0.95rem;
+                width: 100%;
+            }
+
+            .grid-selection-count {
+                font-size: 0.9rem;
+                color: #555;
+                background-color: #f8f8f8;
+                padding: 5px 10px;
+                border-radius: 4px;
+                display: flex;
+                gap: 10px;
+            }
+
+            .grid-selection-count strong {
+                color: var(--fsu-garnet);
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                body {
+                    grid-template-columns: 1fr;
+                }
+
+                .sidebar {
+                    position: static;
+                }
+
+                .grid-view {
+                    grid-template-columns: 1fr;
+                }
+
+                .modal-content {
+                    width: 95%;
+                }
+
+                .publish-options {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .grid-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+
+                .grid-controls {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .grid-search-box {
+                    width: 100%;
+                }
+
+                .grid-selection-count {
+                    margin-top: 10px;
+                    width: 100%;
+                    justify-content: space-between;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .project-info {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .info-item {
+                    width: 100%;
+                }
+            }
+
+            /* Style for combined content items */
+            .item-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .image-preview {
+                width: 100%;
+                height: 180px;
+                overflow: hidden;
+                flex-grow: 1;
+            }
+
+            /* No content message styling */
+            .no-content-message {
+                text-align: center;
+                padding: 30px 0;
+                color: #777;
+                font-style: italic;
+            }
+
+            .preview-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .grid-item:hover .preview-image {
+                transform: scale(1.05);
+            }
+
+            .text-preview {
+                padding: 15px;
+                background-color: #f9f9f9;
+                min-height: 120px;
+            }
+
+            .text-preview h4 {
+                color: var(--fsu-garnet);
+                margin-top: 0;
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+            }
+
+            .text-preview p {
+                margin: 0;
+                color: #555;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Type-specific styling */
+            .item-type {
+                padding: 3px 8px;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 0.8rem;
+            }
+
+            .press-release-type {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #4caf50;
+            }
+
+            .social-media-type {
+                background-color: rgba(255, 152, 0, 0.1);
+                color: #ff9800;
+            }
+
+            .item-details {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 15px;
+                background-color: #f5f5f5;
+                border-top: 1px solid #e0e0e0;
+                font-size: 0.8rem;
+            }
+
+            /* Enhanced modal styles for combined content */
+            .preview-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .modal-content {
+                background-color: white;
+                width: 90%;
+                max-width: 800px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                background-color: var(--fsu-garnet);
+                color: white;
+            }
+
+            .modal-title {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+
+            .modal-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .modal-body {
+                padding: 0;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
+            .modal-image {
+                width: 100%;
+                max-height: 400px;
+                object-fit: contain;
+                background-color: #f0f0f0;
+            }
+
+            .modal-text {
+                padding: 20px;
+            }
+
+            .modal-text h3 {
+                color: var(--fsu-garnet);
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+
+            .modal-text p {
+                line-height: 1.6;
+                color: #333;
+            }
+
+            .modal-footer {
+                display: flex;
+                justify-content: space-between;
+                padding: 15px 20px;
+                background-color: #f5f5f5;
+                border-top: 1px solid #e0e0e0;
+            }
+
+            .modal-type-badge {
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+
+            .modal-type-badge.press-release {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #4caf50;
+            }
+
+            .modal-type-badge.social-media {
+                background-color: rgba(255, 152, 0, 0.1);
+                color: #ff9800;
+            }
+
+            .modal-date {
+                color: #777;
+                font-size: 0.9rem;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .grid-view {
+                    grid-template-columns: 1fr;
+                }
+
+                .modal-content {
+                    width: 95%;
+                }
+            }
+
+            /* Publish button container */
+            .publish-button-container {
+                padding: 10px 15px;
+                background-color: #f9f9f9;
+                border-top: 1px solid #e0e0e0;
+                text-align: right;
+            }
+
+            /* Publish button styling */
+            .grid-publish-btn {
+                background-color: var(--fsu-garnet);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-left: auto;
+            }
+
+            .grid-publish-btn:hover {
+                background-color: #651b2a;
+                transform: translateY(-2px);
+            }
+
+            .grid-publish-btn:active {
+                transform: translateY(0);
+            }
+
+            .grid-publish-btn.published {
+                background-color: #4caf50;
+            }
+
+            .grid-publish-btn i {
+                font-size: 16px;
+            }
+
+            /* Enhanced styling for publish buttons */
+            .grid-publish-btn.published {
+                background-color: #4caf50; /* Green color for published state */
+                pointer-events: none; /* Prevents further clicks */
+            }
+
+            .grid-publish-btn.published:hover {
+                background-color: #4caf50; /* Keep the same color on hover */
+                transform: none; /* Disable hover animation */
+                cursor: default;
+            }
+
+            /* Animation for publishing state */
+            @keyframes publishing {
+                0% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-3px);
+                }
+                100% {
+                    transform: translateY(0);
+                }
+            }
+
+            .grid-publish-btn.publishing {
+                background-color: #ffa000; /* Orange color for publishing state */
+                pointer-events: none; /* Prevents clicks during publishing */
+            }
+
+            .grid-publish-btn.publishing i {
+                animation: publishing 1s infinite; /* Apply bouncing animation to icon */
+            }
+
+            .notification-sidebar {
+                /* position: fixed;
+   right: 0; */
+                width: 200px;
+                height: min-content;
+                background: white;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                overflow-y: auto;
+                z-index: 100;
+                border-radius: 6px;
+                /* margin-left: auto; */
+            }
+
+            .notification {
+                padding: 12px;
+                border-left: 3px solid var(--fsu-garnet);
+                margin: 12px 0;
+                background: #f8f8f8;
+                border-radius: 0 4px 4px 0;
+                transition: transform 0.2s ease;
+            }
+
+            .notification:hover {
+                transform: translateX(-5px);
+            }
+
+            .notification-title {
+                color: var(--fsu-garnet);
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+
+            .notification-content {
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 4px;
+            }
+
+            .notification-time {
+                color: #999;
+                font-size: 0.8rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="sidebar">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
+                alt="FSU Logo"
+                width="100"
+            />
+            <div class="sidebar-item">
+                <i class="material-icons">home</i>
+                <a href="project_new.html"> Home </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">search</i>
+                <a href="project_new_research_page.html"> Research </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">description</i>
+                <a href="project_new_content_draft.html"> Content Draft </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">brush</i>
+                <span>Graphics</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">share</i>
+                <a href="projetc_new_marketing.html"> Marketing </a>
+            </div>
+            <div class="sidebar-item active">
+                <i class="material-icons">publish</i>
+                <span>Publish</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">equalizer</i>
+                <a href="project_new_analytics.html"> Analytics</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- FSU Header with Coordinator and Deadline -->
+            <header class="fsu-header">
+                <div class="header-container">
+                    <div class="logo-container">
+                        <h1 class="site-title">FSU Football Season 2025</h1>
+                    </div>
+                    <div class="project-info">
+                        <div class="info-item">
+                            <i class="material-icons">person</i>
+                            <div class="info-content">
+                                <span class="info-label"
+                                    >Publishing Coordinator</span
+                                >
+                                <span class="info-value">Sarah Johnson</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <span class="info-label">Phase Status</span>
+                                <span class="info-value">In Progress</span>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <i class="material-icons">event</i>
+                            <div class="info-content">
+                                <span class="info-label">Deadline</span>
+                                <span class="info-value">March 15, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Publishing Dashboard -->
+            <div class="dashboard">
+                <div class="dashboard-header"></div>
+
+                <!-- Publishing Options -->
+                <div class="publish-options">
+                    <div class="select-container">
+                        <label for="publish-type">Select Content Type:</label>
+                        <select id="publish-type" class="custom-select">
+                            <option value="" disabled selected>Choose</option>
+                            <option value="all">All Content</option>
+                            <option value="social">Social Media</option>
+                            <option value="press">Press Release</option>
+                        </select>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Content Table Dashboard -->
+            <div class="dashboard">
+            <div class="dashboard-header"></div>
+
+            <main class="content-grid-container">
+                <div class="grid-header"></div>
+
+                <div class="grid-view">
+                    <!-- Combined content items with both text and images -->
+                    <div class="grid-item" data-type="press-release">
+                        <div class="item-preview">
+                            <div class="item-content">
+                                <div class="image-preview">
+                                    <img
+                                        src="https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM="
+                                        alt="Season Opener Image"
+                                        class="preview-image"
+                                    />
+                                </div>
+                                <div class="text-preview">
+                                    <h4>Season Opener Press Release</h4>
+                                    <p>
+                                        Florida State University's football team
+                                        is set to begin its 2025 season with
+                                        renewed energy and determination...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-type press-release-type"
+                                >Press Release</span
+                            >
+                            <span class="item-date">Updated: Feb 28, 2025</span>
+                        </div>
+
+                        <div class="publish-button-container">
+                            <button class="grid-publish-btn">
+                                <i class="material-icons">publish</i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item" data-type="social-media">
+                        <div class="item-preview">
+                            <div class="item-content">
+                                <div class="image-preview">
+                                    <img
+                                        src="https://media.gettyimages.com/id/1243367519/photo/louisville-ky-a-florida-state-seminoles-logo-is-seen-on-a-flag-as-the-team-runs-onto-the.jpg?s=612x612&w=gi&k=20&c=2qUdiXv60GHq_-ccudrWu2kYSVO6-tLRzeZbIjlrU6M="
+                                        alt="Team Banner 2025"
+                                        class="preview-image"
+                                    />
+                                </div>
+                                <div class="text-preview">
+                                    <h4>Home Game Announcement</h4>
+                                    <p>
+                                        Join us this Saturday as the Seminoles
+                                        take on their rivals in the season's
+                                        most anticipated matchup...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-type social-media-type"
+                                >Social Media Post</span
+                            >
+                            <span class="item-date">Updated: Mar 1, 2025</span>
+                        </div>
+
+                        <div class="publish-button-container">
+                            <button class="grid-publish-btn">
+                                <i class="material-icons">publish</i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item" data-type="press-release">
+                        <div class="item-preview">
+                            <div class="item-content">
+                                <div class="image-preview">
+                                    <img
+                                        src="https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768"
+                                        alt="Marcus Johnson"
+                                        class="preview-image"
+                                    />
+                                </div>
+                                <div class="text-preview">
+                                    <h4>Player Spotlight: Marcus Johnson</h4>
+                                    <p>
+                                        Quarterback Marcus Johnson has been
+                                        training rigorously during the
+                                        off-season to prepare for what analysts
+                                        predict will be his breakout year...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-type press-release-type"
+                                >Press Release</span
+                            >
+                            <span class="item-date">Updated: Mar 2, 2025</span>
+                        </div>
+
+                        <div class="publish-button-container">
+                            <button class="grid-publish-btn">
+                                <i class="material-icons">publish</i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item" data-type="social-media">
+                        <div class="item-preview">
+                            <div class="item-content">
+                                <div class="image-preview">
+                                    <img
+                                        src="https://familyweekend.fsu.edu/sites/g/files/upcbnu2046/files/pictures/football-graphic-fw-2024.jpg"
+                                        alt="Season Tickets"
+                                        class="preview-image"
+                                    />
+                                </div>
+                                <div class="text-preview">
+                                    <h4>Season Ticket Promotion</h4>
+                                    <p>
+                                        Get ready for an unforgettable season
+                                        with FSU Football! Early bird season
+                                        tickets now available with exclusive
+                                        benefits for loyal fans...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-type social-media-type"
+                                >Social Media Post</span
+                            >
+                            <span class="item-date">Updated: Mar 3, 2025</span>
+                        </div>
+
+                        <div class="publish-button-container">
+                            <button class="grid-publish-btn">
+                                <i class="material-icons">publish</i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item" data-type="social-media">
+                        <div class="item-preview">
+                            <div class="item-content">
+                                <div class="image-preview">
+                                    <img
+                                        src="https://ik.imagekit.io/0bocj83w8/https://dzfa1uifb0sb6.cloudfront.net/preview_for_templates/template_1338_preview.jpg?tr=w-600,q-35"
+                                        alt="Social Media Kit"
+                                        class="preview-image"
+                                    />
+                                </div>
+                                <div class="text-preview">
+                                    <h4>Game Day Countdown</h4>
+                                    <p>
+                                        Only 3 days until kickoff! Share your
+                                        excitement and game day traditions with
+                                        us using #FSUGameDay...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-type social-media-type"
+                                >Social Media Post</span
+                            >
+                            <span class="item-date">Updated: Mar 4, 2025</span>
+                        </div>
+
+                        <div class="publish-button-container">
+                            <button class="grid-publish-btn">
+                                <i class="material-icons">publish</i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-item" data-type="press-release">
+                        <div class="item-preview">
+                            <div class="item-content">
+                                <div class="image-preview">
+                                    <img
+                                        src="https://www.tallahassee.com/gcdn/authoring/authoring-images/2024/10/06/PTCN/75540869007-usatsi-24420080.jpg?crop=3851,2167,x0,y215&width=660&height=371&format=pjpg&auto=webp"
+                                        alt="Coach Interview"
+                                        class="preview-image"
+                                    />
+                                </div>
+                                <div class="text-preview">
+                                    <h4>
+                                        Coach's Corner: Pre-Season Interview
+                                    </h4>
+                                    <p>
+                                        Head Coach Mike Thompson discusses
+                                        training camp progress, team strategy,
+                                        and expectations for the upcoming 2025
+                                        season...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-type press-release-type"
+                                >Press Release</span
+                            >
+                            <span class="item-date">Updated: Feb 25, 2025</span>
+                        </div>
+
+                        <div class="publish-button-container">
+                            <button class="grid-publish-btn">
+                                <i class="material-icons">publish</i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </main>
+
+        <aside class="notification-sidebar">
+            <div class="notification-header">
+                <h2>Notifications</h2>
+            </div>
+            <div class="notification-list">
+                <!-- Notifications will be dynamically inserted here -->
+            </div>
+        </aside>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize published content array
+                let publishedContent = [];
+
+                // DOM elements
+                const publishTypeSelect =
+                    document.getElementById("publish-type");
+                const submitReviewBtn =
+                    document.getElementById("submit-review-btn");
+                const phaseStatusElement = document.querySelector(
+                    ".info-item:nth-child(2) .info-value",
+                ); // Phase status element
+                const gridView = document.querySelector(".grid-view");
+
+                // Track the review state (not started, submitted, accepted)
+                let reviewState = "not-started";
+
+                // Add data attributes to grid items if not already present
+                document
+                    .querySelectorAll(".grid-item")
+                    .forEach((item, index) => {
+                        if (!item.dataset.id) {
+                            item.dataset.id = `item${index + 1}`;
+                        }
+                        if (!item.dataset.title) {
+                            item.dataset.title =
+                                item.querySelector("h4").textContent;
+                        }
+                        if (!item.dataset.date) {
+                            const dateText =
+                                item.querySelector(".item-date").textContent;
+                            item.dataset.date = dateText.replace(
+                                "Updated: ",
+                                "",
+                            );
+                        }
+
+                        // Add selected state functionality to grid items
+                        item.addEventListener("click", function (e) {
+                            // Prevent triggering if clicking on the publish button
+                            if (e.target.closest(".grid-publish-btn")) {
+                                return;
+                            }
+
+                            // Toggle selected state for the grid item
+                            this.classList.toggle("selected-item");
+
+                            // Update the selected count and review button state
+                            updateSelectedCount();
+
+                            // Show the modal content preview
+                            const itemType = this.dataset.type;
+                            const title = this.querySelector("h4").textContent;
+                            const text = this.querySelector("p").textContent;
+                            const image = this.querySelector("img").src;
+                            const imageAlt = this.querySelector("img").alt;
+                            const date =
+                                this.querySelector(".item-date").textContent;
+
+                            showCombinedContentModal(
+                                title,
+                                text,
+                                image,
+                                imageAlt,
+                                itemType,
+                                date,
+                            );
+                        });
+                    });
+
+                // Set up grid publish buttons
+                const publishButtons =
+                    document.querySelectorAll(".grid-publish-btn");
+
+                publishButtons.forEach((button) => {
+                    // Set button's data-id attribute if not already present
+                    if (!button.dataset.id) {
+                        const parentItem = button.closest(".grid-item");
+                        button.dataset.id = parentItem.dataset.id;
+                    }
+
+                    button.addEventListener("click", function (e) {
+                        e.stopPropagation();
+
+                        // If already published, don't do anything
+                        if (this.classList.contains("published")) {
+                            return;
+                        }
+
+                        const itemId = this.dataset.id;
+                        const gridItem = document.querySelector(
+                            `.grid-item[data-id="${itemId}"]`,
+                        );
+
+                        const contentTitle =
+                            gridItem.dataset.title ||
+                            gridItem.querySelector("h4").textContent;
+                        const contentType = gridItem.dataset.type;
+                        const contentDate =
+                            gridItem.dataset.date ||
+                            gridItem
+                                .querySelector(".item-date")
+                                .textContent.replace("Updated: ", "");
+
+                        // Check if already published
+                        const existingItemIndex = publishedContent.findIndex(
+                            (item) => item.id === itemId,
+                        );
+                        if (existingItemIndex !== -1) {
+                            alert(
+                                `"${contentTitle}" is already in the publishing queue.`,
+                            );
+                            return;
+                        }
+
+                        // Show publishing state
+                        this.classList.add("publishing");
+                        this.innerHTML =
+                            '<i class="material-icons">cloud_upload</i> Publishing...';
+
+                        // Simulate publishing process
+                        setTimeout(() => {
+                            // Add to published content
+                            const newItem = {
+                                id: itemId,
+                                title: contentTitle,
+                                type: contentType,
+                                date: contentDate,
+                                status: "published",
+                            };
+
+                            publishedContent.push(newItem);
+                            addNotification(
+                             "update",
+                             `Content Published`,
+                             `Published ${contentType} - ${contentDate} successfully`,
+                         );
+
+                            // Mark grid item as published
+                            gridItem.classList.add("published-item");
+
+                            // Show success state - NO TIMEOUT to reset
+                            this.classList.remove("publishing");
+                            this.classList.add("published");
+                            this.innerHTML =
+                                '<i class="material-icons">check_circle</i> Published';
+
+                            // Enable review button if there are published items and not already reviewed
+                            if (
+                                publishedContent.length > 0 &&
+                                reviewState === "not-started"
+                            ) {
+                                submitReviewBtn.disabled = false;
+                                submitReviewBtn.style.opacity = "1";
+                            }
+
+                            // Update selected count
+                            updateSelectedCount();
+                        }, 1500);
+                    });
+                });
+
+                // Update selected count function
+                function updateSelectedCount() {
+                    const selectedItems = document.querySelectorAll(
+                        ".grid-item.selected-item",
+                    );
+                    const publishedItems = document.querySelectorAll(
+                        ".grid-item.published-item",
+                    );
+                    const visibleItems = Array.from(
+                        document.querySelectorAll(".grid-item"),
+                    ).filter(
+                        (item) =>
+                            !item.style.display ||
+                            item.style.display !== "none",
+                    );
+
+                    // Add count display if it doesn't exist
+                    let countDisplay = document.querySelector(
+                        ".grid-selection-count",
+                    );
+                    if (!countDisplay) {
+                        countDisplay = document.createElement("div");
+                        countDisplay.className = "grid-selection-count";
+                        const gridHeader =
+                            document.querySelector(".grid-header");
+                        if (gridHeader) {
+                            gridHeader.appendChild(countDisplay);
+                        }
+                    }
+
+                    // Update count display
+                    if (countDisplay) {
+                        countDisplay.innerHTML = `
+
+                <span>Published: <strong>${publishedItems.length}</strong></span> |
+                <span>Total: <strong>${document.querySelectorAll(".grid-item").length}</strong></span>
             `;
-        }
-        
-        // Enable/disable submit button based on selections
-        if (submitReviewBtn && reviewState === 'not-started') {
-            const hasPublishedItems = publishedItems.length > 0;
-            const hasTypeSelected = publishTypeSelect && publishTypeSelect.value;
-            
-            if (hasPublishedItems && hasTypeSelected) {
-                submitReviewBtn.disabled = false;
-                submitReviewBtn.style.opacity = "1";
-            } else {
-                submitReviewBtn.disabled = true;
-                submitReviewBtn.style.opacity = "0.6";
-            }
-        }
-    }
-    
-    // Add select all/none options to the grid container
-    function addGridSelectionControls() {
-        const gridControls = document.querySelector('.grid-controls');
-        if (!gridControls) return;
-        
-        const selectAllBtn = document.createElement('button');
-        selectAllBtn.className = 'grid-select-btn';
-        selectAllBtn.innerHTML = '<i class="material-icons">select_all</i> Select All';
-        
-        const selectNoneBtn = document.createElement('button');
-        selectNoneBtn.className = 'grid-select-btn';
-        selectNoneBtn.innerHTML = '<i class="material-icons">clear</i> Select None';
-        
-        gridControls.appendChild(selectAllBtn);
-        gridControls.appendChild(selectNoneBtn);
-        
-        // Select all grid items
-        selectAllBtn.addEventListener('click', function() {
-            document.querySelectorAll('.grid-item').forEach(item => {
-                item.classList.add('selected-item');
-            });
-            updateSelectedCount();
-        });
-        
-        // Deselect all grid items
-        selectNoneBtn.addEventListener('click', function() {
-            document.querySelectorAll('.grid-item').forEach(item => {
-                item.classList.remove('selected-item');
-            });
-            updateSelectedCount();
-        });
-    }
-    
-    // Add search functionality to the grid
-    function addGridSearchFeature() {
-        const gridHeader = document.querySelector('.grid-header');
-        if (!gridHeader) return;
-        
-        const searchBox = document.createElement('div');
-        searchBox.className = 'grid-search-box';
-        searchBox.innerHTML = `
+                    }
+
+                    // Enable/disable submit button based on selections
+                    if (submitReviewBtn && reviewState === "not-started") {
+                        const hasPublishedItems = publishedItems.length > 0;
+                        const hasTypeSelected =
+                            publishTypeSelect && publishTypeSelect.value;
+
+                        if (hasPublishedItems && hasTypeSelected) {
+                            submitReviewBtn.disabled = false;
+                            submitReviewBtn.style.opacity = "1";
+                        } else {
+                            submitReviewBtn.disabled = true;
+                            submitReviewBtn.style.opacity = "0.6";
+                        }
+                    }
+                }
+
+                // Add select all/none options to the grid container
+                function addGridSelectionControls() {
+                    const gridControls =
+                        document.querySelector(".grid-controls");
+                    if (!gridControls) return;
+
+                    const selectAllBtn = document.createElement("button");
+                    selectAllBtn.className = "grid-select-btn";
+                    selectAllBtn.innerHTML =
+                        '<i class="material-icons">select_all</i> Select All';
+
+                    const selectNoneBtn = document.createElement("button");
+                    selectNoneBtn.className = "grid-select-btn";
+                    selectNoneBtn.innerHTML =
+                        '<i class="material-icons">clear</i> Select None';
+
+                    gridControls.appendChild(selectAllBtn);
+                    gridControls.appendChild(selectNoneBtn);
+
+                    // Select all grid items
+                    selectAllBtn.addEventListener("click", function () {
+                        document
+                            .querySelectorAll(".grid-item")
+                            .forEach((item) => {
+                                item.classList.add("selected-item");
+                            });
+                        updateSelectedCount();
+                    });
+
+                    // Deselect all grid items
+                    selectNoneBtn.addEventListener("click", function () {
+                        document
+                            .querySelectorAll(".grid-item")
+                            .forEach((item) => {
+                                item.classList.remove("selected-item");
+                            });
+                        updateSelectedCount();
+                    });
+                }
+
+                // Add search functionality to the grid
+                function addGridSearchFeature() {
+                    const gridHeader = document.querySelector(".grid-header");
+                    if (!gridHeader) return;
+
+                    const searchBox = document.createElement("div");
+                    searchBox.className = "grid-search-box";
+                    searchBox.innerHTML = `
             <i class="material-icons">search</i>
             <input type="text" id="search-grid" placeholder="Search content...">
         `;
-        
-        gridHeader.appendChild(searchBox);
-        
-        // Add search functionality
-        const searchInput = searchBox.querySelector('input');
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            document.querySelectorAll('.grid-item').forEach(item => {
-                const title = item.querySelector('h4').textContent.toLowerCase();
-                const text = item.querySelector('p').textContent.toLowerCase();
-                const type = item.dataset.type.toLowerCase();
-                
-                if (title.includes(searchTerm) || text.includes(searchTerm) || type.includes(searchTerm)) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-            
-            // Update the count after search filtering
-            updateSelectedCount();
-        });
-    }
-    
-    // Handle publish type selection
-    if (publishTypeSelect) {
-        publishTypeSelect.addEventListener('change', function() {
-            const selectedType = this.value;
-            
-            // Filter grid items based on the selected publish type
-            document.querySelectorAll('.grid-item').forEach(item => {
-                const itemType = item.dataset.type;
-                
-                // Show all items if "all" is selected or no filter is selected
-                if (!selectedType || selectedType === 'all') {
-                    item.style.display = '';
-                } else if (selectedType === 'social' && itemType === 'social-media') {
-                    item.style.display = '';
-                } else if (selectedType === 'press' && itemType === 'press-release') {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-            
-            // Update selected count
-            updateSelectedCount();
-            
-            // Visual feedback on selection change
-            this.style.borderColor = '#ceb888';
-            setTimeout(() => {
-                this.style.borderColor = '#e0e0e0';
-            }, 300);
-            
-            // Enable/disable review button based on selection
-            if (reviewState === 'not-started' && publishedContent.length > 0) {
-                submitReviewBtn.disabled = !selectedType;
-                submitReviewBtn.style.opacity = selectedType ? "1" : "0.6";
-            }
-        });
-    }
-    
-    // Submit Review Button Initialization
-    if (submitReviewBtn) {
-        // Make sure the button is always enabled
-        submitReviewBtn.disabled = false;
-        submitReviewBtn.style.opacity = "1";
-        
-        submitReviewBtn.addEventListener('click', function() {
-            if (reviewState === 'not-started') {
-                // Count published items
-                const publishedItems = document.querySelectorAll('.grid-item.published-item');
-                const itemsToReview = publishedItems.length;
-                
-                // Show confirmation dialog - no need to check if items exist since button is always active
-                if (confirm(`Are you sure you want to submit ${itemsToReview > 0 ? itemsToReview : 'all'} items for review? This will notify the review team.`)) {
-                    // Update button text and appearance
-                    this.innerHTML = '<i class="material-icons">rate_review</i> Accept Review';
-                    this.classList.add('review-submitted');
-                    
-                    // Update phase status
-                    updateProjectStatus('Under Review');
-                    
-                    // Update review state
-                    reviewState = 'submitted';
-                    
-                    // Show success notification
-                    alert(`Successfully submitted ${itemsToReview > 0 ? itemsToReview : 'all'} items for review.`);
-                }
-            } else if (reviewState === 'submitted') {
-                // Accept the review
-                if (confirm('Are you sure you want to accept this review?')) {
-                    // Update button text and appearance
-                    this.innerHTML = '<i class="material-icons">check_circle</i> Review Accepted';
-                    this.classList.remove('review-submitted');
-                    this.classList.add('review-accepted');
-                    
-                    // Don't disable the button, just change its appearance
-                    // this.disabled = true; (removed)
-                    
-                    // Update phase status
-                    updateProjectStatus('Completed');
-                    
-                    // Update review state
-                    reviewState = 'accepted';
-                    
-                    // Show success notification
-                    alert('Review has been accepted.');
-                    
-                    // Disable further interaction with grid items
-                    document.querySelectorAll('.grid-item').forEach(item => {
-                        item.classList.add('review-completed');
+
+                    gridHeader.appendChild(searchBox);
+
+                    // Add search functionality
+                    const searchInput = searchBox.querySelector("input");
+                    searchInput.addEventListener("input", function () {
+                        const searchTerm = this.value.toLowerCase();
+
+                        document
+                            .querySelectorAll(".grid-item")
+                            .forEach((item) => {
+                                const title = item
+                                    .querySelector("h4")
+                                    .textContent.toLowerCase();
+                                const text = item
+                                    .querySelector("p")
+                                    .textContent.toLowerCase();
+                                const type = item.dataset.type.toLowerCase();
+
+                                if (
+                                    title.includes(searchTerm) ||
+                                    text.includes(searchTerm) ||
+                                    type.includes(searchTerm)
+                                ) {
+                                    item.style.display = "";
+                                } else {
+                                    item.style.display = "none";
+                                }
+                            });
+
+                        // Update the count after search filtering
+                        updateSelectedCount();
                     });
                 }
-            } else if (reviewState === 'accepted') {
-                // Allow clicking even after acceptance - could reset or perform another action
-                alert('This review has already been accepted.');
-            }
-        });
-    }
-    
-    // Function to display combined content in modal
-    function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
-        // Check if modal already exists
-        let modal = document.getElementById('preview-modal');
-        
-        if (!modal) {
-            // Create modal container
-            modal = document.createElement('div');
-            modal.id = 'preview-modal';
-            modal.className = 'preview-modal';
-            
-            // Add modal HTML structure for combined content
-            modal.innerHTML = `
+
+                // Handle publish type selection
+                if (publishTypeSelect) {
+                    publishTypeSelect.addEventListener("change", function () {
+                        const selectedType = this.value;
+
+                        // Filter grid items based on the selected publish type
+                        document
+                            .querySelectorAll(".grid-item")
+                            .forEach((item) => {
+                                const itemType = item.dataset.type;
+
+                                // Show all items if "all" is selected or no filter is selected
+                                if (!selectedType || selectedType === "all") {
+                                    item.style.display = "";
+                                } else if (
+                                    selectedType === "social" &&
+                                    itemType === "social-media"
+                                ) {
+                                    item.style.display = "";
+                                } else if (
+                                    selectedType === "press" &&
+                                    itemType === "press-release"
+                                ) {
+                                    item.style.display = "";
+                                } else {
+                                    item.style.display = "none";
+                                }
+                            });
+
+                        // Update selected count
+                        updateSelectedCount();
+
+                        // Visual feedback on selection change
+                        this.style.borderColor = "#ceb888";
+                        setTimeout(() => {
+                            this.style.borderColor = "#e0e0e0";
+                        }, 300);
+
+                        // Enable/disable review button based on selection
+                        if (
+                            reviewState === "not-started" &&
+                            publishedContent.length > 0
+                        ) {
+                            submitReviewBtn.disabled = !selectedType;
+                            submitReviewBtn.style.opacity = selectedType
+                                ? "1"
+                                : "0.6";
+                        }
+                    });
+                }
+
+                // Submit Review Button Initialization
+                if (submitReviewBtn) {
+                    // Make sure the button is always enabled
+                    submitReviewBtn.disabled = false;
+                    submitReviewBtn.style.opacity = "1";
+
+                    submitReviewBtn.addEventListener("click", function () {
+                        if (reviewState === "not-started") {
+                            // Count published items
+                            const publishedItems = document.querySelectorAll(
+                                ".grid-item.published-item",
+                            );
+                            const itemsToReview = publishedItems.length;
+
+                            // Show confirmation dialog - no need to check if items exist since button is always active
+                            if (
+                                confirm(
+                                    `Are you sure you want to submit ${itemsToReview > 0 ? itemsToReview : "all"} items for review? This will notify the review team.`,
+                                )
+                            ) {
+                                // Update button text and appearance
+                                this.innerHTML =
+                                    '<i class="material-icons">rate_review</i> Accept Review';
+                                this.classList.add("review-submitted");
+
+                                // Update phase status
+                                updateProjectStatus("Under Review");
+
+                                // Update review state
+                                reviewState = "submitted";
+
+                                // Show success notification
+                                alert(
+                                    `Successfully submitted ${itemsToReview > 0 ? itemsToReview : "all"} items for review.`,
+                                );
+                            }
+                        } else if (reviewState === "submitted") {
+                            // Accept the review
+                            if (
+                                confirm(
+                                    "Are you sure you want to accept this review?",
+                                )
+                            ) {
+                                // Update button text and appearance
+                                this.innerHTML =
+                                    '<i class="material-icons">check_circle</i> Review Accepted';
+                                this.classList.remove("review-submitted");
+                                this.classList.add("review-accepted");
+
+                                // Don't disable the button, just change its appearance
+                                // this.disabled = true; (removed)
+
+                                // Update phase status
+                                updateProjectStatus("Completed");
+
+                                // Update review state
+                                reviewState = "accepted";
+
+                                // Show success notification
+                                alert("Review has been accepted.");
+
+                                // Disable further interaction with grid items
+                                document
+                                    .querySelectorAll(".grid-item")
+                                    .forEach((item) => {
+                                        item.classList.add("review-completed");
+                                    });
+                            }
+                        } else if (reviewState === "accepted") {
+                            // Allow clicking even after acceptance - could reset or perform another action
+                            alert("This review has already been accepted.");
+                        }
+                    });
+                }
+
+                // Function to display combined content in modal
+                function showCombinedContentModal(
+                    title,
+                    text,
+                    imageSrc,
+                    imageAlt,
+                    contentType,
+                    date,
+                ) {
+                    // Check if modal already exists
+                    let modal = document.getElementById("preview-modal");
+
+                    if (!modal) {
+                        // Create modal container
+                        modal = document.createElement("div");
+                        modal.id = "preview-modal";
+                        modal.className = "preview-modal";
+
+                        // Add modal HTML structure for combined content
+                        modal.innerHTML = `
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title"></h3>
@@ -1732,92 +1998,162 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-            
-            document.body.appendChild(modal);
-            
-            // Set up close functionality
-            const closeBtn = modal.querySelector('.modal-close');
-            closeBtn.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-            
-            // Close on click outside
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        }
-        
-        // Determine display title based on content type
-        let displayTitle;
-        if (contentType === 'press-release') {
-            displayTitle = 'Press Release';
-        } else if (contentType === 'social-media') {
-            displayTitle = 'Social Media Post';
-        } else {
-            displayTitle = 'Content';
-        }
-        
-        // Update modal content
-        modal.querySelector('.modal-title').textContent = displayTitle;
-        modal.querySelector('.modal-content-title').textContent = title;
-        modal.querySelector('.modal-content-text').textContent = text;
-        modal.querySelector('.modal-image').src = imageSrc;
-        modal.querySelector('.modal-image').alt = imageAlt;
-        modal.querySelector('.modal-date').textContent = date;
-        
-        // Set type badge
-        const typeBadge = modal.querySelector('.modal-type-badge');
-        typeBadge.textContent = displayTitle;
-        typeBadge.className = 'modal-type-badge ' + contentType;
-        
-        // Show modal
-        modal.style.display = 'flex';
-    }
-    
-    // Function to update project status
-    function updateProjectStatus(status) {
-        // Use a more specific selector to target only the phase status element
-        const phaseStatusElement = document.querySelector('.info-item:nth-child(2) .info-value');
-        
-        if (phaseStatusElement) {
-            phaseStatusElement.textContent = status;
-            
-            // Remove any existing status classes
-            phaseStatusElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
-            
-            // Add appropriate status class
-            if (status === 'In Progress') {
-                phaseStatusElement.classList.add('status-in-progress');
-            } else if (status === 'Under Review') {
-                phaseStatusElement.classList.add('status-under-review');
-            } else if (status === 'Completed') {
-                phaseStatusElement.classList.add('status-completed');
-            }
-            
-            // Update parent container class if it exists
-            const parentContainer = phaseStatusElement.closest('.info-item');
-            if (parentContainer) {
-                parentContainer.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
-                
-                if (status === 'In Progress') {
-                    parentContainer.classList.add('status-in-progress');
-                } else if (status === 'Under Review') {
-                    parentContainer.classList.add('status-under-review');
-                } else if (status === 'Completed') {
-                    parentContainer.classList.add('status-completed');
-                }
-            }
-        }
-    }
-    
-    // Initialize grid controls
-    addGridSelectionControls();
-    addGridSearchFeature();
-    updateSelectedCount();
-});
 
-    </script>
-</body>
+                        document.body.appendChild(modal);
+
+                        // Set up close functionality
+                        const closeBtn = modal.querySelector(".modal-close");
+                        closeBtn.addEventListener("click", function () {
+                            modal.style.display = "none";
+                        });
+
+                        // Close on click outside
+                        modal.addEventListener("click", function (e) {
+                            if (e.target === modal) {
+                                modal.style.display = "none";
+                            }
+                        });
+                    }
+
+                    // Determine display title based on content type
+                    let displayTitle;
+                    if (contentType === "press-release") {
+                        displayTitle = "Press Release";
+                    } else if (contentType === "social-media") {
+                        displayTitle = "Social Media Post";
+                    } else {
+                        displayTitle = "Content";
+                    }
+
+                    // Update modal content
+                    modal.querySelector(".modal-title").textContent =
+                        displayTitle;
+                    modal.querySelector(".modal-content-title").textContent =
+                        title;
+                    modal.querySelector(".modal-content-text").textContent =
+                        text;
+                    modal.querySelector(".modal-image").src = imageSrc;
+                    modal.querySelector(".modal-image").alt = imageAlt;
+                    modal.querySelector(".modal-date").textContent = date;
+
+                    // Set type badge
+                    const typeBadge = modal.querySelector(".modal-type-badge");
+                    typeBadge.textContent = displayTitle;
+                    typeBadge.className = "modal-type-badge " + contentType;
+
+                    // Show modal
+                    modal.style.display = "flex";
+                }
+
+                // Function to update project status
+                function updateProjectStatus(status) {
+                    // Use a more specific selector to target only the phase status element
+                    const phaseStatusElement = document.querySelector(
+                        ".info-item:nth-child(2) .info-value",
+                    );
+
+                    if (phaseStatusElement) {
+                        phaseStatusElement.textContent = status;
+
+                        // Remove any existing status classes
+                        phaseStatusElement.classList.remove(
+                            "status-in-progress",
+                            "status-under-review",
+                            "status-completed",
+                        );
+
+                        // Add appropriate status class
+                        if (status === "In Progress") {
+                            phaseStatusElement.classList.add(
+                                "status-in-progress",
+                            );
+                        } else if (status === "Under Review") {
+                            phaseStatusElement.classList.add(
+                                "status-under-review",
+                            );
+                        } else if (status === "Completed") {
+                            phaseStatusElement.classList.add(
+                                "status-completed",
+                            );
+                        }
+
+                        // Update parent container class if it exists
+                        const parentContainer =
+                            phaseStatusElement.closest(".info-item");
+                        if (parentContainer) {
+                            parentContainer.classList.remove(
+                                "status-in-progress",
+                                "status-under-review",
+                                "status-completed",
+                            );
+
+                            if (status === "In Progress") {
+                                parentContainer.classList.add(
+                                    "status-in-progress",
+                                );
+                            } else if (status === "Under Review") {
+                                parentContainer.classList.add(
+                                    "status-under-review",
+                                );
+                            } else if (status === "Completed") {
+                                parentContainer.classList.add(
+                                    "status-completed",
+                                );
+                            }
+                        }
+                    }
+                }
+
+                // Initialize grid controls
+                addGridSelectionControls();
+                addGridSearchFeature();
+                updateSelectedCount();
+            });
+
+            function addNotification(type, title, message) {
+                const notificationList =
+                    document.querySelector(".notification-list");
+                if (!notificationList) return;
+
+                const notification = document.createElement("div");
+                notification.className = `notification type-${type} new`;
+
+                const icon = getIconForType(type);
+
+                notification.innerHTML = `
+            <i class="material-icons notification-icon">${icon}</i>
+            <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+            <div class="notification-time">Just now</div>
+            </div>
+            `;
+
+                notificationList.insertBefore(
+                    notification,
+                    notificationList.firstChild,
+                );
+
+                // Fade out "new" tag after some time
+                setTimeout(() => {
+                    notification.classList.remove("new");
+                }, 5000);
+            }
+
+            // Get icon based on notification type
+            function getIconForType(type) {
+                const icons = {
+                    assignment: "person_add",
+                    progress: "trending_up",
+                    review: "rate_review",
+                    update: "update",
+                    alert: "warning",
+                    comment: "comment",
+                    default: "notifications",
+                };
+
+                return icons[type] || icons.default;
+            }
+        </script>
+    </body>
 </html>

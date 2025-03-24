@@ -28,12 +28,14 @@
         body {
             background-color: var(--fsu-garnet);
             display: grid;
-            grid-template-columns: 250px 1fr 300px;
+            grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                    180px,
+                    1fr
+                );
             min-height: 100vh;
             gap: 24px;
             padding: 24px;
         }
-
         .sidebar {
             background: var(--fsu-gold);
             border-radius: 8px;
@@ -227,25 +229,25 @@
         box-shadow: var(--shadow);
         margin-bottom: 20px;
     }
-    
+
     .dropdown-container {
         display: flex;
         align-items: center;
         gap: 15px;
         margin-bottom: 20px;
     }
-    
+
     .dropdown-container label {
         font-weight: 600;
         color: var(--fsu-garnet);
         font-size: 1rem;
     }
-    
+
     .custom-select {
         position: relative;
         min-width: 250px;
     }
-    
+
     .custom-select select {
         appearance: none;
         -webkit-appearance: none;
@@ -259,13 +261,13 @@
         cursor: pointer;
         transition: border-color 0.3s ease;
     }
-    
+
     .custom-select select:focus {
         outline: none;
         border-color: var(--fsu-gold);
         box-shadow: 0 0 0 2px rgba(206, 184, 136, 0.3);
     }
-    
+
     .select-arrow {
         position: absolute;
         right: 12px;
@@ -273,11 +275,11 @@
         transform: translateY(-50%);
         pointer-events: none;
     }
-    
+
     .select-arrow i {
         color: var(--fsu-garnet);
     }
-    
+
     /* Content Display Styles */
     .content-display {
         min-height: 100px;
@@ -286,45 +288,45 @@
         border-radius: 6px;
         background-color: #f9f9f9;
     }
-    
+
     .placeholder-message {
         color: #666;
         text-align: center;
         font-style: italic;
         padding: 20px;
     }
-    
+
     /* Content Type Specific Styles */
     .press-release-content,
     .social-media-content {
         display: none;
         padding: 15px;
     }
-    
+
     .press-release-content.active,
     .social-media-content.active {
         display: block;
         animation: fadeIn 0.5s ease;
     }
-    
+
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
     }
-    
+
     /* Press Release specific styling */
     .press-release-content {
         background-color: white;
         border-radius: 6px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
-    
+
     /* Social Media specific styling */
     .social-media-content {
         background-color: white;
         border-radius: 6px;
     }
-    
+
     /* Add hover effect to dropdown */
     .custom-select select:hover {
         border-color: var(--fsu-gold);
@@ -383,13 +385,13 @@
         flex-direction: column;
         width: 100%;
     }
-    
+
     .btn {
         width: 100%;
         margin-bottom: 10px;
         justify-content: center;
     }
-    
+
     .btn-submit {
         order: -1; /* This puts the submit button above the add new button on mobile */
     }
@@ -400,11 +402,11 @@
 }
 
 .btn-submit.review-state {
-    background-color: var(--fsu-gold); 
+    background-color: var(--fsu-gold);
 }
 
 .btn-submit.accepted-state {
-    background-color: var(--fsu-gold); 
+    background-color: var(--fsu-gold);
     pointer-events: none; /* Prevents further clicks */
 }
 
@@ -566,7 +568,7 @@
         color: #757575;
         font-size: 1rem;
     }
-    
+
     /* Media Popup Styles */
     .media-popup {
         display: none;
@@ -580,12 +582,12 @@
         justify-content: center;
         align-items: center;
     }
-    
+
     .media-popup.active {
         display: flex;
         animation: fadeIn 0.3s ease;
     }
-    
+
     .popup-content {
         background-color: white;
         width: 90%;
@@ -597,7 +599,7 @@
         flex-direction: column;
         box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     }
-    
+
     .popup-header {
         padding: 15px 20px;
         display: flex;
@@ -607,12 +609,12 @@
         background-color: var(--fsu-garnet);
         color: white;
     }
-    
+
     .popup-header h3 {
         margin: 0;
         font-size: 1.2rem;
     }
-    
+
     .close-popup {
         background: none;
         border: none;
@@ -624,17 +626,17 @@
         justify-content: center;
         transition: transform 0.2s ease;
     }
-    
+
     .close-popup:hover {
         transform: scale(1.1);
     }
-    
+
     .popup-tabs {
         display: flex;
         border-bottom: 1px solid #e0e0e0;
         background-color: #f9f9f9;
     }
-    
+
     .tab-btn {
         padding: 15px 20px;
         background: none;
@@ -647,39 +649,39 @@
         flex: 1;
         text-align: center;
     }
-    
+
     .tab-btn:hover {
         background-color: #f0f0f0;
         color: var(--fsu-garnet);
     }
-    
+
     .tab-btn.active {
         border-bottom-color: var(--fsu-gold);
         color: var(--fsu-garnet);
         background-color: white;
     }
-    
+
     .popup-body {
         padding: 20px;
         overflow-y: auto;
         flex: 1;
     }
-    
+
     .tab-content {
         display: none;
     }
-    
+
     .tab-content.active {
         display: block;
         animation: fadeIn 0.3s ease;
     }
-    
+
     .media-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 15px;
     }
-    
+
     .media-item {
         border: 1px solid #e0e0e0;
         border-radius: 6px;
@@ -688,19 +690,19 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         background-color: white;
     }
-    
+
     .media-item:hover {
         transform: translateY(-3px);
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
-    
+
     .media-item img {
         width: 100%;
         height: 120px;
         object-fit: cover;
         display: block;
     }
-    
+
     .media-name {
         display: block;
         padding: 8px 10px;
@@ -709,18 +711,18 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
     .media-checkbox {
         position: absolute;
         top: 8px;
         right: 8px;
         z-index: 2;
     }
-    
+
     .media-checkbox input[type="checkbox"] {
         display: none;
     }
-    
+
     .media-checkbox label {
         display: block;
         width: 22px;
@@ -731,12 +733,12 @@
         cursor: pointer;
         position: relative;
     }
-    
+
     .media-checkbox input[type="checkbox"]:checked + label {
         background-color: var(--fsu-gold);
         border-color: var(--fsu-garnet);
     }
-    
+
     .media-checkbox input[type="checkbox"]:checked + label:after {
         content: "";
         position: absolute;
@@ -748,31 +750,31 @@
         border-bottom: 2px solid var(--fsu-garnet);
         transform: rotate(-45deg);
     }
-    
+
     .popup-options {
         padding: 15px 20px;
         border-top: 1px solid #e0e0e0;
         background-color: #f9f9f9;
     }
-    
+
     .options-container {
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
     }
-    
+
     .option-group {
         flex: 1;
         min-width: 200px;
     }
-    
+
     .option-group label {
         display: block;
         margin-bottom: 5px;
         font-weight: 500;
         color: #555;
     }
-    
+
     .option-group input,
     .option-group select {
         width: 100%;
@@ -781,7 +783,7 @@
         border-radius: 4px;
         font-size: 0.9rem;
     }
-    
+
     .popup-footer {
         padding: 15px 20px;
         border-top: 1px solid #e0e0e0;
@@ -790,17 +792,17 @@
         align-items: center;
         background-color: white;
     }
-    
+
     .selection-summary {
         font-size: 0.9rem;
         color: #555;
     }
-    
+
     .popup-actions {
         display: flex;
         gap: 10px;
     }
-    
+
     .popup-btn {
         padding: 8px 15px;
         border-radius: 4px;
@@ -809,25 +811,25 @@
         border: none;
         transition: all 0.2s ease;
     }
-    
+
     .cancel-btn {
         background-color: #f0f0f0;
         color: #555;
     }
-    
+
     .cancel-btn:hover {
         background-color: #e0e0e0;
     }
-    
+
     .save-btn {
         background-color: var(--fsu-garnet);
         color: white;
     }
-    
+
     .save-btn:hover {
         background-color: #8a3a4d;
     }
-    
+
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -1059,10 +1061,53 @@
 .comment-item.new {
     animation: fadeIn 0.3s ease forwards;
 }
-        
+
+.notification-sidebar {
+   /* position: fixed;
+   right: 0; */
+   width: 200px;
+   height: min-content;
+   background: white;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   padding: 20px;
+   overflow-y: auto;
+   z-index: 100;
+   border-radius: 6px;
+   /* margin-left: auto; */
+}
+
+.notification {
+   padding: 12px;
+   border-left: 3px solid var(--fsu-garnet);
+   margin: 12px 0;
+   background: #f8f8f8;
+   border-radius: 0 4px 4px 0;
+   transition: transform 0.2s ease;
+}
+
+.notification:hover {
+   transform: translateX(-5px);
+}
+
+.notification-title {
+   color: var(--fsu-garnet);
+   font-weight: 600;
+   margin-bottom: 4px;
+}
+
+.notification-content {
+   color: #666;
+   font-size: 0.9rem;
+   margin-bottom: 4px;
+}
+
+.notification-time {
+   color: #999;
+   font-size: 0.8rem;
+}
     </style>
 </head>
-<body>
+
     <nav class="sidebar">
         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png" alt="FSU Logo" width="100">
         <div class="sidebar-item">
@@ -1096,12 +1141,12 @@
     </nav>
 
     <!-- Main Content Area -->
-    <div class="content-area">
+    <main class="content-area">
         <!-- FSU Header with Coordinator and Deadline -->
         <header class="fsu-header">
             <div class="header-container">
                 <div class="logo-container">
-                    
+
                     <h1 class="site-title">FSU Football Season 2025</h1>
                 </div>
                 <div class="project-info">
@@ -1117,8 +1162,8 @@
                             <span class="info-label">Phase Status</span>
                             <span class="info-value">In Progress</span>
                         </div>
-                    </div>    
-                    
+                    </div>
+
                         <div class="info-item">
                         <i class="material-icons">event</i>
                         <div class="info-content">
@@ -1157,232 +1202,235 @@
         </div>
 
         <!-- Media Selection Popup -->
-<div id="media-popup" class="media-popup">
-    <div class="popup-content">
-        <div class="popup-header">
-            <h3>Select Media</h3>
-            <button id="close-popup" class="close-popup"><i class="material-icons">close</i></button>
-        </div>
-        
-        <div class="popup-tabs">
-            <button class="tab-btn active" data-tab="team-gallery">Team Gallery</button>
-            <button class="tab-btn" data-tab="stock-media">Stock Media</button>
-            <button class="tab-btn" data-tab="research-media">Research Media</button>
-        </div>
-        
-        <div class="popup-body">
-            <!-- Team Gallery Tab -->
-            <div class="tab-content active" id="team-gallery-content">
-                <div class="media-grid">
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="team-1" name="selected-media">
-                            <label for="team-1"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Team Image 1">
-                        <span class="media-name">Team Huddle</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="team-2" name="selected-media">
-                            <label for="team-2"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Team Image 2">
-                        <span class="media-name">Quarterback</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="team-3" name="selected-media">
-                            <label for="team-3"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Team Image 3">
-                        <span class="media-name">Defense Line</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="team-4" name="selected-media">
-                            <label for="team-4"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Team Image 4">
-                        <span class="media-name">Stadium View</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="team-5" name="selected-media">
-                            <label for="team-5"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Team Image 5">
-                        <span class="media-name">Coach Meeting</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="team-6" name="selected-media">
-                            <label for="team-6"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Team Image 6">
-                        <span class="media-name">Trophy Presentation</span>
-                    </div>
+        <div id="media-popup" class="media-popup">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h3>Select Media</h3>
+                    <button id="close-popup" class="close-popup"><i class="material-icons">close</i></button>
                 </div>
-            </div>
-            
-            <!-- Stock Media Tab -->
-            <div class="tab-content" id="stock-media-content">
-                <div class="media-grid">
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="stock-1" name="selected-media">
-                            <label for="stock-1"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Stock Image 1">
-                        <span class="media-name">Football Close-up</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="stock-2" name="selected-media">
-                            <label for="stock-2"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Stock Image 2">
-                        <span class="media-name">Stadium Aerial</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="stock-3" name="selected-media">
-                            <label for="stock-3"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Stock Image 3">
-                        <span class="media-name">Fans Cheering</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="stock-4" name="selected-media">
-                            <label for="stock-4"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Stock Image 4">
-                        <span class="media-name">College Campus</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Research Media Tab -->
-            <div class="tab-content" id="research-media-content">
-                <div class="media-grid">
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="research-1" name="selected-media">
-                            <label for="research-1"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Research Image 1">
-                        <span class="media-name">Performance Charts</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="research-2" name="selected-media">
-                            <label for="research-2"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Research Image 2">
-                        <span class="media-name">Team Statistics</span>
-                    </div>
-                    <div class="media-item">
-                        <div class="media-checkbox">
-                            <input type="checkbox" id="research-3" name="selected-media">
-                            <label for="research-3"></label>
-                        </div>
-                        <img src="/api/placeholder/150/150" alt="Research Image 3">
-                        <span class="media-name">Season Comparison</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="popup-footer">
-            <div class="selection-summary">
-                <span id="selected-count">0 items selected</span>
-            </div>
-            <div class="popup-actions">
-                <button id="cancel-selection" class="popup-btn cancel-btn">Cancel</button>
-                <button id="save-selection" class="popup-btn save-btn">Save Selection</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="graphics-grid-container">
-    <h3 class="grid-title">Existing Graphics</h3>
-    <div class="graphics-grid" id="graphics-grid">
-        <!-- These are sample items - your JavaScript will dynamically add/remove these -->
-        <div class="grid-item">
-            
-            
-        </div>
-        <div class="grid-item">
-            <div class="grid-item-preview">
-                <img src="/api/placeholder/200/150" alt="FSU Graphic">
-                <div class="grid-item-overlay">
-                    <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
-                    <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
+                <div class="popup-tabs">
+                    <button class="tab-btn active" data-tab="team-gallery">Team Gallery</button>
+                    <button class="tab-btn" data-tab="stock-media">Stock Media</button>
+                    <button class="tab-btn" data-tab="research-media">Research Media</button>
                 </div>
-            </div>
-            <div class="grid-item-info">
-                <h4>Team Highlights</h4>
-                <span class="grid-item-type">Social Media</span>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="grid-item-preview">
-                <img src="/api/placeholder/200/150" alt="FSU Graphic">
-                <div class="grid-item-overlay">
-                    <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
-                    <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
-                </div>
-            </div>
-            <div class="grid-item-info">
-                <h4>Player Spotlight</h4>
-                <span class="grid-item-type">Social Media</span>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="grid-item-preview">
-                <img src="/api/placeholder/200/150" alt="FSU Graphic">
-                <div class="grid-item-overlay">
-                    <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
-                    <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
-                </div>
-            </div>
-            <div class="grid-item-info">
-                <h4>Game Schedule</h4>
-                <span class="grid-item-type">Press Release</span>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Comments Section -->
-<main class="main-content">
-    <div class="comments-section">
-        <h2 class="section-title">
-            Comments   
-        </h2>
-        
-        <div class="comment-form">
-            <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
-            <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
-        </div>
-        
-        <div class="comments-list" id="commentsList">
-            <!-- Example comments -->
-            <div class="comment-item">
-              
-            </div>
-            
-            <div class="comment-item">
-             
+                <div class="popup-body">
+                    <!-- Team Gallery Tab -->
+                    <div class="tab-content active" id="team-gallery-content">
+                        <div class="media-grid">
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="team-1" name="selected-media">
+                                    <label for="team-1"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Team Image 1">
+                                <span class="media-name">Team Huddle</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="team-2" name="selected-media">
+                                    <label for="team-2"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Team Image 2">
+                                <span class="media-name">Quarterback</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="team-3" name="selected-media">
+                                    <label for="team-3"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Team Image 3">
+                                <span class="media-name">Defense Line</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="team-4" name="selected-media">
+                                    <label for="team-4"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Team Image 4">
+                                <span class="media-name">Stadium View</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="team-5" name="selected-media">
+                                    <label for="team-5"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Team Image 5">
+                                <span class="media-name">Coach Meeting</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="team-6" name="selected-media">
+                                    <label for="team-6"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Team Image 6">
+                                <span class="media-name">Trophy Presentation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stock Media Tab -->
+                    <div class="tab-content" id="stock-media-content">
+                        <div class="media-grid">
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="stock-1" name="selected-media">
+                                    <label for="stock-1"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Stock Image 1">
+                                <span class="media-name">Football Close-up</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="stock-2" name="selected-media">
+                                    <label for="stock-2"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Stock Image 2">
+                                <span class="media-name">Stadium Aerial</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="stock-3" name="selected-media">
+                                    <label for="stock-3"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Stock Image 3">
+                                <span class="media-name">Fans Cheering</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="stock-4" name="selected-media">
+                                    <label for="stock-4"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Stock Image 4">
+                                <span class="media-name">College Campus</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Media Tab -->
+                    <div class="tab-content" id="research-media-content">
+                        <div class="media-grid">
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="research-1" name="selected-media">
+                                    <label for="research-1"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Research Image 1">
+                                <span class="media-name">Performance Charts</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="research-2" name="selected-media">
+                                    <label for="research-2"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Research Image 2">
+                                <span class="media-name">Team Statistics</span>
+                            </div>
+                            <div class="media-item">
+                                <div class="media-checkbox">
+                                    <input type="checkbox" id="research-3" name="selected-media">
+                                    <label for="research-3"></label>
+                                </div>
+                                <img src="/api/placeholder/150/150" alt="Research Image 3">
+                                <span class="media-name">Season Comparison</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="popup-footer">
+                    <div class="selection-summary">
+                        <span id="selected-count">0 items selected</span>
+                    </div>
+                    <div class="popup-actions">
+                        <button id="cancel-selection" class="popup-btn cancel-btn">Cancel</button>
+                        <button id="save-selection" class="popup-btn save-btn">Save Selection</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
 
+        <div class="graphics-grid-container">
+            <h3 class="grid-title">Existing Graphics</h3>
+            <div class="graphics-grid" id="graphics-grid">
+                <!-- These are sample items - your JavaScript will dynamically add/remove these -->
+                <div class="grid-item">
+
+
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-preview">
+                        <img src="/api/placeholder/200/150" alt="FSU Graphic">
+                        <div class="grid-item-overlay">
+                            <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
+                            <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
+                        </div>
+                    </div>
+                    <div class="grid-item-info">
+                        <h4>Team Highlights</h4>
+                        <span class="grid-item-type">Social Media</span>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-preview">
+                        <img src="/api/placeholder/200/150" alt="FSU Graphic">
+                        <div class="grid-item-overlay">
+                            <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
+                            <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
+                        </div>
+                    </div>
+                    <div class="grid-item-info">
+                        <h4>Player Spotlight</h4>
+                        <span class="grid-item-type">Social Media</span>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-preview">
+                        <img src="/api/placeholder/200/150" alt="FSU Graphic">
+                        <div class="grid-item-overlay">
+                            <button class="grid-action-btn edit-btn"><i class="material-icons">edit</i></button>
+                            <button class="grid-action-btn delete-btn"><i class="material-icons">delete</i></button>
+                        </div>
+                    </div>
+                    <div class="grid-item-info">
+                        <h4>Game Schedule</h4>
+                        <span class="grid-item-type">Press Release</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main class="main-content">
+            <div class="comments-section">
+                <h2 class="section-title">
+                    Comments
+                </h2>
+
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                    <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+                </div>
+
+                <div class="comments-list" id="commentsList">
+                    <!-- Example comments -->
+                    <div class="comment-item">
+
+                    </div>
+
+                    <div class="comment-item"></div>
+                </div>
+            </div>
+        </main>
+    </main>
+
+    <aside class="notification-sidebar">
+        <div class="notification-header">
+            <h2>Notifications</h2>
+        </div>
+        <div class="notification-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+    </aside>
     <script>
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1390,52 +1438,52 @@ document.addEventListener('DOMContentLoaded', function() {
     const graphicsGrid = document.getElementById('graphics-grid');
     const addNewBtn = document.querySelector('.btn-add');
     const contentTypeSelect = document.getElementById('content-type');
-    
+
     // Get status elements
     const statusItem = document.querySelector('.info-item:nth-child(2)');
     const statusValue = statusItem ? statusItem.querySelector('.info-value') : null;
     const submitReviewBtn = document.querySelector('.btn-submit');
-    
+
     // Make sure status starts as "In Progress"
     if (statusItem && statusValue) {
         statusItem.classList.add('status-in-progress');
         statusValue.textContent = 'In Progress';
     }
-    
+
     // Sample data for graphics items categorized by type
     let pressReleaseGraphics = [
-        { 
-            id: 1, 
-            title: 'Season Opener', 
-            type: 'Press Release', 
-            imageSrc: 'https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM=' 
+        {
+            id: 1,
+            title: 'Season Opener',
+            type: 'Press Release',
+            imageSrc: 'https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM='
         },
-        { 
-            id: 4, 
-            title: 'Game Schedule', 
-            type: 'Press Release', 
-            imageSrc: 'https://sportsbrackets.net/wp-content/uploads/2024/07/Printable-2024-FSU-Football-Schedule-1.jpg' 
+        {
+            id: 4,
+            title: 'Game Schedule',
+            type: 'Press Release',
+            imageSrc: 'https://sportsbrackets.net/wp-content/uploads/2024/07/Printable-2024-FSU-Football-Schedule-1.jpg'
         }
     ];
-    
+
     let socialMediaGraphics = [
-        { 
-            id: 2, 
-            title: 'Team Highlights', 
-            type: 'Social Media', 
-            imageSrc: 'https://media.gettyimages.com/id/1658304818/photo/orlando-florida-renardo-green-of-the-florida-state-seminoles-reacts-after-intercepting-jayden.jpg?s=612x612&w=0&k=20&c=paAWDjlbQr5cAyBFkWayGhBL3xp393Puahq4mFRoFas=' 
+        {
+            id: 2,
+            title: 'Team Highlights',
+            type: 'Social Media',
+            imageSrc: 'https://media.gettyimages.com/id/1658304818/photo/orlando-florida-renardo-green-of-the-florida-state-seminoles-reacts-after-intercepting-jayden.jpg?s=612x612&w=0&k=20&c=paAWDjlbQr5cAyBFkWayGhBL3xp393Puahq4mFRoFas='
         },
-        { 
-            id: 3, 
-            title: 'Player Spotlight', 
-            type: 'Social Media', 
-            imageSrc: 'https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768' 
+        {
+            id: 3,
+            title: 'Player Spotlight',
+            type: 'Social Media',
+            imageSrc: 'https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768'
         }
     ];
-    
+
     // Current graphics items (will be updated based on selected type)
     let graphicsItems = [...pressReleaseGraphics, ...socialMediaGraphics];
-    
+
     // FSU Team Gallery Media
     const teamGalleryMedia = [
         {
@@ -1469,7 +1517,7 @@ document.addEventListener('DOMContentLoaded', function() {
             imageSrc: 'https://media.gettyimages.com/id/1817413899/photo/charlotte-north-carolina-head-coach-mike-norvell-of-the-florida-state-seminoles-holds-up-the.jpg?s=612x612&w=0&k=20&c=lR9OjhEoHP54gbyUc5gez9rVcRHOuffNm8Qj_x0XKqI='
         }
     ];
-    
+
     // FSU Stock Media
     const stockMedia = [
         {
@@ -1493,7 +1541,7 @@ document.addEventListener('DOMContentLoaded', function() {
             imageSrc: 'https://media.gettyimages.com/id/184999165/photo/the-florida-state-university.jpg?s=612x612&w=gi&k=20&c=M0ECB0UATY4u_dfaOPJ6ahw3E8oezTrbHa9nVcr5NQ0='
         }
     ];
-    
+
     // FSU Research Media
     const researchMedia = [
         {
@@ -1512,12 +1560,12 @@ document.addEventListener('DOMContentLoaded', function() {
             imageSrc: 'https://nondoc.com/wp-content/uploads/2023/12/Resume-Comparison-2023-CFP.jpg'
         }
     ];
-    
+
     // Function to render graphics grid
     function renderGraphicsGrid() {
         // Clear the grid
         graphicsGrid.innerHTML = '';
-        
+
         if (graphicsItems.length === 0) {
             // Show empty state if no items
             graphicsGrid.innerHTML = `
@@ -1528,7 +1576,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             return;
         }
-        
+
         // Add each item to the grid
         graphicsItems.forEach(item => {
             // If this is a multi-image item, create a grid item for each image
@@ -1541,14 +1589,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="grid-item-type">${item.type}</span>
                 `;
                 graphicsGrid.appendChild(gridSetHeader);
-                
+
                 // Create a grid item for each media item
                 item.mediaItems.forEach((mediaItem, index) => {
                     const gridItem = document.createElement('div');
                     gridItem.className = 'grid-item';
                     gridItem.dataset.id = `${item.id}-${index}`;
                     gridItem.dataset.parentId = item.id;
-                    
+
                     gridItem.innerHTML = `
                         <div class="grid-item-preview">
                             <img src="${mediaItem.img}" alt="${mediaItem.name}">
@@ -1562,7 +1610,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span class="media-count">${index + 1} of ${item.mediaItems.length}</span>
                         </div>
                     `;
-                    
+
                     graphicsGrid.appendChild(gridItem);
                 });
             } else {
@@ -1570,10 +1618,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const gridItem = document.createElement('div');
                 gridItem.className = 'grid-item';
                 gridItem.dataset.id = item.id;
-                
-                const imageSrc = item.mediaItems && item.mediaItems.length > 0 ? 
+
+                const imageSrc = item.mediaItems && item.mediaItems.length > 0 ?
                     item.mediaItems[0].img : item.imageSrc;
-                
+
                 gridItem.innerHTML = `
                     <div class="grid-item-preview">
                         <img src="${imageSrc}" alt="${item.title}">
@@ -1587,15 +1635,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="grid-item-type">${item.type}</span>
                     </div>
                 `;
-                
+
                 graphicsGrid.appendChild(gridItem);
             }
         });
-        
+
         // Add event listeners to the new buttons
         addButtonListeners();
     }
-    
+
     // Function to filter graphics based on selected content type
     function filterGraphicsByType(contentType) {
         if (contentType === 'press-release') {
@@ -1606,10 +1654,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // If no specific type or "all" is selected, show all graphics
             graphicsItems = [...pressReleaseGraphics, ...socialMediaGraphics];
         }
-        
+
         renderGraphicsGrid();
     }
-    
+
     // Function to add event listeners to buttons
     function addButtonListeners() {
         // Edit buttons
@@ -1620,7 +1668,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 editGraphicItem(itemId);
             });
         });
-        
+
         // Delete buttons
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
@@ -1630,24 +1678,24 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
+
     // Function to close the media selection popup
     function closePopup() {
         const mediaPopup = document.getElementById('media-popup');
         mediaPopup.classList.remove('active');
-        
+
         // Reset checkboxes
         document.querySelectorAll('input[name="selected-media"]').forEach(checkbox => {
             checkbox.checked = false;
         });
-        
+
         // Reset counter
         const selectedCountElem = document.getElementById('selected-count');
         if (selectedCountElem) {
             selectedCountElem.textContent = '0 items selected';
         }
     }
-    
+
     // Function to handle adding a new graphic
     function addNewGraphic() {
         const contentType = document.getElementById('content-type').value;
@@ -1655,7 +1703,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Please select a content type before adding a new graphic.');
             return;
         }
-        
+
         // Show the media selection popup
         const mediaPopup = document.getElementById('media-popup');
         if (mediaPopup) {
@@ -1666,14 +1714,14 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Media popup element not found!");
         }
     }
-    
+
     // Function to update the media popup content with FSU images
     function updateMediaPopupContent() {
         // Team Gallery Tab
         const teamGalleryContent = document.getElementById('team-gallery-content');
         if (teamGalleryContent) {
             let teamGalleryHTML = '<div class="media-grid">';
-            
+
             teamGalleryMedia.forEach(item => {
                 teamGalleryHTML += `
                     <div class="media-item">
@@ -1686,16 +1734,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
             });
-            
+
             teamGalleryHTML += '</div>';
             teamGalleryContent.innerHTML = teamGalleryHTML;
         }
-        
+
         // Stock Media Tab
         const stockMediaContent = document.getElementById('stock-media-content');
         if (stockMediaContent) {
             let stockMediaHTML = '<div class="media-grid">';
-            
+
             stockMedia.forEach(item => {
                 stockMediaHTML += `
                     <div class="media-item">
@@ -1708,16 +1756,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
             });
-            
+
             stockMediaHTML += '</div>';
             stockMediaContent.innerHTML = stockMediaHTML;
         }
-        
+
         // Research Media Tab
         const researchMediaContent = document.getElementById('research-media-content');
         if (researchMediaContent) {
             let researchMediaHTML = '<div class="media-grid">';
-            
+
             researchMedia.forEach(item => {
                 researchMediaHTML += `
                     <div class="media-item">
@@ -1730,15 +1778,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
             });
-            
+
             researchMediaHTML += '</div>';
             researchMediaContent.innerHTML = researchMediaHTML;
         }
-        
+
         // Reattach event listeners to checkboxes
         const checkboxes = document.querySelectorAll('input[name="selected-media"]');
         const selectedCountElem = document.getElementById('selected-count');
-        
+
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 if (selectedCountElem) {
@@ -1748,7 +1796,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
+
     // Function to edit a graphic item
     function editGraphicItem(itemId) {
         // Handle potential compound IDs (for multi-image items)
@@ -1758,27 +1806,27 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             baseId = parseInt(itemId);
         }
-        
+
         // Find the item in all graphics arrays
         let item = pressReleaseGraphics.find(item => item.id === baseId);
         if (!item) {
             item = socialMediaGraphics.find(item => item.id === baseId);
         }
-        
+
         if (item) {
             // In a real application, you would open an edit form/modal
             // For this demo, we'll just show an alert
             alert(`Editing graphic: ${item.title}`);
         }
     }
-    
+
     // Function to delete a graphic item
 function deleteGraphicItem(itemId) {
     console.log("Deleting item with ID:", itemId); // Debug log
-    
+
     // Parse the ID to handle both regular and compound IDs
     let baseId, mediaIndex;
-    
+
     if (typeof itemId === 'string' && itemId.includes('-')) {
         const parts = itemId.split('-');
         baseId = parseInt(parts[0]);
@@ -1788,42 +1836,42 @@ function deleteGraphicItem(itemId) {
         baseId = parseInt(itemId);
         mediaIndex = null;
     }
-    
+
     // Get the item from the current display array first
     const displayItemIndex = graphicsItems.findIndex(item => item.id === baseId);
-    
+
     if (displayItemIndex === -1) {
         console.error("Item not found in display array:", baseId);
         return;
     }
-    
+
     const displayItem = graphicsItems[displayItemIndex];
     console.log("Found display item:", displayItem); // Debug log
-    
+
     // Handle deletion based on whether it's a specific media item or entire graphic
     if (mediaIndex !== null && displayItem.mediaItems && displayItem.mediaItems.length > 1) {
         // Deleting a specific media item
         if (confirm(`Are you sure you want to delete this media item?`)) {
             console.log("Deleting specific media at index:", mediaIndex); // Debug log
-            
+
             // Remove the specific media item from the display item
             displayItem.mediaItems.splice(mediaIndex, 1);
-            
+
             // If this was the preview image, update it
             if (mediaIndex === 0 && displayItem.mediaItems.length > 0) {
                 displayItem.imageSrc = displayItem.mediaItems[0].img;
             }
-            
+
             // If this was the last media item, remove the entire graphic
             if (displayItem.mediaItems.length === 0) {
                 // Remove from the display array
                 graphicsItems.splice(displayItemIndex, 1);
-                
+
                 // Remove from source arrays too
                 pressReleaseGraphics = pressReleaseGraphics.filter(item => item.id !== baseId);
                 socialMediaGraphics = socialMediaGraphics.filter(item => item.id !== baseId);
             }
-            
+
             // Now we need to ensure the source arrays are in sync
             const prIndex = pressReleaseGraphics.findIndex(item => item.id === baseId);
             if (prIndex !== -1) {
@@ -1838,7 +1886,7 @@ function deleteGraphicItem(itemId) {
                     }
                 }
             }
-            
+
             const smIndex = socialMediaGraphics.findIndex(item => item.id === baseId);
             if (smIndex !== -1) {
                 if (displayItem.mediaItems.length === 0) {
@@ -1862,58 +1910,58 @@ function deleteGraphicItem(itemId) {
             socialMediaGraphics = socialMediaGraphics.filter(item => item.id !== baseId);
         }
     }
-    
+
     // Re-render the grid
     renderGraphicsGrid();
 }
-    
+
     // Add event listener to content type select to filter graphics
     if (contentTypeSelect) {
         contentTypeSelect.addEventListener('change', function() {
             filterGraphicsByType(this.value);
         });
     }
-    
+
     // Add event listener to "Add New" button
     if (addNewBtn) {
         addNewBtn.addEventListener('click', addNewGraphic);
     } else {
         console.error("Add New button not found!");
     }
-    
+
     // Initialize the grid on page load with all graphics
     renderGraphicsGrid();
-    
+
     // Set up media popup event listeners
     const closePopupBtn = document.getElementById('close-popup');
     const cancelBtn = document.getElementById('cancel-selection');
-    
+
     if (closePopupBtn) {
         closePopupBtn.addEventListener('click', closePopup);
     } else {
         console.error("Close popup button not found!");
     }
-    
+
     if (cancelBtn) {
         cancelBtn.addEventListener('click', closePopup);
     } else {
         console.error("Cancel button not found!");
     }
-    
+
     // Tab switching functionality
     const tabButtons = document.querySelectorAll('.tab-btn');
-    
+
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Remove active class from all tabs
             tabButtons.forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
+
             // Add active class to current tab
             this.classList.add('active');
             const tabId = this.dataset.tab + '-content';
             const tabContent = document.getElementById(tabId);
-            
+
             if (tabContent) {
                 tabContent.classList.add('active');
             } else {
@@ -1921,35 +1969,35 @@ function deleteGraphicItem(itemId) {
             }
         });
     });
-    
+
     // Save selection functionality
     const saveSelectionBtn = document.getElementById('save-selection');
-    
+
     if (saveSelectionBtn) {
         saveSelectionBtn.addEventListener('click', function() {
             const checkedBoxes = document.querySelectorAll('input[name="selected-media"]:checked');
-            
+
             if (checkedBoxes.length === 0) {
                 alert('Please select at least one media item.');
                 return;
             }
-            
+
             if (!contentTypeSelect) {
                 console.error("Content type select not found!");
                 return;
             }
-            
+
             const contentType = contentTypeSelect.value;
-            
+
             // Create new graphic(s) from selected media
             const selectedIds = Array.from(checkedBoxes).map(box => box.id);
-            
+
             // Get a list of selected media items
             const selectedItems = [];
             selectedIds.forEach(id => {
                 let mediaElem;
                 let mediaItem;
-                
+
                 // Check which category this item belongs to
                 if (id.startsWith('team-')) {
                     mediaItem = teamGalleryMedia.find(item => item.id === id);
@@ -1958,7 +2006,7 @@ function deleteGraphicItem(itemId) {
                 } else if (id.startsWith('research-')) {
                     mediaItem = researchMedia.find(item => item.id === id);
                 }
-                
+
                 if (mediaItem) {
                     selectedItems.push({
                         img: mediaItem.imageSrc,
@@ -1970,7 +2018,7 @@ function deleteGraphicItem(itemId) {
                     if (mediaElem) {
                         const mediaImg = mediaElem.querySelector('img').src;
                         const mediaName = mediaElem.querySelector('.media-name').textContent;
-                        
+
                         selectedItems.push({
                             img: mediaImg,
                             name: mediaName
@@ -1978,23 +2026,23 @@ function deleteGraphicItem(itemId) {
                     }
                 }
             });
-            
+
             if (selectedItems.length === 0) {
                 alert('Error retrieving selected media items. Please try again.');
                 return;
             }
-            
+
             // Generate a title based on the first selected media item and content type
-            const generatedTitle = contentType === 'press-release' ? 
-                `Press Release: ${selectedItems[0].name}` : 
+            const generatedTitle = contentType === 'press-release' ?
+                `Press Release: ${selectedItems[0].name}` :
                 `Social Post: ${selectedItems[0].name}`;
-            
+
             // Get next ID
             const nextId = Math.max(
                 ...[...pressReleaseGraphics, ...socialMediaGraphics].map(item => item.id),
                 0
             ) + 1;
-            
+
             // Create a new item with the selected data
             const newItem = {
                 id: nextId,
@@ -2003,67 +2051,82 @@ function deleteGraphicItem(itemId) {
                 imageSrc: selectedItems[0].img, // Use the first image as the preview
                 mediaItems: selectedItems
             };
-            
+
             // Add to the appropriate array
             if (contentType === 'press-release') {
                 pressReleaseGraphics.push(newItem);
             } else {
                 socialMediaGraphics.push(newItem);
             }
-            
+
             // Add to current display array regardless of filter
             graphicsItems.push(newItem);
-            
+
             // Re-render the grid
             renderGraphicsGrid();
-            
+
             // Close the popup
             closePopup();
-            
+
             // Show confirmation
-            alert(`New ${newItem.type} added successfully with ${selectedItems.length} media items!`);
+            //alert(`New ${newItem.type} added successfully with ${selectedItems.length} media items!`);
+            addNotification(
+                "update",
+                `Graphics Added`,
+                `New ${newItem.type} added successfully with ${selectedItems.length} media items!`,
+            );
         });
     } else {
         console.error("Save selection button not found!");
     }
-    
+
     // Submit review button functionality - integrated in main code
     if (submitReviewBtn) {
         let clickCount = 0;
-        
-        submitReviewBtn.addEventListener('click', function() {
-            clickCount++;
-            
-            if (clickCount === 1) {
-                // First click - change to "Under Review"
-                if (statusItem && statusValue) {
-                    statusItem.classList.remove('status-in-progress');
-                    statusItem.classList.add('status-under-review');
-                    statusValue.textContent = 'Under Review';
-                }
-                
-                this.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
-                this.classList.add('review-state');
-                
-                // Show success message
-                alert('Content submitted for review successfully!');
-            } else if (clickCount === 2) {
-                // Second click - change to "Completed"
-                if (statusItem && statusValue) {
-                    statusItem.classList.remove('status-under-review');
-                    statusItem.classList.add('status-completed');
-                    statusValue.textContent = 'Completed';
-                }
-                
-                this.innerHTML = '<i class="material-icons">done_all</i> Review Accepted';
-                this.classList.remove('review-state');
-                this.classList.add('accepted-state');
-                this.disabled = true;
-                
-                // Show acceptance message
-                alert('Review has been accepted!');
-            }
-        });
+
+        // submitReviewBtn.addEventListener('click', function() {
+        //     clickCount++;
+
+        //     if (clickCount === 1) {
+        //         // First click - change to "Under Review"
+        //         if (statusItem && statusValue) {
+        //             statusItem.classList.remove('status-in-progress');
+        //             statusItem.classList.add('status-under-review');
+        //             statusValue.textContent = 'Under Review';
+        //         }
+
+        //         this.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+        //         this.classList.add('review-state');
+
+        //         // Show success message
+        //        // alert('Content submitted for review successfully!');
+        //         addNotification(
+        //             "update",
+        //             `Graphics Review Request`,
+        //             `Review request submitted successfully`,
+        //         );
+        //     } else if (clickCount === 2) {
+        //         // Second click - change to "Completed"
+        //         if (statusItem && statusValue) {
+        //             statusItem.classList.remove('status-under-review');
+        //             statusItem.classList.add('status-completed');
+        //             statusValue.textContent = 'Completed';
+        //         }
+
+        //         this.innerHTML = '<i class="material-icons">done_all</i> Review Accepted';
+        //         this.classList.remove('review-state');
+        //         this.classList.add('accepted-state');
+        //         this.disabled = true;
+
+        //         // Show acceptance message
+        //        // alert('Review has been accepted!');
+        //         addNotification(
+        //             "progress",
+        //             `Graphics Review Accepted`,
+        //             `Review accepted !`,
+        //         );
+        //     }
+        // });
     }
 });
 
@@ -2072,40 +2135,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusItem = document.querySelector('.info-item:nth-child(2)');
     const statusValue = statusItem ? statusItem.querySelector('.info-value') : null;
     const submitReviewBtn = document.querySelector('.btn-submit');
-    
+
     if (!statusValue || !submitReviewBtn) return;
-    
+
     // Track button state
     let clickCount = 0;
-    
+
     // Connect the review button to status updates
     submitReviewBtn.addEventListener('click', function() {
         clickCount++;
-        
+
         if (clickCount === 1) {
             // First click - change to "Under Review"
             statusItem.classList.remove('status-in-progress');
             statusItem.classList.add('status-under-review');
             statusValue.textContent = 'Under Review';
-            
+
             this.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
             this.classList.add('review-state');
-            
+
             // Show success message
-            alert('Content submitted for review successfully!');
+           // alert('Content submitted for review successfully!');
+            addNotification(
+                "update",
+                `Graphics Review Request`,
+                `Review request submitted successfully`,
+            );
         } else if (clickCount === 2) {
             // Second click - change to "Completed"
             statusItem.classList.remove('status-under-review');
             statusItem.classList.add('status-completed');
             statusValue.textContent = 'Completed';
-            
+
             this.innerHTML = '<i class="material-icons">done_all</i> Review Accepted';
             this.classList.remove('review-state');
             this.classList.add('accepted-state');
             this.disabled = true;
-            
+
             // Show acceptance message
-            alert('Review has been accepted!');
+            //alert('Review has been accepted!');
+            addNotification(
+                "progress",
+                `Graphics Review Accepted`,
+                `Review accepted !`,
+            );
         }
     });
 });
@@ -2113,39 +2186,39 @@ document.addEventListener('DOMContentLoaded', function() {
 // Comments Functionality - Updated Version
 function initializeComments() {
     console.log("Initializing comments functionality");
-    
+
     // Get DOM elements
     const commentInput = document.getElementById('commentInput');
     const postCommentBtn = document.getElementById('postCommentBtn');
     const commentsList = document.getElementById('commentsList');
-    
+
     // Debug log to check if elements are found
     console.log("Comment elements:", {
         input: commentInput,
         button: postCommentBtn,
         list: commentsList
     });
-    
+
     // Ensure elements exist before adding event listeners
     if (!commentInput || !postCommentBtn || !commentsList) {
         console.error("Could not find required comment elements");
         return;
     }
-    
+
     // Remove any existing event listeners by cloning
     const newPostBtn = postCommentBtn.cloneNode(true);
     postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
-    
+
     // Add event listener to post button
     newPostBtn.addEventListener('click', function(e) {
         console.log("Post comment button clicked");
         e.preventDefault();
-        
+
         const commentText = commentInput.value.trim();
         if (commentText) {
             addNewComment(commentText, commentsList);
             commentInput.value = '';
-            
+
             // Scroll to the new comment
             setTimeout(() => {
                 const firstComment = commentsList.firstChild;
@@ -2157,7 +2230,7 @@ function initializeComments() {
             alert('Please enter a comment');
         }
     });
-    
+
     // Add keypress event to also submit on Enter
     commentInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -2165,16 +2238,16 @@ function initializeComments() {
             newPostBtn.click();
         }
     });
-    
+
     // Auto-resize the textarea as user types
     commentInput.addEventListener('input', function() {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
     });
-    
+
     // Add event listeners to existing comment buttons
     setupCommentButtons();
-    
+
     console.log("Comments functionality initialized");
 }
 
@@ -2187,20 +2260,20 @@ function addNewComment(text, commentsList) {
             return;
         }
     }
-    
+
     console.log("Adding new comment:", text);
-    
+
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
     });
-    
+
     // Create a new comment element
     const newComment = document.createElement('div');
     newComment.className = 'comment-item';
-    
+
     // Create comment HTML without avatar image
     newComment.innerHTML = `
         <div class="comment-avatar">
@@ -2218,29 +2291,32 @@ function addNewComment(text, commentsList) {
             </div>
         </div>
     `;
-    
+
     // Add to the beginning of the list with a fade-in effect
     newComment.style.opacity = '0';
     newComment.style.transition = 'opacity 0.3s ease';
-    
+
     if (commentsList.firstChild) {
         commentsList.insertBefore(newComment, commentsList.firstChild);
     } else {
         commentsList.appendChild(newComment);
     }
-    
+
     // Trigger the fade-in animation
     setTimeout(() => {
         newComment.style.opacity = '1';
     }, 10);
-    
+
     console.log("Comment added to list");
-    
+
     // Add event listeners to the new comment's buttons
     setupCommentButtonsForElement(newComment);
-    
+
     // Update the comments counter if it exists
     updateCommentsCounter();
+
+    addNotification("comment", `New Comment !`, `${text}`);
+
 }
 
 function updateCommentsCounter() {
@@ -2253,11 +2329,11 @@ function updateCommentsCounter() {
 
 function setupCommentButtons() {
     console.log("Setting up comment buttons for all comments");
-    
+
     // Get all comment items
     const commentItems = document.querySelectorAll('.comment-item');
     console.log(`Found ${commentItems.length} comments`);
-    
+
     commentItems.forEach((item, index) => {
         console.log(`Setting up buttons for comment ${index}`);
         setupCommentButtonsForElement(item);
@@ -2269,30 +2345,30 @@ function setupCommentButtonsForElement(element) {
         console.error("No element provided to setupCommentButtonsForElement");
         return;
     }
-    
+
     // Reply button - using more specific selector with the added class
-    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') || 
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') ||
                      element.querySelector('.comment-action-btn:first-child');
-                     
+
     if (replyBtn) {
         // Remove existing event listeners by cloning
         const newReplyBtn = replyBtn.cloneNode(true);
         replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
-        
+
         newReplyBtn.addEventListener('click', function() {
             const commentAuthor = element.querySelector('.comment-author').textContent;
             const commentInput = document.getElementById('commentInput');
             if (commentInput) {
                 commentInput.value = `@${commentAuthor} `;
                 commentInput.focus();
-                
+
                 // Auto-resize the textarea after setting value
                 commentInput.style.height = 'auto';
                 commentInput.style.height = (commentInput.scrollHeight) + 'px';
-                
+
                 // Scroll to the comment form
                 commentInput.scrollIntoView({ behavior: 'smooth' });
-                
+
                 console.log(`Set reply to ${commentAuthor}`);
             } else {
                 console.error("Comment input not found");
@@ -2301,32 +2377,32 @@ function setupCommentButtonsForElement(element) {
     } else {
         console.warn("Reply button not found in comment", element);
     }
-    
+
     // Edit button - using more specific selector with the added class
-    const editBtn = element.querySelector('.comment-action-btn.edit-btn') || 
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') ||
                     element.querySelector('.comment-action-btn:nth-child(2)');
-                    
+
     if (editBtn) {
         // Remove existing event listeners by cloning
         const newEditBtn = editBtn.cloneNode(true);
         editBtn.parentNode.replaceChild(newEditBtn, editBtn);
-        
+
         newEditBtn.addEventListener('click', function() {
             const commentText = element.querySelector('.comment-text');
             if (!commentText) {
                 console.error("Comment text element not found");
                 return;
             }
-            
+
             const originalText = commentText.textContent;
             console.log("Editing comment:", originalText);
-            
+
             // Check if we're already editing this comment
             if (element.querySelector('.comment-edit-interface')) {
                 console.warn("Edit interface already open");
                 return;
             }
-            
+
             // Create edit interface
             const editInterface = document.createElement('div');
             editInterface.className = 'comment-edit-interface';
@@ -2337,25 +2413,25 @@ function setupCommentButtonsForElement(element) {
                     <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
                 </div>
             `;
-            
+
             // Replace comment text with edit interface
             commentText.style.display = 'none';
             commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
-            
+
             // Focus the textarea and auto-resize
             const textarea = editInterface.querySelector('.comment-edit-input');
             textarea.focus();
-            
+
             // Set initial height based on content
             textarea.style.height = 'auto';
             textarea.style.height = (textarea.scrollHeight) + 'px';
-            
+
             // Add auto-resize on input
             textarea.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
             });
-            
+
             // Add event listeners for save and cancel buttons
             const saveBtn = editInterface.querySelector('.save-edit-btn');
             saveBtn.addEventListener('click', function() {
@@ -2368,7 +2444,7 @@ function setupCommentButtonsForElement(element) {
                 commentText.style.display = 'block';
                 editInterface.remove();
             });
-            
+
             const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
             cancelBtn.addEventListener('click', function() {
                 // Just clean up without saving
@@ -2394,7 +2470,52 @@ if (document.readyState === "complete" || document.readyState === "interactive")
     setTimeout(initializeComments, 100); // Short timeout to ensure execution
 }
 
-        
+
+function addNotification(type, title, message) {
+    const notificationList =
+        document.querySelector(".notification-list");
+    if (!notificationList) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification type-${type} new`;
+
+    const icon = getIconForType(type);
+
+    notification.innerHTML = `
+<i class="material-icons notification-icon">${icon}</i>
+<div class="notification-content">
+<div class="notification-title">${title}</div>
+<div class="notification-message">${message}</div>
+<div class="notification-time">Just now</div>
+</div>
+`;
+
+    notificationList.insertBefore(
+        notification,
+        notificationList.firstChild,
+    );
+
+    // Fade out "new" tag after some time
+    setTimeout(() => {
+        notification.classList.remove("new");
+    }, 5000);
+}
+
+// Get icon based on notification type
+function getIconForType(type) {
+    const icons = {
+        assignment: "person_add",
+        progress: "trending_up",
+        review: "rate_review",
+        update: "update",
+        alert: "warning",
+        comment: "comment",
+        default: "notifications",
+    };
+
+    return icons[type] || icons.default;
+}
+
     </script>
 </body>
 </html>
