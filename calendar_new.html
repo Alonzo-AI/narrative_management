@@ -216,14 +216,14 @@
         }
 
         .view-selector {
-                background-color: #ceb888;
-                color: #782f40;
-                border: none;
-                border-radius: 4px;
-                padding: 8px;
-                width: 200px;
-                height: 36px;
-            }
+            background-color: #ceb888;
+            color: #782f40;
+            border: none;
+            border-radius: 4px;
+            padding: 8px;
+            width: 200px;
+            height: 36px;
+        }
     </style>
 </head>
 <body>
@@ -238,17 +238,17 @@
             <div style="width: 200px">
                 <select
                 id="viewSelector"
-                class="browser-default view-selector"
-                onchange="location = this.value"
-            >
-                <option value="projects_overview.html" selected>
-                    Workflow View
-                </option>
-                <option value="grid_view.html">Grid View</option>
-                <option value="calendar_new.html">
-                    Calendar View
-                </option>
-            </select>
+                class="view-selector"
+                onchange="window.location.href = this.value"
+                >
+                    <option value="projects_overview.html">
+                        Workflow View
+                    </option>
+                    <option value="grid_view.html">Grid View</option>
+                    <option value="calendar_new.html" selected>
+                        Calendar View
+                    </option>
+                </select>
             </div>
         </div>
         <div class="view-controls">
@@ -630,6 +630,12 @@ nextButton.addEventListener('click', () => navigate(1));
 
 // Initialize calendar
 switchView('month');
+
+// Initialize view selector
+document.addEventListener('DOMContentLoaded', function() {
+    const viewSelector = document.getElementById('viewSelector');
+    viewSelector.value = 'calendar_new.html';
+});
     </script>
 </body>
 </html>
