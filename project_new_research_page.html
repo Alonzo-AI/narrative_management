@@ -2948,16 +2948,16 @@ function addBreakingNewsToResearchGrid(story) {
 
     // Set up the content section
     let cardContent = `
-        <div class="card-content">
-            <h3 class="card-title">${story.title}</h3>
-            <p class="card-description">Athlete Story - ${story.tag}</p>
-            <div class="card-file">
-                <i class="material-icons">sports</i>
-                <span>Breaking News Story</span>
+            <div class="card-content">
+                <h3 class="card-title">${story.title}</h3>
+                <p class="card-description">Athlyte Story - ${story.tag}</p>
+                <div class="card-file">
+                    
+                    <span class="card-excerpt">${story.excerpt}</span>
+                </div>
+                <div class="card-date">Added: ${story.date}</div>
             </div>
-            <div class="card-date">Added: ${dateString}</div>
-        </div>
-    `;
+        `;
 
     // Set up action buttons
     let cardActions = `
@@ -2992,7 +2992,7 @@ function addBreakingNewsToResearchGrid(story) {
 //     const selectedCards = document.querySelectorAll('.story-card.selected');
 
 //     if (selectedCards.length === 0) {
-//         alert('Please select at least one athlete story');
+//         alert('Please select at least one athlyte story');
 //         return;
 //     }
 
@@ -3056,7 +3056,6 @@ function closeModal() {
 function showUploadForm(type) {
     currentContentType = type;
 
-    // Set the appropriate title based on content type
     const titles = {
         'documents': 'Upload Documents',
         'web-links': 'Add Web Links',
@@ -3066,65 +3065,52 @@ function showUploadForm(type) {
 
     document.getElementById('uploadModalTitle').textContent = titles[type];
 
-    // Close the first modal
     closeModal();
-
-    // Reset forms
     resetUploadForm();
+
     if (type === 'web-links') {
         resetWebLinkForm();
-    }
-
-    // Show the appropriate form based on content type
-    if (type === 'web-links') {
-        // Show web links form instead of file upload
         document.getElementById('webLinksForm').style.display = 'block';
         document.querySelector('.upload-container').style.display = 'none';
-
-        // Focus on the first field
-        setTimeout(() => {
-            document.getElementById('linkTitle').focus();
-        }, 100);
+        setTimeout(() => document.getElementById('linkTitle').focus(), 100);
     } else {
-        // For other content types, show the regular file upload
         document.getElementById('webLinksForm').style.display = 'none';
-        document.querySelector('.upload-container').style.display = 'block';
 
-        // If it's a breaking news, enable the upload button right away
         if (type === 'breaking-news') {
             document.getElementById('upload-btn').disabled = false;
         } else {
-            // Otherwise, disable until files are selected
             document.getElementById('upload-btn').disabled = true;
         }
 
         if (type === 'breaking-news') {
-        console.log("Hello breaking news");
-        document.getElementById('story-section').style.display = "block";
-        const storySelectBtns = document.querySelectorAll('.story-select-btn');
-        storySelectBtns.forEach(btn => {
-                console.log(btn);
-                btn.addEventListener('click', function() {
+            console.log("Hello breaking news");
+            document.getElementById('story-section').style.display = "block";
 
+            // ✅ FIX: prevent multiple listeners by cloning buttons
+            const storySelectBtns = document.querySelectorAll('.story-select-btn');
+            storySelectBtns.forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', function () {
                     const card = this.closest('.story-card');
                     const storyId = card.getAttribute('data-story-id');
                     addSelectedStoryToGrid(storyId);
                 });
-        });
-        document.querySelector('.upload-container').style.display = 'none';
-    } else {
+            });
 
-        document.getElementById('story-section').style.display = "none";
-        document.querySelector('.upload-container').style.display = 'block';
-    }
+            document.querySelector('.upload-container').style.display = 'none';
+        } else {
+            document.getElementById('story-section').style.display = "none";
+            document.querySelector('.upload-container').style.display = 'block';
+        }
     }
 
-    // Open the upload modal
     const uploadModal = document.getElementById('uploadModal');
     uploadModal.classList.add('show');
 
     console.log('Opening upload form for type:', type);
 }
+
 
 function closeUploadModal() {
     // Close the upload modal
