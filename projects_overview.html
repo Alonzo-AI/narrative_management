@@ -13,6 +13,18 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         />
         <style>
+
+            .center-align  {
+                
+                margin-bottom: -10px;
+                padding: 0 20px;
+                display: flex;
+                height: 150px;
+                width: 150px;
+                align-items: center;
+
+            }
+
             .header-container {
                 display: flex;
                 justify-content: space-between;
@@ -22,13 +34,13 @@
             }
 
             .header-title {
-                color: #97d7e5;
+                color: #73d2e7;
                 margin: 0;
                 flex-grow: 1;
             }
 
             .create-project-btn {
-                background-color: #97d7e5;
+                background-color: #73d2e7;
                 color: white;
                 display: flex;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -53,7 +65,7 @@
 
             .btn {
                 text-transform: none;
-                background-color: #97d7e5;
+                background-color: #73d2e7;
                 color: white;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 margin-left: 10px;
@@ -66,7 +78,7 @@
             }
 
             .view-selector {
-                background-color: #97d7e5;
+                background-color: #73d2e7;
                 color: white;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 border: none;
@@ -100,6 +112,7 @@
             body {
                 background-color: white;
             }
+
             .kanban-container {
                 display: flex;
                 justify-content: center;
@@ -154,282 +167,22 @@
                 margin-left: 10%;
             }
 
-            .notifications-trigger {
-                position: relative;
-                background: none;
-                border: none;
-                padding: 0;
-                cursor: pointer;
-                margin-right: 20px;
-            }
-
-            .notifications-trigger i {
-                color: #97d7e5;
-                font-size: 24px;
-            }
-
-            .notification-count {
-                position: absolute;
-                top: -8px;
-                right: -8px;
-                background-color: #d32f2f;
-                color: white;
-                border-radius: 50%;
-                padding: 2px 6px;
-                font-size: 12px;
-                min-width: 18px;
-                text-align: center;
-            }
-
-            .notifications-panel {
-                position: fixed;
-                top: 0;
-                right: -400px;
-                width: 400px;
-                height: 100vh;
-                background-color: white;
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-                transition: right 0.3s ease;
-                z-index: 1000;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .notifications-panel.active {
-                right: 0;
-            }
-
-            .notifications-header {
-                background-color: #782f40;
-                color: #ceb888;
-                padding: 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .notifications-header h5 {
-                margin: 0;
-                font-size: 1.2rem;
-            }
-
-            .close-notifications {
-                background: none;
-                border: none;
-                color: #ceb888;
-                cursor: pointer;
-                padding: 5px;
-            }
-
-            .notifications-tabs {
-                background-color: #ceb888;
-                display: flex;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .notifications-tab {
-                flex: 1;
-                padding: 15px;
-                text-align: center;
-                color: #782f40;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-                font-weight: 500;
-            }
-
-            .notifications-tab.active {
-                background-color: #782f40;
-                color: #ceb888;
-            }
-
-            .notifications-content {
-                flex-grow: 1;
-                overflow-y: auto;
-                padding: 0;
-            }
-
-            .notification-list {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            .notification-item {
-                padding: 15px 20px;
-                border-bottom: 1px solid #eee;
-                display: flex;
-                align-items: flex-start;
-                gap: 15px;
-                transition: background-color 0.3s ease;
-            }
-
-            .notification-item:hover {
-                background-color: #f5f5f5;
-            }
-
-            .notification-icon {
-                color: #782f40;
-            }
-
-            .notification-content {
-                flex-grow: 1;
-            }
-
-            .notification-title {
-                font-weight: 500;
-                margin-bottom: 5px;
-            }
-
-            .notification-time {
-                color: #666;
-                font-size: 0.8rem;
-            }
-
-            .notification-actions {
-                display: flex;
-                gap: 10px;
-                margin-top: 10px;
-            }
-
-            .notification-actions button {
-                background-color: #782f40;
-                color: white;
-                border: none;
-                padding: 5px 15px;
-                border-radius: 15px;
-                cursor: pointer;
-                font-size: 0.8rem;
-                transition: opacity 0.3s ease;
-            }
-
-            .notification-actions button:hover {
-                opacity: 0.9;
-            }
-
-            .notification-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                z-index: 999;
-            }
-
-            .notification-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
+            
         </style>
     </head>
     <body>
-        <div class="notification-overlay"></div>
-        <div class="notifications-panel">
-            <div class="notifications-header">
-                <h5>Notifications</h5>
-                <button class="close-notifications">
-                    <i class="material-icons">close</i>
-                </button>
-            </div>
-            <div class="notifications-tabs">
-                <div class="notifications-tab active" data-tab="info">Info</div>
-                <div class="notifications-tab" data-tab="actions">Actions</div>
-            </div>
-            <div class="notifications-content">
-                <!-- Info Notifications Tab Content -->
-                <div class="tab-content" id="info-notifications">
-                    <div class="notification-item">
-                        <i class="material-icons notification-icon">update</i>
-                        <div class="notification-content">
-                            <div class="notification-title">
-                                Alex Jones updated the graphics for NFL Draft
-                                2025
-                            </div>
-                            <div class="notification-time">2 hours ago</div>
-                        </div>
-                    </div>
-                    <div class="notification-item">
-                        <i class="material-icons notification-icon">edit</i>
-                        <div class="notification-content">
-                            <div class="notification-title">
-                                Sarah Thompson modified the content for FSU
-                                Football Season 2025
-                            </div>
-                            <div class="notification-time">3 hours ago</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Actions Notifications Tab Content -->
-                <div
-                    class="tab-content"
-                    id="actions-notifications"
-                    style="display: none"
-                >
-                    <div class="notification-item">
-                        <i class="material-icons notification-icon"
-                            >rate_review</i
-                        >
-                        <div class="notification-content">
-                            <div class="notification-title">
-                                "FSU Fan Engagement Drive" has a new Review
-                                Request for Graphics
-                            </div>
-                            <div class="notification-time">1 hour ago</div>
-                            <div class="notification-actions">
-                                <button onclick="handleReview('approve')">
-                                    Approve
-                                </button>
-                                <button onclick="handleReview('reject')">
-                                    Reject
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notification-item">
-                        <i class="material-icons notification-icon"
-                            >assignment</i
-                        >
-                        <div class="notification-content">
-                            <div class="notification-title">
-                                New task assignment in "Seminoles Championship
-                                Run"
-                            </div>
-                            <div class="notification-time">4 hours ago</div>
-                            <div class="notification-actions">
-                                <button onclick="handleAssignment('accept')">
-                                    Accept
-                                </button>
-                                <button onclick="handleAssignment('decline')">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="center-align" style="padding: 10px; margin-bottom: -10px">
+       
+        <div class="center-align">
             <img
                 src="https://athlytesports.com/wp-content/uploads/2024/04/athlyte-new-logo.svg"
                 alt="FSU Logo"
-                width="100"
+                
             />
         </div>
         <div class="container">
             <div class="header-container">
                 <h3 class="header-title">Projects Overview</h3>
-                <button
-                    class="notifications-trigger"
-                    onclick="toggleNotifications()"
-                >
-                    <i class="material-icons">notifications</i>
-                    <span class="notification-count">3</span>
-                </button>
+                
                 <a href="create_project.html" class="create-project-btn">
                     <i class="material-icons">add</i>
                     Create Project
