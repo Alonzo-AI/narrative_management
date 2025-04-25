@@ -189,10 +189,42 @@
                 box-sizing: border-box !important;
                 margin: 0 0 8px 0 !important;
             }
+
+            .home-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.home-button .btn-floating {
+  background-color: var(--fsu-gold);
+}
+
+.home-button .btn-floating i {
+  color: var(--fsu-garnet);
+}
+
+.home-button .btn-floating:hover {
+  background-color: var(--fsu-garnet);
+}
+
+.home-button .btn-floating:hover i {
+  color: var(--fsu-gold);
+}
+
         </style>
     </head>
     <body>
+        
         <div class="container">
+
+             <!-- Add this inside the archive-header div, at the beginning -->
+<div class="home-button">
+    <a href="projects_overview.html" class="btn-floating btn-large waves-effect waves-light">
+      <i class="material-icons">home</i>
+    </a>
+  </div>
+
             <div class="create-project-form">
                 <h4 class="page-title">Create New Project</h4>
 
