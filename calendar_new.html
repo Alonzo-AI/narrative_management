@@ -19,8 +19,8 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
+            background-color: rgb(236, 234, 234);
+            color: #73d2e7;
         }
 
         .container {
@@ -34,10 +34,16 @@
             margin-bottom: 30px;
         }
 
-        .logo {
-            width: 100px;
-            height: auto;
-            margin-bottom: 20px;
+        .center-align  {
+                
+            margin-bottom: 15px;
+            padding: 0 20px;
+            display: inline-flex;                ;
+            height: 150px;
+            width: 150px;
+            align-items: center;
+                
+              
         }
 
         /* View Controls */
@@ -50,8 +56,8 @@
 
         .view-btn {
             padding: 8px 16px;
-            background-color: var(--fsu-gold);
-            color: var(--fsu-garnet);
+            background-color: #73d2e7;
+            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -64,12 +70,12 @@
         }
 
         .view-btn.active {
-            background-color: white;
+            background-color: rgb(163, 227, 241);
         }
 
         /* Calendar Container */
         .calendar-container {
-            background-color: var(--fsu-gold);
+            background-color: #73d2e7;
             border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
@@ -80,7 +86,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            color: var(--fsu-garnet);
+            color: white;
         }
 
         .nav-buttons {
@@ -91,7 +97,7 @@
         .nav-btn {
             background: none;
             border: none;
-            color: var(--fsu-garnet);
+            color: white;
             font-size: 24px;
             cursor: pointer;
             padding: 5px;
@@ -113,8 +119,8 @@
         }
 
         .monthly-view .header-cell {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
+            background-color: rgb(236, 234, 234);
+            color: black;
             padding: 10px;
             text-align: center;
             font-weight: bold;
@@ -135,8 +141,8 @@
         }
 
         .weekly-view .time-cell {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
+            background-color: rgb(236, 234, 234);
+            color: black;
             padding: 10px;
             text-align: right;
         }
@@ -147,6 +153,16 @@
             padding: 5px;
         }
 
+        .weekly-view .header-cell {
+            background-color: rgb(236, 234, 234);
+            color: black;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+
+        }    
+
+
         /* Daily View */
         .daily-view {
             display: grid;
@@ -156,8 +172,8 @@
         }
 
         .daily-view .time-cell {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
+            background-color: rgb(236, 234, 234);
+            color: black;
             padding: 10px;
             text-align: right;
         }
@@ -168,10 +184,19 @@
             padding: 10px;
         }
 
+        .daily-view .header-cell {
+            background-color: rgb(236, 234, 234);
+            color: black;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+
+        }    
+
         /* Event Cards */
         .event-card {
-            background-color: var(--fsu-garnet);
-            color: var(--fsu-gold);
+            background-color: rgb(236, 234, 234);
+            color: black;
             padding: 8px;
             border-radius: 4px;
             margin-bottom: 5px;
@@ -216,22 +241,25 @@
         }
 
         .view-selector {
-            background-color: #ceb888;
-            color: #782f40;
+            background-color: #73d2e7;
+            color: white;
             border: none;
             border-radius: 4px;
             padding: 8px;
             width: 200px;
             height: 36px;
         }
+
     </style>
 </head>
 <body>
+    <div class="center-align">
+        <img src="https://athlytesports.com/wp-content/uploads/2024/04/athlyte-new-logo.svg" alt="FSU Logo">
+    </div>
+
     <div class="container">
         <div class="header">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d5/Florida_State_Seminoles_logo.svg/1200px-Florida_State_Seminoles_logo.svg.png"
-            alt="FSU Logo"
-            width="100" class="logo">
+            
             <h1>FSU Projects Calendar</h1>
         </div>
         <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
