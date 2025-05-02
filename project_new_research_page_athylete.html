@@ -1,0 +1,3507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSU Research Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: rgb(236, 234, 234);
+            display: grid;
+            grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                    180px,
+                    1fr
+                );
+            min-height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        /* body * {
+          outline: 1px dashed rgba(0, 0, 0, 0.1);
+        } */
+
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* FSU Header Styles */
+.fsu-header {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fsu-logo {
+    width: 60px;
+    height: auto;
+}
+
+.site-title {
+    color: #73d2e7;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.project-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.info-item i {
+    color: #73d2e7;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #73d2e7;
+}
+
+/* Phase Status Styles */
+.info-item:nth-child(2) .info-value {
+    font-weight: 600;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Status Colors */
+.status-in-progress .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.status-under-review .info-value {
+    color: #FF9800; /* Orange */
+}
+
+.status-completed .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Status Icon Animations */
+.info-item:nth-child(2) i.material-icons {
+    transition: transform 0.3s ease;
+}
+
+/* Status Badge (Optional) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-badge.in-progress {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.status-badge.under-review {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.status-badge.completed {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+/* Pulse animation for "Under Review" status (optional) */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.status-under-review .info-value {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+
+        /* Sidebar styles */
+        .sidebar {
+            background: #73d2e7;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: relative;
+            top: 150px;
+            max-width: 200px;
+        }
+
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: rgb(163, 227, 241);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background-color: rgb(236, 234, 234);
+            color: #73d2e7;
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+        }
+
+        .nav-item:hover {
+            background-color: rgb(236, 234, 234);
+            color: #73d2e7;
+        }
+
+        /* Main content styles */
+        .main-content {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        /* Or add space between the two main content sections */
+        .main-content + .main-content {
+            margin-top: 40px; /* Adjust as needed */
+        }
+
+
+        .header {
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            color: #73d2e7;
+            margin-bottom: 16px;
+            font-size: 2rem;
+        }
+
+        /* Research cards grid */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .research-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.active {
+            background: rgba(120, 47, 64, 0.1);
+            color: var(--fsu-garnet);
+        }
+
+        .status-badge.completed {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .card-title {
+            color: var(--fsu-garnet);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--fsu-garnet);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Header styles update */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-new-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        /* Header Buttons Styles */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn i {
+    font-size: 1.2rem;
+}
+
+.btn-primary {
+    background: #73d2e7;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: rgb(236, 234, 234);
+}
+
+.btn-secondary {
+    background: white;
+    color: #73d2e7;
+    border: 1px solid rgb(236, 234, 234);
+}
+
+.btn-secondary:hover {
+    background: #f8f2e7;
+}
+
+.submit-review-btn {
+    position: relative;
+}
+
+.submit-review-btn::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background-color: #73d2e7;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .project-info {
+        width: 100%;
+    }
+
+    .info-item {
+        flex: 1;
+        min-width: 150px;
+    }
+}
+
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            max-height: 700px;
+            overflow-y: scroll;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        /* Modal Header with Close Button Styles */
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: #73d2e7;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    border-radius: 50%;
+}
+
+.close-btn:hover {
+    color: var(--fsu-garnet);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.close-btn i {
+    font-size: 24px;
+}
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .content-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .content-type-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .content-type-card:hover {
+            transform: translateY(-5px);
+            background: white;
+            border-color: #73d2e7;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-type-card i {
+            font-size: 2.5rem;
+            color: #73d2e7;
+            margin-bottom: 15px;
+        }
+
+        .content-type-card h3 {
+            color: #73d2e7;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .content-type-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Drag and Drop Upload Styles */
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .upload-area {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #73d2e7;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            background-color: rgba(120, 47, 64, 0.03);
+        }
+
+        .upload-area.dragover {
+            background-color: rgba(206, 184, 136, 0.2);
+            border-color: var(--fsu-gold);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #73d2e7;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            text-align: center;
+            color: #666;
+        }
+
+        .upload-text h3 {
+            color: #73d2e7;
+            margin-bottom: 5px;
+        }
+
+        .upload-file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-list {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-icon {
+            margin-right: 10px;
+            color: #73d2e7;
+        }
+
+        .file-name {
+            font-size: 0.9rem;
+        }
+
+        .file-size {
+            color: #888;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .file-remove {
+            color: #ff3b30;
+            cursor: pointer;
+        }
+
+        .upload-actions {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .upload-btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .upload-btn.submit {
+            background: #73d2e7;
+            color: white;
+        }
+
+        .upload-btn.submit:hover {
+            background: #692a38;
+        }
+
+        .upload-btn.cancel {
+            background: #f2f2f2;
+            color: #666;
+        }
+
+        .upload-btn.cancel:hover {
+            background: #e6e6e6;
+        }
+
+        /* Web Links Form Styles */
+.form-container {
+    width: 100%;
+    padding: 15px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #73d2e7;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23782f40'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #73d2e7;
+}
+
+textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Link validation styles */
+.form-input.valid {
+    border-color: #28a745;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2328a745'%3e%3cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 40px; /* Space for the icon */
+}
+
+.form-input.invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc3545'%3e%3cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 40px; /* Space for the icon */
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* Upload actions */
+.upload-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.upload-btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.upload-btn.submit {
+    background: #73d2e7;
+    color: white;
+}
+
+.upload-btn.submit:hover {
+    background: rgb(163, 227, 241);
+}
+
+.upload-btn.submit:disabled {
+    background: rgb(163, 227, 241);
+    cursor: not-allowed;
+}
+
+.upload-btn.cancel {
+    background: #f2f2f2;
+    color: #666;
+}
+
+.upload-btn.cancel:hover {
+    background: #e6e6e6;
+}
+
+        /* Form styles */
+        .form-container {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #73d2e7;
+        }
+
+        textarea.search-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Athlete Stories Grid Styles */
+#athleteStoriesGrid {
+    width: 100%;
+    padding: 15px 0;
+}
+
+/* Story Card */
+.story-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.story-card.selected {
+    border: 2px solid #73d2e7;
+}
+
+.story-card.selected::after {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #73d2e7;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.story-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.story-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #73d2e7;
+    color: white;
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.story-content {
+    padding: 15px;
+}
+
+.story-title {
+    color: #73d2e7;
+    font-size: 1rem;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.story-excerpt {
+    color: #666;
+    font-size: 0.85rem;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.story-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.story-image {
+    display: none;
+}
+
+.story-date {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.story-select-btn {
+    background-color: transparent;
+    color: #73d2e7;
+    border: 1px solid #73d2e7;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.story-select-btn:hover {
+    background-color: #73d2e7;
+    color: white;
+}
+
+.selected .story-select-btn {
+    background-color: #73d2e7;
+    color: white;
+}
+
+/* Upload Actions */
+.upload-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#custom-story-btn {
+    background-color: var(--fsu-gold);
+    color: #73d2e7;
+}
+
+#custom-story-btn:hover {
+    background-color: #bda677;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .stories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-tags {
+        margin-top: 15px;
+    }
+}
+
+/* Custom scrollbar for stories grid */
+.stories-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.stories-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.stories-grid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.stories-grid::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+
+        /* Enhanced Comments Section Styles */
+.comments-section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.section-title {
+    color: #73d2e7;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--fsu-gold);
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-counter {
+    background: #73d2e7;
+    color: white;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .comment-form {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.comment-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, height 0.2s ease;
+    overflow: hidden;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: #73d2e7;
+}
+
+#postCommentBtn {
+    padding: 12px 20px;
+    height: fit-content;
+}
+
+@media (max-width: 767px) {
+    #postCommentBtn {
+        align-self: flex-end;
+    }
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0; /* Ensures proper text wrapping */
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: #73d2e7;
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: #73d2e7;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.comment-action-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Comment edit interface */
+.comment-edit-interface {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-edit-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.comment-edit-input:focus {
+    outline: none;
+    border-color: #73d2e7;
+}
+
+.comment-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* No comments message */
+.no-comments-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Loading indicator */
+.comment-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.comment-loading .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(120, 47, 64, 0.2);
+    border-top-color: #73d2e7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation for new comments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-item.new {
+    animation: fadeIn 0.3s ease forwards;
+}
+        /* Simple Grid View Styles */
+.research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.research-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+}
+
+.research-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    background-color: var(--fsu-garnet);
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-icon i {
+    font-size: 2rem;
+}
+
+.card-content {
+    padding: 16px;
+    flex: 1;
+}
+
+.card-title {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: var(--fsu-garnet);
+    font-weight: 600;
+}
+
+.card-description {
+    color: #666;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.card-file {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.card-file i {
+    color: var(--fsu-garnet);
+    font-size: 18px;
+}
+
+.card-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.card-actions {
+    display: flex;
+    padding: 12px 16px;
+    background: #f8f8f8;
+    gap: 8px;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: rgb(163, 227, 241);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #73d2e7;
+    border: 1px solid #73d2e7;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(236, 234, 234);
+}
+
+/* Icon colors by type */
+.research-card:nth-child(2) .card-icon {
+    background-color: #2196F3; /* Blue for media */
+}
+
+.research-card:nth-child(3) .card-icon {
+    background-color: #4CAF50; /* Green for web links */
+}
+
+.research-card:nth-child(4) .card-icon {
+    background-color: #FF5722; /* Red-orange for videos */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1200px) {
+    body {
+        grid-template-columns: minmax(200px, 1fr) 3fr minmax(
+                250px,
+                1fr
+            );
+        padding: 16px;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .notification-sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .team-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        margin-bottom: 16px;
+    }
+
+    .card-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .team-button,
+    .edit-button {
+        width: 100%;
+    }
+}
+.notification-sidebar {
+    /* position: fixed;
+    right: 0; */
+    width: 200px;
+    height: min-content;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 100;
+    border-radius: 6px;
+    /* margin-left: auto; */
+}
+
+.notification {
+    padding: 12px;
+    border-left: 3px solid #73d2e7;
+    margin: 12px 0;
+    background: #f8f8f8;
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.2s ease;
+}
+
+.notification:hover {
+    transform: translateX(-5px);
+}
+
+.notification-title {
+    color: #73d2e7;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.notification-content {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.notification-time {
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.logo-above-sidebar {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    height: 250px;
+    width: 250px;
+    z-index: 10;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Comprehensive Dashboard Structure with Header and Buttons -->
+
+     <!-- Logo above sidebar -->
+<img
+src="https://athlytesports.com/wp-content/uploads/2024/04/athlyte-new-logo.svg"
+alt="FSU Logo"
+class="logo-above-sidebar"
+/>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        
+        <div class="nav-item">
+            <i class="material-icons">home</i>
+            <a href="projects_overview.html"> Home </a>
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">assignment</i>
+            <a href="project_new_athylte.html"> Project </a>
+        </div>
+        <div class="nav-item active">
+            <i class="material-icons">search</i>
+            <span>Research</span>
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">description</i>
+            <a href="project_new_content_draft.html"> Content Draft</a>
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">brush</i>
+            <a href="projetc_new_graphics.html"> Graphics</a>
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">share</i>
+            <a href="projetc_new_marketing.html"> Marketing</a>
+        </div>
+        <div class="nav-item">
+            <i class="material-icons">share</i>
+            <a href="project_new_publish.html"> Publish</a>
+        </div>
+
+        <div class="nav-item">
+            <i class="material-icons">equalizer</i>
+            <a href="project_new_analytics.html"> Analytics</a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+        <!-- FSU Header with Coordinator and Deadline -->
+        <header class="fsu-header">
+            <div class="header-container">
+                <div class="logo-container">
+
+                    <h1 class="site-title">2023 Football Season Recap</h1>
+                </div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <i class="material-icons">person</i>
+                        <div class="info-content">
+                            <span class="info-label">Research Coordinator</span>
+                            <span class="info-value">Sarah Johnson</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                     <div class="info-content">
+                            <span class="info-label">Phase Status</span>
+                            <span class="info-value">In Progress</span>
+                        </div>
+                    </div>
+
+                        <div class="info-item">
+                        <i class="material-icons">event</i>
+                        <div class="info-content">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">March 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content with research grid -->
+        <main class="main-content">
+            <div class="header">
+                <div class="header-top">
+                    <h1>Research</h1>
+                    <div class="header-buttons">
+                        <button class="btn btn-secondary submit-review-btn" onclick="submitReview()">
+                            <i class="material-icons">rate_review</i>
+                            Submit Review
+                        </button>
+                        <button class="btn btn-primary add-new-btn" onclick="openModal()">
+                            <i class="material-icons">add</i>
+                            Add New
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ONLY ONE research grid in the entire document -->
+            <div class="research-grid">
+                <!-- Research items will be populated here -->
+            </div>
+        </main>
+
+        <!-- Comments Section -->
+        <main class="main-content">
+            <div class="comments-section">
+                <h2 class="section-title">
+                    Comments
+                </h2>
+
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                    <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+                </div>
+
+                <div class="comments-list" id="commentsList">
+                    <!-- Example comments -->
+                    <div class="comment-item">
+
+                    </div>
+
+                    <div class="comment-item">
+
+                            </div>
+                        </div>
+                    </div>
+                </main>
+        </main>
+    </main>
+
+    <aside class="notification-sidebar">
+        <div class="notification-header">
+            <h2>Notifications</h2>
+        </div>
+        <div class="notification-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+    </aside>
+
+<!-- Add New Modal -->
+<div id="addNewModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Research Content</h2>
+            <button class="close-btn" onclick="closeModal()">
+                <i class="material-icons">close</i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="content-type-grid">
+                <div class="content-type-card" data-type="documents" onclick="showUploadForm('documents')">
+                    <i class="material-icons">description</i>
+                    <h3>Documents</h3>
+                    <p>Upload and manage research documents</p>
+                </div>
+                <div class="content-type-card" data-type="web-links" onclick="showUploadForm('web-links')">
+                    <i class="material-icons">link</i>
+                    <h3>Web Links</h3>
+                    <p>Add relevant web resources and articles</p>
+                </div>
+                <div class="content-type-card" data-type="breaking-news" onclick="showUploadForm('breaking-news')">
+                    <i class="material-icons">flash_on</i>
+                    <h3>Breaking News</h3>
+                    <p>Add latest news and updates</p>
+                </div>
+                <div class="content-type-card" data-type="media" onclick="showUploadForm('media')">
+                    <i class="material-icons">perm_media</i>
+                    <h3>Media</h3>
+                    <p>Upload images, videos, and other media</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Modal with All Content Types -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="uploadModalTitle">Upload Content</h2>
+            <button class="close-btn" onclick="closeUploadModal()">
+                <i class="material-icons">close</i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- Standard File Upload Container (for documents, media) -->
+            <div class="upload-container" id="upload-container">
+                <div class="upload-area" id="upload-area">
+                    <i class="material-icons upload-icon">cloud_upload</i>
+                    <div class="upload-text">
+                        <h3>Drag & Drop files here</h3>
+                        <p>or click to browse files</p>
+                    </div>
+                    <input type="file" class="upload-file-input" id="file-input" multiple>
+                </div>
+                <div class="file-list" id="file-list">
+                    <!-- Files will be listed here -->
+                </div>
+                <div class="upload-actions">
+                    <button class="upload-btn cancel" id="cancel-upload" onclick="cancelUpload()">Cancel</button>
+                    <button class="upload-btn submit" id="upload-btn" onclick="uploadFiles()">Upload</button>
+                </div>
+            </div>
+
+            <!-- Web Links Form (hidden by default) -->
+            <div id="webLinksForm" class="form-container" style="display: none;">
+                <div class="form-group">
+                    <label for="linkTitle">Link Title</label>
+                    <input type="text" id="linkTitle" class="form-input" placeholder="Enter website title or description">
+                    <div class="error-message" id="titleError">Please enter a title with at least 3 characters.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="linkUrl">URL</label>
+                    <input type="url" id="linkUrl" class="form-input" placeholder="https://example.com/resource">
+                    <div class="error-message" id="urlError">Please enter a valid URL starting with http:// or https://</div>
+                </div>
+
+                <div class="upload-actions">
+                    <button class="upload-btn cancel" id="cancel-weblink" onclick="cancelUpload()">Cancel</button>
+                    <button class="upload-btn submit" id="submit-weblink" onclick="submitWebLink()" disabled>Add Link</button>
+                </div>
+            </div>
+
+                <div id="story-section" style="display: none;">
+                <!-- Athlete Stories Grid (hidden by default) -->
+                    <div id="athleteStoriesGrid" class="form-container" style="display: none;">
+                        <!-- All the athlete stories content -->
+                    </div>
+
+
+                    <div class="stories-grid">
+                        <!-- Story Card 1 -->
+                        <div class="story-card" data-story-id="1">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">Trey Benson goes OFF! </h3>
+                                <p class="story-excerpt">💥 Shatters his personal best with 200 rushing yards, surpassing his previous record of 163! 🏃💨 #GoNoles.</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 21, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story Card 2 -->
+                        <div class="story-card" data-story-id="2">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">Another dominant performance!</h3>
+                                <p class="story-excerpt">Trey Benson now has 6 games with 100+ yards and 2 with 150+ yards after torching Virginia Tech! 🔥 #FSU</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 18, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story Card 3 -->
+                        <div class="story-card" data-story-id="3">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">Benson > VT's entire backfield!</h3>
+                                <p class="story-excerpt">Trey Benson exploded for 200 yards, outgaining Virginia Tech's top rusher Kyron Drones (80 yards) by a mile! 🚀 #Noles</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 15, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story Card 4 -->
+                        <div class="story-card" data-story-id="4">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">🚨 History Made! 🚨</h3>
+                                <p class="story-excerpt">Trey Benson just set the all-time rushing record for any FSU player against Virginia Tech with 200 yards on the ground! 
+                                    🌟🏆He surpasses Greg Jones 2002 performance of 120 yards vs. the Hokies. What a performance! 🔥#GoNoles | #TreyBenson | #RecordBreaker</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 14, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story Card 5 -->
+                        <div class="story-card" data-story-id="5">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">🔥 Consistency King! 🔥</h3>
+                                <p class="story-excerpt">Trey Benson just logged his 4th consecutive game with 50+ rushing yards against AAC opponents! 💨💪Dominating the ground game and keeping the streak alive! 🚀🏆#GoNoles | #TreyBenson | #GroundGameStrong</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 10, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story Card 6 -->
+                        <div class="story-card" data-story-id="6">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">🚀 Trey Benson hits a new gear!</h3>
+                                <p class="story-excerpt">Breaks his career-long rush with an 85-yard sprint vs. Virginia Tech, smashing his previous best of 55 yards vs. Pitt earlier this season! 🔥💨 #GoNoles #FSU</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 8, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Story Card 7 -->
+                        <div class="story-card" data-story-id="6">
+                            <div class="story-image" style="background-image: url('https://via.placeholder.com/300x200');">
+                                <div class="story-tag">FSU Football</div>
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-title">🔥 Trey Benson turns on the jets!</h3>
+                                <p class="story-excerpt">His 85-yard dash vs. Virginia Tech is the longest rush by any FSU player in the 2023 season! 🚀💨 #GoNoles #FSU</p>
+                                <div class="story-meta">
+                                    <span class="story-date">Nov 8, 2024</span>
+                                    <button class="story-select-btn">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        // Global variables
+let selectedFiles = [];
+let currentContentType = '';
+
+// Helper function to get appropriate icon name based on file type
+function getFileIconName(fileType) {
+    if (!fileType) return 'insert_drive_file';
+
+    if (fileType.includes('image')) {
+        return 'image';
+    } else if (fileType.includes('video')) {
+        return 'movie';
+    } else if (fileType.includes('audio')) {
+        return 'audiotrack';
+    } else if (fileType.includes('pdf')) {
+        return 'picture_as_pdf';
+    } else if (fileType.includes('word') || fileType.includes('document')) {
+        return 'description';
+    } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
+        return 'table_chart';
+    } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+        return 'slideshow';
+    } else {
+        return 'insert_drive_file';
+    }
+}
+
+// Enhanced Submit Review functionality with Phase Status updates
+function submitReview() {
+    // You can customize this function based on your requirements
+    console.log("Submit Review button clicked");
+
+    // Show confirmation dialog
+    const confirmSubmit = confirm("Are you sure you want to submit your review? This action can't be undone.");
+
+    if (confirmSubmit) {
+        // Show loading state
+        const submitBtn = document.querySelector('.submit-review-btn');
+        submitBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Submitting...';
+        submitBtn.disabled = true;
+
+        // Simulate API call with timeout
+        setTimeout(() => {
+            // Show success message
+           // alert("Your review has been successfully submitted!");
+             addNotification(
+               "default",
+               `Review Request`,
+               `Research Review request raised.`,
+           );
+
+            // Update Phase Status to "Under Review"
+            updatePhaseStatus("Under Review", "reviews");
+
+            // Change the button to "Accept Review" instead of resetting to original state
+            submitBtn.innerHTML = '<i class="material-icons">check_circle</i> Accept Review';
+            submitBtn.disabled = false;
+
+            // You might want to change the class name or add a new class to style it differently
+            submitBtn.classList.remove('submit-review-btn');
+            submitBtn.classList.add('accept-review-btn');
+
+            // Optionally change the onclick function
+            submitBtn.onclick = function() {
+                acceptReview();
+            };
+
+        }, 1500);
+    }
+}
+
+// New function for Accept Review functionality
+function acceptReview() {
+    console.log("Accept Review button clicked");
+
+    // Show confirmation dialog
+    const confirmAccept = confirm("Are you sure you want to accept this review?");
+
+    if (confirmAccept) {
+        // Show loading state
+        const acceptBtn = document.querySelector('.accept-review-btn');
+        acceptBtn.innerHTML = '<i class="material-icons">hourglass_top</i> Processing...';
+        acceptBtn.disabled = true;
+
+        // Simulate API call with timeout
+        setTimeout(() => {
+            // Show success message
+          //  alert("Review has been accepted successfully!");
+
+          addNotification(
+            "progress",
+            `Review Accepted`,
+            `Research Review Accepted`,
+        );
+
+            // Update Phase Status to "Completed"
+            updatePhaseStatus("Completed", "task_alt");
+
+            // Update button state
+            acceptBtn.innerHTML = '<i class="material-icons">done_all</i> Accepted';
+            acceptBtn.disabled = true;
+        }, 1500);
+    }
+}
+
+// Function to update the Phase Status
+function updatePhaseStatus(status, iconName) {
+    const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
+    const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
+
+    if (statusElement) {
+        // Apply fade-out effect
+        statusElement.style.transition = 'opacity 0.3s ease';
+        statusElement.style.opacity = '0';
+
+        // Update status text and fade back in
+        setTimeout(() => {
+            statusElement.textContent = status;
+
+            // Add color based on status
+            if (status === "In Progress") {
+                statusElement.style.color = '#2196F3'; // Blue
+            } else if (status === "Under Review") {
+                statusElement.style.color = '#FF9800'; // Orange
+            } else if (status === "Completed") {
+                statusElement.style.color = '#4CAF50'; // Green
+            }
+
+            statusElement.style.opacity = '1';
+        }, 300);
+    }
+
+    if (iconElement && iconName) {
+        // Update icon with animation
+        iconElement.style.transform = 'scale(0)';
+        setTimeout(() => {
+            iconElement.textContent = iconName;
+            iconElement.style.transform = 'scale(1)';
+        }, 300);
+    }
+}
+
+// Initialize styles for phase status animations
+function initPhaseStatusStyles() {
+    const statusElement = document.querySelector('.info-item:nth-child(2) .info-value');
+    const iconElement = document.querySelector('.info-item:nth-child(2) i.material-icons');
+
+    if (statusElement) {
+        statusElement.style.transition = 'opacity 0.3s ease, color 0.3s ease';
+    }
+
+    if (iconElement) {
+        iconElement.style.transition = 'transform 0.3s ease';
+    }
+
+    // Set initial status color
+    updatePhaseStatus("In Progress", "pending_actions");
+}
+
+// Call initialization when document is ready
+document.addEventListener('DOMContentLoaded', initPhaseStatusStyles);
+
+// Add event listeners to a card
+function addCardEventListeners(card, type, files) {
+    // Get the buttons
+    const buttons = card.querySelectorAll('.btn');
+    if (buttons.length >= 2) {
+        // First button (View/Visit/Play)
+        buttons[0].addEventListener('click', function() {
+            const title = card.querySelector('.card-title').textContent;
+            if (type === 'web-links') {
+                alert(`Visiting website: ${title}`);
+            } else if (type === 'media' && files && files.length > 0 && files[0].type.includes('video')) {
+                alert(`Playing video: ${files[0].name}`);
+            } else if (type === 'media' && files && files.length > 0 && files[0].type.includes('image')) {
+                alert(`Viewing image: ${files[0].name}`);
+            } else {
+                alert(`Viewing: ${title}`);
+            }
+        });
+
+        // Second button (Download/Copy Link)
+        buttons[1].addEventListener('click', function() {
+            const title = card.querySelector('.card-title').textContent;
+            if (type === 'web-links') {
+                alert(`Link copied: ${title}`);
+            } else if (files && files.length > 0) {
+                alert(`Downloading: ${files[0].name}`);
+            } else {
+                alert(`Downloading: ${title}`);
+            }
+        });
+    }
+}
+
+// Helper function to format file size
+function formatFileSize(size) {
+    if (size < 1024) {
+        return size + ' B';
+    } else if (size < 1024 * 1024) {
+        return (size / 1024).toFixed(1) + ' KB';
+    } else {
+        return (size / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+}
+
+// Modal functionality
+function openModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    console.log('Opening Add New modal');
+}
+
+function closeModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+
+
+function closeUploadModal() {
+    const modal = document.getElementById('uploadModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+// This is the function to handle cancel button click
+function cancelUpload() {
+    // Close the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.remove('show');
+
+    // Open the Add New modal again
+    const addNewModal = document.getElementById('addNewModal');
+    addNewModal.classList.add('show');
+
+    console.log('Canceled upload, returning to Add New popup');
+}
+
+function resetUploadForm() {
+    // Clear selected files
+    selectedFiles = [];
+    document.getElementById('file-list').innerHTML = '';
+
+    // Reset upload button
+    document.getElementById('upload-btn').disabled = true;
+}
+
+// Modal functionality
+function openModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling behind the modal
+    console.log('Opening Add New modal');
+}
+
+function closeModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+    console.log('Closing modal, returning to main page');
+}
+
+// Close modal when clicking outside of it (optional feature)
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('addNewModal');
+    if (modal && modal.classList.contains('show')) {
+        // Check if the click was outside the modal content
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+});
+
+// Close modal with Escape key (optional feature)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('addNewModal');
+        if (modal && modal.classList.contains('show')) {
+            closeModal();
+        }
+    }
+});
+
+// File handling functionality
+function handleFileSelect(event) {
+    const files = event.target.files || event.dataTransfer.files;
+
+    console.log("Files selected:", files.length);
+
+    if (files.length > 0) {
+        // Convert FileList to Array and add to selectedFiles
+        Array.from(files).forEach(file => {
+            // Check if file is already in the list
+            if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                selectedFiles.push(file);
+            }
+        });
+
+        console.log("Selected files after adding:", selectedFiles.length);
+
+        // Update the file list
+        updateFileList();
+
+        // Enable the upload button if we have files
+        document.getElementById('upload-btn').disabled = false;
+    }
+}
+
+function updateFileList() {
+    const fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+
+    selectedFiles.forEach((file, index) => {
+        // Create a file item element
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+
+        // Format the file size
+        const fileSize = formatFileSize(file.size);
+
+        // Get file icon based on type
+        const fileIcon = getFileIcon(file.type);
+
+        // Set the file item content
+        fileItem.innerHTML = `
+            <div class="file-info">
+                <i class="material-icons file-icon">${fileIcon}</i>
+                <span class="file-name">${file.name}</span>
+                <span class="file-size">${fileSize}</span>
+            </div>
+            <i class="material-icons file-remove" data-index="${index}">close</i>
+        `;
+
+        fileList.appendChild(fileItem);
+    });
+
+    // Add click event to remove buttons
+    document.querySelectorAll('.file-remove').forEach(button => {
+        button.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            selectedFiles.splice(index, 1);
+            updateFileList();
+
+            // Disable upload button if no files left
+            if (selectedFiles.length === 0 &&
+                (currentContentType === 'documents' || currentContentType === 'media')) {
+                document.getElementById('upload-btn').disabled = true;
+            }
+        });
+    });
+}
+
+function getFileIcon(fileType) {
+    if (!fileType) return 'insert_drive_file';
+
+    if (fileType.includes('image')) {
+        return 'image';
+    } else if (fileType.includes('video')) {
+        return 'videocam';
+    } else if (fileType.includes('audio')) {
+        return 'audiotrack';
+    } else if (fileType.includes('pdf')) {
+        return 'picture_as_pdf';
+    } else if (fileType.includes('word') || fileType.includes('document')) {
+        return 'description';
+    } else if (fileType.includes('excel') || fileType.includes('spreadsheet')) {
+        return 'table_chart';
+    } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+        return 'slideshow';
+    } else {
+        return 'insert_drive_file';
+    }
+}
+
+// Upload function - completely revised
+function uploadFiles() {
+    console.log("Upload function called");
+
+   // Check if we need files but don't have any
+    if (selectedFiles.length === 0 &&
+        (currentContentType === 'documents' || currentContentType === 'media')) {
+      //  consol('Please select at least one file to upload.');
+        return;
+    }
+
+    console.log("Files to be uploaded:", selectedFiles);
+    console.log("Content type:", currentContentType);
+
+    try {
+        // Generate automatic title and description
+        let title = '';
+        let description = '';
+
+        if (currentContentType === 'media') {
+            title = 'Media';
+            description = 'Uploaded media files';
+        } else if (currentContentType === 'web-links') {
+            title = 'Web Resource';
+            description = 'Web resource link';
+        } else if (currentContentType === 'breaking-news') {
+            title = 'Breaking News';
+            description = 'Latest research update';
+        } else {
+            title = 'Research Document';
+            description = 'Uploaded research document';
+        }
+
+        // If we have files, use the first file name as title
+        if (selectedFiles.length > 0) {
+            // Get the file name without extension
+            const fileName = selectedFiles[0].name.split('.').slice(0, -1).join('.');
+            if (fileName) {
+                title = fileName;
+            }
+        }
+
+        // Call the original addToResearchGrid function with title and description
+        const researchGrid = document.querySelector('.research-grid');
+        if (!researchGrid) {
+            alert("Error: Cannot find research grid element");
+            return;
+        }
+
+        // Get current date for display
+        const today = new Date();
+        const dateString = today.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        // Create a new research card
+        const researchCard = document.createElement('div');
+        researchCard.className = 'research-card';
+
+        // Determine icon based on content type
+        let iconName = 'description';
+        if (currentContentType === 'media') {
+            iconName = 'perm_media';
+        } else if (currentContentType === 'web-links') {
+            iconName = 'link';
+        } else if (currentContentType === 'breaking-news') {
+            iconName = 'flash_on';
+        }
+
+        // Create card header with icon
+        let cardIcon = `
+            <div class="card-icon">
+                <i class="material-icons">${iconName}</i>
+            </div>
+        `;
+
+        // Set up the content section
+        let cardContent = `
+            <div class="card-content">
+                <h3 class="card-title">${title}</h3>
+                <p class="card-description">${description}</p>
+        `;
+
+        // Add file information based on content type
+        if (currentContentType === 'web-links') {
+            cardContent += `
+                <div class="card-file">
+                    <i class="material-icons">language</i>
+                    <span>example.com/research</span>
+                </div>
+            `;
+        } else if (currentContentType === 'breaking-news') {
+            cardContent += `
+                <div class="card-file">
+                    <i class="material-icons">article</i>
+                    <span>Research announcement</span>
+                </div>
+            `;
+        } else {
+            // For files (documents, media)
+            if (selectedFiles.length > 0) {
+                // Sort through the files to display them in order
+                selectedFiles.forEach((file, index) => {
+                    // Only show first 2 files directly
+                    if (index < 2) {
+                        const fileIcon = getFileIconName(file.type);
+                        const fileSize = formatFileSize(file.size);
+
+                        cardContent += `
+                            <div class="card-file">
+                                <i class="material-icons">${fileIcon}</i>
+                                <span>${file.name} (${fileSize})</span>
+                            </div>
+                        `;
+                    }
+                });
+
+                // If there are more files, indicate that
+                if (selectedFiles.length > 2) {
+                    cardContent += `
+                        <div class="card-file">
+                            <i class="material-icons">more_horiz</i>
+                            <span>+${selectedFiles.length - 2} more files</span>
+                        </div>
+                    `;
+                }
+            } else {
+                // Fallback if no files
+                cardContent += `
+                    <div class="card-file">
+                        <i class="material-icons">insert_drive_file</i>
+                        <span>No files attached</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Add date and close content div
+        cardContent += `
+                <div class="card-date">Added: ${dateString}</div>
+            </div>
+        `;
+
+        // Set up action buttons based on content type
+        let cardActions = '<div class="card-actions">';
+
+        if (currentContentType === 'web-links') {
+            cardActions += `
+                <button class="btn btn-secondary">Visit</button>
+                <button class="btn btn-primary">Copy Link</button>
+            `;
+        } else if (currentContentType === 'media' && selectedFiles.length > 0) {
+            // Check the first file type to determine appropriate buttons
+            const firstFile = selectedFiles[0];
+
+            if (firstFile.type.includes('video')) {
+                cardActions += `
+                    <button class="btn btn-secondary">Play</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            } else if (firstFile.type.includes('image')) {
+                cardActions += `
+                    <button class="btn btn-secondary">View</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            } else if (firstFile.type.includes('audio')) {
+                cardActions += `
+                    <button class="btn btn-secondary">Listen</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            } else {
+                // Default for other media types
+                cardActions += `
+                    <button class="btn btn-secondary">View</button>
+                    <button class="btn btn-primary">Download</button>
+                `;
+            }
+        } else {
+            // Default actions for documents and other types
+            cardActions += `
+                <button class="btn btn-secondary">View</button>
+                <button class="btn btn-primary">Download</button>
+            `;
+        }
+
+        cardActions += '</div>';
+
+        // Combine all parts
+        researchCard.innerHTML = cardIcon + cardContent + cardActions;
+
+        // Add custom background color based on type
+        if (currentContentType === 'media') {
+            researchCard.querySelector('.card-icon').style.backgroundColor = '#2196F3';
+        } else if (currentContentType === 'web-links') {
+            researchCard.querySelector('.card-icon').style.backgroundColor = '#4CAF50';
+        } else if (currentContentType === 'breaking-news') {
+            researchCard.querySelector('.card-icon').style.backgroundColor = '#FF9800';
+        }
+
+        // Insert the card at the beginning of the grid
+        if (researchGrid.firstChild) {
+            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
+        } else {
+            researchGrid.appendChild(researchCard);
+        }
+
+        console.log("Card added to grid");
+
+        // Add event listeners to the new card's buttons
+        const buttons = researchCard.querySelectorAll('.btn');
+        if (buttons.length >= 2) {
+            // First button (View/Visit/Play)
+            buttons[0].addEventListener('click', function() {
+                const cardTitle = researchCard.querySelector('.card-title').textContent;
+                if (currentContentType === 'web-links') {
+                    alert(`Visiting website: ${cardTitle}`);
+                } else if (currentContentType === 'media' && selectedFiles.length > 0 && selectedFiles[0].type.includes('video')) {
+                    alert(`Playing video: ${selectedFiles[0].name}`);
+                } else if (currentContentType === 'media' && selectedFiles.length > 0 && selectedFiles[0].type.includes('image')) {
+                    alert(`Viewing image: ${selectedFiles[0].name}`);
+                } else {
+                    alert(`Viewing: ${cardTitle}`);
+                }
+            });
+
+            // Second button (Download/Copy Link)
+            buttons[1].addEventListener('click', function() {
+                const cardTitle = researchCard.querySelector('.card-title').textContent;
+                if (currentContentType === 'web-links') {
+                    alert(`Link copied: ${cardTitle}`);
+                } else if (selectedFiles.length > 0) {
+                    alert(`Downloading: ${selectedFiles[0].name}`);
+                } else {
+                    alert(`Downloading: ${cardTitle}`);
+                }
+            });
+        }
+
+        // Show success message
+        const contentTypeNames = {
+            'documents': 'Document',
+            'web-links': 'Web Link',
+            'breaking-news': 'News',
+            'media': 'Media'
+        };
+
+        // alert(`${contentTypeNames[currentContentType]} has been added to your research projects.`);
+        addNotification(
+            "default",
+            `${contentTypeNames[currentContentType]} has been added`,
+            `${title} has been added to your research deck.`,
+        );
+        // Close the modal
+        closeUploadModal();
+
+        // Clear selected files
+        selectedFiles = [];
+
+    } catch (error) {
+        console.error("Error during upload:", error);
+        alert("An error occurred while adding content to the grid. Please try again.");
+    }
+}
+
+// Simplified test upload function
+function testUpload() {
+    const grid = document.querySelector('.research-grid');
+    if (!grid) {
+        alert("Can't find research grid!");
+        return;
+    }
+
+    const testCard = document.createElement('div');
+    testCard.className = 'research-card';
+    testCard.innerHTML = `
+        <div class="card-icon" style="background-color: #782f40;">
+            <i class="material-icons">check</i>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Test Upload</h3>
+            <p class="card-description">This is a test upload card</p>
+            <div class="card-date">Added: ${new Date().toLocaleDateString()}</div>
+        </div>
+        <div class="card-actions">
+            <button class="btn btn-secondary">Test</button>
+            <button class="btn btn-primary">OK</button>
+        </div>
+    `;
+
+    if (grid.firstChild) {
+        grid.insertBefore(testCard, grid.firstChild);
+    } else {
+        grid.appendChild(testCard);
+    }
+
+    alert("Test card added!");
+    closeUploadModal();
+}
+
+// Fix the file input handling
+function setupFileInput() {
+    const fileInput = document.getElementById('file-input');
+    if (fileInput) {
+        console.log("File input found, setting up event listener");
+
+        // Remove any existing listeners by cloning
+        const newFileInput = fileInput.cloneNode(true);
+        fileInput.parentNode.replaceChild(newFileInput, fileInput);
+
+        // Add new event listener
+        newFileInput.addEventListener('change', function(event) {
+            console.log("File input changed");
+            handleFileSelect(event);
+        });
+    } else {
+        console.error("File input element not found");
+    }
+}
+
+// Add a debug function to help troubleshoot
+function addDebugButton() {
+    const uploadActions = document.querySelector('.upload-actions');
+    if (uploadActions) {
+        const debugBtn = document.createElement('button');
+        debugBtn.textContent = 'Debug';
+        debugBtn.className = 'upload-btn';
+        debugBtn.style.backgroundColor = '#333';
+        debugBtn.style.color = 'white';
+
+        debugBtn.addEventListener('click', function() {
+            console.log("--- DEBUG INFO ---");
+            console.log("Selected Files:", selectedFiles);
+            console.log("Content Type:", currentContentType);
+            console.log("Upload Button:", document.getElementById('upload-btn'));
+            console.log("File Input:", document.getElementById('file-input'));
+            console.log("Research Grid:", document.querySelector('.research-grid'));
+            alert("Debug info printed to console");
+        });
+
+        uploadActions.appendChild(debugBtn);
+    }
+}
+
+// Add a test button
+function addTestButton() {
+    const uploadActions = document.querySelector('.upload-actions');
+    if (uploadActions) {
+        const testBtn = document.createElement('button');
+        testBtn.textContent = 'Test Upload';
+        testBtn.className = 'upload-btn';
+        testBtn.style.backgroundColor = 'green';
+
+        testBtn.addEventListener('click', testUpload);
+        uploadActions.appendChild(testBtn);
+    }
+}
+
+// Initialize everything when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+
+    // Add event listener to the Add New button
+    const addNewBtn = document.querySelector('.add-new-btn');
+    if (addNewBtn) {
+        // Remove any previous listeners by cloning
+        const newAddBtn = addNewBtn.cloneNode(true);
+        addNewBtn.parentNode.replaceChild(newAddBtn, addNewBtn);
+
+        // Add direct click event listener
+        newAddBtn.addEventListener('click', function() {
+            console.log("Add New button clicked");
+            openModal();
+        });
+    }
+
+    // Add event listeners to the close buttons in the modals
+    const closeAddModalBtn = document.querySelector('#addNewModal .close-btn');
+    if (closeAddModalBtn) {
+        // Remove any previous listeners by cloning
+        const newCloseBtn = closeAddModalBtn.cloneNode(true);
+        closeAddModalBtn.parentNode.replaceChild(newCloseBtn, closeAddModalBtn);
+
+        // Add direct click event listener
+        newCloseBtn.addEventListener('click', function() {
+            console.log("Close Add modal button clicked");
+            closeModal();
+        });
+    }
+
+    const closeUploadModalBtn = document.querySelector('#uploadModal .close-btn');
+    if (closeUploadModalBtn) {
+        // Remove any previous listeners by cloning
+        const newCloseBtn = closeUploadModalBtn.cloneNode(true);
+        closeUploadModalBtn.parentNode.replaceChild(newCloseBtn, closeUploadModalBtn);
+
+        // Add direct click event listener
+        newCloseBtn.addEventListener('click', function() {
+            console.log("Close Upload modal button clicked");
+            closeUploadModal();
+        });
+    }
+
+    // Setup content type grid for the Add New modal
+    const modalBody = document.querySelector('#addNewModal .modal-body');
+    if (modalBody) {
+        // Check if the grid already exists to prevent duplicates
+        if (!modalBody.querySelector('.content-type-grid')) {
+            const contentTypeGrid = document.createElement('div');
+            contentTypeGrid.className = 'content-type-grid';
+            contentTypeGrid.innerHTML = `
+                <div class="content-type-card" data-type="documents">
+                    <i class="material-icons">description</i>
+                    <h3>Documents</h3>
+                    <p>Upload and manage research documents</p>
+                </div>
+                <div class="content-type-card" data-type="web-links">
+                    <i class="material-icons">link</i>
+                    <h3>Web Links</h3>
+                    <p>Add relevant web resources and articles</p>
+                </div>
+                <div class="content-type-card" data-type="breaking-news">
+                    <i class="material-icons">flash_on</i>
+                    <h3>Breaking News</h3>
+                    <p>Add latest news and updates</p>
+                </div>
+                <div class="content-type-card" data-type="media">
+                    <i class="material-icons">perm_media</i>
+                    <h3>Media</h3>
+                    <p>Upload images, videos, and other media</p>
+                </div>
+            `;
+
+            // Clear any existing content and add the grid
+            modalBody.innerHTML = '';
+            modalBody.appendChild(contentTypeGrid);
+        }
+    }
+
+    // Add event listeners to all content type cards, but first remove any existing ones
+    const contentTypeCards = document.querySelectorAll('.content-type-card');
+    contentTypeCards.forEach(card => {
+        // Remove existing event listeners by cloning the node
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+
+        // Add the event listener to the new card
+        newCard.addEventListener('click', function() {
+            const type = this.getAttribute('data-type');
+            if (type) {
+                console.log('Content type card clicked:', type);
+             //   showUploadForm(type);
+            }
+        });
+    });
+
+    // Set up drag and drop functionality
+    const uploadArea = document.getElementById('upload-area');
+    if (uploadArea) {
+        // Create a new element to replace the old one (removes all existing listeners)
+        const newUploadArea = uploadArea.cloneNode(true);
+        uploadArea.parentNode.replaceChild(newUploadArea, uploadArea);
+
+        // Drag and drop events on the new element
+        newUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.add('dragover');
+        });
+
+        newUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+        });
+
+        newUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+            handleFileSelect(e);
+        });
+    }
+
+    // Setup file input
+    setupFileInput();
+
+    // Add direct event listener to upload button
+    const uploadBtn = document.getElementById('upload-btn');
+    if (uploadBtn) {
+        // Remove any previous event listeners by cloning the button
+        const newBtn = uploadBtn.cloneNode(true);
+        uploadBtn.parentNode.replaceChild(newBtn, uploadBtn);
+
+        // Add a direct click event listener
+        newBtn.addEventListener('click', function(e) {
+            console.log("Upload button clicked directly");
+            e.preventDefault();
+            uploadFiles();
+        });
+        console.log("Direct upload button event listener added");
+    }
+
+    // Add direct event listener to cancel button
+    const cancelBtn = document.getElementById('cancel-upload');
+    if (cancelBtn) {
+        // Remove any previous event listeners by cloning the button
+        const newBtn = cancelBtn.cloneNode(true);
+        cancelBtn.parentNode.replaceChild(newBtn, cancelBtn);
+
+        // Add a direct click event listener
+        newBtn.addEventListener('click', function(e) {
+            console.log("Cancel button clicked directly");
+            e.preventDefault();
+            cancelUpload();
+        });
+    }
+
+
+});
+
+
+
+// Web link validation function
+function validateWebLink() {
+    const titleInput = document.getElementById('linkTitle');
+    const urlInput = document.getElementById('linkUrl');
+    const submitBtn = document.getElementById('submit-weblink');
+
+    // Validate title (required, at least 3 characters)
+    const titleValid = titleInput.value.trim().length >= 3;
+
+    // Validate URL (required, must be a valid URL)
+    let urlValid = false;
+    try {
+        const url = new URL(urlInput.value);
+        urlValid = url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (_) {
+        urlValid = false;
+    }
+
+    // Add visual validation feedback
+    titleInput.classList.toggle('valid', titleValid);
+    titleInput.classList.toggle('invalid', !titleValid && titleInput.value.trim() !== '');
+
+    urlInput.classList.toggle('valid', urlValid);
+    urlInput.classList.toggle('invalid', !urlValid && urlInput.value.trim() !== '');
+
+    // Enable/disable submit button
+    submitBtn.disabled = !(titleValid && urlValid);
+
+    return titleValid && urlValid;
+}
+
+// Function to submit web link
+function submitWebLink() {
+    // Validate inputs
+    if (!validateWebLink()) {
+        return;
+    }
+
+    // Get form values
+    const title = document.getElementById('linkTitle').value.trim();
+    const url = document.getElementById('linkUrl').value.trim();
+
+    console.log("Submitting web link:", { title, url });
+
+    // Create a web link object
+    const webLink = {
+        title: title,
+        url: url,
+        date: new Date()
+    };
+
+    // Add to research grid
+    addWebLinkToResearchGrid(webLink);
+
+    // Show success message
+    // alert(`Web link "${title}" has been added to your research projects.`);
+    addNotification(
+        "default",
+        `Web link has been added`,
+        `${title} has been added to your research deck.`,
+    );
+
+    // Close the modal
+    closeUploadModal();
+}
+
+// Function to add web link to research grid
+function addWebLinkToResearchGrid(webLink) {
+    console.log("Adding web link to research grid:", webLink);
+
+    // Get current date for display
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    // Create a new research card
+    const researchCard = document.createElement('div');
+    researchCard.className = 'research-card';
+
+    // Create card header with icon
+    let cardIcon = `
+        <div class="card-icon" style="background-color: #4CAF50;">
+            <i class="material-icons">link</i>
+        </div>
+    `;
+
+    // Set up the content section
+    let cardContent = `
+        <div class="card-content">
+            <h3 class="card-title">${webLink.title}</h3>
+            <p class="card-description">Web Resource</p>
+            <div class="card-file">
+                <i class="material-icons">language</i>
+                <span>${new URL(webLink.url).hostname}</span>
+            </div>
+            <div class="card-date">Added: ${dateString}</div>
+        </div>
+    `;
+
+    // Set up action buttons
+    let cardActions = `
+        <div class="card-actions">
+            <button class="btn btn-secondary" onclick="window.open('${webLink.url}', '_blank')">Visit</button>
+            <button class="btn btn-primary" onclick="copyToClipboard('${webLink.url}')">Copy Link</button>
+        </div>
+    `;
+
+    // Combine all parts
+    researchCard.innerHTML = cardIcon + cardContent + cardActions;
+
+    // Get the research grid
+    const researchGrid = document.querySelector('.research-grid');
+
+    if (researchGrid) {
+        // Add to the beginning so newest appears first
+        if (researchGrid.firstChild) {
+            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
+        } else {
+            researchGrid.appendChild(researchCard);
+        }
+        console.log("Web link card added to grid");
+    } else {
+        console.error("Research grid container not found");
+    }
+}
+
+// Helper function to copy URL to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            // Show a temporary tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'clipboard-tooltip';
+            tooltip.textContent = 'Link copied!';
+            document.body.appendChild(tooltip);
+
+            // Remove after animation
+            setTimeout(() => {
+                tooltip.remove();
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Could not copy text: ', err);
+            alert('Link copied: ' + text);
+        });
+}
+
+// Reset form function
+function resetWebLinkForm() {
+    const titleInput = document.getElementById('linkTitle');
+    const urlInput = document.getElementById('linkUrl');
+
+    if (titleInput && urlInput) {
+        titleInput.value = '';
+        urlInput.value = '';
+
+        titleInput.classList.remove('valid', 'invalid');
+        urlInput.classList.remove('valid', 'invalid');
+
+        document.getElementById('submit-weblink').disabled = true;
+    }
+}
+
+// Add event listeners for web link form validation
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up validation for web link form
+    const linkTitle = document.getElementById('linkTitle');
+    const linkUrl = document.getElementById('linkUrl');
+
+    if (linkTitle && linkUrl) {
+        linkTitle.addEventListener('input', validateWebLink);
+        linkUrl.addEventListener('input', validateWebLink);
+        linkUrl.addEventListener('blur', validateWebLink);
+    }
+});
+
+
+// Function to add a selected story to the research grid
+function addSelectedStoryToGrid(storyId) {
+    // Find the selected story card
+    console.log("I am getting Called ")
+    const storyCard = document.querySelector(`.story-card[data-story-id="${storyId}"]`);
+    if (!storyCard) {
+        console.error(`Story with ID ${storyId} not found`);
+        return;
+    }
+
+    // Extract story details
+    const title = storyCard.querySelector('.story-title').textContent;
+    const excerpt = storyCard.querySelector('.story-excerpt').textContent;
+    const tag = storyCard.querySelector('.story-tag').textContent;
+    const date = storyCard.querySelector('.story-date').textContent;
+
+    // Create a story object
+    const story = {
+        id: storyId,
+        title: title,
+        excerpt: excerpt,
+        tag: tag,
+        date: date
+    };
+
+    // Add to research grid
+    addBreakingNewsToResearchGrid(story);
+
+    // Show success message
+    //alert(`Story "${title}" has been added to your research projects.`);
+    addNotification(
+        "default",
+        `Story has been added`,
+        `${title} has been added to your research deck.`,
+    );
+
+    // Close the modal
+    closeUploadModal();
+}
+
+// Function to add breaking news to research grid
+function addBreakingNewsToResearchGrid(story) {
+    console.log("Adding breaking news to research grid:", story);
+
+    // Get current date for display
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    // Create a new research card
+    const researchCard = document.createElement('div');
+    researchCard.className = 'research-card';
+
+    // Create card header with icon
+    let cardIcon = `
+        <div class="card-icon" style="background-color: #FF9800;">
+            <i class="material-icons">flash_on</i>
+        </div>
+    `;
+
+    // Set up the content section
+    let cardContent = `
+            <div class="card-content">
+                <h3 class="card-title">${story.title}</h3>
+                <p class="card-description">Athlyte Story - ${story.tag}</p>
+                <div class="card-file">
+                    
+                    <span class="card-excerpt">${story.excerpt}</span>
+                </div>
+                <div class="card-date">Added: ${story.date}</div>
+            </div>
+        `;
+
+    // Set up action buttons
+    let cardActions = `
+        <div class="card-actions">
+            <button class="btn btn-secondary" onclick="viewStoryDetails('${story.id}')">View</button>
+            <button class="btn btn-primary" onclick="editStoryDetails('${story.id}')">Edit</button>
+        </div>
+    `;
+
+    // Combine all parts
+    researchCard.innerHTML = cardIcon + cardContent + cardActions;
+
+    // Get the research grid
+    const researchGrid = document.querySelector('.research-grid');
+
+    if (researchGrid) {
+        // Add to the beginning so newest appears first
+        if (researchGrid.firstChild) {
+            researchGrid.insertBefore(researchCard, researchGrid.firstChild);
+        } else {
+            researchGrid.appendChild(researchCard);
+        }
+        console.log("Breaking news card added to grid");
+    } else {
+        console.error("Research grid container not found");
+    }
+}
+
+// Function to submit all selected stories
+// function submitSelectedStories() {
+//     // Get all selected story cards
+//     const selectedCards = document.querySelectorAll('.story-card.selected');
+
+//     if (selectedCards.length === 0) {
+//         alert('Please select at least one athlyte story');
+//         return;
+//     }
+
+//     // For each selected card, add to research grid
+//     selectedCards.forEach(card => {
+//         const storyId = card.getAttribute('data-story-id');
+//         addSelectedStoryToGrid(storyId);
+//     });
+// }
+
+// Placeholder functions for view and edit buttons
+function viewStoryDetails(storyId) {
+    alert(`Viewing details for story ID: ${storyId}`);
+}
+
+function editStoryDetails(storyId) {
+    alert(`Editing story ID: ${storyId}`);
+}
+
+// Add event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize athlete stories
+    initializeAthleteStories();
+
+    // Add submit functionality to the athlete stories form
+    // const storySelectBtns = document.querySelectorAll('.story-select-btn');
+    // storySelectBtns.forEach(btn => {
+    //     btn.addEventListener('click', function() {
+    //         const card = this.closest('.story-card');
+    //         const storyId = card.getAttribute('data-story-id');
+    //         addSelectedStoryToGrid(storyId);
+    //     });
+    // });
+});
+
+// Debug check for athlete stories grid
+setTimeout(() => {
+    const athleteGrid = document.getElementById('athleteStoriesGrid');
+    if (athleteGrid) {
+        console.log("athleteStoriesGrid element found in DOM");
+    } else {
+        console.error("athleteStoriesGrid element NOT found in DOM");
+    }
+}, 1000);
+
+// Modal navigation functionality
+function openModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling behind the modal
+    console.log('Opening Add New modal');
+}
+
+function closeModal() {
+    const modal = document.getElementById('addNewModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+    console.log('Closing modal, returning to main page');
+}
+
+function showUploadForm(type) {
+    currentContentType = type;
+
+    const titles = {
+        'documents': 'Upload Documents',
+        'web-links': 'Add Web Links',
+        'breaking-news': 'Create Breaking News',
+        'media': 'Upload Media'
+    };
+
+    document.getElementById('uploadModalTitle').textContent = titles[type];
+
+    closeModal();
+    resetUploadForm();
+
+    if (type === 'web-links') {
+        resetWebLinkForm();
+        document.getElementById('webLinksForm').style.display = 'block';
+        document.querySelector('.upload-container').style.display = 'none';
+        setTimeout(() => document.getElementById('linkTitle').focus(), 100);
+    } else {
+        document.getElementById('webLinksForm').style.display = 'none';
+
+        if (type === 'breaking-news') {
+            document.getElementById('upload-btn').disabled = false;
+        } else {
+            document.getElementById('upload-btn').disabled = true;
+        }
+
+        if (type === 'breaking-news') {
+            console.log("Hello breaking news");
+            document.getElementById('story-section').style.display = "block";
+
+            // ✅ FIX: prevent multiple listeners by cloning buttons
+            const storySelectBtns = document.querySelectorAll('.story-select-btn');
+            storySelectBtns.forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', function () {
+                    const card = this.closest('.story-card');
+                    const storyId = card.getAttribute('data-story-id');
+                    addSelectedStoryToGrid(storyId);
+                });
+            });
+
+            document.querySelector('.upload-container').style.display = 'none';
+        } else {
+            document.getElementById('story-section').style.display = "none";
+            document.querySelector('.upload-container').style.display = 'block';
+        }
+    }
+
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.add('show');
+
+    console.log('Opening upload form for type:', type);
+}
+
+
+function closeUploadModal() {
+    // Close the upload modal
+    const uploadModal = document.getElementById('uploadModal');
+    uploadModal.classList.remove('show');
+
+    // Open the Add New modal again instead of returning to main page
+    const addNewModal = document.getElementById('addNewModal');
+    addNewModal.classList.add('show');
+
+    console.log('Closing upload modal, returning to Add New popup');
+}
+
+// Function to handle cancel button click (used in both file upload and web links)
+function cancelUpload() {
+    console.log('Cancel upload button clicked');
+
+    // Same behavior as close button - return to Add New modal
+    closeUploadModal();
+}
+
+// This function is used when the X button is clicked in the upload modal
+function closeUploadModalButton() {
+    const closeBtn = document.querySelector('#uploadModal .close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            closeUploadModal();
+        });
+    }
+}
+
+// Initialize the close button functionality when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up the close button in the upload modal
+    closeUploadModalButton();
+
+    // Optional: Also handle Escape key to return to Add New modal instead of closing completely
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const uploadModal = document.getElementById('uploadModal');
+            const addNewModal = document.getElementById('addNewModal');
+
+            if (uploadModal && uploadModal.classList.contains('show')) {
+                event.preventDefault(); // Prevent default Escape behavior
+                closeUploadModal(); // Return to Add New modal
+                return;
+            }
+
+            // Only close completely if we're in the Add New modal
+            if (addNewModal && addNewModal.classList.contains('show')) {
+                closeModal();
+            }
+        }
+    });
+});
+
+// Comments Functionality - Updated Version
+function initializeComments() {
+    console.log("Initializing comments functionality");
+
+    // Get DOM elements
+    const commentInput = document.getElementById('commentInput');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const commentsList = document.getElementById('commentsList');
+
+    // Debug log to check if elements are found
+    console.log("Comment elements:", {
+        input: commentInput,
+        button: postCommentBtn,
+        list: commentsList
+    });
+
+    // Ensure elements exist before adding event listeners
+    if (!commentInput || !postCommentBtn || !commentsList) {
+        console.error("Could not find required comment elements");
+        return;
+    }
+
+    // Remove any existing event listeners by cloning
+    const newPostBtn = postCommentBtn.cloneNode(true);
+    postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
+
+    // Add event listener to post button
+    newPostBtn.addEventListener('click', function(e) {
+        console.log("Post comment button clicked");
+        e.preventDefault();
+
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            addNewComment(commentText, commentsList);
+            commentInput.value = '';
+
+            // Scroll to the new comment
+            setTimeout(() => {
+                const firstComment = commentsList.firstChild;
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+
+
+
+        } else {
+            alert('Please enter a comment');
+        }
+    });
+
+    // Add keypress event to also submit on Enter
+    commentInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            newPostBtn.click();
+        }
+    });
+
+    // Auto-resize the textarea as user types
+    commentInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    // Add event listeners to existing comment buttons
+    setupCommentButtons();
+
+    console.log("Comments functionality initialized");
+}
+
+function addNewComment(text, commentsList) {
+    // Ensure commentsList is provided or find it
+    if (!commentsList) {
+        commentsList = document.getElementById('commentsList');
+        if (!commentsList) {
+            console.error("Comments list element not found");
+            return;
+        }
+    }
+
+    console.log("Adding new comment:", text);
+
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    // Create a new comment element
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item';
+
+    // Create comment HTML without avatar image
+    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <!-- No avatar image -->
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    `;
+
+    // Add to the beginning of the list with a fade-in effect
+    newComment.style.opacity = '0';
+    newComment.style.transition = 'opacity 0.3s ease';
+
+    if (commentsList.firstChild) {
+        commentsList.insertBefore(newComment, commentsList.firstChild);
+    } else {
+        commentsList.appendChild(newComment);
+    }
+
+    // Trigger the fade-in animation
+    setTimeout(() => {
+        newComment.style.opacity = '1';
+    }, 10);
+
+    console.log("Comment added to list");
+
+    // Add event listeners to the new comment's buttons
+    setupCommentButtonsForElement(newComment);
+
+    // Update the comments counter if it exists
+    updateCommentsCounter();
+
+    addNotification(
+        "comment",
+        `New Comment !`,
+        `${text}`,
+    );
+}
+
+function updateCommentsCounter() {
+    const counter = document.querySelector('.comments-counter');
+    if (counter) {
+        const count = document.querySelectorAll('.comment-item').length;
+        counter.textContent = count;
+    }
+}
+
+function setupCommentButtons() {
+    console.log("Setting up comment buttons for all comments");
+
+    // Get all comment items
+    const commentItems = document.querySelectorAll('.comment-item');
+    console.log(`Found ${commentItems.length} comments`);
+
+    commentItems.forEach((item, index) => {
+        console.log(`Setting up buttons for comment ${index}`);
+        setupCommentButtonsForElement(item);
+    });
+}
+
+function setupCommentButtonsForElement(element) {
+    if (!element) {
+        console.error("No element provided to setupCommentButtonsForElement");
+        return;
+    }
+
+    // Reply button - using more specific selector with the added class
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') ||
+                     element.querySelector('.comment-action-btn:first-child');
+
+    if (replyBtn) {
+        // Remove existing event listeners by cloning
+        const newReplyBtn = replyBtn.cloneNode(true);
+        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+
+        newReplyBtn.addEventListener('click', function() {
+            const commentAuthor = element.querySelector('.comment-author').textContent;
+            const commentInput = document.getElementById('commentInput');
+            if (commentInput) {
+                commentInput.value = `@${commentAuthor} `;
+                commentInput.focus();
+
+                // Auto-resize the textarea after setting value
+                commentInput.style.height = 'auto';
+                commentInput.style.height = (commentInput.scrollHeight) + 'px';
+
+                // Scroll to the comment form
+                commentInput.scrollIntoView({ behavior: 'smooth' });
+
+                console.log(`Set reply to ${commentAuthor}`);
+            } else {
+                console.error("Comment input not found");
+            }
+        });
+    } else {
+        console.warn("Reply button not found in comment", element);
+    }
+
+    // Edit button - using more specific selector with the added class
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') ||
+                    element.querySelector('.comment-action-btn:nth-child(2)');
+
+    if (editBtn) {
+        // Remove existing event listeners by cloning
+        const newEditBtn = editBtn.cloneNode(true);
+        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+
+        newEditBtn.addEventListener('click', function() {
+            const commentText = element.querySelector('.comment-text');
+            if (!commentText) {
+                console.error("Comment text element not found");
+                return;
+            }
+
+            const originalText = commentText.textContent;
+            console.log("Editing comment:", originalText);
+
+            // Check if we're already editing this comment
+            if (element.querySelector('.comment-edit-interface')) {
+                console.warn("Edit interface already open");
+                return;
+            }
+
+            // Create edit interface
+            const editInterface = document.createElement('div');
+            editInterface.className = 'comment-edit-interface';
+            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+
+            // Replace comment text with edit interface
+            commentText.style.display = 'none';
+            commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
+
+            // Focus the textarea and auto-resize
+            const textarea = editInterface.querySelector('.comment-edit-input');
+            textarea.focus();
+
+            // Set initial height based on content
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+
+            // Add auto-resize on input
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+
+            // Add event listeners for save and cancel buttons
+            const saveBtn = editInterface.querySelector('.save-edit-btn');
+            saveBtn.addEventListener('click', function() {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    commentText.textContent = newText;
+                    console.log("Comment updated:", newText);
+                }
+                // Clean up
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+
+            const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Just clean up without saving
+                commentText.style.display = 'block';
+                editInterface.remove();
+                console.log("Edit cancelled");
+            });
+        });
+    } else {
+        console.warn("Edit button not found in comment", element);
+    }
+}
+
+// Make sure comments are initialized after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing comments");
+    initializeComments();
+});
+
+// In case DOMContentLoaded already fired, also try to initialize now
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    console.log("Document already loaded, initializing comments immediately");
+    setTimeout(initializeComments, 100); // Short timeout to ensure execution
+}
+
+function addNotification(type, title, message) {
+    const notificationList =
+        document.querySelector(".notification-list");
+    if (!notificationList) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification type-${type} new`;
+
+    const icon = getIconForType(type);
+
+    notification.innerHTML = `
+<i class="material-icons notification-icon">${icon}</i>
+<div class="notification-content">
+<div class="notification-title">${title}</div>
+<div class="notification-message">${message}</div>
+<div class="notification-time">Just now</div>
+</div>
+`;
+
+    notificationList.insertBefore(
+        notification,
+        notificationList.firstChild,
+    );
+
+    // Fade out "new" tag after some time
+    setTimeout(() => {
+        notification.classList.remove("new");
+    }, 5000);
+}
+
+// Get icon based on notification type
+function getIconForType(type) {
+    const icons = {
+        assignment: "person_add",
+        progress: "trending_up",
+        review: "rate_review",
+        update: "update",
+        alert: "warning",
+        comment: "comment",
+        default: "notifications",
+    };
+
+    return icons[type] || icons.default;
+}
+
+    </script>
+</body>
+</html>
