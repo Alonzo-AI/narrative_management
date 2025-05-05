@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlyte Content Publishing Platform - FSU Marketing</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --fsu-garnet: #782f40;
+            --fsu-gold: #ceb888;
+            --fsu-black: #231f20;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @font-face {
+            font-family: 'GothicCustom';
+            src: url('https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: rgb(236, 234, 234);
+                display: grid;
+                grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                        180px,
+                        1fr
+                    );
+                min-height: 100vh;
+                gap: 24px;
+                padding: 24px;
+        }
+
+        .sidebar {
+                background: #73d2e7;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: var(--shadow);
+                height: fit-content;
+                position: relative;
+                top: 150px;
+                max-width: 200px;
+            }
+
+            
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                margin: 8px 0;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: var(--transition);
+                color: rgb(163, 227, 241);
+                
+
+            }
+
+            .sidebar-item:hover {
+                background-color: rgb(163, 227, 241);
+                transform: translateX(5px);
+            }
+
+            .sidebar-item.active {
+                background-color: rgb(236, 234, 234);
+                color: #73d2e7;
+            }
+
+            .sidebar-item.active i {
+                color: #73d2e7;
+            }
+
+            .sidebar-item i {
+                margin-right: 12px;
+                color: white;
+                font-size: 20px;
+           
+            }
+
+            .sidebar-item a {
+                text-decoration: none;
+                color: aliceblue;
+
+            }
+
+
+            .sidebar-item:hover {
+                background-color: rgb(163, 227, 241);
+                color: white;
+            }
+
+            .sidebar-item:hover i {
+                color: white;
+            }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* FSU Header Styles */
+.fsu-header {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fsu-logo {
+    width: 60px;
+    height: auto;
+}
+
+.site-title {
+    color: #73d2e7;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.project-info {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.info-item i {
+    color: #73d2e7;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #73d2e7;
+}
+
+.info-item .info-value {
+    transition: color 0.3s ease;
+}
+
+/* Review Button State Styles */
+.submit-review-btn {
+    padding: 12px 24px;
+    color: #73d2e7;
+    border: 1px solid #73d2e7;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+
+
+.submit-review-btn:hover {
+    background-color: rgb(236, 234, 234);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Button state transition animations */
+@keyframes buttonStateChange {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.button-state-change {
+    animation: buttonStateChange 0.4s ease;
+}
+
+/* Status colors for the info items */
+.info-item.status-in-progress .info-value {
+    color: #2196F3; /* Blue */
+}
+
+.info-item.status-under-review .info-value {
+    color: #FF9800; /* Orange */
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.info-item.status-completed .info-value {
+    color: #4CAF50; /* Green */
+}
+
+/* Pulse animation for "Under Review" status */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.sponsor-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sponsor-selection {
+        flex: 1;
+    }
+
+    .sponsor-selection h3 {
+        color: #73d2e7;
+        margin-bottom: 12px;
+        font-family: 'GothicCustom', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .sponsor-dropdown-wrapper {
+        position: relative;
+    }
+
+    .sponsor-dropdown {
+        width: 100%;
+        max-width: 350px;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        background-color: white;
+        font-size: 1rem;
+        color: var(--fsu-black);
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23782f40' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 15px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sponsor-dropdown:focus {
+        outline: none;
+        border-color: #73d2e7;
+        box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+    }
+
+    .sponsor-dropdown option {
+        padding: 10px;
+    }
+
+    .custom-sponsor-input {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        max-width: 350px;
+    }
+
+    .custom-sponsor-input input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-sponsor-input input:focus {
+        outline: none;
+        border-color: #73d2e7;
+        box-shadow: 0 0 0 3px rgba(120, 47, 64, 0.2);
+    }
+
+    .add-custom-btn {
+        padding: 12px 15px;
+        background-color: #73d2e7;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-custom-btn:hover {
+        background-color: rgb(163, 227, 241);
+    }
+
+    .sponsor-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    .assign-sponsor-btn {
+        padding: 12px 24px;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .assign-sponsor-btn {
+        background-color: #73d2e7;
+    }
+
+   .assign-sponsor-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .assign-sponsor-btn:hover {
+        background-color: rgb(163, 227, 241);
+    }
+
+   .assign-sponsor-btn:active {
+        transform: translateY(0);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .sponsor-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .sponsor-selection {
+            margin-bottom: 20px;
+        }
+
+        .sponsor-dropdown {
+            max-width: 100%;
+        }
+
+        .sponsor-actions {
+            justify-content: flex-start;
+        }
+    }
+
+    .assigned-sponsor-display {
+        background-color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+
+        display: none;
+        align-items: center;
+
+        transition: all 0.3s ease;
+    }
+
+    .sponsor-icon {
+        background-color: rgba(120, 47, 64, 0.1);
+        padding: 10px;
+        border-radius: 50%;
+        color: #73d2e7;
+    }
+
+    .sponsor-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sponsor-label {
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .sponsor-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #73d2e7;
+    }
+
+    /* Animation for when sponsor is assigned */
+    @keyframes sponsorAssigned {
+        0% { transform: translateY(-10px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .sponsor-assigned-animation {
+        animation: sponsorAssigned 0.4s ease forwards;
+    }
+
+    /* Grid Container Styles */
+    .content-grid-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-top: 24px;
+        margin-bottom: 24px;
+        overflow: hidden;
+    }
+
+    .grid-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .grid-header h3 {
+        color: #73d2e7;
+        margin: 0;
+        font-family: 'GothicCustom', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .grid-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .refresh-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 12px;
+        background-color: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .refresh-btn:hover {
+        background-color: #e9e9e9;
+    }
+
+    .refresh-btn i {
+        font-size: 18px;
+    }
+
+    /* Grid View Styles - for combined content */
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: white;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for combined content items */
+.item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-preview {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover .preview-image {
+    transform: scale(1.05);
+}
+
+.text-preview {
+    padding: 15px;
+    background-color: #f9f9f9;
+    min-height: 120px;
+}
+
+.text-preview h4 {
+    color: var(--fsu-garnet);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.text-preview p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Type-specific styling */
+.item-type {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.press-release-type {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.social-media-type {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+}
+
+/* Enhanced modal styles for combined content */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #73d2e7;
+    color: white;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+}
+
+.modal-text {
+    padding: 20px;
+}
+
+.modal-text h3 {
+    color: #73d2e7;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.modal-text p {
+    line-height: 1.6;
+    color: #333;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+}
+
+.modal-type-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.modal-type-badge.press-release {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.modal-type-badge.social-media {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.modal-date {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-view {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+}
+
+     /* Enhanced Comments Section Styles */
+.comments-section {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.section-title {
+    color: #73d2e7;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--fsu-gold);
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments-counter {
+    background: #73d2e7;
+    color: white;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .comment-form {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.comment-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, height 0.2s ease;
+    overflow: hidden;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: #73d2e7;
+}
+
+#postCommentBtn {
+    padding: 12px 20px;
+    height: fit-content;
+    background: #73d2e7;
+    color: white;
+}
+
+@media (max-width: 767px) {
+    #postCommentBtn {
+        align-self: flex-end;
+    }
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0; /* Ensures proper text wrapping */
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: #73d2e7;
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: #73d2e7;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.comment-action-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Comment edit interface */
+.comment-edit-interface {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-edit-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.comment-edit-input:focus {
+    outline: none;
+    border-color: #73d2e7;
+}
+
+.comment-edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.save-edit-btn, .cancel-edit-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* No comments message */
+.no-comments-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Loading indicator */
+.comment-loading {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.comment-loading .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(120, 47, 64, 0.2);
+    border-top-color: #73d2e7;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation for new comments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-item.new {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.notification-sidebar {
+   /* position: fixed;
+   right: 0; */
+   width: 200px;
+   height: min-content;
+   background: white;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   padding: 20px;
+   overflow-y: auto;
+   z-index: 100;
+   border-radius: 6px;
+   /* margin-left: auto; */
+}
+
+.notification {
+   padding: 12px;
+   border-left: 3px solid #73d2e7;
+   margin: 12px 0;
+   background: #f8f8f8;
+   border-radius: 0 4px 4px 0;
+   transition: transform 0.2s ease;
+}
+
+.notification:hover {
+   transform: translateX(-5px);
+}
+
+.notification-title {
+   color: #73d2e7;
+   font-weight: 600;
+   margin-bottom: 4px;
+}
+
+.notification-content {
+   color: #666;
+   font-size: 0.9rem;
+   margin-bottom: 4px;
+}
+
+.notification-time {
+   color: #999;
+   font-size: 0.8rem;
+}
+
+.logo-above-sidebar {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    height: 250px;
+    width: 250px;
+    z-index: 10;
+}
+
+   </style>
+</head>
+<body>
+
+    <!-- Comprehensive Dashboard Structure with Header and Buttons -->
+
+     <!-- Logo above sidebar -->
+     <img
+     src="https://athlytesports.com/wp-content/uploads/2024/04/athlyte-new-logo.svg"
+     alt="FSU Logo"
+     class="logo-above-sidebar"
+     />
+
+    <nav class="sidebar">
+        
+        <div class="sidebar-item">
+            <i class="material-icons">home</i>
+            <a href="projects_overview.html"> Home </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">assignment</i>
+            <a href="project_new_athylte.html"> Project </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">search</i>
+            <a href="project_new_research_page.html"> Research </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">description</i>
+            <a href="project_new_content_draft.html"> Content Draft </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">brush</i>
+            <a href="projetc_new_graphics.html"> Graphics </a>
+        </div>
+        <div class="sidebar-item active">
+            <i class="material-icons">share</i>
+            <span>Marketing</span>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">publish</i>
+            <a href="project_new_publish_athlyte.html"> Publish </a>
+        </div>
+        <div class="sidebar-item">
+            <i class="material-icons">equalizer</i>
+            <a href="project_new_analytics_athlyte.html"> Analytics</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+        <!-- FSU Header with Coordinator and Deadline -->
+        <header class="fsu-header">
+            <div class="header-container">
+                <div class="logo-container">
+
+                    <h1 class="site-title">2023 Football Season Recap</h1>
+                </div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <i class="material-icons">person</i>
+                        <div class="info-content">
+                            <span class="info-label">Marketing Coordinator</span>
+                            <span class="info-value">Sarah Johnson</span>
+                        </div>
+                    </div>
+                    <div class="info-item status-in-progress">
+                        <i class="material-icons">assignment</i>
+                        <div class="info-content">
+                            <span class="info-label">Phase Status</span>
+                            <span class="info-value">In Progress</span>
+                        </div>
+                    </div>
+
+                        <div class="info-item">
+                        <i class="material-icons">event</i>
+                        <div class="info-content">
+                            <span class="info-label">Deadline</span>
+                            <span class="info-value">March 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="sponsor-container">
+            <div class="sponsor-selection">
+                <h3>Assign Sponsor</h3>
+                <div class="sponsor-dropdown-wrapper">
+                    <select id="sponsor-dropdown" class="sponsor-dropdown">
+                        <option value="" disabled selected>Select a sponsor</option>
+                        <option value="nike">Nike</option>
+                        <option value="adidas">Adidas</option>
+                        <option value="under-armour">Under Armour</option>
+                        <option value="gatorade">Gatorade</option>
+                        <option value="coca-cola">Coca-Cola</option>
+                        <option value="pepsi">Pepsi</option>
+                        <option value="verizon">Verizon</option>
+                        <option value="att">AT&T</option>
+                        <option value="custom">Add Custom Sponsor...</option>
+                    </select>
+                    <div id="custom-sponsor-input" class="custom-sponsor-input hidden">
+                        <input type="text" id="custom-sponsor-name" placeholder="Enter sponsor name">
+                        <button id="add-custom-sponsor" class="add-custom-btn">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="sponsor-actions">
+                <button id="assign-sponsor-btn" class="assign-sponsor-btn">Assign Sponsor</button>
+                <button id="submit-review-btn" class="submit-review-btn">Submit Review</button>
+            </div>
+        </div>
+
+        <div id="assigned-sponsor-display" class="assigned-sponsor-display hidden">
+
+
+        </div>
+
+        <div class="content-grid-container">
+            <div class="grid-header">
+                <h3>Stories Preview</h3>
+                <div class="grid-controls">
+                    <button id="refresh-grid" class="refresh-btn">
+                        <i class="material-icons">refresh</i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-view">
+                <!-- Combined content items with both text and images -->
+                <div class="grid-item" data-type="press-release">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://media.gettyimages.com/id/2149279152/photo/florida-state-spring-football-practice.jpg?s=2048x2048&w=gi&k=20&c=qtgjsR9CV-kcWJDGKjGiyBt533heghso5vAc5yKBIjM=" alt="Season Opener Image" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Season Opener Press Release</h4>
+                                <p>Florida State University's football team is set to begin its 2025 season with renewed energy and determination...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type press-release-type">Press Release</span>
+                        <span class="item-date">Updated: Feb 28, 2025</span>
+                    </div>
+                </div>
+
+                <div class="grid-item" data-type="social-media">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://media.gettyimages.com/id/1243367519/photo/louisville-ky-a-florida-state-seminoles-logo-is-seen-on-a-flag-as-the-team-runs-onto-the.jpg?s=612x612&w=gi&k=20&c=2qUdiXv60GHq_-ccudrWu2kYSVO6-tLRzeZbIjlrU6M=" alt="Team Banner 2025" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Home Game Announcement</h4>
+                                <p>Join us this Saturday as the Seminoles take on their rivals in the season's most anticipated matchup...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type social-media-type">Social Media Post</span>
+                        <span class="item-date">Updated: Mar 1, 2025</span>
+                    </div>
+                </div>
+
+                <div class="grid-item" data-type="press-release">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://www.orlandosentinel.com/wp-content/uploads/2023/06/TNS_SPORTS-FBC-FSU-TITLE-OS.jpg?w=1024&h=768" alt="Marcus Johnson" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Player Spotlight: Marcus Johnson</h4>
+                                <p>Quarterback Marcus Johnson has been training rigorously during the off-season to prepare for what analysts predict will be his breakout year...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type press-release-type">Press Release</span>
+                        <span class="item-date">Updated: Mar 2, 2025</span>
+                    </div>
+                </div>
+
+                <div class="grid-item" data-type="social-media">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://familyweekend.fsu.edu/sites/g/files/upcbnu2046/files/pictures/football-graphic-fw-2024.jpg" alt="Season Tickets" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Season Ticket Promotion</h4>
+                                <p>Get ready for an unforgettable season with FSU Football! Early bird season tickets now available with exclusive benefits for loyal fans...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type social-media-type">Social Media Post</span>
+                        <span class="item-date">Updated: Mar 3, 2025</span>
+                    </div>
+                </div>
+
+                <div class="grid-item" data-type="social-media">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://ik.imagekit.io/0bocj83w8/https://dzfa1uifb0sb6.cloudfront.net/preview_for_templates/template_1338_preview.jpg?tr=w-600,q-35" alt="Social Media Kit" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Game Day Countdown</h4>
+                                <p>Only 3 days until kickoff! Share your excitement and game day traditions with us using #FSUGameDay...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type social-media-type">Social Media Post</span>
+                        <span class="item-date">Updated: Mar 4, 2025</span>
+                    </div>
+                </div>
+
+                <div class="grid-item" data-type="press-release">
+                    <div class="item-preview">
+                        <div class="item-content">
+                            <div class="image-preview">
+                                <img src="https://www.tallahassee.com/gcdn/authoring/authoring-images/2024/10/06/PTCN/75540869007-usatsi-24420080.jpg?crop=3851,2167,x0,y215&width=660&height=371&format=pjpg&auto=webp" alt="Coach Interview" class="preview-image">
+                            </div>
+                            <div class="text-preview">
+                                <h4>Coach's Corner: Pre-Season Interview</h4>
+                                <p>Head Coach Mike Thompson discusses training camp progress, team strategy, and expectations for the upcoming 2025 season...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-type press-release-type">Press Release</span>
+                        <span class="item-date">Updated: Feb 25, 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Comments Section -->
+    <main class="main-content">
+        <div class="comments-section">
+            <h2 class="section-title">
+                Comments
+            </h2>
+
+            <div class="comment-form">
+                <textarea id="commentInput" placeholder="Add a comment..." class="comment-input"></textarea>
+                <button id="postCommentBtn" class="btn btn-primary">Post Comment</button>
+            </div>
+
+            <div class="comments-list" id="commentsList">
+                <!-- Example comments -->
+                <div class="comment-item">
+
+                </div>
+
+                <div class="comment-item">
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </main>
+    <aside class="notification-sidebar">
+        <div class="notification-header">
+            <h2>Notifications</h2>
+        </div>
+        <div class="notification-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+    </aside>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const sponsorDropdown = document.getElementById('sponsor-dropdown');
+    const customSponsorInput = document.getElementById('custom-sponsor-input');
+    const customSponsorName = document.getElementById('custom-sponsor-name');
+    const addCustomSponsorBtn = document.getElementById('add-custom-sponsor');
+    const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
+
+    const sponsorContainer = document.querySelector('.sponsor-container');
+    const sponsorSelection = document.querySelector('.sponsor-selection');
+
+    // Show/hide custom sponsor input based on dropdown selection
+    sponsorDropdown.addEventListener('change', function() {
+        if (this.value === 'custom') {
+            customSponsorInput.classList.remove('hidden');
+            customSponsorName.focus();
+        } else {
+            customSponsorInput.classList.add('hidden');
+        }
+    });
+
+    // Add custom sponsor to dropdown
+    addCustomSponsorBtn.addEventListener('click', function() {
+        const sponsorName = customSponsorName.value.trim();
+
+        if (sponsorName) {
+            // Create new option
+            const newOption = document.createElement('option');
+            newOption.value = sponsorName.toLowerCase().replace(/\s+/g, '-');
+            newOption.textContent = sponsorName;
+
+            // Insert before the "Add Custom Sponsor..." option
+            const customOption = sponsorDropdown.querySelector('option[value="custom"]');
+            sponsorDropdown.insertBefore(newOption, customOption);
+
+            // Select the new option
+            sponsorDropdown.value = newOption.value;
+
+            // Hide custom input
+            customSponsorInput.classList.add('hidden');
+            customSponsorName.value = '';
+
+            // Show confirmation message
+            showNotification(`Added ${sponsorName} to sponsors list`);
+        } else {
+            showNotification('Please enter a sponsor name', 'error');
+        }
+    });
+
+    // Assign sponsor button functionality
+    assignSponsorBtn.addEventListener('click', function() {
+        const selectedOption = sponsorDropdown.options[sponsorDropdown.selectedIndex];
+
+        if (sponsorDropdown.value && sponsorDropdown.value !== 'custom') {
+            // Get the selected sponsor name
+            const sponsorName = selectedOption.textContent;
+
+            // Replace dropdown with sponsor name display
+            replaceDropdownWithSponsorName(sponsorName);
+
+            // Hide the assign sponsor button
+            assignSponsorBtn.style.display = 'none';
+
+            // Show notification
+           // showNotification(`Assigned ${sponsorName} as sponsor`, 'success');
+            addNotification(
+             "update",
+             `Sponsor Assigned`,
+             `Assigned ${sponsorName} as sponsor`,
+         );
+
+            // You would typically send data to your backend here
+            console.log(`Sponsor assigned: ${sponsorName}`);
+        } else {
+            // If no sponsor is selected
+            showNotification('Please select a sponsor', 'error');
+        }
+    });
+
+
+
+ // Helper function to replace dropdown with sponsor name
+    function replaceDropdownWithSponsorName(sponsorName) {
+        // Create sponsor display element
+        const sponsorDisplay = document.createElement('div');
+        sponsorDisplay.className = 'assigned-sponsor-display';
+        sponsorDisplay.innerHTML = `
+            <div class="sponsor-icon">
+                <i class="material-icons">business</i>
+            </div>
+            <div class="sponsor-info">
+                <span class="sponsor-label">Assigned Sponsor</span>
+                <span class="sponsor-name">${sponsorName}</span>
+            </div>
+        `;
+
+        // Add styles for the sponsor display if not already in document
+        if (!document.getElementById('sponsor-display-styles')) {
+            const displayStyles = document.createElement('style');
+            displayStyles.id = 'sponsor-display-styles';
+            displayStyles.textContent = `
+                .sponsor-selection .assigned-sponsor-display {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px 15px;
+                    background-color: white;
+
+                    border-radius: 6px;
+                    animation: fadeIn 0.3s ease;
+                }
+
+                .sponsor-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 40px;
+                    height: 40px;
+                    background-color: rgba(120, 47, 64, 0.1);
+                    border-radius: 50%;
+                }
+
+                .sponsor-icon i {
+                    color: var(--fsu-garnet);
+                }
+
+                .sponsor-info {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .sponsor-label {
+                    font-size: 0.8rem;
+                    color: #666;
+                }
+
+                .sponsor-name {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    color: var(--fsu-garnet);
+                }
+
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(displayStyles);
+        }
+
+        // Hide dropdown wrapper and custom input
+        const dropdownWrapper = document.querySelector('.sponsor-dropdown-wrapper');
+        dropdownWrapper.style.display = 'none';
+
+        // Add the sponsor display to the selection area
+        sponsorSelection.appendChild(sponsorDisplay);
+    }
+
+    // Helper function to show notifications
+    function showNotification(message, type = 'info') {
+        // Check if notification container exists, create if not
+        let notificationContainer = document.querySelector('.notification-container');
+
+        if (!notificationContainer) {
+            notificationContainer = document.createElement('div');
+            notificationContainer.className = 'notification-container';
+            document.body.appendChild(notificationContainer);
+
+            // Add styles for notification container
+            const style = document.createElement('style');
+            style.textContent = `
+                .notification-container {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                }
+
+                .notification {
+                    margin-bottom: 10px;
+                    padding: 15px 20px;
+                    border-radius: 6px;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    color: white;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    min-width: 300px;
+                    animation: slideIn 0.3s ease forwards;
+                }
+
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+
+                .notification.info { background-color: #2196F3; }
+                .notification.success { background-color: #4CAF50; }
+                .notification.error { background-color: #F44336; }
+
+                .notification-close {
+                    cursor: pointer;
+                    margin-left: 15px;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            ${message}
+            <span class="notification-close">&times;</span>
+        `;
+
+        // Add to container
+        notificationContainer.appendChild(notification);
+
+        // Handle close button
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', function() {
+            removeNotification(notification);
+        });
+
+        // Auto remove after 4 seconds
+        setTimeout(() => {
+            removeNotification(notification);
+        }, 4000);
+    }
+
+    function removeNotification(notification) {
+        notification.style.animation = 'slideOut 0.3s ease forwards';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }
+
+    // Helper function to update project status in the header
+    function updateProjectStatus(status) {
+        const statusValue = document.querySelector('.info-item:nth-child(2) .info-value');
+        if (statusValue) {
+            // Remove any existing status classes
+            statusValue.parentElement.parentElement.classList.remove('status-in-progress', 'status-under-review', 'status-completed');
+
+            // Update text
+            statusValue.textContent = status;
+
+            // Add appropriate class
+            switch(status) {
+                case 'In Progress':
+                    statusValue.parentElement.parentElement.classList.add('status-in-progress');
+                    break;
+                case 'Under Review':
+                    statusValue.parentElement.parentElement.classList.add('status-under-review');
+                    break;
+                case 'Completed':
+                    statusValue.parentElement.parentElement.classList.add('status-completed');
+                    break;
+            }
+        }
+    }
+});
+
+
+
+        // Enhanced grid handling and modal display for combined content
+document.addEventListener('DOMContentLoaded', function() {
+    const gridItems = document.querySelectorAll('.grid-item');
+
+    gridItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const itemType = this.dataset.type;
+
+            // Get content elements
+            const title = this.querySelector('h4').textContent;
+            const text = this.querySelector('p').textContent;
+            const image = this.querySelector('img').src;
+            const imageAlt = this.querySelector('img').alt;
+            const date = this.querySelector('.item-date').textContent;
+
+            // Show modal with combined content
+            showCombinedContentModal(title, text, image, imageAlt, itemType, date);
+        });
+    });
+
+    // Refresh button functionality
+    const refreshGridBtn = document.getElementById('refresh-grid');
+    if (refreshGridBtn) {
+        refreshGridBtn.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            icon.style.animation = 'spin 1s linear';
+
+            setTimeout(() => {
+                icon.style.animation = '';
+            }, 1000);
+
+            console.log('Refreshing content...');
+        });
+    }
+});
+
+// Function to display combined content in modal
+function showCombinedContentModal(title, text, imageSrc, imageAlt, contentType, date) {
+    // Check if modal already exists
+    let modal = document.getElementById('preview-modal');
+
+    if (!modal) {
+        // Create modal container
+        modal = document.createElement('div');
+        modal.id = 'preview-modal';
+        modal.className = 'preview-modal';
+
+        // Add modal HTML structure for combined content
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"></h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <img class="modal-image" src="" alt="">
+                    <div class="modal-text">
+                        <h3 class="modal-content-title"></h3>
+                        <p class="modal-content-text"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="modal-type-badge"></span>
+                    <span class="modal-date"></span>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // Set up close functionality
+        const closeBtn = modal.querySelector('.modal-close');
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Close on click outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
+    // Determine display title based on content type
+    let displayTitle;
+    if (contentType === 'press-release') {
+        displayTitle = 'Press Release';
+    } else if (contentType === 'social-media') {
+        displayTitle = 'Social Media Post';
+    } else {
+        displayTitle = 'Content';
+    }
+
+    // Update modal content
+    modal.querySelector('.modal-title').textContent = displayTitle;
+    modal.querySelector('.modal-content-title').textContent = title;
+    modal.querySelector('.modal-content-text').textContent = text;
+    modal.querySelector('.modal-image').src = imageSrc;
+    modal.querySelector('.modal-image').alt = imageAlt;
+    modal.querySelector('.modal-date').textContent = date;
+
+    // Set type badge
+    const typeBadge = modal.querySelector('.modal-type-badge');
+    typeBadge.textContent = displayTitle;
+    typeBadge.className = 'modal-type-badge ' + contentType;
+
+    // Show modal
+    modal.style.display = 'flex';
+}
+
+    // Comments Functionality - Updated Version
+function initializeComments() {
+    console.log("Initializing comments functionality");
+
+    // Get DOM elements
+    const commentInput = document.getElementById('commentInput');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const commentsList = document.getElementById('commentsList');
+
+    // Debug log to check if elements are found
+    console.log("Comment elements:", {
+        input: commentInput,
+        button: postCommentBtn,
+        list: commentsList
+    });
+
+    // Ensure elements exist before adding event listeners
+    if (!commentInput || !postCommentBtn || !commentsList) {
+        console.error("Could not find required comment elements");
+        return;
+    }
+
+    // Remove any existing event listeners by cloning
+    const newPostBtn = postCommentBtn.cloneNode(true);
+    postCommentBtn.parentNode.replaceChild(newPostBtn, postCommentBtn);
+
+    // Add event listener to post button
+    newPostBtn.addEventListener('click', function(e) {
+        console.log("Post comment button clicked");
+        e.preventDefault();
+
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            addNewComment(commentText, commentsList);
+            commentInput.value = '';
+
+            // Scroll to the new comment
+            setTimeout(() => {
+                const firstComment = commentsList.firstChild;
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        } else {
+            alert('Please enter a comment');
+        }
+    });
+
+    // Add keypress event to also submit on Enter
+    commentInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            newPostBtn.click();
+        }
+    });
+
+    // Auto-resize the textarea as user types
+    commentInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    // Add event listeners to existing comment buttons
+    setupCommentButtons();
+
+    console.log("Comments functionality initialized");
+}
+
+function addNewComment(text, commentsList) {
+    // Ensure commentsList is provided or find it
+    if (!commentsList) {
+        commentsList = document.getElementById('commentsList');
+        if (!commentsList) {
+            console.error("Comments list element not found");
+            return;
+        }
+    }
+
+    console.log("Adding new comment:", text);
+
+    const today = new Date();
+    const dateString = today.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    // Create a new comment element
+    const newComment = document.createElement('div');
+    newComment.className = 'comment-item';
+
+    // Create comment HTML without avatar image
+    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <!-- No avatar image -->
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    `;
+
+    // Add to the beginning of the list with a fade-in effect
+    newComment.style.opacity = '0';
+    newComment.style.transition = 'opacity 0.3s ease';
+
+    if (commentsList.firstChild) {
+        commentsList.insertBefore(newComment, commentsList.firstChild);
+    } else {
+        commentsList.appendChild(newComment);
+    }
+
+    // Trigger the fade-in animation
+    setTimeout(() => {
+        newComment.style.opacity = '1';
+    }, 10);
+
+    console.log("Comment added to list");
+
+    // Add event listeners to the new comment's buttons
+    setupCommentButtonsForElement(newComment);
+
+    addNotification("comment", `New Comment !`, `${text}`);
+
+    // Update the comments counter if it exists
+    updateCommentsCounter();
+}
+
+function updateCommentsCounter() {
+    const counter = document.querySelector('.comments-counter');
+    if (counter) {
+        const count = document.querySelectorAll('.comment-item').length;
+        counter.textContent = count;
+    }
+}
+
+function setupCommentButtons() {
+    console.log("Setting up comment buttons for all comments");
+
+    // Get all comment items
+    const commentItems = document.querySelectorAll('.comment-item');
+    console.log(`Found ${commentItems.length} comments`);
+
+    commentItems.forEach((item, index) => {
+        console.log(`Setting up buttons for comment ${index}`);
+        setupCommentButtonsForElement(item);
+    });
+}
+
+function setupCommentButtonsForElement(element) {
+    if (!element) {
+        console.error("No element provided to setupCommentButtonsForElement");
+        return;
+    }
+
+    // Reply button - using more specific selector with the added class
+    const replyBtn = element.querySelector('.comment-action-btn.reply-btn') ||
+                     element.querySelector('.comment-action-btn:first-child');
+
+    if (replyBtn) {
+        // Remove existing event listeners by cloning
+        const newReplyBtn = replyBtn.cloneNode(true);
+        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+
+        newReplyBtn.addEventListener('click', function() {
+            const commentAuthor = element.querySelector('.comment-author').textContent;
+            const commentInput = document.getElementById('commentInput');
+            if (commentInput) {
+                commentInput.value = `@${commentAuthor} `;
+                commentInput.focus();
+
+                // Auto-resize the textarea after setting value
+                commentInput.style.height = 'auto';
+                commentInput.style.height = (commentInput.scrollHeight) + 'px';
+
+                // Scroll to the comment form
+                commentInput.scrollIntoView({ behavior: 'smooth' });
+
+                console.log(`Set reply to ${commentAuthor}`);
+            } else {
+                console.error("Comment input not found");
+            }
+        });
+    } else {
+        console.warn("Reply button not found in comment", element);
+    }
+
+    // Edit button - using more specific selector with the added class
+    const editBtn = element.querySelector('.comment-action-btn.edit-btn') ||
+                    element.querySelector('.comment-action-btn:nth-child(2)');
+
+    if (editBtn) {
+        // Remove existing event listeners by cloning
+        const newEditBtn = editBtn.cloneNode(true);
+        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+
+        newEditBtn.addEventListener('click', function() {
+            const commentText = element.querySelector('.comment-text');
+            if (!commentText) {
+                console.error("Comment text element not found");
+                return;
+            }
+
+            const originalText = commentText.textContent;
+            console.log("Editing comment:", originalText);
+
+            // Check if we're already editing this comment
+            if (element.querySelector('.comment-edit-interface')) {
+                console.warn("Edit interface already open");
+                return;
+            }
+
+            // Create edit interface
+            const editInterface = document.createElement('div');
+            editInterface.className = 'comment-edit-interface';
+            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+
+            // Replace comment text with edit interface
+            commentText.style.display = 'none';
+            commentText.parentNode.insertBefore(editInterface, commentText.nextSibling);
+
+            // Focus the textarea and auto-resize
+            const textarea = editInterface.querySelector('.comment-edit-input');
+            textarea.focus();
+
+            // Set initial height based on content
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+
+            // Add auto-resize on input
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+
+            // Add event listeners for save and cancel buttons
+            const saveBtn = editInterface.querySelector('.save-edit-btn');
+            saveBtn.addEventListener('click', function() {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    commentText.textContent = newText;
+                    console.log("Comment updated:", newText);
+                }
+                // Clean up
+                commentText.style.display = 'block';
+                editInterface.remove();
+            });
+
+            const cancelBtn = editInterface.querySelector('.cancel-edit-btn');
+            cancelBtn.addEventListener('click', function() {
+                // Just clean up without saving
+                commentText.style.display = 'block';
+                editInterface.remove();
+                console.log("Edit cancelled");
+            });
+        });
+    } else {
+        console.warn("Edit button not found in comment", element);
+    }
+}
+
+// Make sure comments are initialized after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing comments");
+    initializeComments();
+});
+
+// In case DOMContentLoaded already fired, also try to initialize now
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    console.log("Document already loaded, initializing comments immediately");
+    setTimeout(initializeComments, 100); // Short timeout to ensure execution
+}
+
+(function() {
+    // Wait for everything to be fully loaded
+    window.addEventListener('load', function() {
+        console.log("FSU Marketing Review Button Handler Initializing...");
+
+        // Track review state (0=initial, 1=submitted, 2=accepted)
+        let reviewState = 0;
+
+        // Load state from localStorage if previously saved
+        if (localStorage.getItem('fsuReviewState')) {
+            reviewState = parseInt(localStorage.getItem('fsuReviewState'));
+            console.log("Loaded previous state:", reviewState);
+
+            // If the state is "Review Accepted" (2) when page loads,
+            // reset it to initial state (0) for a fresh cycle
+            if (reviewState === 2) {
+                console.log("Found 'Review Accepted' state on page load, resetting to initial state");
+                reviewState = 0;
+                localStorage.setItem('fsuReviewState', reviewState);
+            }
+        }
+
+        // Try multiple ways to find the submit review button
+        let submitReviewBtn = document.getElementById('submit-review-btn');
+
+        // If ID doesn't work, try finding it by its class and text content
+        if (!submitReviewBtn) {
+            console.log("Button not found by ID, trying alternative methods");
+            const buttons = document.querySelectorAll('.submit-review-btn');
+
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === 'Submit Review') {
+                    submitReviewBtn = btn;
+                    console.log("Button found by class and text content");
+                }
+            });
+        }
+
+        // If still not found, try finding any button that looks like a submit button
+        if (!submitReviewBtn) {
+            console.log("Button not found by class, trying by text content only");
+            const allButtons = document.querySelectorAll('button');
+
+            allButtons.forEach(btn => {
+                if (btn.textContent.trim().includes('Review') ||
+                    btn.textContent.trim().includes('review')) {
+                    submitReviewBtn = btn;
+                    console.log("Button found by text content search:", btn.textContent);
+                }
+            });
+        }
+
+        // Final check if we found the button
+        if (!submitReviewBtn) {
+            console.error("CRITICAL: Submit review button could not be found by any method");
+            return;
+        } else {
+            console.log("SUCCESS: Submit review button found:", submitReviewBtn.textContent);
+        }
+
+        // Reference to the assign sponsor button (optional)
+        const assignSponsorBtn = document.getElementById('assign-sponsor-btn');
+
+        // Update initial state without breaking existing functionality
+        updateButtonAndStatus();
+
+        // Create a new click handler that will be called after any existing ones
+        const originalOnClick = submitReviewBtn.onclick;
+
+        submitReviewBtn.onclick = function(e) {
+            console.log("Review button clicked, current state:", reviewState);
+
+            // Call the original click handler if it exists
+            if (typeof originalOnClick === 'function') {
+                originalOnClick.call(this, e);
+            }
+
+            // Our custom state management logic
+            if (reviewState === 0) {
+                // First click: Submit for Review
+                if (!assignSponsorBtn || assignSponsorBtn.style.display === 'none') {
+                    // Sponsor is assigned, proceed to submit
+                    reviewState = 1;
+                    updateButtonAndStatus();
+
+                    // Use the existing notification system if available
+                    //if (typeof window.showNotification === 'function') {
+                       // window.showNotification('Marketing materials submitted for review', 'success');
+                          addNotification(
+                            "update",
+                            `Marketing Review Request`,
+                            `Review request submitted successfully`,
+                      );
+
+                }
+            }
+            else if (reviewState === 1) {
+                // Second click: Accept Review
+                reviewState = 2;
+                updateButtonAndStatus();
+
+                // Use the existing notification system if available
+               // if (typeof window.showNotification === 'function') {
+                    //window.showNotification('Review accepted', 'success');
+                    addNotification(
+                     "progress",
+                     `Graphics Review Accepted`,
+                     `Review accepted !`,
+                 );
+                    // }
+
+                // Set a timeout to reset back to initial state after delay
+                setTimeout(function() {
+                    console.log("Auto-resetting to initial state after delay");
+                    reviewState = 0;
+                    updateButtonAndStatus();
+
+                    // Use the existing notification system if available
+                    // if (typeof window.showNotification === 'function') {
+                    //     window.showNotification('Ready for next review cycle', 'info');
+                    // }
+
+                    // Update localStorage
+                    localStorage.setItem('fsuReviewState', reviewState);
+                }, 5000); // 5 second delay - adjust as needed
+            }
+
+            // Save state to localStorage with a unique key to avoid conflicts
+            localStorage.setItem('fsuReviewState', reviewState);
+
+            // Don't prevent default or return false to allow other handlers to work
+        };
+
+        // Function to update button appearance based on state
+        function updateButtonAndStatus() {
+            console.log("Updating button and status for state:", reviewState);
+
+            // 1. Update button appearance while preserving other styles
+            if (reviewState === 0) {
+                submitReviewBtn.textContent = 'Submit Review';
+
+                // Only update background if needed
+                if (submitReviewBtn.style.backgroundColor !== 'white' &&
+                    !submitReviewBtn.classList.contains('submit-review-btn-initial')) {
+                    submitReviewBtn.style.backgroundColor = 'white'; 
+                    submitReviewBtn.style.transition = 'background-color 0.3s ease';
+                }
+            }
+            else if (reviewState === 1) {
+                submitReviewBtn.textContent = 'Accept Review';
+                submitReviewBtn.style.backgroundColor = 'rgb(236, 234, 234)'; 
+            }
+            else if (reviewState === 2) {
+                submitReviewBtn.textContent = 'Review Accepted';
+                submitReviewBtn.style.backgroundColor = 'rgb(236, 234, 234)'; 
+            }
+
+            // Add a subtle animation to highlight the button change
+            submitReviewBtn.style.transition = 'background-color 0.5s ease, transform 0.3s ease';
+            submitReviewBtn.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                submitReviewBtn.style.transform = 'scale(1)';
+            }, 300);
+
+            // 2. Update project status
+            updateProjectStatus();
+        }
+
+        // Update the project status based on current review state
+        function updateProjectStatus() {
+            let statusText = 'In Progress';
+            let statusColor = '#2196F3'; // Blue
+
+            if (reviewState === 1) {
+                statusText = 'Under Review';
+                statusColor = '#FF9800'; // Orange
+            } else if (reviewState === 2) {
+                statusText = 'Completed';
+                statusColor = '#4CAF50'; // Green
+            }
+
+            // Try different approaches to find the status element
+            const statusSelectors = [
+                '.info-item:nth-child(2) .info-value',
+                '.info-item .info-value',
+                '.info-content .info-value',
+                '.project-info .info-value'
+            ];
+
+            let statusValue = null;
+
+            for (const selector of statusSelectors) {
+                const elements = document.querySelectorAll(selector);
+                for (const el of elements) {
+                    // Look for elements with status-related text
+                    if (el.textContent.includes('Progress') ||
+                        el.textContent.includes('Review') ||
+                        el.textContent.includes('Completed')) {
+                        statusValue = el;
+                        console.log("Status element found using selector:", selector);
+                        break;
+                    }
+                }
+                if (statusValue) break;
+            }
+
+            if (statusValue) {
+                // Update text
+                statusValue.textContent = statusText;
+
+                // Update color directly with inline style
+                statusValue.style.color = statusColor;
+
+                // Add or remove pulsing effect
+                if (reviewState === 1) {
+                    // Only add animation if it doesn't already exist
+                    if (statusValue.style.animation !== 'pulse 2s infinite ease-in-out') {
+                        // First make sure we have the animation defined
+                        ensurePulseAnimationExists();
+                        statusValue.style.animation = 'pulse 2s infinite ease-in-out';
+                    }
+                } else {
+                    statusValue.style.animation = 'none';
+                }
+
+                console.log("Status updated to:", statusText);
+            } else {
+                console.error("Status value element not found");
+            }
+        }
+
+        // Make sure the pulse animation exists in the stylesheet
+        function ensurePulseAnimationExists() {
+            // Check if the animation already exists
+            let animationExists = false;
+            for (let i = 0; i < document.styleSheets.length; i++) {
+                try {
+                    const rules = document.styleSheets[i].cssRules || document.styleSheets[i].rules;
+                    for (let j = 0; j < rules.length; j++) {
+                        if (rules[j].name === 'pulse') {
+                            animationExists = true;
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    // Ignore security errors from accessing stylesheets
+                }
+                if (animationExists) break;
+            }
+
+            // If animation doesn't exist, add it
+            if (!animationExists) {
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes pulse {
+                        0% { opacity: 1; }
+                        50% { opacity: 0.7; }
+                        100% { opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                console.log("Added pulse animation to stylesheet");
+            }
+        }
+    });
+})();
+
+
+function addNotification(type, title, message) {
+    const notificationList =
+        document.querySelector(".notification-list");
+    if (!notificationList) return;
+
+    const notification = document.createElement("div");
+    notification.className = `notification type-${type} new`;
+
+    const icon = getIconForType(type);
+
+    notification.innerHTML = `
+<i class="material-icons notification-icon">${icon}</i>
+<div class="notification-content">
+<div class="notification-title">${title}</div>
+<div class="notification-message">${message}</div>
+<div class="notification-time">Just now</div>
+</div>
+`;
+
+    notificationList.insertBefore(
+        notification,
+        notificationList.firstChild,
+    );
+
+    // Fade out "new" tag after some time
+    setTimeout(() => {
+        notification.classList.remove("new");
+    }, 5000);
+}
+
+// Get icon based on notification type
+function getIconForType(type) {
+    const icons = {
+        assignment: "person_add",
+        progress: "trending_up",
+        review: "rate_review",
+        update: "update",
+        alert: "warning",
+        comment: "comment",
+        default: "notifications",
+    };
+
+    return icons[type] || icons.default;
+}
+
+</script>
+</body>
+</html>
