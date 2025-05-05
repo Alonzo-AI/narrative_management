@@ -1,0 +1,3065 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Content Draft - FSU Basketball Season Recap</title>
+        <!-- Add Materialize CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            /* Keep existing custom variables */
+            :root {
+                --fsu-garnet: #782f40;
+                --fsu-gold: #ceb888;
+                --fsu-black: #231f20;
+                --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Update body styles for Materialize grid */
+            body {
+                background-color: rgb(236, 234, 234);
+            display: grid;
+            grid-template-columns: minmax(180px, 0.8fr) 4.2fr minmax(
+                    180px,
+                    1fr
+                );
+            min-height: 100vh;
+            gap: 24px;
+            padding: 24px;
+        }
+
+
+            /* Update main container styles */
+            .page-container {
+                margin: 0 auto;
+                width: 100%;
+                max-width: 1920px;
+            }
+
+            /* Left sidebar styles */
+            .left-sidebar {
+                background: #73d2e7;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: var(--shadow);
+                height: fit-content;
+                position: relative;
+                top: 150px;
+                max-width: 200px;
+            }
+
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                margin: 8px 0;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: var(--transition);
+                color: rgb(163, 227, 241);
+            }
+
+            .sidebar-item:hover {
+                background-color: rgb(163, 227, 241);
+                transform: translateX(5px);
+            }
+
+            .sidebar-item.active {
+                background-color: rgb(236, 234, 234);
+                color: #73d2e7;
+            }
+
+            .sidebar-item.active i {
+                color: #73d2e7;
+            }
+
+            .sidebar-item i {
+                margin-right: 12px;
+                color: white;
+                font-size: 20px;
+            }
+
+
+            .sidebar-item:hover {
+                background-color: rgb(236, 234, 234);
+                color: #73d2e7;
+            }
+
+            .sidebar-item:hover i {
+                color: #73d2e7;
+            }
+
+
+            /* Main content area styles */
+            .main-content-area {
+                background: white;
+                border-radius: 8px;
+                padding: 24px;
+                box-shadow: var(--shadow);
+                margin-bottom: 24px;
+            }
+
+            /* Responsive adjustments */
+            @media only screen and (max-width: 993px) {
+                .left-sidebar {
+                    margin-bottom: 24px;
+                }
+
+                .related-content-sidebar {
+                    margin-top: 24px;
+                    position: relative;
+                    top: 0;
+                }
+            }
+
+            @media only screen and (max-width: 600px) {
+                body {
+                    padding: 12px;
+                }
+            }
+
+            /* Keep all other existing styles */
+            @font-face {
+                font-family: "GothicCustom";
+                src: url("https://cdn.jsdelivr.net/gh/googlefonts/gothic-league@main/fonts/ttf/GothicA1-Bold.ttf")
+                    format("truetype");
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+            }
+
+            .content-container {
+                display: grid;
+                grid-template-columns: 1fr 300px;
+                gap: 24px;
+            }
+
+            /* Visual container dividers */
+
+            /* Add divider between FSU header and Content Drafts section */
+            .fsu-header {
+                position: relative;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+                box-shadow: none;
+                border-bottom: 1px solid rgba(206, 184, 136, 0.5); /* Subtle FSU gold border */
+            }
+
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .fsu-logo {
+                width: 60px;
+                height: auto;
+            }
+
+            .site-title {
+                color: #73d2e7;
+                font-size: 1.8rem;
+                margin: 0;
+            }
+
+            .project-info {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .info-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background-color: #f8f8f8;
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+
+            .info-item i {
+                color: #73d2e7;
+            }
+
+            .info-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .info-label {
+                font-size: 0.75rem;
+                color: #666;
+            }
+
+            .info-value {
+                font-weight: 600;
+                color: #73d2e7;
+            }
+
+            /* Phase Status Styling */
+            .status-item {
+                transition: background-color 0.3s ease;
+                border-radius: 6px;
+                position: relative;
+            }
+
+            .status-item[data-status="in-progress"] {
+                background-color: rgba(33, 150, 243, 0.1);
+            }
+
+            .status-item[data-status="under-review"] {
+                background-color: rgba(255, 152, 0, 0.1);
+            }
+
+            .status-item[data-status="completed"] {
+                background-color: rgba(76, 175, 80, 0.1);
+            }
+
+            /* Status icon animations */
+            .status-icon {
+                transition: transform 0.5s ease;
+            }
+
+            .status-item[data-status="in-progress"] .status-icon {
+                color: #2196f3;
+                animation: rotate 2s infinite linear;
+            }
+
+            .status-item[data-status="under-review"] .status-icon {
+                color: #ff9800;
+                animation: pulse 2s infinite ease-in-out;
+            }
+
+            .status-item[data-status="completed"] .status-icon {
+                color: #4caf50;
+            }
+
+            /* Status text styling */
+            .status-item[data-status="in-progress"] .info-value {
+                color: #2196f3;
+            }
+
+            .status-item[data-status="under-review"] .info-value {
+                color: #ff9800;
+            }
+
+            .status-item[data-status="completed"] .info-value {
+                color: #4caf50;
+            }
+
+            /* Status badge */
+            .status-badge {
+                display: inline-block;
+                height: 8px;
+                width: 8px;
+                border-radius: 50%;
+                margin-left: 5px;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+
+            .status-item[data-status="in-progress"] .status-badge {
+                background-color: #2196f3;
+            }
+
+            .status-item[data-status="under-review"] .status-badge {
+                background-color: #ff9800;
+            }
+
+            .status-item[data-status="completed"] .status-badge {
+                background-color: #4caf50;
+            }
+
+            /* Animation keyframes */
+            @keyframes rotate {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes pulse {
+                0% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                50% {
+                    opacity: 0.7;
+                    transform: scale(1.1);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            /* Status colors for different phases */
+            .info-item[data-status="in-progress"] .info-value {
+                color: #2196f3; /* Blue */
+            }
+
+            .info-item[data-status="under-review"] .info-value {
+                color: #ff9800; /* Orange */
+            }
+
+            .info-item[data-status="completed"] .info-value {
+                color: #4caf50; /* Green */
+            }
+
+            /* Optional subtle background tint */
+            .info-item[data-status="in-progress"] {
+                background-color: rgba(33, 150, 243, 0.05);
+            }
+
+            .info-item[data-status="under-review"] {
+                background-color: rgba(255, 152, 0, 0.05);
+            }
+
+            .info-item[data-status="completed"] {
+                background-color: rgba(76, 175, 80, 0.05);
+            }
+    
+            /* Main content area */
+            .main-content {
+                background: white;
+                border-radius: 8px;
+                padding: 24px;
+                box-shadow: var(--shadow);
+                height: min-content;
+                width: 70%;
+                overflow-y: auto;
+            }
+
+            .content-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+                padding-bottom: 16px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .content-header h1 {
+                color: #73d2e7;
+                font-size: 24px;
+            }
+
+            .create-btn {
+                background-color: #73d2e7;
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                font-weight: 500;
+                transition: background-color 0.2s;
+            }
+
+            .create-btn:hover {
+                background-color: rgb(163, 227, 241);
+            }
+
+            /* Content list */
+            .content-list {
+                list-style: none;
+            }
+
+            .content-item {
+                padding: 16px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .content-item:last-child {
+                border-bottom: none;
+            }
+
+            .content-item:hover {
+                background-color: #f9f9f9;
+            }
+
+            .content-info {
+                flex: 1;
+            }
+
+            .content-title {
+                font-weight: 500;
+                color: #73d2e7;
+                margin-bottom: 4px;
+            }
+
+            .content-meta {
+                display: flex;
+                gap: 16px;
+                color: #666;
+                font-size: 14px;
+            }
+
+            .content-type,
+            .content-status,
+            .content-date {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .status-badge {
+                display: inline-block;
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 12px;
+            }
+
+            .status-draft {
+                background-color: #e3f2fd;
+                color: #1976d2;
+            }
+
+            .status-published {
+                background-color: #e8f5e9;
+                color: #388e3c;
+            }
+
+            .status-review {
+                background-color: #fff8e1;
+                color: #ffa000;
+            }
+
+            .content-actions {
+                display: flex;
+                gap: 8px;
+            }
+
+            .action-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #666;
+                transition: color 0.2s;
+            }
+
+            .action-btn:hover {
+                color: #73d2e7;
+            }
+
+            /* Review button styling */
+            .review-btn {
+                background-color: white;
+                color: #73d2e7;
+                border: 1px solid #73d2e7;
+                padding: 10px 16px;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                font-weight: 500;
+                transition:
+                    background-color 0.2s,
+                    transform 0.1s;
+                margin-right: -300px;
+            }
+
+            .review-btn:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                background-color: rgb(236, 234, 234);
+                transform: translateY(-1px);
+            }
+
+            .review-btn:active {
+                transform: translateY(1px);
+            }
+
+            .review-btn.accepted {
+                background-color: rgb(236, 234, 234);
+            }
+
+            .review-btn.accepted:hover {
+                background-color: rgb(236, 234, 234);
+            }
+
+            /* Header buttons container for better alignment */
+            .header-buttons {
+                display: flex;
+                align-items: center;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .content-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+                }
+
+                .header-buttons {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .review-btn,
+                .create-btn {
+                    padding: 8px 12px;
+                    font-size: 14px;
+                }
+
+                .review-btn {
+                    margin-right: 8px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .header-buttons {
+                    flex-direction: column;
+                    width: 100%;
+                    gap: 8px;
+                }
+
+                .review-btn,
+                .create-btn {
+                    width: 100%;
+                    justify-content: center;
+                }
+
+                .review-btn {
+                    margin-right: 0;
+                    margin-bottom: 8px;
+                }
+            }
+
+            /* Dashboard styles */
+            .dashboard-container {
+                display: none;
+                background-color: white;
+                border-radius: 8px;
+                margin-top: 20px;
+                padding: 24px;
+                box-shadow: var(--shadow);
+                overflow: visible;
+            }
+
+            .dashboard-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .dashboard-title {
+                font-size: 20px;
+                color: #73d2e7;
+            }
+
+            .close-dashboard {
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: #666;
+                cursor: pointer;
+            }
+
+            /* Dashboard Layout */
+            .dashboard-layout {
+                display: block;
+                width: 100%;
+            }
+
+            .dashboard-main {
+                width: 100%;
+            }
+
+            /* Content types row */
+            .content-types {
+                display: flex;
+                justify-content: space-between;
+                gap: 16px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .content-type-card {
+                background-color: #f8f8f8;
+                border-radius: 8px;
+                padding: 20px;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.2s;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                border: 2px solid transparent;
+                flex: 1;
+            }
+
+            .content-type-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                background-color: #f2f2f2;
+            }
+
+            .content-type-card.selected {
+                border-color: #73d2e7;
+                background-color: rgba(120, 47, 64, 0.05);
+            }
+
+            .content-type-icon {
+                background-color: #73d2e7;
+                color: white;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto 12px;
+            }
+
+            .content-type-icon i {
+                font-size: 28px;
+            }
+
+            .content-type-title {
+                font-weight: 600;
+                color: #73d2e7;
+                margin-bottom: 4px;
+            }
+
+            .content-type-desc {
+                font-size: 13px;
+                color: #666;
+            }
+
+            /* Dialog styles */
+            .content-editor-dialog {
+                display: none;
+                background-color: white;
+                border-radius: 8px;
+                border: 1px solid #eee;
+                padding: 20px;
+                margin-top: 20px;
+                box-shadow: var(--shadow);
+                width: 100%;
+            }
+
+            .dialog-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .dialog-title {
+                font-size: 18px;
+                color: #73d2e7;
+                font-weight: 500;
+            }
+
+            /* Dialog action buttons */
+            .dialog-actions {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+                margin-top: 16px;
+            }
+
+            /* For the Add More section with just 2 buttons */
+            #format-message .dialog-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Format message styling */
+            .format-message {
+                background-color: #f0f0f0;
+                border-left: 4px solid #73d2e7;
+                padding: 12px 16px;
+                margin: 16px 0;
+                color: var(--fsu-black);
+                font-size: 14px;
+                border-radius: 4px;
+                text-align: center;
+            }
+
+            /* Text area styling */
+            .text-editor {
+                width: 100%;
+                min-height: 200px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 12px;
+                font-size: 14px;
+                line-height: 1.5;
+                resize: vertical;
+                margin-bottom: 16px;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+            }
+
+            /* Button styling */
+            .btn {
+                padding: 10px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                border: none;
+                transition:
+                    background-color 0.2s,
+                    transform 0.1s;
+                min-width: 150px;
+                height: 44px;
+            }
+
+            .btn:hover {
+                transform: translateY(-1px);
+            }
+
+            .btn:active {
+                transform: translateY(1px);
+            }
+
+            .btn i {
+                font-size: 18px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Primary button (Save Draft) */
+            .btn-primary {
+                background-color: #73d2e7;
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background-color: rgb(163, 227, 241);
+            }
+
+            .btn-primary i {
+                color: white;
+            }
+
+            /* Secondary button (Upload) */
+            .btn-secondary {
+                background-color: #73d2e7;
+                color: white;
+            }
+
+            .btn-secondary:hover {
+                background-color: rgb(163, 227, 241);
+            }
+
+            .btn-secondary i {
+                color: white;
+            }
+
+            /* Tertiary button (Rewrite with AI) */
+            .btn-tertiary {
+                background-color: #73d2e7;
+                color: white;
+            }
+
+            .btn-tertiary:hover {
+                background-color: rgb(163, 227, 241);
+            }
+
+            .btn-tertiary i {
+                color: white;
+            }
+
+            /* Add divider between Content Drafts section and Comments section */
+            .saved-content-section {
+                position: relative;
+                padding-bottom: 30px;
+                margin-bottom: 30px;
+                border-bottom: 1px solid rgba(206, 184, 136, 0.5); /* Subtle FSU gold border */
+            }
+
+            /* Optional: Add a slight visual indication that these are separate sections */
+            .fsu-header:after,
+            .saved-content-section:after {
+                content: "";
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 4px;
+                border-radius: 2px;
+                background-color: #73d2e7;
+            }
+
+            .saved-content-section .content-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+                padding-bottom: 16px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .saved-content-section .content-header h1 {
+                color: #73d2e7;
+                font-size: 24px;
+            }
+
+            .filter-controls {
+                display: flex;
+                gap: 10px;
+            }
+
+            .filter-btn {
+                background-color: #f0f0f0;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-weight: 500;
+                color: #555;
+            }
+
+            .filter-btn:hover {
+                background-color: #e0e0e0;
+            }
+
+            .filter-btn.active {
+                background-color: #73d2e7;
+                color: white;
+            }
+
+            /* Table Styles */
+            .content-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .content-table th,
+            .content-table td {
+                padding: 16px;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+            }
+
+            .content-table th {
+                background-color: #f8f8f8;
+                color: var(--fsu-black);
+                font-weight: 600;
+            }
+
+            .content-table tbody tr:hover {
+                background-color: #f9f9f9;
+            }
+
+            .content-table .content-preview {
+                max-width: 300px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .content-table .action-buttons {
+                display: flex;
+                gap: 8px;
+            }
+
+            .content-table .action-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #666;
+                transition: color 0.2s;
+            }
+
+            .content-table .action-btn:hover {
+                color: #73d2e7;
+            }
+
+            .content-table .edit-btn:hover {
+                color: #2196f3;
+            }
+
+            .content-table .delete-btn:hover {
+                color: #f44336;
+            }
+
+            .content-table .no-content-row td {
+                text-align: center;
+                padding: 30px;
+                color: #888;
+                font-style: italic;
+            }
+
+            /* Type badge styling */
+            .type-badge {
+                display: inline-block;
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .type-press-release {
+                background-color: #e3f2fd;
+                color: #1976d2;
+            }
+
+            .type-social-media {
+                background-color: #e8f5e9;
+                color: #388e3c;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 992px) {
+                .content-table th:nth-child(4),
+                .content-table td:nth-child(4) {
+                    display: none;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .saved-content-section .content-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 15px;
+                }
+
+                .content-table th:nth-child(3),
+                .content-table td:nth-child(3) {
+                    display: none;
+                }
+            }
+
+            /* Style the Comments section as a distinct container */
+            .comments-section {
+                border-top: none; /* Remove any existing border to avoid duplication */
+                background-color: white;
+            }
+
+            .section-title {
+                color: #73d2e7;
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+                border-bottom: 2px solid var(--fsu-gold);
+                padding-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .comments-counter {
+                background: #73d2e7;
+                color: white;
+                font-size: 0.9rem;
+                padding: 2px 8px;
+                border-radius: 12px;
+                min-width: 24px;
+                text-align: center;
+            }
+
+            .comment-form {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 30px;
+                flex-direction: column;
+            }
+
+            @media (min-width: 768px) {
+                .comment-form {
+                    flex-direction: row;
+                    align-items: flex-start;
+                }
+            }
+
+            .comment-input {
+                flex: 1;
+                padding: 12px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                resize: vertical;
+                min-height: 60px;
+                max-height: 200px;
+                font-family: inherit;
+                font-size: 0.95rem;
+                transition:
+                    border-color 0.3s ease,
+                    height 0.2s ease;
+                overflow: hidden;
+            }
+
+            .comment-input:focus {
+                outline: none;
+                border-color: #73d2e7;
+            }
+
+            #postCommentBtn {
+                padding: 12px 20px;
+                height: fit-content;
+            }
+
+            @media (max-width: 767px) {
+                #postCommentBtn {
+                    align-self: flex-end;
+                }
+            }
+
+            .comments-list {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .comment-item {
+                display: flex;
+                gap: 15px;
+                padding-bottom: 20px;
+                transition: opacity 0.3s ease;
+            }
+
+            .comment-avatar {
+                width: 40px;
+                height: 40px;
+                background-color: #f0f0f0;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #666;
+                font-size: 1.2rem;
+                flex-shrink: 0;
+            }
+
+            .comment-content {
+                flex: 1;
+                min-width: 0; /* Ensures proper text wrapping */
+            }
+
+            .comment-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+                flex-wrap: wrap;
+            }
+
+            .comment-author {
+                font-weight: 600;
+                color: #73d2e7;
+            }
+
+            .comment-date {
+                color: #888;
+                font-size: 0.85rem;
+            }
+
+            .comment-text {
+                margin-bottom: 10px;
+                line-height: 1.4;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+            }
+
+            .comment-actions {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .comment-action-btn {
+                background: none;
+                border: none;
+                color: #73d2e7;
+                cursor: pointer;
+                font-size: 0.85rem;
+                padding: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            .comment-action-btn:hover {
+                opacity: 0.8;
+                text-decoration: underline;
+            }
+
+            /* Comment edit interface */
+            .comment-edit-interface {
+                margin-top: 10px;
+                margin-bottom: 15px;
+            }
+
+            .comment-edit-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-family: inherit;
+                font-size: 0.95rem;
+                min-height: 80px;
+                margin-bottom: 10px;
+                resize: vertical;
+                max-height: 200px;
+                overflow: hidden;
+            }
+
+            .comment-edit-input:focus {
+                outline: none;
+                border-color: #73d2e7;
+            }
+
+            .comment-edit-actions {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+            }
+
+            .save-edit-btn,
+            .cancel-edit-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
+            /* No comments message */
+            .no-comments-message {
+                text-align: center;
+                color: #666;
+                padding: 20px;
+                font-style: italic;
+            }
+
+            /* Loading indicator */
+            .comment-loading {
+                display: flex;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .comment-loading .spinner {
+                width: 24px;
+                height: 24px;
+                border: 3px solid rgba(120, 47, 64, 0.2);
+                border-top-color: #73d2e7;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Animation for new comments */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .comment-item.new {
+                animation: fadeIn 0.3s ease forwards;
+            }
+
+            /* Custom collapsible styling for related content sidebar */
+            .related-content-sidebar .collapsible {
+                border: none;
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .related-content-sidebar .collapsible-header {
+                background-color: #73d2e7;
+                color: white;
+                display: flex;
+                align-items: center;
+                border: none;
+                padding: 10px 15px;
+                font-weight: 600;
+                border-radius: 4px;
+                margin-bottom: 5px;
+                cursor: pointer;
+                line-height: normal;
+            }
+
+            .related-content-sidebar .collapsible-header i {
+                margin-right: 10px;
+                color: #73d2e7;
+                font-size: 20px;
+                height: auto;
+                min-width: 1.5rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .related-content-sidebar .collapsible-body {
+                background-color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .related-content-sidebar .collapsible li {
+                margin-bottom: 10px;
+                border: 1px solid #73d2e7;
+                border-radius: 4px;
+                overflow: hidden;
+                background-color: transparent;
+            }
+
+            .related-content-sidebar
+                .collapsible
+                li.active
+                .collapsible-header {
+                background-color:#73d2e7;
+                color: white;
+            }
+
+            .related-content-sidebar
+                .collapsible
+                li.active
+                .collapsible-header
+                i {
+                color: white;
+            }
+
+            /* Related Content Sidebar Styles */
+            .related-content-sidebar {
+                background: white;
+                border-radius: 8px;
+                padding: 20px;
+                border-left: 2px solid #73d2e7;
+                height: min-content;
+            }
+
+            /* Related content sidebar title */
+            .related-content-title {
+                color: #73d2e7;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #73d2e7;
+                padding-bottom: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 1.5;
+            }
+
+            .related-sections {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .related-section h6 {
+                color: #73d2e7;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
+
+            .related-items {
+                max-height: 200px;
+                overflow-y: auto;
+                background-color: white;
+                border-radius: 4px;
+                padding: 10px;
+            }
+
+            .related-items .no-content-message {
+                color: #888;
+                text-align: center;
+                font-style: italic;
+            }
+
+            .related-content-item {
+                background-color: #f0f0f0;
+                border-radius: 4px;
+                padding: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .related-content-item .item-actions {
+                display: flex;
+                gap: 5px;
+            }
+
+            .related-content-item .item-actions button {
+                background: none;
+                border: none;
+                color:#73d2e7;
+                cursor: pointer;
+                padding: 0;
+            }
+
+            .related-content-item .item-actions button:hover {
+                opacity: 0.7;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 1200px) {
+                .content-container {
+                    grid-template-columns: 1fr;
+                }
+
+                .related-content-sidebar {
+                    position: relative;
+                    top: 0;
+                }
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    grid-template-columns: 1fr;
+                    padding: 12px;
+                }
+
+                .sidebar {
+                    display: none;
+                }
+            }
+
+            .notification-sidebar {
+                /* position: fixed;
+                right: 0; */
+                /* width: 200px; */
+                margin-top: 10%;
+                height: min-content;
+                background: white;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                overflow-y: auto;
+                z-index: 100;
+                border-radius: 6px;
+                /* margin-left: auto; */
+            }
+
+            .notification {
+                padding: 12px;
+                border-left: 3px solid #73d2e7;
+                margin: 12px 0;
+                background: #f8f8f8;
+                border-radius: 0 4px 4px 0;
+                transition: transform 0.2s ease;
+            }
+
+            .notification:hover {
+                transform: translateX(-5px);
+            }
+
+            .notification-title {
+                color: #73d2e7;
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+
+            .notification-content {
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 4px;
+            }
+
+            .notification-time {
+                color: #999;
+                font-size: 0.8rem;
+            }
+            .notification-sidebar h2 {
+                font-size: 2rem;
+            }
+
+            .logo-above-sidebar {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    height: 250px;
+    width: 250px;
+    z-index: 10;
+}
+
+        </style>
+    </head>
+    <body>
+
+         <!-- Comprehensive Dashboard Structure with Header and Buttons -->
+
+     <!-- Logo above sidebar -->
+<img
+src="https://athlytesports.com/wp-content/uploads/2024/04/athlyte-new-logo.svg"
+alt="FSU Logo"
+class="logo-above-sidebar"
+/>
+
+        <!-- Left Sidebar - 2 columns on large screens -->
+
+        <aside class="left-sidebar">
+            
+            <div class="sidebar-item">
+                <i class="material-icons">home</i>
+                <a href="projects_overview.html"> Home </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">assignment</i>
+                <a href="project_new_athylte.html"> Project </a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">search</i>
+                <a href="project_new_research_page_athylete.html"> Research </a>
+            </div>
+            <div class="sidebar-item active">
+                <i class="material-icons">description</i>
+                <span>Content draft</span>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">brush</i>
+                <a href="projetc_new_graphics.html"> Graphics</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">share</i>
+                <a href="projetc_new_marketing.html"> Marketing</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">publish</i>
+                <a href="project_new_publish.html"> Publish</a>
+            </div>
+            <div class="sidebar-item">
+                <i class="material-icons">equalizer</i>
+                <a href="project_new_analytics.html"> Analytics</a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area - 8 columns on large screens -->
+
+        <main class="main-content-area">
+            <!-- FSU Header -->
+            <header class="fsu-header">
+                <div class="header-container">
+                    <div class="logo-container">
+                        <h1 class="site-title">FSU Football Season 2025</h1>
+                    </div>
+                    <div class="project-info">
+                        <div class="info-item">
+                            <i class="material-icons">person</i>
+                            <div class="info-content">
+                                <span class="info-label"
+                                    >Content Coordinator</span
+                                >
+                                <span class="info-value">Sarah Johnson</span>
+                            </div>
+                        </div>
+                        <div class="info-item" data-status="in-progress">
+                            <i class="material-icons">assignment</i>
+                            <div class="info-content">
+                                <span class="info-label">Phase Status</span>
+                                <span class="info-value">In Progress</span>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <i class="material-icons">event</i>
+                            <div class="info-content">
+                                <span class="info-label">Deadline</span>
+                                <span class="info-value">March 15, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+                <h1>Content Drafts</h1>
+                <div class="header-buttons"></div>
+                <button class="review-btn" id="submitReviewBtn">
+                    <i class="material-icons">rate_review</i> Submit Review
+                </button>
+                <button class="create-btn" id="createContentBtn">
+                    <i class="material-icons">add</i> Create New Content
+                </button>
+            </div>
+            <!-- Dashboard container -->
+            <div id="dashboard-container" class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">Select Content Type</h2>
+                    <button class="close-dashboard" id="closeDashboardBtn">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="dashboard-layout">
+                    <!-- Main dashboard content -->
+                    <div class="dashboard-main">
+                        <p>Select content type to create:</p>
+
+                        <div class="content-types">
+                            <div
+                                class="content-type-card"
+                                data-type="press-release"
+                            >
+                                <div class="content-type-icon">
+                                    <i class="material-icons">description</i>
+                                </div>
+                                <h3 class="content-type-title">
+                                    Press Release
+                                </h3>
+                            </div>
+
+                            <div
+                                class="content-type-card"
+                                data-type="social-media"
+                            >
+                                <div class="content-type-icon">
+                                    <i class="material-icons">share</i>
+                                </div>
+                                <h3 class="content-type-title">
+                                    Social Media Post
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- Press Release Dialog -->
+                        <div
+                            id="press-release-dialog"
+                            class="content-editor-dialog"
+                        >
+                            <div class="dialog-header">
+                                <h3 class="dialog-title">
+                                    Press Release Editor
+                                </h3>
+                            </div>
+
+                            <textarea
+                                class="text-editor"
+                                placeholder="Enter your press release content here..."
+                            ></textarea>
+
+                            <div class="dialog-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    id="rewritePressReleaseBtn"
+                                >
+                                    <i class="material-icons">edit</i>
+                                    Rewrite with AI
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    id="saveVersionBtn"
+                                >
+                                    <i class="material-icons">save</i>
+                                    Save Draft
+                                </button>
+                                <!-- <button
+                                    class="btn btn-tertiary"
+                                    id="uploadPressReleaseBtn"
+                                >
+                                    <i class="material-icons">file_upload</i>
+                                    Upload
+                                </button> -->
+                            </div>
+                        </div>
+
+                        <!-- Social Media Dialog -->
+                        <div
+                            id="social-media-dialog"
+                            class="content-editor-dialog"
+                        >
+                            <div class="dialog-header">
+                                <h3 class="dialog-title">
+                                    Social Media Post Editor
+                                </h3>
+                            </div>
+
+                            <textarea
+                                class="text-editor"
+                                placeholder="Enter your social media content here..."
+                            ></textarea>
+
+                            <div class="dialog-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    id="rewriteSocialBtn"
+                                >
+                                    <i class="material-icons">edit</i>
+                                    Rewrite with AI
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    id="socialSaveBtn"
+                                >
+                                    <i class="material-icons">save</i>
+                                    Save Draft
+                                </button>
+                                <!-- <button
+                                    class="btn btn-tertiary"
+                                    id="uploadSocialBtn"
+                                >
+                                    <i class="material-icons">file_upload</i>
+                                    Upload
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="saved-content-section">
+                <div class="content-header">
+                    <h1>Saved Content</h1>
+                    <div class="filter-controls">
+                        <button class="filter-btn active" data-filter="all">
+                            All
+                        </button>
+                        <button class="filter-btn" data-filter="press-release">
+                            Press Releases
+                        </button>
+                        <button class="filter-btn" data-filter="social-media">
+                            Social Media
+                        </button>
+                    </div>
+                </div>
+
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Content</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="savedContentTableBody">
+                        <!-- Table will be populated with JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Comments Section -->
+
+            <div class="comments-section">
+                <h2 class="section-title">Comments</h2>
+
+                <div class="comment-form">
+                    <textarea
+                        id="commentInput"
+                        placeholder="Add a comment..."
+                        class="comment-input"
+                    ></textarea>
+                    <button id="postCommentBtn" class="btn btn-primary">
+                        Post Comment
+                    </button>
+                </div>
+
+                <div class="comments-list" id="commentsList">
+                    <!-- Example comments -->
+                    <div class="comment-item"></div>
+
+                    <div class="comment-item"></div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="related-content-and-notifications">
+            <div class="related-content-sidebar">
+                <h6 class="related-content-title">Related Content</h6>
+                <ul class="collapsible expandable">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">web-stories</i>Selected
+                        </div>
+                        <div class="collapsible-body">
+                            <div
+                                id="relatedStoriesContent"
+                                class="related-items"
+                            >
+                                <p class="no-content-message">
+                                    No stories selected
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">description</i>Documents
+                        </div>
+                        <div class="collapsible-body">
+                            <div
+                                id="relatedDocumentsContent"
+                                class="related-items"
+                            >
+                                <p class="no-content-message">
+                                    No documents available
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">link</i>Web Links
+                        </div>
+                        <div class="collapsible-body">
+                            <div id="relatedLinksContent" class="related-items">
+                                <p class="no-content-message">
+                                    No links available
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="notification-sidebar">
+                <div class="notification-header">
+                    <h2>Notifications</h2>
+                </div>
+                <div class="notification-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Materialize JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- Keep existing JavaScript -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get DOM elements
+                const dashboardContainer = document.getElementById(
+                    "dashboard-container",
+                );
+                const createBtn = document.getElementById("createContentBtn");
+                const closeDashboardBtn =
+                    document.getElementById("closeDashboardBtn");
+                const contentTypeCards =
+                    document.querySelectorAll(".content-type-card");
+                const pressReleaseDialog = document.getElementById(
+                    "press-release-dialog",
+                );
+                const socialMediaDialog = document.getElementById(
+                    "social-media-dialog",
+                );
+                const formatMessage = document.getElementById("format-message");
+
+                let selectedContentType = null;
+
+                // Show dashboard when create button is clicked
+                createBtn.addEventListener("click", function () {
+                    dashboardContainer.style.display = "block";
+                    // Make sure dialogs are hidden when dashboard opens
+                    if (pressReleaseDialog)
+                        pressReleaseDialog.style.display = "none";
+                    if (socialMediaDialog)
+                        socialMediaDialog.style.display = "none";
+                    if (formatMessage) formatMessage.style.display = "none";
+                    // Reset selection
+                    contentTypeCards.forEach((c) =>
+                        c.classList.remove("selected"),
+                    );
+                    selectedContentType = null;
+                });
+
+                // Hide dashboard when close button is clicked
+                closeDashboardBtn.addEventListener("click", function () {
+                    dashboardContainer.style.display = "none";
+                    if (pressReleaseDialog)
+                        pressReleaseDialog.style.display = "none";
+                    if (socialMediaDialog)
+                        socialMediaDialog.style.display = "none";
+                    if (formatMessage) formatMessage.style.display = "none";
+                });
+
+                // Handle content type selection
+                contentTypeCards.forEach((card) => {
+                    card.addEventListener("click", function () {
+                        console.log(
+                            "Card clicked:",
+                            this.getAttribute("data-type"),
+                        );
+
+                        // Remove selection from all cards
+                        contentTypeCards.forEach((c) =>
+                            c.classList.remove("selected"),
+                        );
+
+                        // Add selection to clicked card
+                        this.classList.add("selected");
+
+                        // Store selected content type
+                        selectedContentType = this.getAttribute("data-type");
+                        console.log(
+                            "Selected content type:",
+                            selectedContentType,
+                        );
+
+                        // Hide all dialogs first
+                        if (pressReleaseDialog)
+                            pressReleaseDialog.style.display = "none";
+                        if (socialMediaDialog)
+                            socialMediaDialog.style.display = "none";
+                        if (formatMessage) formatMessage.style.display = "none";
+
+                        // Show appropriate dialog based on selection
+                        if (selectedContentType === "press-release") {
+                            // Show press release dialog
+                            if (pressReleaseDialog) {
+                                console.log("Showing press release dialog");
+                                pressReleaseDialog.style.display = "block";
+                            } else {
+                                console.error(
+                                    "Press release dialog element not found",
+                                );
+                            }
+                        } else if (selectedContentType === "social-media") {
+                            // Show social media dialog
+                            if (socialMediaDialog) {
+                                console.log("Showing social media dialog");
+                                socialMediaDialog.style.display = "block";
+                            } else {
+                                console.error(
+                                    "Social media dialog element not found",
+                                );
+                            }
+                        } else if (selectedContentType === "newsletter") {
+                            // For the "Add more" option, show the message
+                            if (formatMessage) {
+                                formatMessage.style.display = "block";
+                            }
+                        }
+                    });
+                });
+
+                // Handle dialog button actions for Press Release
+                const rewritePressReleaseBtn = document.getElementById(
+                    "rewritePressReleaseBtn",
+                );
+                const saveVersionBtn =
+                    document.getElementById("saveVersionBtn");
+                const uploadPressReleaseBtn = document.getElementById(
+                    "uploadPressReleaseBtn",
+                );
+                const pressReleaseEditor = document.querySelector(
+                    "#press-release-dialog .text-editor",
+                );
+
+                // Social media buttons
+                const rewriteSocialBtn =
+                    document.getElementById("rewriteSocialBtn");
+                const socialSaveBtn = document.getElementById("socialSaveBtn");
+                const uploadSocialBtn =
+                    document.getElementById("uploadSocialBtn");
+                const socialMediaEditor = document.querySelector(
+                    "#social-media-dialog .text-editor",
+                );
+
+                // Press Release button handlers
+                if (rewritePressReleaseBtn) {
+                    rewritePressReleaseBtn.addEventListener(
+                        "click",
+                        function () {
+                            const content = pressReleaseEditor
+                                ? pressReleaseEditor.value
+                                : "";
+                            console.log(
+                                "Rewriting press release content with AI:",
+                                content,
+                            );
+
+                            // Here you would typically send the content to an AI service
+                            alert(
+                                "Press release content sent for AI rewriting. This would integrate with your AI service.",
+                            );
+                        },
+                    );
+                }
+
+                if (uploadPressReleaseBtn) {
+                    uploadPressReleaseBtn.addEventListener(
+                        "click",
+                        function () {
+                            console.log("Upload press release clicked");
+                            alert(
+                                "Press release upload functionality would be implemented here.",
+                            );
+                        },
+                    );
+                }
+
+                if (saveVersionBtn) {
+                    saveVersionBtn.addEventListener("click", function () {
+                        const content = pressReleaseEditor
+                            ? pressReleaseEditor.value
+                            : "";
+                        console.log("Saving press release version:", content);
+
+                        // Here you would typically save the content to your system
+                        // alert("Press release saved as draft successfully!");
+                        //
+                        addNotification(
+                            "default",
+                            `New Draft`,
+                            `Press release draft has been added`,
+                        );
+
+                        // Hide the dashboard
+                        dashboardContainer.style.display = "none";
+                        pressReleaseDialog.style.display = "none";
+                    });
+                }
+
+                // Social Media button handlers
+                if (rewriteSocialBtn) {
+                    rewriteSocialBtn.addEventListener("click", function () {
+                        const content = socialMediaEditor
+                            ? socialMediaEditor.value
+                            : "";
+                        console.log(
+                            "Rewriting social media content with AI:",
+                            content,
+                        );
+
+                        // Here you would typically send the content to an AI service
+                        alert(
+                            "Social media content sent for AI rewriting. This would integrate with your AI service.",
+                        );
+                    });
+                }
+
+                if (uploadSocialBtn) {
+                    uploadSocialBtn.addEventListener("click", function () {
+                        console.log("Upload social media post clicked");
+                        alert(
+                            "Social media post upload functionality would be implemented here.",
+                        );
+                    });
+                }
+
+                if (socialSaveBtn) {
+                    socialSaveBtn.addEventListener("click", function () {
+                        const content = socialMediaEditor
+                            ? socialMediaEditor.value
+                            : "";
+                        console.log("Saving social media version:", content);
+
+                        // Here you would typically save the content to your system
+                        // alert("Social media post saved as draft successfully!");
+                        addNotification(
+                            "default",
+                            `New Draft`,
+                            `Press release draft has been added`,
+                        );
+                        // Hide the dashboard
+                        dashboardContainer.style.display = "none";
+                        socialMediaDialog.style.display = "none";
+                    });
+                }
+
+                // Initialize: ensure all dialogs are hidden at start
+                if (pressReleaseDialog) {
+                    pressReleaseDialog.style.display = "none";
+                }
+                if (socialMediaDialog) {
+                    socialMediaDialog.style.display = "none";
+                }
+                if (formatMessage) {
+                    formatMessage.style.display = "none";
+                }
+
+                // Static related content for documents and links
+                const staticDocuments = [
+                    {
+                        name: "FSU Football Season Overview",
+                        content:
+                            "Jordan Travis emerged as a pivotal quarterback, showcasing exceptional leadership and strategic playmaking throughout the 2025 season. His ability to read defensive formations and make split-second decisions significantly contributed to the team's offensive success.",
+                        citation: "pp. 23-25",
+                    },
+                    {
+                        name: "Team Performance Analysis",
+                        content:
+                            "The offensive line demonstrated remarkable improvement, reducing sack rates by 22% compared to the previous season. Key players like Rod Dent and Qae'shon Sapp provided crucial protection, creating vital spaces for running backs and quarterbacks.",
+                        citation: "pp. 47-49",
+                    },
+                ];
+
+                const staticWebLinks = [
+                    {
+                        name: "FSU Athletics Official Site",
+                        content:
+                            "Florida State University's football program has consistently ranked among the top athletic programs in the NCAA, with a rich history of producing NFL-caliber talent. The 2025 season reinforced this legacy through exceptional team performance and individual player achievements.",
+                        citation: "Game Recap Section",
+                    },
+                    {
+                        name: "ACC Football Insights",
+                        content:
+                            "The Atlantic Coast Conference (ACC) recognized FSU's outstanding season, highlighting the team's strategic adaptations and resilient performance across multiple challenging matchups. Key statistical innovations in play-calling and defensive strategies set the Seminoles apart.",
+                        citation: "2025 Season Analysis",
+                    },
+                ];
+
+                // Setup custom collapsible instead of using Materialize
+                setupCustomCollapsible();
+
+                // Then populate content
+                populateRelatedContent();
+
+                // Function to setup custom collapsible functionality
+                function setupCustomCollapsible() {
+                    const headers = document.querySelectorAll(
+                        ".related-content-sidebar .collapsible-header",
+                    );
+
+                    // First, hide all content bodies
+                    document
+                        .querySelectorAll(
+                            ".related-content-sidebar .collapsible-body",
+                        )
+                        .forEach((body) => {
+                            body.style.display = "none";
+                        });
+
+                    // Add click handlers to headers
+                    headers.forEach((header) => {
+                        header.addEventListener("click", function () {
+                            // Toggle active class on parent li
+                            this.parentNode.classList.toggle("active");
+
+                            // Toggle display of next sibling (the body)
+                            const body = this.nextElementSibling;
+                            if (body.style.display === "block") {
+                                body.style.display = "none";
+                            } else {
+                                body.style.display = "block";
+                            }
+                        });
+                    });
+
+                    console.log(
+                        "Custom collapsible initialized with",
+                        headers.length,
+                        "collapsible headers",
+                    );
+
+                    // Optionally open the first section by default
+                    if (headers.length > 0) {
+                        const firstBody = headers[0].nextElementSibling;
+                        if (firstBody) {
+                            headers[0].parentNode.classList.add("active");
+                            firstBody.style.display = "block";
+                        }
+                    }
+                }
+
+                function populateRelatedContent() {
+                    // Existing Selected Stories Population
+                    const selectedStoriesContainer =
+                        document.getElementById("selectedStories");
+                    const relatedStoriesContent = document.getElementById(
+                        "relatedStoriesContent",
+                    );
+
+                    // Clear previous content
+                    if (relatedStoriesContent) {
+                        relatedStoriesContent.innerHTML = "";
+
+                        if (selectedStoriesContainer) {
+                            const storyItems =
+                                selectedStoriesContainer.querySelectorAll(
+                                    ".story-item",
+                                );
+
+                            if (storyItems.length > 0) {
+                                storyItems.forEach((item) => {
+                                    const storyText =
+                                        item.querySelector(
+                                            "div > p",
+                                        ).textContent;
+
+                                    const relatedItem =
+                                        document.createElement("div");
+                                    relatedItem.className =
+                                        "related-content-item";
+                                    relatedItem.innerHTML = `
+                            <span>${storyText}</span>
+                            <div class="item-actions">
+                                <button onclick="copyToClipboard('${storyText.replace(/'/g, "\\'")}')" title="Copy">
+                                    <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                                </button>
+                                <button onclick="insertContentIntoEditor('${storyText.replace(/'/g, "\\'")}')" title="Insert">
+                                    <i class="material-icons" style="font-size: 18px;">input</i>
+                                </button>
+                            </div>
+                        `;
+
+                                    relatedStoriesContent.appendChild(
+                                        relatedItem,
+                                    );
+                                });
+                            } else {
+                                relatedStoriesContent.innerHTML =
+                                    '<p class="no-content-message">No stories selected</p>';
+                            }
+                        } else {
+                            relatedStoriesContent.innerHTML =
+                                '<p class="no-content-message">No stories selected</p>';
+                        }
+                    }
+
+                    // Populate Static Documents
+                    const relatedDocumentsContent = document.getElementById(
+                        "relatedDocumentsContent",
+                    );
+                    if (relatedDocumentsContent) {
+                        relatedDocumentsContent.innerHTML = "";
+
+                        if (staticDocuments.length > 0) {
+                            staticDocuments.forEach((doc) => {
+                                const relatedItem =
+                                    document.createElement("div");
+                                relatedItem.className = "related-content-item";
+                                relatedItem.innerHTML = `
+                        <div>
+                            <strong>${doc.name}</strong>
+                            <p style="margin: 5px 0; font-size: 0.9em;">${doc.content}</p>
+                            <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${doc.citation}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="copyToClipboard('${doc.content.replace(/'/g, "\\'")}')" title="Copy">
+                                <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                            </button>
+                            <button onclick="insertContentIntoEditor('${doc.content.replace(/'/g, "\\'")}')" title="Insert">
+                                <i class="material-icons" style="font-size: 18px;">input</i>
+                            </button>
+                        </div>
+                    `;
+
+                                relatedDocumentsContent.appendChild(
+                                    relatedItem,
+                                );
+                            });
+                        } else {
+                            relatedDocumentsContent.innerHTML =
+                                '<p class="no-content-message">No documents available</p>';
+                        }
+                    }
+
+                    // Populate Static Web Links
+                    const relatedLinksContent = document.getElementById(
+                        "relatedLinksContent",
+                    );
+                    if (relatedLinksContent) {
+                        relatedLinksContent.innerHTML = "";
+
+                        if (staticWebLinks.length > 0) {
+                            staticWebLinks.forEach((link) => {
+                                const relatedItem =
+                                    document.createElement("div");
+                                relatedItem.className = "related-content-item";
+                                relatedItem.innerHTML = `
+                        <div>
+                            <strong>${link.name}</strong>
+                            <p style="margin: 5px 0; font-size: 0.9em;">${link.content}</p>
+                            <div style="font-size: 0.8em; color: #666; font-style: italic;">Citation: ${link.citation}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button onclick="copyToClipboard('${link.content.replace(/'/g, "\\'")}')" title="Copy">
+                                <i class="material-icons" style="font-size: 18px;">content_copy</i>
+                            </button>
+                            <button onclick="insertContentIntoEditor('${link.content.replace(/'/g, "\\'")}')" title="Insert">
+                                <i class="material-icons" style="font-size: 18px;">input</i>
+                            </button>
+                        </div>
+                    `;
+
+                                relatedLinksContent.appendChild(relatedItem);
+                            });
+                        } else {
+                            relatedLinksContent.innerHTML =
+                                '<p class="no-content-message">No links available</p>';
+                        }
+                    }
+                }
+            });
+
+            // Global functions for copy and insert functionality
+            function copyToClipboard(text) {
+                navigator.clipboard
+                    .writeText(text)
+                    .then(() => {
+                        alert("Content copied to clipboard!");
+                    })
+                    .catch((err) => {
+                        console.error("Failed to copy: ", err);
+                    });
+            }
+
+            function insertContentIntoEditor(text) {
+                // Get the currently active editor
+                let activeEditor = null;
+
+                // Check which dialog is currently visible
+                if (
+                    document.getElementById("press-release-dialog") &&
+                    document.getElementById("press-release-dialog").style
+                        .display === "block"
+                ) {
+                    activeEditor = document.querySelector(
+                        "#press-release-dialog .text-editor",
+                    );
+                } else if (
+                    document.getElementById("social-media-dialog") &&
+                    document.getElementById("social-media-dialog").style
+                        .display === "block"
+                ) {
+                    activeEditor = document.querySelector(
+                        "#social-media-dialog .text-editor",
+                    );
+                }
+
+                // Insert the text if an editor is active
+                if (activeEditor) {
+                    const startPos = activeEditor.selectionStart;
+                    const endPos = activeEditor.selectionEnd;
+
+                    // Insert the text at cursor position
+                    activeEditor.value =
+                        activeEditor.value.substring(0, startPos) +
+                        text +
+                        activeEditor.value.substring(endPos);
+
+                    // Update cursor position after insertion
+                    activeEditor.selectionStart = activeEditor.selectionEnd =
+                        startPos + text.length;
+                    activeEditor.focus();
+
+                    alert("Content inserted into editor!");
+                } else {
+                    alert("Please open an editor first!");
+                }
+            }
+
+            // Array to store saved content
+            let savedContentItems = [];
+
+            // Function to add new content to the table
+            function addContentToTable(title, type, content, date) {
+                // Create a new entry
+                const newContent = {
+                    id: Date.now(), // Use timestamp as unique ID
+                    title:
+                        title ||
+                        `Untitled ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+                    type: type,
+                    content: content,
+                    date: date || new Date().toLocaleString(),
+                };
+
+                // Add to the array
+                savedContentItems.push(newContent);
+
+                // Save to localStorage for persistence
+                localStorage.setItem(
+                    "fsuSavedContent",
+                    JSON.stringify(savedContentItems),
+                );
+
+                // Refresh the table
+                renderContentTable();
+            }
+
+            // Function to render the content table
+            function renderContentTable(filterType = "all") {
+                const tableBody = document.getElementById(
+                    "savedContentTableBody",
+                );
+
+                // Clear the table
+                tableBody.innerHTML = "";
+
+                // Filter the content if needed
+                const filteredContent =
+                    filterType === "all"
+                        ? savedContentItems
+                        : savedContentItems.filter(
+                              (item) => item.type === filterType,
+                          );
+
+                // Check if there's content to display
+                if (filteredContent.length === 0) {
+                    tableBody.innerHTML = `
+            <tr class="no-content-row">
+                <td colspan="5">No ${filterType === "all" ? "" : filterType + " "}content has been saved yet</td>
+            </tr>
+        `;
+                    return;
+                }
+
+                // Add each item to the table
+                filteredContent.forEach((item) => {
+                    const row = document.createElement("tr");
+                    row.dataset.id = item.id;
+                    row.dataset.type = item.type;
+
+                    row.innerHTML = `
+            <td>${item.title}</td>
+            <td>
+                <span class="type-badge type-${item.type}">
+                    ${item.type === "press-release" ? "Press Release" : "Social Media"}
+                </span>
+            </td>
+            <td class="content-preview">${item.content}</td>
+            <td>${item.date}</td>
+            <td class="action-buttons">
+                <button class="action-btn edit-btn" title="Edit" onclick="editContent(${item.id})">
+                    <i class="material-icons">edit</i>
+                </button>
+                <button class="action-btn" title="Copy" onclick="copyContent(${item.id})">
+                    <i class="material-icons">content_copy</i>
+                </button>
+                <button class="action-btn delete-btn" title="Delete" onclick="deleteContent(${item.id})">
+                    <i class="material-icons">delete</i>
+                </button>
+            </td>
+        `;
+
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Function to edit content
+            function editContent(id) {
+                const item = savedContentItems.find((item) => item.id === id);
+                if (!item) return;
+
+                // Show the dashboard
+                const dashboardContainer = document.getElementById(
+                    "dashboard-container",
+                );
+                if (dashboardContainer)
+                    dashboardContainer.style.display = "block";
+
+                // Select the appropriate content type
+                const contentTypeCards =
+                    document.querySelectorAll(".content-type-card");
+                contentTypeCards.forEach((card) => {
+                    card.classList.remove("selected");
+                    if (card.getAttribute("data-type") === item.type) {
+                        card.classList.add("selected");
+                    }
+                });
+
+                // Show the appropriate dialog and populate with content
+                if (item.type === "press-release") {
+                    const dialog = document.getElementById(
+                        "press-release-dialog",
+                    );
+                    const editor = dialog.querySelector(".text-editor");
+                    dialog.style.display = "block";
+                    if (editor) editor.value = item.content;
+                } else if (item.type === "social-media") {
+                    const dialog = document.getElementById(
+                        "social-media-dialog",
+                    );
+                    const editor = dialog.querySelector(".text-editor");
+                    dialog.style.display = "block";
+                    if (editor) editor.value = item.content;
+                }
+
+                // Store the ID being edited for use when saving
+                sessionStorage.setItem("editingContentId", id);
+            }
+
+            // Function to copy content
+            function copyContent(id) {
+                const item = savedContentItems.find((item) => item.id === id);
+                if (!item) return;
+
+                navigator.clipboard
+                    .writeText(item.content)
+                    .then(() => {
+                        alert("Content copied to clipboard!");
+                    })
+                    .catch((err) => {
+                        console.error("Failed to copy: ", err);
+                    });
+            }
+
+            // Function to delete content
+            function deleteContent(id) {
+                if (confirm("Are you sure you want to delete this content?")) {
+                    savedContentItems = savedContentItems.filter(
+                        (item) => item.id !== id,
+                    );
+                    localStorage.setItem(
+                        "fsuSavedContent",
+                        JSON.stringify(savedContentItems),
+                    );
+                    renderContentTable();
+                }
+            }
+
+            // Add event listeners after DOM content is loaded
+            document.addEventListener("DOMContentLoaded", function () {
+                // Load saved content from localStorage
+                const savedContent = localStorage.getItem("fsuSavedContent");
+                if (savedContent) {
+                    savedContentItems = JSON.parse(savedContent);
+                }
+
+                // Render the table initially
+                renderContentTable();
+
+                // Set up filter buttons
+                const filterButtons = document.querySelectorAll(".filter-btn");
+                filterButtons.forEach((button) => {
+                    button.addEventListener("click", function () {
+                        // Remove active class from all buttons
+                        filterButtons.forEach((btn) =>
+                            btn.classList.remove("active"),
+                        );
+
+                        // Add active class to clicked button
+                        this.classList.add("active");
+
+                        // Filter the table
+                        renderContentTable(this.getAttribute("data-filter"));
+                    });
+                });
+
+                // Modify existing save buttons to add content to the table
+
+                // Press Release Save Button
+                const saveVersionBtn =
+                    document.getElementById("saveVersionBtn");
+                if (saveVersionBtn) {
+                    saveVersionBtn.addEventListener("click", function () {
+                        const editor = document.querySelector(
+                            "#press-release-dialog .text-editor",
+                        );
+                        if (!editor) return;
+
+                        const content = editor.value;
+                        if (!content.trim()) {
+                            alert("Please enter some content before saving.");
+                            return;
+                        }
+
+                        // Check if we're editing an existing item
+                        const editingId =
+                            sessionStorage.getItem("editingContentId");
+                        if (editingId) {
+                            // Update existing item
+                            const itemIndex = savedContentItems.findIndex(
+                                (item) => item.id === parseInt(editingId),
+                            );
+                            if (itemIndex !== -1) {
+                                savedContentItems[itemIndex].content = content;
+                                savedContentItems[itemIndex].date =
+                                    new Date().toLocaleString() + " (Edited)";
+                                localStorage.setItem(
+                                    "fsuSavedContent",
+                                    JSON.stringify(savedContentItems),
+                                );
+                                sessionStorage.removeItem("editingContentId");
+                            }
+                        } else {
+                            // Add new item
+                            const title =
+                                "Press Release - " +
+                                new Date().toLocaleDateString();
+                            addContentToTable(title, "press-release", content);
+                        }
+
+                        // Hide dialogs
+                        const dashboardContainer = document.getElementById(
+                            "dashboard-container",
+                        );
+                        if (dashboardContainer)
+                            dashboardContainer.style.display = "none";
+
+                        const pressReleaseDialog = document.getElementById(
+                            "press-release-dialog",
+                        );
+                        if (pressReleaseDialog)
+                            pressReleaseDialog.style.display = "none";
+
+                        // Clear the editor
+                        if (editor) editor.value = "";
+
+                        renderContentTable();
+                    });
+                }
+
+                // Social Media Save Button
+                const socialSaveBtn = document.getElementById("socialSaveBtn");
+                if (socialSaveBtn) {
+                    socialSaveBtn.addEventListener("click", function () {
+                        const editor = document.querySelector(
+                            "#social-media-dialog .text-editor",
+                        );
+                        if (!editor) return;
+
+                        const content = editor.value;
+                        if (!content.trim()) {
+                            alert("Please enter some content before saving.");
+                            return;
+                        }
+
+                        // Check if we're editing an existing item
+                        const editingId =
+                            sessionStorage.getItem("editingContentId");
+                        if (editingId) {
+                            // Update existing item
+                            const itemIndex = savedContentItems.findIndex(
+                                (item) => item.id === parseInt(editingId),
+                            );
+                            if (itemIndex !== -1) {
+                                savedContentItems[itemIndex].content = content;
+                                savedContentItems[itemIndex].date =
+                                    new Date().toLocaleString() + " (Edited)";
+                                localStorage.setItem(
+                                    "fsuSavedContent",
+                                    JSON.stringify(savedContentItems),
+                                );
+                                sessionStorage.removeItem("editingContentId");
+                            }
+                        } else {
+                            // Add new item
+                            const title =
+                                "Social Post - " +
+                                new Date().toLocaleDateString();
+                            addContentToTable(title, "social-media", content);
+                        }
+
+                        // Hide dialogs
+                        const dashboardContainer = document.getElementById(
+                            "dashboard-container",
+                        );
+                        if (dashboardContainer)
+                            dashboardContainer.style.display = "none";
+
+                        const socialMediaDialog = document.getElementById(
+                            "social-media-dialog",
+                        );
+                        if (socialMediaDialog)
+                            socialMediaDialog.style.display = "none";
+
+                        // Clear the editor
+                        if (editor) editor.value = "";
+
+                        renderContentTable();
+                    });
+                }
+
+                // Comments Functionality - Updated Version
+                function initializeComments() {
+                    console.log("Initializing comments functionality");
+
+                    // Get DOM elements
+                    const commentInput =
+                        document.getElementById("commentInput");
+                    const postCommentBtn =
+                        document.getElementById("postCommentBtn");
+                    const commentsList =
+                        document.getElementById("commentsList");
+
+                    // Debug log to check if elements are found
+                    console.log("Comment elements:", {
+                        input: commentInput,
+                        button: postCommentBtn,
+                        list: commentsList,
+                    });
+
+                    // Ensure elements exist before adding event listeners
+                    if (!commentInput || !postCommentBtn || !commentsList) {
+                        console.error(
+                            "Could not find required comment elements",
+                        );
+                        return;
+                    }
+
+                    // Remove any existing event listeners by cloning
+                    const newPostBtn = postCommentBtn.cloneNode(true);
+                    postCommentBtn.parentNode.replaceChild(
+                        newPostBtn,
+                        postCommentBtn,
+                    );
+
+                    // Add event listener to post button
+                    newPostBtn.addEventListener("click", function (e) {
+                        console.log("Post comment button clicked");
+                        e.preventDefault();
+
+                        const commentText = commentInput.value.trim();
+                        if (commentText) {
+                            addNewComment(commentText, commentsList);
+                            commentInput.value = "";
+
+                            // Scroll to the new comment
+                            setTimeout(() => {
+                                const firstComment = commentsList.firstChild;
+                                if (firstComment) {
+                                    firstComment.scrollIntoView({
+                                        behavior: "smooth",
+                                    });
+                                }
+                            }, 100);
+                        } else {
+                            alert("Please enter a comment");
+                        }
+                    });
+
+                    // Add keypress event to also submit on Enter
+                    commentInput.addEventListener("keypress", function (e) {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            newPostBtn.click();
+                        }
+                    });
+
+                    // Auto-resize the textarea as user types
+                    commentInput.addEventListener("input", function () {
+                        this.style.height = "auto";
+                        this.style.height = this.scrollHeight + "px";
+                    });
+
+                    // Add event listeners to existing comment buttons
+                    setupCommentButtons();
+
+                    console.log("Comments functionality initialized");
+                }
+
+                function addNewComment(text, commentsList) {
+                    // Ensure commentsList is provided or find it
+                    if (!commentsList) {
+                        commentsList = document.getElementById("commentsList");
+                        if (!commentsList) {
+                            console.error("Comments list element not found");
+                            return;
+                        }
+                    }
+
+                    console.log("Adding new comment:", text);
+
+                    const today = new Date();
+                    const dateString = today.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                    });
+
+                    // Create a new comment element
+                    const newComment = document.createElement("div");
+                    newComment.className = "comment-item";
+
+                    // Create comment HTML without avatar image
+                    newComment.innerHTML = `
+        <div class="comment-avatar">
+            <!-- No avatar image -->
+        </div>
+        <div class="comment-content">
+            <div class="comment-header">
+                <span class="comment-author">Current User</span>
+                <span class="comment-date">${dateString}</span>
+            </div>
+            <p class="comment-text">${text}</p>
+            <div class="comment-actions">
+                <button class="comment-action-btn reply-btn">Reply</button>
+                <button class="comment-action-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    `;
+
+                    // Add to the beginning of the list with a fade-in effect
+                    newComment.style.opacity = "0";
+                    newComment.style.transition = "opacity 0.3s ease";
+
+                    if (commentsList.firstChild) {
+                        commentsList.insertBefore(
+                            newComment,
+                            commentsList.firstChild,
+                        );
+                    } else {
+                        commentsList.appendChild(newComment);
+                    }
+
+                    // Trigger the fade-in animation
+                    setTimeout(() => {
+                        newComment.style.opacity = "1";
+                    }, 10);
+
+                    console.log("Comment added to list");
+
+                    // Add event listeners to the new comment's buttons
+                    setupCommentButtonsForElement(newComment);
+
+                    // Update the comments counter if it exists
+                    updateCommentsCounter();
+                    addNotification("comment", `New Comment !`, `${text}`);
+                }
+
+                function updateCommentsCounter() {
+                    const counter = document.querySelector(".comments-counter");
+                    if (counter) {
+                        const count =
+                            document.querySelectorAll(".comment-item").length;
+                        counter.textContent = count;
+                    }
+                }
+
+                function setupCommentButtons() {
+                    console.log("Setting up comment buttons for all comments");
+
+                    // Get all comment items
+                    const commentItems =
+                        document.querySelectorAll(".comment-item");
+                    console.log(`Found ${commentItems.length} comments`);
+
+                    commentItems.forEach((item, index) => {
+                        console.log(`Setting up buttons for comment ${index}`);
+                        setupCommentButtonsForElement(item);
+                    });
+                }
+
+                function setupCommentButtonsForElement(element) {
+                    if (!element) {
+                        console.error(
+                            "No element provided to setupCommentButtonsForElement",
+                        );
+                        return;
+                    }
+
+                    // Reply button - using more specific selector with the added class
+                    const replyBtn =
+                        element.querySelector(
+                            ".comment-action-btn.reply-btn",
+                        ) ||
+                        element.querySelector(
+                            ".comment-action-btn:first-child",
+                        );
+
+                    if (replyBtn) {
+                        // Remove existing event listeners by cloning
+                        const newReplyBtn = replyBtn.cloneNode(true);
+                        replyBtn.parentNode.replaceChild(newReplyBtn, replyBtn);
+
+                        newReplyBtn.addEventListener("click", function () {
+                            const commentAuthor =
+                                element.querySelector(
+                                    ".comment-author",
+                                ).textContent;
+                            const commentInput =
+                                document.getElementById("commentInput");
+                            if (commentInput) {
+                                commentInput.value = `@${commentAuthor} `;
+                                commentInput.focus();
+
+                                // Auto-resize the textarea after setting value
+                                commentInput.style.height = "auto";
+                                commentInput.style.height =
+                                    commentInput.scrollHeight + "px";
+
+                                // Scroll to the comment form
+                                commentInput.scrollIntoView({
+                                    behavior: "smooth",
+                                });
+
+                                console.log(`Set reply to ${commentAuthor}`);
+                            } else {
+                                console.error("Comment input not found");
+                            }
+                        });
+                    } else {
+                        console.warn(
+                            "Reply button not found in comment",
+                            element,
+                        );
+                    }
+
+                    // Edit button - using more specific selector with the added class
+                    const editBtn =
+                        element.querySelector(".comment-action-btn.edit-btn") ||
+                        element.querySelector(
+                            ".comment-action-btn:nth-child(2)",
+                        );
+
+                    if (editBtn) {
+                        // Remove existing event listeners by cloning
+                        const newEditBtn = editBtn.cloneNode(true);
+                        editBtn.parentNode.replaceChild(newEditBtn, editBtn);
+
+                        newEditBtn.addEventListener("click", function () {
+                            const commentText =
+                                element.querySelector(".comment-text");
+                            if (!commentText) {
+                                console.error("Comment text element not found");
+                                return;
+                            }
+
+                            const originalText = commentText.textContent;
+                            console.log("Editing comment:", originalText);
+
+                            // Check if we're already editing this comment
+                            if (
+                                element.querySelector(".comment-edit-interface")
+                            ) {
+                                console.warn("Edit interface already open");
+                                return;
+                            }
+
+                            // Create edit interface
+                            const editInterface = document.createElement("div");
+                            editInterface.className = "comment-edit-interface";
+                            editInterface.innerHTML = `
+                <textarea class="comment-edit-input">${originalText}</textarea>
+                <div class="comment-edit-actions">
+                    <button class="btn btn-primary save-edit-btn">Save</button>
+                    <button class="btn btn-secondary cancel-edit-btn">Cancel</button>
+                </div>
+            `;
+
+                            // Replace comment text with edit interface
+                            commentText.style.display = "none";
+                            commentText.parentNode.insertBefore(
+                                editInterface,
+                                commentText.nextSibling,
+                            );
+
+                            // Focus the textarea and auto-resize
+                            const textarea = editInterface.querySelector(
+                                ".comment-edit-input",
+                            );
+                            textarea.focus();
+
+                            // Set initial height based on content
+                            textarea.style.height = "auto";
+                            textarea.style.height =
+                                textarea.scrollHeight + "px";
+
+                            // Add auto-resize on input
+                            textarea.addEventListener("input", function () {
+                                this.style.height = "auto";
+                                this.style.height = this.scrollHeight + "px";
+                            });
+
+                            // Add event listeners for save and cancel buttons
+                            const saveBtn =
+                                editInterface.querySelector(".save-edit-btn");
+                            saveBtn.addEventListener("click", function () {
+                                const newText = textarea.value.trim();
+                                if (newText) {
+                                    commentText.textContent = newText;
+                                    console.log("Comment updated:", newText);
+                                }
+                                // Clean up
+                                commentText.style.display = "block";
+                                editInterface.remove();
+                            });
+
+                            const cancelBtn =
+                                editInterface.querySelector(".cancel-edit-btn");
+                            cancelBtn.addEventListener("click", function () {
+                                // Just clean up without saving
+                                commentText.style.display = "block";
+                                editInterface.remove();
+                                console.log("Edit cancelled");
+                            });
+                        });
+                    } else {
+                        console.warn(
+                            "Edit button not found in comment",
+                            element,
+                        );
+                    }
+                }
+
+                // Make sure comments are initialized after DOM is fully loaded
+                document.addEventListener("DOMContentLoaded", function () {
+                    console.log("DOM loaded, initializing comments");
+                    initializeComments();
+                });
+
+                // In case DOMContentLoaded already fired, also try to initialize now
+                if (
+                    document.readyState === "complete" ||
+                    document.readyState === "interactive"
+                ) {
+                    console.log(
+                        "Document already loaded, initializing comments immediately",
+                    );
+                    setTimeout(initializeComments, 100); // Short timeout to ensure execution
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const submitReviewBtn =
+                    document.getElementById("submitReviewBtn");
+                let isSubmitted = false;
+
+                if (submitReviewBtn) {
+                    submitReviewBtn.addEventListener("click", function () {
+                        if (!isSubmitted) {
+                            // First click - Submit for review
+                            isSubmitted = true;
+                            this.classList.add("accepted");
+                            this.innerHTML =
+                                '<i class="material-icons">check_circle</i> Accept Review';
+
+                            // Show success message
+                            alert("Content submitted for review successfully!");
+                        } else {
+                            // Second click - Accept the review
+                            this.disabled = true;
+                            this.innerHTML =
+                                '<i class="material-icons">done_all</i> Review Accepted';
+
+                            // Show acceptance message
+                            //alert("Review has been accepted!");
+                            addNotification(
+                                "progress",
+                                `Review Accepted`,
+                                `Content Draft Review Accepted`,
+                            );
+
+                            // Optional: You can add code here to update the project status
+                            const statusValue = document.querySelector(
+                                ".info-item .info-value",
+                            );
+                            if (
+                                statusValue &&
+                                statusValue.textContent.trim() === "In Progress"
+                            ) {
+                                statusValue.textContent = "Under Review";
+                            }
+                        }
+                    });
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get the status elements
+                const statusItem = document.querySelector(
+                    ".info-item[data-status]",
+                );
+                const statusValue = statusItem
+                    ? statusItem.querySelector(".info-value")
+                    : null;
+                const submitReviewBtn =
+                    document.getElementById("submitReviewBtn");
+
+                if (!statusItem || !statusValue || !submitReviewBtn) return;
+
+                // Connect the review button to status updates
+                let clickCount = 0;
+                submitReviewBtn.addEventListener("click", function () {
+                    clickCount++;
+
+                    if (clickCount === 1) {
+                        // First click - change to "Under Review"
+                        statusItem.setAttribute("data-status", "under-review");
+                        statusValue.textContent = "Under Review";
+                        this.innerHTML =
+                            '<i class="material-icons">check_circle</i> Accept Review';
+                        this.classList.add("accepted");
+
+                        // Show success message
+                        //alert("Content submitted for review successfully!");
+                        addNotification(
+                            "default",
+                            `Review Request`,
+                            `Content Draft Review request raised.`,
+                        );
+                    } else if (clickCount === 2) {
+                        // Second click - change to "Completed"
+                        statusItem.setAttribute("data-status", "completed");
+                        statusValue.textContent = "Completed";
+                        this.innerHTML =
+                            '<i class="material-icons">done_all</i> Review Accepted';
+                        this.disabled = true;
+
+                        // Show acceptance message
+                        alert("Review has been accepted!");
+                    }
+                });
+            });
+
+            function addNotification(type, title, message) {
+                const notificationList =
+                    document.querySelector(".notification-list");
+                if (!notificationList) return;
+
+                const notification = document.createElement("div");
+                notification.className = `notification type-${type} new`;
+
+                const icon = getIconForType(type);
+
+                notification.innerHTML = `
+            <i class="material-icons notification-icon">${icon}</i>
+            <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+            <div class="notification-time">Just now</div>
+            </div>
+            `;
+
+                notificationList.insertBefore(
+                    notification,
+                    notificationList.firstChild,
+                );
+
+                // Fade out "new" tag after some time
+                setTimeout(() => {
+                    notification.classList.remove("new");
+                }, 5000);
+            }
+
+            // Get icon based on notification type
+            function getIconForType(type) {
+                const icons = {
+                    assignment: "person_add",
+                    progress: "trending_up",
+                    review: "rate_review",
+                    update: "update",
+                    alert: "warning",
+                    comment: "comment",
+                    default: "notifications",
+                };
+
+                return icons[type] || icons.default;
+            }
+        </script>
+    </body>
+</html>
