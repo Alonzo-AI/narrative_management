@@ -299,6 +299,164 @@
                 font-size: 18px;
             }
         }
+
+        .news-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.news-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.2s, border 0.2s;
+}
+
+.news-item:hover {
+  background-color: #e0f7ff;
+}
+
+.news-item.selected {
+  background-color: #73d2e7;
+  color: white;
+  border-color: #73d2e7;
+  font-weight: bold;
+}
+
+.tick-icon {
+  display: none;
+  background-color: white;
+  color: green;
+  border: 2px solid green;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 16px;
+  font-weight: bold;
+}
+
+.news-item.selected .tick-icon {
+  display: inline-block;
+}
+
+.drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 6px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  color: #888;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: #e6f7ff;
+}
+
+#preview-area img {
+  max-width: 120px;
+  border-radius: 4px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
+
+.sponsor-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  border: 2px solid #73d2e7;
+  border-radius: 6px;
+  background-color: #e6f7ff;
+}
+
+
+.sponsor-name {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.dropdown-container {
+  position: relative;
+  max-width: 100%;
+}
+
+.dropdown-selected {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+.selected-logo-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.selected-sponsor-logo {
+  height: 30px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.dropdown-arrow {
+  margin-left: auto;
+  font-size: 16px;
+}
+
+.dropdown-list {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  z-index: 100;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item img {
+  height: 30px;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 500px) {
+  .dropdown-selected {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+
     </style>
 </head>
 <body>
@@ -347,7 +505,7 @@
                 <button class="btn btn-primary">Create Narrative</button>
             </div>
 
-            <div class="action-card" id="creative-tools-btn">
+            <div class="action-card" id="breaking-news-btn">
                 <div class="card-header">
                     <div class="card-icon creative-icon">📰</div>
                     <h3 class="card-title">Breaking News</h3>
@@ -356,7 +514,7 @@
                 <button class="btn btn-primary">Add News</button>
             </div>
 
-            <div class="action-card" id="creative-tools-btn">
+            <div class="action-card" id="stats-research-btn">
                 <div class="card-header">
                     <div class="card-icon creative-icon">📊</div> 
                     <h3 class="card-title">Stats Research</h3>
@@ -366,6 +524,119 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="platform-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="document.getElementById('platform-modal').style.display='none'">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Choose Platform</h2>
+            </div>
+            <div class="form-group">
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <button class="btn btn-primary" onclick="openBreakingNews()">X</button>
+                    <button class="btn btn-primary">Facebook</button>
+                    <button class="btn btn-primary">Instagram</button>
+                    <button class="btn btn-primary">Website</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="breaking-news-modal">
+        <div class="modal-content">
+          <span class="close-modal" onclick="document.getElementById('breaking-news-modal').style.display='none'">&times;</span>
+          <div class="modal-header">
+            <h2 class="modal-title">Uploaded Breaking News</h2>
+          </div>
+          <div class="form-group">
+            <div class="news-grid" id="newsGrid">
+                <div class="news-item" data-news="Quarterback injured during practice.">
+                  <span class="tick-icon">✔</span>
+                  <span class="news-text">Quarterback injured during practice.</span>
+                </div>
+                <div class="news-item" data-news="Coach announces new lineup for Saturday.">
+                  <span class="tick-icon">✔</span>
+                  <span class="news-text">Coach announces new lineup for Saturday.</span>
+                </div>
+                <div class="news-item" data-news="Unexpected weather delays game.">
+                  <span class="tick-icon">✔</span>
+                  <span class="news-text">Unexpected weather delays game.</span>
+                </div>
+              </div>
+        
+              <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="openSponsorModal()">Skip</button>
+                <button class="btn btn-primary" onclick="submitSelectedNews()">Select</button>
+
+              </div>
+              
+            </div>
+          </div>
+         
+        </div>
+      </div>
+
+      <div class="modal" id="sponsor-modal">
+        <div class="modal-content">
+          <span class="close-modal" onclick="document.getElementById('sponsor-modal').style.display='none'">&times;</span>
+          <div class="modal-header">
+            <h2 class="modal-title">Story</h2>
+          </div>
+          <div class="form-group">
+            <div id="selected-news-wrapper" style="display: none; margin-bottom: 15px;">
+                <strong>Selected News:</strong>
+                <p id="selected-news-text" style="margin-top: 5px; background: #f0f0f0; padding: 10px; border-radius: 6px;"></p>
+              </div>
+              
+            <label class="form-label">Story Note</label>
+            <textarea class="form-control" placeholder="Type your message here..."></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Upload Graphic</label>
+            <div id="drop-area" class="drop-zone">
+             
+              <input type="file" id="fileElem" accept="image/*" />
+              <div id="preview-area" style="margin-top: 10px;"></div>
+            </div>
+        </div>
+        <div class="dropdown-container">
+          <!-- Dropdown Header -->
+          <div class="dropdown-selected" onclick="toggleSponsorDropdown()">
+            <div class="selected-logo-wrapper" id="logo-wrapper" style="display: none;">
+              <img id="selected-logo" class="selected-sponsor-logo" src="" alt="Sponsor Logo" />
+            </div>
+            <span id="selected-name">Select a Sponsor</span>
+            <span class="dropdown-arrow">&#9662;</span>
+          </div>
+        
+          <!-- Dropdown List -->
+          <div id="sponsor-dropdown" class="dropdown-list">
+            <div class="dropdown-item" onclick="selectSponsor(this)" data-name="Under Armour" data-logo="https://download.logo.wine/logo/Under_Armour/Under_Armour-Logo.wine.png">
+              <img src="https://download.logo.wine/logo/Under_Armour/Under_Armour-Logo.wine.png" />
+              <span>Under Armour</span>
+            </div>
+            <div class="dropdown-item" onclick="selectSponsor(this)" data-name="Nike" data-logo="https://i.pinimg.com/736x/29/df/c6/29dfc6f05b80804c18913851a79c5140.jpg">
+              <img src="https://i.pinimg.com/736x/29/df/c6/29dfc6f05b80804c18913851a79c5140.jpg" />
+              <span>Nike</span>
+            </div>
+            <div class="dropdown-item" onclick="selectSponsor(this)" data-name="Adidas" data-logo="https://www.citypng.com/public/uploads/preview/adidas-black-logo-701751694777212bstvn6c2g9.png">
+              <img src="https://www.citypng.com/public/uploads/preview/adidas-black-logo-701751694777212bstvn6c2g9.png" />
+              <span>Adidas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary">Publish</button>
+        </div>
+      </div>
+          </div>
+       
+    </div>
+    
+      </div>
+      
+      
+      
 
     
     </div>
@@ -394,9 +665,9 @@
         });
         
         quickStoryBtn.addEventListener('click', () => {
-            console.log('Create Story clicked');
-            // No action needed - popup functionality removed
+            document.getElementById('platform-modal').style.display = 'block';
         });
+
         
         creativeToolsBtn.addEventListener('click', () => {
             console.log('Open Tools clicked');
@@ -454,6 +725,181 @@
             storyModal.style.display = 'none';
             this.reset();
         });
+
+        function openBreakingNews() {
+    document.getElementById('platform-modal').style.display = 'none';
+    document.getElementById('breaking-news-modal').style.display = 'block';
+}
+
+
+let selectedNews = null;
+
+// Initialize click selection logic
+document.addEventListener("DOMContentLoaded", function () {
+  const newsItems = document.querySelectorAll(".news-item");
+
+  newsItems.forEach(item => {
+    item.addEventListener("click", function () {
+      newsItems.forEach(i => i.classList.remove("selected"));
+      this.classList.add("selected");
+      selectedNews = this.getAttribute("data-news");
+    });
+  });
+});
+
+// Called when "Select" button is clicked
+function submitSelectedNews() {
+  if (selectedNews) {
+    // Show selected news in sponsor modal
+    const wrapper = document.getElementById("selected-news-wrapper");
+    const text = document.getElementById("selected-news-text");
+    text.innerText = selectedNews;
+    wrapper.style.display = "block";
+
+    // Open sponsor modal
+    document.getElementById("breaking-news-modal").style.display = "none";
+    document.getElementById("sponsor-modal").style.display = "block";
+  } else {
+    alert("Please select a news item.");
+  }
+}
+
+// Called when "Skip" is clicked
+function openSponsorModal() {
+  document.getElementById("breaking-news-modal").style.display = "none";
+  document.getElementById("sponsor-modal").style.display = "block";
+
+  // Hide selected news
+  document.getElementById("selected-news-wrapper").style.display = "none";
+  document.getElementById("selected-news-text").innerText = "";
+}
+
+
+
+function submitSelectedNews() {
+  if (selectedNews) {
+    // Show the selected news above the textarea
+    const wrapper = document.getElementById('selected-news-wrapper');
+    const text = document.getElementById('selected-news-text');
+    text.innerText = selectedNews;
+    wrapper.style.display = 'block';
+
+    // Show the sponsor modal
+    document.getElementById('breaking-news-modal').style.display = 'none';
+    document.getElementById('sponsor-modal').style.display = 'block';
+  } else {
+    alert("Please select a news item.");
+  }
+}
+
+function openSponsorModal() {
+  document.getElementById('breaking-news-modal').style.display = 'none';
+  document.getElementById('sponsor-modal').style.display = 'block';
+
+  // Hide selected news when skipping
+  document.getElementById('selected-news-wrapper').style.display = 'none';
+  document.getElementById('selected-news-text').innerText = '';
+}
+
+
+// Initialize after DOM is ready
+document.addEventListener('DOMContentLoaded', initializeNewsSelection);
+
+// Show sponsor modal on skip
+function openSponsorModal() {
+  document.getElementById("breaking-news-modal").style.display = "none";
+  document.getElementById("sponsor-modal").style.display = "block";
+}
+
+function openSponsorModal() {
+  document.getElementById("breaking-news-modal").style.display = "none";
+  document.getElementById("sponsor-modal").style.display = "block";
+}
+
+function openSponsorModal() {
+  document.getElementById("breaking-news-modal").style.display = "none";
+  document.getElementById("sponsor-modal").style.display = "block";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const dropArea = document.getElementById("drop-area");
+  const fileInput = document.getElementById("fileElem");
+  const previewArea = document.getElementById("preview-area");
+
+  // Trigger file input on drop zone click
+  dropArea.addEventListener("click", () => fileInput.click());
+
+  // Handle file input selection
+  fileInput.addEventListener("change", function () {
+    handleFile(fileInput.files[0]);
+  });
+
+  // Drag-over styling
+  dropArea.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    dropArea.style.backgroundColor = "#e6f7ff";
+  });
+
+  // Drag-leave reset
+  dropArea.addEventListener("dragleave", function (e) {
+    e.preventDefault();
+    dropArea.style.backgroundColor = "#f9f9f9";
+  });
+
+  // Handle file drop
+  dropArea.addEventListener("drop", function (e) {
+    e.preventDefault();
+    dropArea.style.backgroundColor = "#f9f9f9";
+
+    const file = e.dataTransfer.files[0];
+    fileInput.files = e.dataTransfer.files; // Sync dropped file with input
+    handleFile(file);
+  });
+
+  function handleFile(file) {
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewArea.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewArea.innerHTML = `<p style="color:red;">Please upload a valid image file.</p>`;
+    }
+  }
+});
+
+
+function toggleSponsorDropdown() {
+  const dropdown = document.getElementById("sponsor-dropdown");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+function selectSponsor(item) {
+  const name = item.getAttribute("data-name");
+  const logo = item.getAttribute("data-logo");
+
+  document.getElementById("selected-name").innerText = name;
+
+  const logoImg = document.getElementById("selected-logo");
+  const logoWrapper = document.getElementById("logo-wrapper");
+
+  logoImg.src = logo;
+  logoWrapper.style.display = "flex";
+
+  document.getElementById("sponsor-dropdown").style.display = "none";
+}
+
+// Close dropdown on outside click
+document.addEventListener("click", function (e) {
+  const container = document.querySelector(".dropdown-container");
+  if (!container.contains(e.target)) {
+    document.getElementById("sponsor-dropdown").style.display = "none";
+  }
+});
+
+
+ 
     </script>
 </body>
 </html>
