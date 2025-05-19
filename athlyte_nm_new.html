@@ -300,10 +300,12 @@
             }
         }
 
-        .news-grid {
+        /* Add this to your existing CSS */
+.news-grid {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-bottom: 20px;
 }
 
 .news-item {
@@ -315,36 +317,35 @@
   border-radius: 6px;
   background-color: #f9f9f9;
   cursor: pointer;
-  transition: background-color 0.2s, border 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .news-item:hover {
   background-color: #e0f7ff;
+  transform: translateY(-2px);
 }
 
 .news-item.selected {
   background-color: #73d2e7;
   color: white;
   border-color: #73d2e7;
-  font-weight: bold;
 }
 
 .tick-icon {
   display: none;
   background-color: white;
-  color: green;
-  border: 2px solid green;
+  color: #4CAF50;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
   text-align: center;
-  line-height: 16px;
+  line-height: 24px;
   font-weight: bold;
 }
 
 .news-item.selected .tick-icon {
-  display: inline-block;
+  display: block;
 }
 
 .drop-zone {
@@ -550,26 +551,26 @@
             <h2 class="modal-title">Uploaded Breaking News</h2>
           </div>
           <div class="form-group">
-            <div class="news-grid" id="newsGrid">
-                <div class="news-item" data-news="Quarterback injured during practice.">
-                  <span class="tick-icon">✔</span>
-                  <span class="news-text">Quarterback injured during practice.</span>
-                </div>
-                <div class="news-item" data-news="Coach announces new lineup for Saturday.">
-                  <span class="tick-icon">✔</span>
-                  <span class="news-text">Coach announces new lineup for Saturday.</span>
-                </div>
-                <div class="news-item" data-news="Unexpected weather delays game.">
-                  <span class="tick-icon">✔</span>
-                  <span class="news-text">Unexpected weather delays game.</span>
-                </div>
-              </div>
-        
-              <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="openSponsorModal()">Skip</button>
-                <button class="btn btn-primary" onclick="submitSelectedNews()">Select</button>
-
-              </div>
+           <!-- Add this to your existing HTML where you want the news selection to appear -->
+<div class="news-grid" id="newsGrid">
+    <div class="news-item" data-news="Quarterback injured during practice.">
+      <span class="news-text">Quarterback injured during practice.</span>
+      <span class="tick-icon">✓</span>
+    </div>
+    <div class="news-item" data-news="Coach announces new lineup for Saturday.">
+      <span class="news-text">Coach announces new lineup for Saturday.</span>
+      <span class="tick-icon">✓</span>
+    </div>
+    <div class="news-item" data-news="Unexpected weather delays game.">
+      <span class="news-text">Unexpected weather delays game.</span>
+      <span class="tick-icon">✓</span>
+    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="openSponsorModal()">Skip</button>
+    <button class="btn btn-primary" onclick="submitSelectedNews()">Select</button>
+  </div>
               
             </div>
           </div>
@@ -668,295 +669,358 @@
 
     <script>
         // Modal functionality
-        const projectModal = document.getElementById('project-modal');
-        const storyModal = document.getElementById('story-modal');
-        const toolsModal = document.getElementById('tools-modal');
-        
-        const newProjectBtn = document.getElementById('new-project-btn');
-        const quickStoryBtn = document.getElementById('quick-story-btn');
-        const creativeToolsBtn = document.getElementById('creative-tools-btn');
-        
-        const closeProjectModal = document.getElementById('close-project-modal');
-        const closeStoryModal = document.getElementById('close-story-modal');
-        const closeToolsModal = document.getElementById('close-tools-modal');
-        
-        const cancelProject = document.getElementById('cancel-project');
-        const cancelStory = document.getElementById('cancel-story');
-        
-        // Button click handlers (no modal opens)
-        newProjectBtn.addEventListener('click', () => {
-            console.log('Create Project clicked');
-            // No action needed - popup functionality removed
-        });
-        
-        quickStoryBtn.addEventListener('click', () => {
-            document.getElementById('platform-modal').style.display = 'block';
-        });
+const projectModal = document.getElementById('project-modal');
+const storyModal = document.getElementById('story-modal');
+const toolsModal = document.getElementById('tools-modal');
 
-        
-        creativeToolsBtn.addEventListener('click', () => {
-            console.log('Open Tools clicked');
-            // No action needed - popup functionality removed
-        });
-        
-        // Close modals with X button
-        closeProjectModal.addEventListener('click', () => {
-            projectModal.style.display = 'none';
-        });
-        
-        closeStoryModal.addEventListener('click', () => {
-            storyModal.style.display = 'none';
-        });
-        
-        closeToolsModal.addEventListener('click', () => {
-            toolsModal.style.display = 'none';
-        });
-        
-        // Close modals with Cancel button
-        cancelProject.addEventListener('click', () => {
-            projectModal.style.display = 'none';
-        });
-        
-        cancelStory.addEventListener('click', () => {
-            storyModal.style.display = 'none';
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === projectModal) {
-                projectModal.style.display = 'none';
-            }
-            if (e.target === storyModal) {
-                storyModal.style.display = 'none';
-            }
-            if (e.target === toolsModal) {
-                toolsModal.style.display = 'none';
-            }
-        });
-        
-        // Form submissions
-        document.getElementById('project-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically process the form data and create a new project
-            alert('Project created successfully!');
-            projectModal.style.display = 'none';
-            this.reset();
-        });
-        
-        document.getElementById('story-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically process the form data and create a new story
-            alert('Story created successfully!');
-            storyModal.style.display = 'none';
-            this.reset();
-        });
+const newProjectBtn = document.getElementById('new-project-btn');
+const quickStoryBtn = document.getElementById('quick-story-btn');
+const creativeToolsBtn = document.getElementById('creative-tools-btn');
+const breakingNewsBtn = document.getElementById('breaking-news-btn');
 
-        function openBreakingNews() {
-    document.getElementById('platform-modal').style.display = 'none';
-    document.getElementById('breaking-news-modal').style.display = 'block';
-}
-
-
+// Store the selected news item
 let selectedNews = null;
 
-// Initialize click selection logic
-document.addEventListener("DOMContentLoaded", function () {
-  const newsItems = document.querySelectorAll(".news-item");
-
-  newsItems.forEach(item => {
-    item.addEventListener("click", function () {
-      newsItems.forEach(i => i.classList.remove("selected"));
-      this.classList.add("selected");
-      selectedNews = this.getAttribute("data-news");
-    });
-  });
+// Button click handlers
+newProjectBtn.addEventListener('click', () => {
+    console.log('Create Project clicked');
+    // No action needed - popup functionality removed
 });
 
-// Called when "Select" button is clicked
-function submitSelectedNews() {
-  if (selectedNews) {
-    // Show selected news in sponsor modal
-    const wrapper = document.getElementById("selected-news-wrapper");
-    const text = document.getElementById("selected-news-text");
-    text.innerText = selectedNews;
-    wrapper.style.display = "block";
+quickStoryBtn.addEventListener('click', () => {
+    document.getElementById('platform-modal').style.display = 'block';
+});
 
-    // Open sponsor modal
+creativeToolsBtn.addEventListener('click', () => {
+    console.log('Open Tools clicked');
+    // No action needed - popup functionality removed
+});
+
+breakingNewsBtn.addEventListener('click', () => {
+    document.getElementById('platform-modal').style.display = 'block';
+});
+
+// Close modals with X button
+document.querySelectorAll('.close-modal').forEach(closeBtn => {
+    closeBtn.addEventListener('click', function() {
+        const modal = this.closest('.modal');
+        modal.style.display = 'none';
+        
+        // If closing the breaking news modal, reset selection
+        if (modal.id === 'breaking-news-modal') {
+            resetNewsSelection();
+        }
+    });
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+    document.querySelectorAll('.modal').forEach(modal => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            
+            // If closing the breaking news modal, reset selection
+            if (modal.id === 'breaking-news-modal') {
+                resetNewsSelection();
+            }
+        }
+    });
+});
+
+// Function to reset news selection
+function resetNewsSelection() {
+    selectedNews = null;
+    const newsItems = document.querySelectorAll(".news-item");
+    newsItems.forEach(item => item.classList.remove("selected"));
+}
+
+// Function to reset all form fields in the sponsor modal
+function resetSponsorModalFields() {
+    // Reset selected news
+    const selectedNewsWrapper = document.getElementById("selected-news-wrapper");
+    if (selectedNewsWrapper) {
+        selectedNewsWrapper.style.display = "none";
+    }
+    
+    const selectedNewsText = document.getElementById("selected-news-text");
+    if (selectedNewsText) {
+        selectedNewsText.innerText = "";
+    }
+    
+    // Reset textarea
+    const textareas = document.querySelectorAll('.form-control');
+    textareas.forEach(textarea => {
+        textarea.value = "";
+    });
+    
+    // Reset file input and preview
+    const fileElem = document.getElementById('fileElem');
+    if (fileElem) {
+        fileElem.value = "";
+    }
+    
+    const previewArea = document.getElementById('preview-area');
+    if (previewArea) {
+        previewArea.innerHTML = "";
+    }
+    
+    // Reset sponsor selection
+    const logoWrapper = document.getElementById('logo-wrapper');
+    if (logoWrapper) {
+        logoWrapper.style.display = "none";
+    }
+    
+    const selectedLogo = document.getElementById('selected-logo');
+    if (selectedLogo) {
+        selectedLogo.src = "";
+    }
+    
+    const selectedName = document.getElementById('selected-name');
+    if (selectedName) {
+        selectedName.innerText = "Select a Sponsor";
+    }
+}
+
+// Handle form submissions if they exist
+const projectForm = document.getElementById('project-form');
+if (projectForm) {
+    projectForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Project created successfully!');
+        projectModal.style.display = 'none';
+        this.reset();
+    });
+}
+
+const storyForm = document.getElementById('story-form');
+if (storyForm) {
+    storyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Story created successfully!');
+        storyModal.style.display = 'none';
+        this.reset();
+    });
+}
+
+// Function to open breaking news modal
+function openBreakingNews() {
+    document.getElementById('platform-modal').style.display = 'none';
+    document.getElementById('breaking-news-modal').style.display = 'block';
+    resetNewsSelection(); // Reset any previous selection
+}
+
+// Initialize news item selection
+function initializeNewsSelection() {
+    const newsItems = document.querySelectorAll(".news-item");
+    
+    newsItems.forEach(item => {
+        item.addEventListener("click", function() {
+            // Remove selected class from all items
+            newsItems.forEach(i => i.classList.remove("selected"));
+            
+            // Add selected class to clicked item
+            this.classList.add("selected");
+            
+            // Store the selected news text
+            selectedNews = this.getAttribute("data-news");
+            console.log("Selected news:", selectedNews);
+        });
+    });
+}
+
+// Function to handle the "Select" button click
+function submitSelectedNews() {
+    if (selectedNews) {
+        // Display the selected news in the sponsor modal
+        const wrapper = document.getElementById("selected-news-wrapper");
+        const text = document.getElementById("selected-news-text");
+        
+        text.innerText = selectedNews;
+        wrapper.style.display = "block";
+        
+        // Reset other form fields to ensure clean state
+        const textareas = document.querySelectorAll('.form-control');
+        textareas.forEach(textarea => {
+            textarea.value = "";
+        });
+        
+        const fileElem = document.getElementById('fileElem');
+        if (fileElem) {
+            fileElem.value = "";
+        }
+        
+        const previewArea = document.getElementById('preview-area');
+        if (previewArea) {
+            previewArea.innerHTML = "";
+        }
+        
+        const logoWrapper = document.getElementById('logo-wrapper');
+        if (logoWrapper) {
+            logoWrapper.style.display = "none";
+        }
+        
+        const selectedName = document.getElementById('selected-name');
+        if (selectedName) {
+            selectedName.innerText = "Select a Sponsor";
+        }
+        
+        // Close news modal and open sponsor modal
+        document.getElementById("breaking-news-modal").style.display = "none";
+        document.getElementById("sponsor-modal").style.display = "block";
+    } else {
+        alert("Please select a news item before proceeding.");
+    }
+}
+
+// Function to handle the "Skip" button click
+function openSponsorModal() {
+    // Reset all form fields in the sponsor modal
+    resetSponsorModalFields();
+    
+    // Reset news selection
+    resetNewsSelection();
+    
+    // Close news modal and open sponsor modal without saving news
     document.getElementById("breaking-news-modal").style.display = "none";
     document.getElementById("sponsor-modal").style.display = "block";
-  } else {
-    alert("Please select a news item.");
-  }
 }
 
-// Called when "Skip" is clicked
-function openSponsorModal() {
-  document.getElementById("breaking-news-modal").style.display = "none";
-  document.getElementById("sponsor-modal").style.display = "block";
-
-  // Hide selected news
-  document.getElementById("selected-news-wrapper").style.display = "none";
-  document.getElementById("selected-news-text").innerText = "";
-}
-
-
-
-function submitSelectedNews() {
-  if (selectedNews) {
-    // Show the selected news above the textarea
-    const wrapper = document.getElementById('selected-news-wrapper');
-    const text = document.getElementById('selected-news-text');
-    text.innerText = selectedNews;
-    wrapper.style.display = 'block';
-
-    // Show the sponsor modal
-    document.getElementById('breaking-news-modal').style.display = 'none';
-    document.getElementById('sponsor-modal').style.display = 'block';
-  } else {
-    alert("Please select a news item.");
-  }
-}
-
-function openSponsorModal() {
-  document.getElementById('breaking-news-modal').style.display = 'none';
-  document.getElementById('sponsor-modal').style.display = 'block';
-
-  // Hide selected news when skipping
-  document.getElementById('selected-news-wrapper').style.display = 'none';
-  document.getElementById('selected-news-text').innerText = '';
-}
-
-
-// Initialize after DOM is ready
-document.addEventListener('DOMContentLoaded', initializeNewsSelection);
-
-// Show sponsor modal on skip
-function openSponsorModal() {
-  document.getElementById("breaking-news-modal").style.display = "none";
-  document.getElementById("sponsor-modal").style.display = "block";
-}
-
-function openSponsorModal() {
-  document.getElementById("breaking-news-modal").style.display = "none";
-  document.getElementById("sponsor-modal").style.display = "block";
-}
-
-function openSponsorModal() {
-  document.getElementById("breaking-news-modal").style.display = "none";
-  document.getElementById("sponsor-modal").style.display = "block";
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  const dropArea = document.getElementById("drop-area");
-  const fileInput = document.getElementById("fileElem");
-  const previewArea = document.getElementById("preview-area");
-
-  // Trigger file input on drop zone click
-  dropArea.addEventListener("click", () => fileInput.click());
-
-  // Handle file input selection
-  fileInput.addEventListener("change", function () {
-    handleFile(fileInput.files[0]);
-  });
-
-  // Drag-over styling
-  dropArea.addEventListener("dragover", function (e) {
-    e.preventDefault();
-    dropArea.style.backgroundColor = "#e6f7ff";
-  });
-
-  // Drag-leave reset
-  dropArea.addEventListener("dragleave", function (e) {
-    e.preventDefault();
-    dropArea.style.backgroundColor = "#f9f9f9";
-  });
-
-  // Handle file drop
-  dropArea.addEventListener("drop", function (e) {
-    e.preventDefault();
-    dropArea.style.backgroundColor = "#f9f9f9";
-
-    const file = e.dataTransfer.files[0];
-    fileInput.files = e.dataTransfer.files; // Sync dropped file with input
-    handleFile(file);
-  });
-
-  function handleFile(file) {
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        previewArea.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      previewArea.innerHTML = `<p style="color:red;">Please upload a valid image file.</p>`;
+// File upload and preview functionality
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize news selection
+    initializeNewsSelection();
+    
+    // Initialize file upload functionality
+    const dropArea = document.getElementById("drop-area");
+    const fileInput = document.getElementById("fileElem");
+    const previewArea = document.getElementById("preview-area");
+    
+    if (dropArea && fileInput && previewArea) {
+        // Trigger file input on drop zone click
+        dropArea.addEventListener("click", () => fileInput.click());
+        
+        // Handle file input selection
+        fileInput.addEventListener("change", function() {
+            handleFile(fileInput.files[0]);
+        });
+        
+        // Drag-over styling
+        dropArea.addEventListener("dragover", function(e) {
+            e.preventDefault();
+            dropArea.style.backgroundColor = "#e6f7ff";
+        });
+        
+        // Drag-leave reset
+        dropArea.addEventListener("dragleave", function(e) {
+            e.preventDefault();
+            dropArea.style.backgroundColor = "#f9f9f9";
+        });
+        
+        // Handle file drop
+        dropArea.addEventListener("drop", function(e) {
+            e.preventDefault();
+            dropArea.style.backgroundColor = "#f9f9f9";
+            
+            const file = e.dataTransfer.files[0];
+            fileInput.files = e.dataTransfer.files; // Sync dropped file with input
+            handleFile(file);
+        });
     }
-  }
+    
+    function handleFile(file) {
+        if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewArea.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
+            };
+            reader.readAsDataURL(file);
+        } else if (file) {
+            previewArea.innerHTML = `<p style="color:red;">Please upload a valid image file.</p>`;
+        }
+    }
 });
 
-
+// Sponsor dropdown functionality
 function toggleSponsorDropdown() {
-  const dropdown = document.getElementById("sponsor-dropdown");
-  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    const dropdown = document.getElementById("sponsor-dropdown");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
 function selectSponsor(item) {
-  const name = item.getAttribute("data-name");
-  const logo = item.getAttribute("data-logo");
-
-  document.getElementById("selected-name").innerText = name;
-
-  const logoImg = document.getElementById("selected-logo");
-  const logoWrapper = document.getElementById("logo-wrapper");
-
-  logoImg.src = logo;
-  logoWrapper.style.display = "flex";
-
-  document.getElementById("sponsor-dropdown").style.display = "none";
+    const name = item.getAttribute("data-name");
+    const logo = item.getAttribute("data-logo");
+    
+    document.getElementById("selected-name").innerText = name;
+    
+    const logoImg = document.getElementById("selected-logo");
+    const logoWrapper = document.getElementById("logo-wrapper");
+    
+    logoImg.src = logo;
+    logoWrapper.style.display = "flex";
+    
+    document.getElementById("sponsor-dropdown").style.display = "none";
 }
 
 // Close dropdown on outside click
-document.addEventListener("click", function (e) {
-  const container = document.querySelector(".dropdown-container");
-  if (!container.contains(e.target)) {
-    document.getElementById("sponsor-dropdown").style.display = "none";
-  }
+document.addEventListener("click", function(e) {
+    const container = document.querySelector(".dropdown-container");
+    if (container && !container.contains(e.target)) {
+        const dropdown = document.getElementById("sponsor-dropdown");
+        if (dropdown) {
+            dropdown.style.display = "none";
+        }
+    }
 });
 
+// Handle publishing/posting
 function handlePublish() {
-  const storyNote = document.querySelector('.form-control').value.trim();
-  const sponsorName = document.getElementById('selected-name')?.innerText.trim();
-  const selectedNews = document.getElementById('selected-news-text')?.innerText.trim();
-  const uploadedFile = document.getElementById('fileElem')?.files[0];
-
-  const sponsorTag = sponsorName ? `#${sponsorName.replace(/\s+/g, '')}` : '';
-  const tweetText = `${selectedNews || storyNote}\n\n${sponsorTag}`;
-
-  // Set tweet text in editable box
-  document.getElementById('tweet-edit-box').value = tweetText;
-
-  // Load image if available
-  if (uploadedFile && uploadedFile.type.startsWith("image/")) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      document.getElementById('tweet-image-preview').src = e.target.result;
-    };
-    reader.readAsDataURL(uploadedFile);
-  } else {
-    document.getElementById('tweet-image-preview').src = '';
-  }
-
-  // Show the tweet preview modal
-  document.getElementById('tweet-modal').style.display = 'block';
+    const storyNote = document.querySelector('.form-control').value.trim();
+    const sponsorName = document.getElementById('selected-name')?.innerText.trim();
+    const selectedNewsText = document.getElementById('selected-news-text')?.innerText.trim();
+    const uploadedFile = document.getElementById('fileElem')?.files[0];
+    
+    // Create tweet text with sponsor hashtag if available
+    const sponsorTag = sponsorName && sponsorName !== "Select a Sponsor" ? 
+        `#${sponsorName.replace(/\s+/g, '')}` : '';
+    const tweetText = `${selectedNewsText || storyNote}\n\n${sponsorTag}`;
+    
+    // Set tweet text in editable box
+    const tweetEditBox = document.getElementById('tweet-edit-box');
+    if (tweetEditBox) {
+        tweetEditBox.value = tweetText;
+    }
+    
+    // Load image if available
+    const tweetImagePreview = document.getElementById('tweet-image-preview');
+    if (tweetImagePreview) {
+        if (uploadedFile && uploadedFile.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                tweetImagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(uploadedFile);
+        } else {
+            tweetImagePreview.src = '';
+        }
+    }
+    
+    // Show the tweet preview modal
+    const tweetModal = document.getElementById('tweet-modal');
+    if (tweetModal) {
+        tweetModal.style.display = 'block';
+    }
 }
 
 function confirmTweet() {
-  const finalText = document.getElementById('tweet-edit-box').value.trim();
-  alert("Tweet confirmed:\n\n" + finalText);
-  document.getElementById('tweet-modal').style.display = 'none';
+    const finalText = document.getElementById('tweet-edit-box').value.trim();
+    alert("Tweet confirmed:\n\n" + finalText);
+    document.getElementById('tweet-modal').style.display = 'none';
+    
+    // Close all modals and reset everything
+    document.getElementById('sponsor-modal').style.display = 'none';
+    resetNewsSelection();
+    resetSponsorModalFields();
 }
-
-
     </script>
 </body>
 </html>
