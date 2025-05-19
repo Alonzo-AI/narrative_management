@@ -323,7 +323,7 @@
             <div class="action-card" id="new-project-btn">
                 <div class="card-header">
                     <div class="card-icon project-icon">📁</div>
-                    <h3 class="card-title">New Project</h3>
+                    <h3 class="card-title">Narrative Management</h3>
                 </div>
                 <p class="card-desc">Create a new narrative project with custom settings and templates.</p>
                 <a href="index.html" class="btn btn-primary">Projects</a>
@@ -340,144 +340,34 @@
 
             <div class="action-card" id="creative-tools-btn">
                 <div class="card-header">
-                    <div class="card-icon creative-icon">🎨</div>
-                    <h3 class="card-title">Narrative</h3>
+                    <div class="card-icon creative-icon">💬</div>
+                    <h3 class="card-title">Sponsored Narratives</h3>
                 </div>
                 <p class="card-desc">Access brainstorming and narrative development tools.</p>
                 <button class="btn btn-primary">Create Narrative</button>
             </div>
+
+            <div class="action-card" id="creative-tools-btn">
+                <div class="card-header">
+                    <div class="card-icon creative-icon">📰</div>
+                    <h3 class="card-title">Breaking News</h3>
+                </div>
+                <p class="card-desc">Add latest news and updates.</p>
+                <button class="btn btn-primary">Add News</button>
+            </div>
+
+            <div class="action-card" id="creative-tools-btn">
+                <div class="card-header">
+                    <div class="card-icon creative-icon">📊</div> 
+                    <h3 class="card-title">Stats Research</h3>
+                </div>
+                <p class="card-desc">Access Stats Research tools.</p>
+                <button class="btn btn-primary">Research</button>
+            </div>
         </div>
     </div>
 
-    <!-- New Project Modal -->
-    <div id="project-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-project-modal">&times;</span>
-            <div class="modal-header">
-                <h2 class="modal-title">Create New Project</h2>
-                <p>Set up your narrative project with the details below</p>
-            </div>
-            <form id="project-form">
-                <div class="form-group">
-                    <label class="form-label" for="project-title">Project Title</label>
-                    <input type="text" class="form-control" id="project-title" placeholder="Enter project title">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="project-desc">Description</label>
-                    <textarea class="form-control" id="project-desc" placeholder="What is this project about?"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="project-type">Project Type</label>
-                    <select class="form-control" id="project-type">
-                        <option value="brand">Brand Narrative</option>
-                        <option value="campaign">Campaign</option>
-                        <option value="series">Content Series</option>
-                        <option value="personal">Personal Story</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="project-deadline">Target Completion Date</label>
-                    <input type="date" class="form-control" id="project-deadline">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="cancel-project">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Project</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Quick Story Modal -->
-    <div id="story-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-story-modal">&times;</span>
-            <div class="modal-header">
-                <h2 class="modal-title">Create Quick Story</h2>
-                <p>Start crafting your narrative with these basic details</p>
-            </div>
-            <form id="story-form">
-                <div class="form-group">
-                    <label class="form-label" for="story-title">Story Title</label>
-                    <input type="text" class="form-control" id="story-title" placeholder="Enter story title">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="story-template">Template</label>
-                    <select class="form-control" id="story-template">
-                        <option value="hero">Hero's Journey</option>
-                        <option value="challenge">Overcoming Challenge</option>
-                        <option value="transformation">Transformation Story</option>
-                        <option value="achievement">Achievement Spotlight</option>
-                        <option value="blank">Blank Template</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="story-summary">Brief Summary</label>
-                    <textarea class="form-control" id="story-summary" placeholder="What's your story about?"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="story-project">Associate with Project (Optional)</label>
-                    <select class="form-control" id="story-project">
-                        <option value="">None</option>
-                        <option value="1">Brand Narrative: AthlyteSports</option>
-                        <option value="2">Summer Campaign 2025</option>
-                        <option value="3">Team Spotlight Series</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="cancel-story">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Story</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Creative Tools Modal -->
-    <div id="tools-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-tools-modal">&times;</span>
-            <div class="modal-header">
-                <h2 class="modal-title">Creative Narrative Tools</h2>
-                <p>Select a tool to help develop your narrative</p>
-            </div>
-            <div class="quick-actions">
-                <div class="action-card">
-                    <div class="card-header">
-                        <div class="card-icon creative-icon">🧠</div>
-                        <h3 class="card-title">Brainstorm Wizard</h3>
-                    </div>
-                    <p class="card-desc">Generate ideas based on themes, keywords, or target audience.</p>
-                    <button class="btn btn-primary">Launch Tool</button>
-                </div>
-
-                <div class="action-card">
-                    <div class="card-header">
-                        <div class="card-icon creative-icon">🔄</div>
-                        <h3 class="card-title">Story Structure</h3>
-                    </div>
-                    <p class="card-desc">Organize your narrative with proven storytelling frameworks.</p>
-                    <button class="btn btn-primary">Launch Tool</button>
-                </div>
-
-                <div class="action-card">
-                    <div class="card-header">
-                        <div class="card-icon creative-icon">👤</div>
-                        <h3 class="card-title">Character Builder</h3>
-                    </div>
-                    <p class="card-desc">Develop compelling characters for your narrative.</p>
-                    <button class="btn btn-primary">Launch Tool</button>
-                </div>
-
-                <div class="action-card">
-                    <div class="card-header">
-                        <div class="card-icon creative-icon">📊</div>
-                        <h3 class="card-title">Narrative Analyzer</h3>
-                    </div>
-                    <p class="card-desc">Get feedback and suggestions to improve your story.</p>
-                    <button class="btn btn-primary">Launch Tool</button>
-                </div>
-            </div>
-        </div>
+    
     </div>
 
     <script>
