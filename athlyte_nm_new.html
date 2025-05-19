@@ -455,6 +455,9 @@
   }
 }
 
+#tweet-text {
+  white-space: pre-line;
+}
 
 
     </style>
@@ -626,10 +629,32 @@
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-primary">Publish</button>
+            <button class="btn btn-primary" onclick="handlePublish()">Publish</button>
+
         </div>
       </div>
+
           </div>
+          <div class="modal" id="tweet-modal">
+            <div class="modal-content">
+              <span class="close-modal" onclick="document.getElementById('tweet-modal').style.display='none'">&times;</span>
+              <div class="modal-header">
+                <h2 class="modal-title">Post Preview</h2>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tweet Text</label>
+                <textarea id="tweet-edit-box" class="form-control" rows="4"></textarea>
+              </div>
+              <div class="form-group" style="text-align: center;">
+                <img id="tweet-image-preview" src="" alt="Tweet Graphic" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="document.getElementById('tweet-modal').style.display='none'">Edit Post</button>
+                <button class="btn btn-primary" onclick="confirmTweet()">Confirm Post</button>
+              </div>
+            </div>
+          </div>
+          
        
     </div>
     
@@ -898,8 +923,40 @@ document.addEventListener("click", function (e) {
   }
 });
 
+function handlePublish() {
+  const storyNote = document.querySelector('.form-control').value.trim();
+  const sponsorName = document.getElementById('selected-name')?.innerText.trim();
+  const selectedNews = document.getElementById('selected-news-text')?.innerText.trim();
+  const uploadedFile = document.getElementById('fileElem')?.files[0];
 
- 
+  const sponsorTag = sponsorName ? `#${sponsorName.replace(/\s+/g, '')}` : '';
+  const tweetText = `${selectedNews || storyNote}\n\n${sponsorTag}`;
+
+  // Set tweet text in editable box
+  document.getElementById('tweet-edit-box').value = tweetText;
+
+  // Load image if available
+  if (uploadedFile && uploadedFile.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('tweet-image-preview').src = e.target.result;
+    };
+    reader.readAsDataURL(uploadedFile);
+  } else {
+    document.getElementById('tweet-image-preview').src = '';
+  }
+
+  // Show the tweet preview modal
+  document.getElementById('tweet-modal').style.display = 'block';
+}
+
+function confirmTweet() {
+  const finalText = document.getElementById('tweet-edit-box').value.trim();
+  alert("Tweet confirmed:\n\n" + finalText);
+  document.getElementById('tweet-modal').style.display = 'none';
+}
+
+
     </script>
 </body>
 </html>
