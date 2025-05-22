@@ -191,6 +191,11 @@
             overflow: auto;
         }
 
+        .body.modal-open {
+            overflow: hidden;
+        }
+
+
         .modal-content {
             background-color: var(--white);
             margin: 10% auto;
@@ -635,26 +640,76 @@
         </div>
       </div>
 
-          </div>
-          <div class="modal" id="tweet-modal">
-            <div class="modal-content">
-              <span class="close-modal" onclick="document.getElementById('tweet-modal').style.display='none'">&times;</span>
-              <div class="modal-header">
-                <h2 class="modal-title">Post Preview</h2>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Tweet Text</label>
-                <textarea id="tweet-edit-box" class="form-control" rows="4"></textarea>
-              </div>
-              <div class="form-group" style="text-align: center;">
-                <img id="tweet-image-preview" src="" alt="Tweet Graphic" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="document.getElementById('tweet-modal').style.display='none'">Edit Post</button>
-                <button class="btn btn-primary" onclick="confirmTweet()">Confirm Post</button>
-              </div>
+          <!-- Twitter-Style Tweet Preview Modal -->
+<div class="modal" id="tweet-modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <span class="close-modal" onclick="document.getElementById('tweet-modal').style.display='none'">&times;</span>
+        <div class="modal-header">
+            <h2 class="modal-title">Post Preview</h2>
+        </div>
+        
+        <!-- Twitter-style Preview -->
+        <div style="border: 1px solid #e1e8ed; border-radius: 12px; padding: 16px; margin-bottom: 20px; background: white;">
+            <div style="display: flex; margin-bottom: 12px;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background-color: #73d2e7; margin-right: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                    JD
+                </div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: bold; color: #0f1419;">John Doe</span>
+                        <span style="color: #536471;">@johndoe</span>
+                        <span style="color: #536471;">·</span>
+                        <span style="color: #536471;">now</span>
+                    </div>
+                </div>
             </div>
-          </div>
+            
+            <div id="twitter-preview-text" style="color: #0f1419; font-size: 15px; line-height: 20px; margin-bottom: 12px; white-space: pre-wrap;">
+                <!-- Tweet text will be inserted here -->
+            </div>
+            
+            <div id="twitter-image-container" style="display: none; margin-bottom: 12px;">
+                <img id="twitter-preview-image" src="" alt="Tweet Image" style="width: 100%; border-radius: 16px; border: 1px solid #e1e8ed;" />
+            </div>
+            
+            <!-- Twitter engagement buttons -->
+            <div style="display: flex; justify-content: space-between; max-width: 425px; margin-top: 12px; color: #536471;">
+                <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M1.751 10c0-4.42 3.584-8.005 8.005-8.005h4.366c4.49 0 8.129 3.64 8.129 8.129 0 2.96-1.607 5.68-4.196 7.133l-8.054 4.524c-.252.142-.568.05-.706-.202-.138-.252-.05-.568.202-.706L18.581 16.5c2.211-1.241 3.585-3.567 3.585-6.371 0-3.859-3.14-7-7-7h-4.366c-3.859 0-7 3.141-7 7v1.126c.001.276-.224.5-.5.5s-.501-.224-.5-.5V10z"/>
+                    </svg>
+                    <span style="font-size: 13px;">0</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.791-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.791 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46L18.5 16V8c0-1.1-.896-2-2-2z"/>
+                    </svg>
+                    <span style="font-size: 13px;">0</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"/>
+                    </svg>
+                    <span style="font-size: 13px;">0</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.29 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h13c.28 0 .5-.22.5-.5L19 15h2z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Edit Tweet Text -->
+
+<div class="modal-footer">
+    <button class="btn btn-secondary" onclick="editTweet()">Edit Preview</button>
+    <button class="btn btn-primary" onclick="postTweet()" style="background-color: #1d9bf0; border-color: #1d9bf0;">Post</button>
+</div>
+
+
+    </div>
+</div>
           
        
     </div>
@@ -682,21 +737,19 @@ const breakingNewsBtn = document.getElementById('breaking-news-btn');
 let selectedNews = null;
 
 // Button click handlers
-newProjectBtn.addEventListener('click', () => {
+document.getElementById('new-project-btn').addEventListener('click', () => {
     console.log('Create Project clicked');
-    // No action needed - popup functionality removed
 });
 
-quickStoryBtn.addEventListener('click', () => {
+document.getElementById('quick-story-btn').addEventListener('click', () => {
     document.getElementById('platform-modal').style.display = 'block';
 });
 
-creativeToolsBtn.addEventListener('click', () => {
+document.getElementById('creative-tools-btn').addEventListener('click', () => {
     console.log('Open Tools clicked');
-    // No action needed - popup functionality removed
 });
 
-breakingNewsBtn.addEventListener('click', () => {
+document.getElementById('breaking-news-btn').addEventListener('click', () => {
     document.getElementById('platform-modal').style.display = 'block';
 });
 
@@ -706,7 +759,6 @@ document.querySelectorAll('.close-modal').forEach(closeBtn => {
         const modal = this.closest('.modal');
         modal.style.display = 'none';
         
-        // If closing the breaking news modal, reset selection
         if (modal.id === 'breaking-news-modal') {
             resetNewsSelection();
         }
@@ -719,7 +771,6 @@ window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
             
-            // If closing the breaking news modal, reset selection
             if (modal.id === 'breaking-news-modal') {
                 resetNewsSelection();
             }
@@ -736,7 +787,6 @@ function resetNewsSelection() {
 
 // Function to reset all form fields in the sponsor modal
 function resetSponsorModalFields() {
-    // Reset selected news
     const selectedNewsWrapper = document.getElementById("selected-news-wrapper");
     if (selectedNewsWrapper) {
         selectedNewsWrapper.style.display = "none";
@@ -747,13 +797,11 @@ function resetSponsorModalFields() {
         selectedNewsText.innerText = "";
     }
     
-    // Reset textarea
     const textareas = document.querySelectorAll('.form-control');
     textareas.forEach(textarea => {
         textarea.value = "";
     });
     
-    // Reset file input and preview
     const fileElem = document.getElementById('fileElem');
     if (fileElem) {
         fileElem.value = "";
@@ -764,7 +812,6 @@ function resetSponsorModalFields() {
         previewArea.innerHTML = "";
     }
     
-    // Reset sponsor selection
     const logoWrapper = document.getElementById('logo-wrapper');
     if (logoWrapper) {
         logoWrapper.style.display = "none";
@@ -781,32 +828,11 @@ function resetSponsorModalFields() {
     }
 }
 
-// Handle form submissions if they exist
-const projectForm = document.getElementById('project-form');
-if (projectForm) {
-    projectForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Project created successfully!');
-        projectModal.style.display = 'none';
-        this.reset();
-    });
-}
-
-const storyForm = document.getElementById('story-form');
-if (storyForm) {
-    storyForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Story created successfully!');
-        storyModal.style.display = 'none';
-        this.reset();
-    });
-}
-
 // Function to open breaking news modal
 function openBreakingNews() {
     document.getElementById('platform-modal').style.display = 'none';
     document.getElementById('breaking-news-modal').style.display = 'block';
-    resetNewsSelection(); // Reset any previous selection
+    resetNewsSelection();
 }
 
 // Initialize news item selection
@@ -815,13 +841,8 @@ function initializeNewsSelection() {
     
     newsItems.forEach(item => {
         item.addEventListener("click", function() {
-            // Remove selected class from all items
             newsItems.forEach(i => i.classList.remove("selected"));
-            
-            // Add selected class to clicked item
             this.classList.add("selected");
-            
-            // Store the selected news text
             selectedNews = this.getAttribute("data-news");
             console.log("Selected news:", selectedNews);
         });
@@ -831,14 +852,13 @@ function initializeNewsSelection() {
 // Function to handle the "Select" button click
 function submitSelectedNews() {
     if (selectedNews) {
-        // Display the selected news in the sponsor modal
         const wrapper = document.getElementById("selected-news-wrapper");
         const text = document.getElementById("selected-news-text");
         
         text.innerText = selectedNews;
         wrapper.style.display = "block";
         
-        // Reset other form fields to ensure clean state
+        // Reset other form fields
         const textareas = document.querySelectorAll('.form-control');
         textareas.forEach(textarea => {
             textarea.value = "";
@@ -864,7 +884,6 @@ function submitSelectedNews() {
             selectedName.innerText = "Select a Sponsor";
         }
         
-        // Close news modal and open sponsor modal
         document.getElementById("breaking-news-modal").style.display = "none";
         document.getElementById("sponsor-modal").style.display = "block";
     } else {
@@ -874,70 +893,86 @@ function submitSelectedNews() {
 
 // Function to handle the "Skip" button click
 function openSponsorModal() {
-    // Reset all form fields in the sponsor modal
     resetSponsorModalFields();
-    
-    // Reset news selection
     resetNewsSelection();
-    
-    // Close news modal and open sponsor modal without saving news
     document.getElementById("breaking-news-modal").style.display = "none";
     document.getElementById("sponsor-modal").style.display = "block";
 }
 
-// File upload and preview functionality
+// Function to handle file processing
+function handleFileUpload(file) {
+    const previewArea = document.getElementById('preview-area');
+    
+    if (!file) {
+        console.log('No file selected');
+        return;
+    }
+    
+    console.log('File selected:', file.name, file.type, file.size);
+    
+    if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            console.log('File loaded successfully');
+            previewArea.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 120px; border-radius: 4px; margin-top: 10px; border: 1px solid #ccc;" />`;
+        };
+        reader.onerror = function() {
+            console.error('Error reading file');
+            previewArea.innerHTML = `<p style="color:red;">Error reading file.</p>`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        console.log('Invalid file type:', file.type);
+        previewArea.innerHTML = `<p style="color:red;">Please upload a valid image file.</p>`;
+    }
+}
+
+// FILE UPLOAD FUNCTIONALITY
 document.addEventListener("DOMContentLoaded", function() {
-    // Initialize news selection
+    console.log('DOM loaded, initializing file upload...');
     initializeNewsSelection();
     
-    // Initialize file upload functionality
-    const dropArea = document.getElementById("drop-area");
-    const fileInput = document.getElementById("fileElem");
-    const previewArea = document.getElementById("preview-area");
-    
-    if (dropArea && fileInput && previewArea) {
-        // Trigger file input on drop zone click
-        dropArea.addEventListener("click", () => fileInput.click());
+    // Wait a bit for all elements to be ready
+    setTimeout(function() {
+        const dropArea = document.getElementById("drop-area");
+        const fileInput = document.getElementById("fileElem");
+        const previewArea = document.getElementById("preview-area");
         
-        // Handle file input selection
-        fileInput.addEventListener("change", function() {
-            handleFile(fileInput.files[0]);
-        });
+        console.log('Drop area:', dropArea);
+        console.log('File input:', fileInput);
+        console.log('Preview area:', previewArea);
         
-        // Drag-over styling
-        dropArea.addEventListener("dragover", function(e) {
-            e.preventDefault();
-            dropArea.style.backgroundColor = "#e6f7ff";
-        });
-        
-        // Drag-leave reset
-        dropArea.addEventListener("dragleave", function(e) {
-            e.preventDefault();
-            dropArea.style.backgroundColor = "#f9f9f9";
-        });
-        
-        // Handle file drop
-        dropArea.addEventListener("drop", function(e) {
-            e.preventDefault();
-            dropArea.style.backgroundColor = "#f9f9f9";
-            
-            const file = e.dataTransfer.files[0];
-            fileInput.files = e.dataTransfer.files; // Sync dropped file with input
-            handleFile(file);
-        });
-    }
-    
-    function handleFile(file) {
-        if (file && file.type.startsWith("image/")) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewArea.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
-            };
-            reader.readAsDataURL(file);
-        } else if (file) {
-            previewArea.innerHTML = `<p style="color:red;">Please upload a valid image file.</p>`;
+        if (!dropArea || !fileInput || !previewArea) {
+            console.error('Required elements not found');
+            return;
         }
-    }
+        
+        // Remove any existing event listeners
+        const newDropArea = dropArea.cloneNode(true);
+        dropArea.parentNode.replaceChild(newDropArea, dropArea);
+        
+        // Add click handler to the new drop area
+        newDropArea.addEventListener("click", function(e) {
+            console.log('Drop area clicked');
+            e.preventDefault();
+            e.stopPropagation();
+            fileInput.click();
+        });
+        
+        // File input change handler
+        fileInput.addEventListener("change", function(e) {
+            console.log('File input changed');
+            const file = e.target.files[0];
+            if (file) {
+                handleFileUpload(file);
+            }
+        });
+        
+        // Make sure file input is properly configured
+        fileInput.style.display = 'none';
+        fileInput.setAttribute('accept', 'image/*');
+        
+    }, 100);
 });
 
 // Sponsor dropdown functionality
@@ -972,6 +1007,29 @@ document.addEventListener("click", function(e) {
     }
 });
 
+let uploadedImageURL = null; // Store uploaded image as Data URL
+
+function handleFileUpload(file) {
+    const previewArea = document.getElementById('preview-area');
+    
+    if (!file) return;
+
+    if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImageURL = e.target.result; // Save Data URL
+            previewArea.innerHTML = `<img src="${uploadedImageURL}" alt="Preview" style="max-width: 120px; border-radius: 4px; margin-top: 10px; border: 1px solid #ccc;" />`;
+        };
+        reader.onerror = function() {
+            previewArea.innerHTML = `<p style="color:red;">Error reading file.</p>`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewArea.innerHTML = `<p style="color:red;">Please upload a valid image file.</p>`;
+    }
+}
+
+
 // Handle publishing/posting
 function handlePublish() {
     const storyNote = document.querySelector('.form-control').value.trim();
@@ -979,48 +1037,75 @@ function handlePublish() {
     const selectedNewsText = document.getElementById('selected-news-text')?.innerText.trim();
     const uploadedFile = document.getElementById('fileElem')?.files[0];
     
+    console.log('Publishing with file:', uploadedFile);
+    
     // Create tweet text with sponsor hashtag if available
     const sponsorTag = sponsorName && sponsorName !== "Select a Sponsor" ? 
         `#${sponsorName.replace(/\s+/g, '')}` : '';
     const tweetText = `${selectedNewsText || storyNote}\n\n${sponsorTag}`;
     
-    // Set tweet text in editable box
-    const tweetEditBox = document.getElementById('tweet-edit-box');
-    if (tweetEditBox) {
-        tweetEditBox.value = tweetText;
+   
+    
+    // Update Twitter-style preview
+    const tweetPreviewText = document.getElementById('twitter-preview-text');
+    const tweetPreviewImage = document.getElementById('twitter-preview-image');
+    const tweetImageContainer = document.getElementById('twitter-image-container');
+    
+    if (tweetPreviewText) {
+        tweetPreviewText.innerText = tweetText;
     }
     
     // Load image if available
-    const tweetImagePreview = document.getElementById('tweet-image-preview');
-    if (tweetImagePreview) {
-        if (uploadedFile && uploadedFile.type.startsWith("image/")) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                tweetImagePreview.src = e.target.result;
-            };
-            reader.readAsDataURL(uploadedFile);
-        } else {
-            tweetImagePreview.src = '';
-        }
+    if (tweetPreviewImage && tweetImageContainer) {
+        if (uploadedImageURL) {
+    tweetPreviewImage.src = uploadedImageURL;
+    tweetImageContainer.style.display = 'block';
+} else {
+    tweetImageContainer.style.display = 'none';
+}
     }
     
     // Show the tweet preview modal
     const tweetModal = document.getElementById('tweet-modal');
     if (tweetModal) {
         tweetModal.style.display = 'block';
+        document.body.classList.remove('modal-open'); // make sure scrolling is allowed
+
     }
 }
 
-function confirmTweet() {
-    const finalText = document.getElementById('tweet-edit-box').value.trim();
-    alert("Tweet confirmed:\n\n" + finalText);
+function updateTwitterPreview() {
+    const editedText = document.getElementById('tweet-edit-box').value;
+    const tweetPreviewText = document.getElementById('twitter-preview-text');
+    if (tweetPreviewText) {
+        tweetPreviewText.innerText = editedText;
+    }
+}
+
+function editTweet() {
     document.getElementById('tweet-modal').style.display = 'none';
-    
-    // Close all modals and reset everything
+    document.getElementById('sponsor-modal').style.display = 'block';
+    document.body.classList.remove('modal-open');
+
+}
+
+function postTweet() {
+    const tweetText = document.getElementById('twitter-preview-text')?.innerText.trim();
+
+    alert("Tweet posted:\n\n" + tweetText);
+
+    // Close the modal and reset
+    document.getElementById('tweet-modal').style.display = 'none';
     document.getElementById('sponsor-modal').style.display = 'none';
+    document.body.classList.remove('modal-open');
+
+
     resetNewsSelection();
     resetSponsorModalFields();
 }
+
+
+
     </script>
 </body>
 </html>
