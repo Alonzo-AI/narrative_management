@@ -26,6 +26,7 @@
             background-color: rgb(236, 234, 234);
             color: var(--dark-gray);
             line-height: 1.6;
+            overflow: auto !important;
         }
 
         .container {
@@ -205,6 +206,8 @@
             max-width: 700px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             animation: slideDown 0.3s ease-out;
+            max-height: 90vh; /* Restrict to viewport height */
+            overflow-y: auto;  /* Enable internal scrolling */
         }
 
         @keyframes slideDown {
@@ -520,7 +523,7 @@
                     <h3 class="card-title">Breaking News</h3>
                 </div>
                 <p class="card-desc">Add latest news and updates.</p>
-                <button class="btn btn-primary">Add News</button>
+                <button class="btn btn-primary" onclick="openPreNewsFromBreaking()">Add News</button>
             </div>
 
             <div class="action-card" id="stats-research-btn">
@@ -549,9 +552,9 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="breaking-news-modal">
+    <div class="modal" id="quick-story-modal">
         <div class="modal-content">
-          <span class="close-modal" onclick="document.getElementById('breaking-news-modal').style.display='none'">&times;</span>
+          <span class="close-modal" onclick="document.getElementById('quick-story-modal').style.display='none'">&times;</span>
           <div class="modal-header">
             <h2 class="modal-title">Uploaded Breaking News</h2>
           </div>
@@ -735,6 +738,8 @@ const breakingNewsBtn = document.getElementById('breaking-news-btn');
 
 // Store the selected news item
 let selectedNews = null;
+let fromBreakingNews = false;
+
 
 // Button click handlers
 document.getElementById('new-project-btn').addEventListener('click', () => {
@@ -749,7 +754,7 @@ document.getElementById('creative-tools-btn').addEventListener('click', () => {
     console.log('Open Tools clicked');
 });
 
-document.getElementById('breaking-news-btn').addEventListener('click', () => {
+document.getElementById('quick-story-btn').addEventListener('click', () => {
     document.getElementById('platform-modal').style.display = 'block';
 });
 
@@ -759,7 +764,7 @@ document.querySelectorAll('.close-modal').forEach(closeBtn => {
         const modal = this.closest('.modal');
         modal.style.display = 'none';
         
-        if (modal.id === 'breaking-news-modal') {
+        if (modal.id === 'quick-story-modal') {
             resetNewsSelection();
         }
     });
@@ -771,7 +776,7 @@ window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
             
-            if (modal.id === 'breaking-news-modal') {
+            if (modal.id === 'quick-story-modal') {
                 resetNewsSelection();
             }
         }
@@ -831,9 +836,15 @@ function resetSponsorModalFields() {
 // Function to open breaking news modal
 function openBreakingNews() {
     document.getElementById('platform-modal').style.display = 'none';
-    document.getElementById('breaking-news-modal').style.display = 'block';
-    resetNewsSelection();
+
+    if (fromBreakingNews) {
+        document.getElementById('sponsor-modal').style.display = 'block';
+        fromBreakingNews = false; // reset the flag
+    } else {
+        document.getElementById('quick-story-modal').style.display = 'block';
+    }
 }
+
 
 // Initialize news item selection
 function initializeNewsSelection() {
@@ -854,38 +865,22 @@ function submitSelectedNews() {
     if (selectedNews) {
         const wrapper = document.getElementById("selected-news-wrapper");
         const text = document.getElementById("selected-news-text");
-        
+
         text.innerText = selectedNews;
         wrapper.style.display = "block";
-        
-        // Reset other form fields
+
+        // Reset fields
         const textareas = document.querySelectorAll('.form-control');
-        textareas.forEach(textarea => {
-            textarea.value = "";
-        });
-        
-        const fileElem = document.getElementById('fileElem');
-        if (fileElem) {
-            fileElem.value = "";
+        textareas.forEach(textarea => textarea.value = "");
+
+        document.getElementById("quick-story-modal").style.display = "none";
+
+        if (fromBreakingNews) {
+            document.getElementById("platform-modal").style.display = "block";
+            fromBreakingNews = false; // reset
+        } else {
+            document.getElementById("sponsor-modal").style.display = "block";
         }
-        
-        const previewArea = document.getElementById('preview-area');
-        if (previewArea) {
-            previewArea.innerHTML = "";
-        }
-        
-        const logoWrapper = document.getElementById('logo-wrapper');
-        if (logoWrapper) {
-            logoWrapper.style.display = "none";
-        }
-        
-        const selectedName = document.getElementById('selected-name');
-        if (selectedName) {
-            selectedName.innerText = "Select a Sponsor";
-        }
-        
-        document.getElementById("breaking-news-modal").style.display = "none";
-        document.getElementById("sponsor-modal").style.display = "block";
     } else {
         alert("Please select a news item before proceeding.");
     }
@@ -895,7 +890,7 @@ function submitSelectedNews() {
 function openSponsorModal() {
     resetSponsorModalFields();
     resetNewsSelection();
-    document.getElementById("breaking-news-modal").style.display = "none";
+    document.getElementById("quick-story-modal").style.display = "none";
     document.getElementById("sponsor-modal").style.display = "block";
 }
 
@@ -1104,7 +1099,15 @@ function postTweet() {
     resetSponsorModalFields();
 }
 
+function openBreakingNewsFromBreaking() {
+    fromBreakingNews = true;
+    document.getElementById('quick-story-modal').style.display = 'block';
+}
 
+function openPreNewsFromBreaking() {
+    fromBreakingNews = true; // Set the source
+    document.getElementById('quick-story-modal').style.display = 'block';
+}
 
     </script>
 </body>
