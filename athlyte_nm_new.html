@@ -538,7 +538,7 @@
     </div>
     <div class="modal" id="platform-modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="document.getElementById('platform-modal').style.display='none'">&times;</span>
+            <span class="close-modal" onclick="closePlatformModal()">&times;</span>
             <div class="modal-header">
                 <h2 class="modal-title">Choose Platform</h2>
             </div>
@@ -763,12 +763,13 @@ document.querySelectorAll('.close-modal').forEach(closeBtn => {
     closeBtn.addEventListener('click', function() {
         const modal = this.closest('.modal');
         modal.style.display = 'none';
-        
+
         if (modal.id === 'quick-story-modal') {
             resetNewsSelection();
         }
     });
 });
+
 
 // Close modal when clicking outside
 window.addEventListener('click', (e) => {
@@ -875,24 +876,33 @@ function submitSelectedNews() {
 
         document.getElementById("quick-story-modal").style.display = "none";
 
-        if (fromBreakingNews) {
-            document.getElementById("platform-modal").style.display = "block";
-            fromBreakingNews = false; // reset
-        } else {
-            document.getElementById("sponsor-modal").style.display = "block";
-        }
+if (fromBreakingNews) {
+    document.getElementById("platform-modal").style.display = "block";
+} else {
+    document.getElementById("sponsor-modal").style.display = "block";
+}
+
     } else {
         alert("Please select a news item before proceeding.");
     }
 }
+
+
 
 // Function to handle the "Skip" button click
 function openSponsorModal() {
     resetSponsorModalFields();
     resetNewsSelection();
     document.getElementById("quick-story-modal").style.display = "none";
-    document.getElementById("sponsor-modal").style.display = "block";
+
+    if (fromBreakingNews) {
+        document.getElementById("platform-modal").style.display = "block";
+    } else {
+        document.getElementById("sponsor-modal").style.display = "block";
+    }
 }
+
+
 
 // Function to handle file processing
 function handleFileUpload(file) {
@@ -1105,9 +1115,44 @@ function openBreakingNewsFromBreaking() {
 }
 
 function openPreNewsFromBreaking() {
-    fromBreakingNews = true; // Set the source
+    fromBreakingNews = true;
     document.getElementById('quick-story-modal').style.display = 'block';
 }
+
+
+function closePlatformModal() {
+    document.getElementById('platform-modal').style.display = 'none';
+
+    if (fromBreakingNews) {
+        fromBreakingNews = false; // reset
+        document.getElementById('sponsor-modal').style.display = 'block';
+    }
+}
+
+document.addEventListener('click', function(e) {
+    if (
+        e.target.classList.contains('close-modal') &&
+        e.target.closest('#platform-modal') &&
+        fromBreakingNews
+    ) {
+        document.getElementById('platform-modal').style.display = 'none';
+        document.getElementById('sponsor-modal').style.display = 'block';
+        fromBreakingNews = false;
+    }
+});
+
+window.addEventListener('click', (e) => {
+    document.querySelectorAll('.modal').forEach(modal => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+
+            if (modal.id === 'quick-story-modal') {
+                resetNewsSelection();
+            }
+        }
+    });
+});
+
 
     </script>
 </body>
