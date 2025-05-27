@@ -591,9 +591,9 @@
 
     playerSelect.innerHTML = `<option value="">-- Select Player --</option>`;
 
-    if (selectedNarrative === "up-next") {
+    if (selectedNarrative === "up-next" || selectedNarrative === "big-plays") {
         playerSelectContainer.style.display = "none";
-        generateBtn.disabled = false; // allow generation without player dropdown
+        generateBtn.disabled = false;
     } else if (narrativePlayers[selectedNarrative]) {
         playerSelectContainer.style.display = "block";
         narrativePlayers[selectedNarrative].forEach(player => {
@@ -608,6 +608,7 @@
         generateBtn.disabled = true;
     }
 });
+
 
             
                 // 👂 When player changes
@@ -625,15 +626,15 @@
 
     let stories = [];
 
-    if (selectedNarrative === "up-next") {
-        // Flatten all stories for all keys under "up-next"
-        const allUpNext = narrativeStories["up-next"];
-        for (const player in allUpNext) {
-            stories = stories.concat(allUpNext[player]);
-        }
-    } else {
-        stories = narrativeStories[selectedNarrative]?.[selectedPlayer] || [];
+    if (selectedNarrative === "up-next" || selectedNarrative === "big-plays") {
+    const allStories = narrativeStories[selectedNarrative];
+    for (const player in allStories) {
+        stories = stories.concat(allStories[player]);
     }
+} else {
+    stories = narrativeStories[selectedNarrative]?.[selectedPlayer] || [];
+}
+
 
     stories.forEach(story => {
         const tweetEl = document.createElement("div");
