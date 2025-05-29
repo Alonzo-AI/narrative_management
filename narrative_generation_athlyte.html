@@ -447,6 +447,32 @@
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             }
 
+            .tag-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.tag img {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+}
+
+
 
         </style>
     </head>
@@ -510,7 +536,7 @@
             
                 // 🎯 Narrative-wise player list
                 const narrativePlayers = {
-                    "big-plays": ["Emeka Egbuka","Bo Nix", "Jordan Watkins"],
+                    "big-plays": ["Cam Skattebo","Kyle McCord", "Jordan Watkins"],
                     "playmaker": ["Trech Kekahuna", "Tawee Walker", "Braedyn Locke"],
                     "up-next": ["Illinois Set for Memorial Stadium Finale vs. Michigan State"]
                 };
@@ -518,13 +544,13 @@
                 // 📢 Narrative + player → tweets with image + text
                 const narrativeStories = {
                     "big-plays": {
-                        "Emeka Egbuka": [
+                        "Cam Skattebo": [
                             {
-                                text: "Emeka Egbuka broke the record as the all-time reception leader in Ohio State history with (202)",
-                                img: "https://pbs.twimg.com/media/GhynX1jWIAAsI5t?format=jpg&name=900x900"
+                                text: "Cam Skattebo had an ALL-TIME GAME. Future NFL star?",
+                                img: "https://scontent.fhyd2-2.fna.fbcdn.net/v/t39.30808-6/487815859_1236981341793388_6541725534997734366_n.jpg?stp=dst-jpg_s640x640_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=8UXI-nQggWYQ7kNvwHgKowA&_nc_oc=AdmfbVYPFvUUra_r93VWpd3bhTLAvrdsj5EqdDq-OwpluPSq1UnZ1TCGUTSpgRiMBcY&_nc_zt=23&_nc_ht=scontent.fhyd2-2.fna&_nc_gid=kDzOdTUfzCvxPxTQWARQ3w&oh=00_AfJPxWKn7QtQv51dkHK69Tu7oqO9zbzZ7UtZQ36JPFjcgg&oe=683E0E23"
                             }
                         ],
-                        "Bo Nix": [    
+                        "Kyle McCord": [    
                             {
                                 text: "Kyle McCord's stats as Ohio State's QB1 vs. Indiana.",
                                 img: "https://pbs.twimg.com/media/F5D-d4hXwAAd5sB.jpg:large"
@@ -637,18 +663,40 @@
     let stories = [];
 
     if (selectedNarrative === "up-next" || selectedNarrative === "big-plays") {
-    const allStories = narrativeStories[selectedNarrative];
-    for (const player in allStories) {
-        stories = stories.concat(allStories[player]);
+        const allStories = narrativeStories[selectedNarrative];
+        for (const player in allStories) {
+            allStories[player].forEach(story => {
+                stories.push({ ...story, player });
+            });
+        }
+    } else {
+        (narrativeStories[selectedNarrative]?.[selectedPlayer] || []).forEach(story => {
+            stories.push({ ...story, player: selectedPlayer });
+        });
     }
-} else {
-    stories = narrativeStories[selectedNarrative]?.[selectedPlayer] || [];
-}
-
 
     stories.forEach(story => {
         const tweetEl = document.createElement("div");
         tweetEl.className = "tweet";
+
+        // Tags for sponsors and dynamic player name
+        const sponsorTags = [
+            { name: "Nike", logo: "https://w7.pngwing.com/pngs/654/821/png-transparent-swoosh-nike-just-do-it-logo-nike-angle-adidas-symbol-thumbnail.png" },
+            { name: "Adidas", logo: "https://toppng.com/uploads/preview/adidas-logo-png-adidas-11563653245c6zmdnvsld.png" }
+        ];
+
+        const tagHTML = `
+            <div class="tag-bar">
+                ${sponsorTags.map(s => `
+                    <div class="tag"><img src="${s.logo}" alt="${s.name}">${s.name}</div>
+                `).join('')}
+                <div class="tag">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="${story.player}">
+                    ${story.player}
+                </div>
+            </div>
+        `;
+
         tweetEl.innerHTML = `
             <div class="tweet-header">
                 <div class="avatar">AS</div>
@@ -659,12 +707,14 @@
             </div>
             <div class="tweet-body">${formatTweetText(story.text)}</div>
             ${story.img ? `<div class="tweet-image"><img src="${story.img}" alt="Narrative Image" /></div>` : ""}
+            ${tagHTML}
             <div class="tweet-footer">
                 <span><i>♡</i> ${Math.floor(Math.random() * 500) + 100}</span>
                 <span><i>↺</i> ${Math.floor(Math.random() * 200) + 50}</span>
                 <span><i>⚑</i> ${formatTwitterTime(new Date())}</span>
             </div>
         `;
+
         tweetsList.appendChild(tweetEl);
     });
 
@@ -672,6 +722,7 @@
         tweetsContainer.classList.add("active");
     }
 });
+
 
             
                 // 🧠 Utility: format hashtags and bold text
