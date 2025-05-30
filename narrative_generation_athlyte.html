@@ -495,6 +495,16 @@
                     
                 </div>
 
+                <div class="form-group" id="sponsor-select-container">
+                    <label for="sponsor-select">Select Sponsor:</label>
+                    <select id="sponsor-select">
+                        <option value="">-- Select Sponsor --</option>
+                        <option value="Nike" data-logo="https://w7.pngwing.com/pngs/654/821/png-transparent-swoosh-nike-just-do-it-logo-nike-angle-adidas-symbol-thumbnail.png">Nike</option>
+                        <option value="Adidas" data-logo="https://toppng.com/uploads/preview/adidas-logo-png-adidas-11563653245c6zmdnvsld.png">Adidas</option>
+                    </select>
+                </div>
+                
+
                 <div
                     class="form-group"
                     id="player-select-container"
@@ -533,6 +543,8 @@
                 const generateBtn = document.getElementById("generate-btn");
                 const tweetsContainer = document.getElementById("tweets-container");
                 const tweetsList = document.getElementById("tweets-list");
+                document.getElementById("sponsor-select").selectedIndex = 0;
+
             
                 // 🎯 Narrative-wise player list
                 const narrativePlayers = {
@@ -592,21 +604,21 @@
                     "up-next": {
                         "Illinois Set for Memorial Stadium Finale vs. Michigan State": [
                             {
-                                text: "Illinois hosts Michigan State on Saturday at 1:30 p.m. CT on FS1.",
-                                img: "https://blogs.illinois.edu/files/6231/846029185/232370.jpg"
+                                text: "#22 Illinois Battles for The Hat against Northwestern",
+                                img: "https://ik.imagekit.io/gcdj03xqg/ChatGPT%20Image%20May%2030,%202025,%2005_12_34%20PM.png?updatedAt=1748607935161"
                                 
                             }
                         ],
                         "": [
                             {
-                                text: "Illinois is 5-1 at home this season. The Illini are looking for six home wins for the first time since 2001, when Illinois finished 6-0 at home on its way to the Big Ten title and 2002 Sugar Bowl.",
-                                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBBLX_4ectWu50S0tbCX5NOhkcdGhsnK8mjLqAVi-sWzzuDE2TrScgtfPp9rycTch_u_o&usqp=CAU"
+                                text: "BADGERS AND GOLDEN GOPHERS BATTLE FOR AXE ",
+                                img: "https://ik.imagekit.io/gcdj03xqg/ChatGPT%20Image%20May%2030,%202025,%2005_42_09%20PM.png?updatedAt=1748607935522"
                             }
                         ],
                         "": [
                             {
-                                text: "Illinois is 5-1 coming off of bye weeks since Bret Bielema’s arrival in 2021, including 4-0 over the last three seasons.",
-                                img: "https://cdn.vox-cdn.com/thumbor/oxJzmXokV4PvDr6g05MfBE0-nII=/0x0:4402x2936/1200x800/filters:focal(2411x399:3115x1103)/cdn.vox-cdn.com/uploads/chorus_image/image/73635045/Copy_of_DJP_4489.0.jpg"
+                                text: "In the last decade of the series….",
+                                img: "https://ik.imagekit.io/gcdj03xqg/ChatGPT%20Image%20May%2030,%202025,%2006_00_42%20PM.png?updatedAt=1748608259002"
                             }
                         ],
                         "": [
@@ -625,8 +637,10 @@
     tweetsList.innerHTML = "";
     tweetsContainer.classList.remove("active");
 
-    playerSelect.innerHTML = `<option value="">-- Select Player --</option>`;
+    document.getElementById("sponsor-select").selectedIndex = 0; // ✅ Reset sponsor
 
+    playerSelect.innerHTML = `<option value="">-- Select Player --</option>`;
+    
     if (selectedNarrative === "up-next" || selectedNarrative === "big-plays") {
         playerSelectContainer.style.display = "none";
         generateBtn.disabled = false;
@@ -644,7 +658,6 @@
         generateBtn.disabled = true;
     }
 });
-
 
             
                 // 👂 When player changes
@@ -680,22 +693,25 @@
         tweetEl.className = "tweet";
 
         // Tags for sponsors and dynamic player name
-        const sponsorTags = [
-            { name: "Nike", logo: "https://w7.pngwing.com/pngs/654/821/png-transparent-swoosh-nike-just-do-it-logo-nike-angle-adidas-symbol-thumbnail.png" },
-            { name: "Adidas", logo: "https://toppng.com/uploads/preview/adidas-logo-png-adidas-11563653245c6zmdnvsld.png" }
-        ];
+        const sponsorSelect = document.getElementById("sponsor-select");
+const selectedSponsor = sponsorSelect.value;
+const selectedSponsorLogo = sponsorSelect.options[sponsorSelect.selectedIndex]?.dataset?.logo || null;
+
 
         const tagHTML = `
-            <div class="tag-bar">
-                ${sponsorTags.map(s => `
-                    <div class="tag"><img src="${s.logo}" alt="${s.name}">${s.name}</div>
-                `).join('')}
-                <div class="tag">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="${story.player}">
-                    ${story.player}
-                </div>
-            </div>
-        `;
+    <div class="tag-bar">
+        ${
+            selectedSponsor && selectedSponsorLogo
+                ? `<div class="tag"><img src="${selectedSponsorLogo}" alt="${selectedSponsor}">${selectedSponsor}</div>`
+                : ''
+        }
+        <div class="tag">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="${story.player}">
+            ${story.player}
+        </div>
+    </div>
+`;
+
 
         tweetEl.innerHTML = `
             <div class="tweet-header">
