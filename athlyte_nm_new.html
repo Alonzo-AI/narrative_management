@@ -751,8 +751,10 @@ const creativeToolsBtn = document.getElementById('creative-tools-btn');
 const breakingNewsBtn = document.getElementById('breaking-news-btn');
 
 // Store the selected news item
-let selectedNews = null;
+let selectedNewsQuickStory = null;
+let selectedNewsBreakingNews = null;
 let fromBreakingNews = false;
+
 
 
 // Button click handlers
@@ -800,10 +802,11 @@ window.addEventListener('click', (e) => {
 
 // Function to reset news selection
 function resetNewsSelection() {
-    selectedNews = null;
-    const newsItems = document.querySelectorAll(".news-item");
-    newsItems.forEach(item => item.classList.remove("selected"));
+    selectedNewsQuickStory = null;
+    selectedNewsBreakingNews = null;
+    document.querySelectorAll(".news-item").forEach(item => item.classList.remove("selected"));
 }
+
 
 // Function to reset all form fields in the sponsor modal
 function resetSponsorModalFields() {
@@ -864,43 +867,52 @@ function openBreakingNews() {
 // Initialize news item selection
 function initializeNewsSelection() {
     const newsItems = document.querySelectorAll(".news-item");
-    
+
     newsItems.forEach(item => {
-        item.addEventListener("click", function() {
-            newsItems.forEach(i => i.classList.remove("selected"));
-            this.classList.add("selected");
-            selectedNews = this.getAttribute("data-news");
-            console.log("Selected news:", selectedNews);
+        item.addEventListener("click", function () {
+            // Only affect selection in the modal currently visible
+            const parentModal = this.closest('.modal');
+            if (parentModal && parentModal.style.display === 'block') {
+                // Remove existing selections within this modal
+                parentModal.querySelectorAll(".news-item").forEach(i => i.classList.remove("selected"));
+                this.classList.add("selected");
+
+                // Set selection only for currently active flow
+                parentModal.setAttribute("data-selected-news", this.getAttribute("data-news"));
+            }
         });
     });
 }
 
+
+
 // Function to handle the "Select" button click
 function submitSelectedNews() {
-    if (selectedNews) {
+    const modal = document.getElementById("quick-story-modal");
+    const selected = modal.getAttribute("data-selected-news");
+
+    if (selected) {
         const wrapper = document.getElementById("selected-news-wrapper");
         const text = document.getElementById("selected-news-text");
 
-        text.innerText = selectedNews;
+        text.innerText = selected;
         wrapper.style.display = "block";
 
-        // Reset fields
-        const textareas = document.querySelectorAll('.form-control');
-        textareas.forEach(textarea => textarea.value = "");
+        // Reset textarea
+        document.querySelectorAll('.form-control').forEach(el => el.value = "");
 
-        document.getElementById("quick-story-modal").style.display = "none";
+        modal.removeAttribute("data-selected-news");
+        modal.style.display = "none";
 
-if (fromBreakingNews) {
-    document.getElementById("platform-modal").style.display = "block";
-} else {
-    document.getElementById("sponsor-modal").style.display = "block";
-}
-
+        if (fromBreakingNews) {
+            document.getElementById("platform-modal").style.display = "block";
+        } else {
+            document.getElementById("sponsor-modal").style.display = "block";
+        }
     } else {
         alert("Please select a news item before proceeding.");
     }
 }
-
 
 
 // Function to handle the "Skip" button click
@@ -1167,6 +1179,10 @@ window.addEventListener('click', (e) => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    initializeNewsSelection();
+    document.querySelectorAll(".news-item").forEach(i => i.classList.remove("selected"));
+});
 
     </script>
 </body>
