@@ -472,6 +472,34 @@
     border-radius: 50%;
 }
 
+.home-icon-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    color: #73d2e7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+    z-index: 1000;
+}
+
+.home-icon-btn:hover {
+    background-color: #73d2e7;
+    transform: scale(1.1);
+    color: white;
+}
+
+.material-icons {
+    font-size: 24px;
+}
+
 
 
         </style>
@@ -481,7 +509,11 @@
             <h1>Athlyte Sports Narrative Management</h1>
             <h2>Bringing sports stories to life</h2>
         </header>
-
+        <a href="index.html" class="home-icon-btn" title="Go Home">
+            <span class="material-icons">home</span>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+          </a>
+          
         <div class="container">
             <div class="controls">
                 <div class="form-group">
