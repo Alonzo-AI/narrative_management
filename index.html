@@ -884,8 +884,6 @@ function initializeNewsSelection() {
     });
 }
 
-
-
 // Function to handle the "Select" button click
 function submitSelectedNews() {
     const modal = document.getElementById("quick-story-modal");
@@ -913,6 +911,7 @@ function submitSelectedNews() {
         alert("Please select a news item before proceeding.");
     }
 }
+
 
 
 // Function to handle the "Skip" button click
@@ -1183,6 +1182,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeNewsSelection();
     document.querySelectorAll(".news-item").forEach(i => i.classList.remove("selected"));
 });
+
 
     </script>
 </body>
